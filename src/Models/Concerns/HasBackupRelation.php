@@ -17,7 +17,7 @@ trait HasBackupRelation
         return $this->backups()->completed();
     }
 
-    public function latestCompletedBackup(): ?Backup
+    public function youngestCompletedBackup(): ?Backup
     {
         return $this->completedBackups()->first();
     }

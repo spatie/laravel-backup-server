@@ -15,11 +15,6 @@ class Destination extends Model
 
     use LogsActivity, HasBackupRelation;
 
-    public function backups()
-    {
-        $this->hasMany(Backup::class);
-    }
-
     public function disk(): Filesystem
     {
         return Storage::disk($this->disk);

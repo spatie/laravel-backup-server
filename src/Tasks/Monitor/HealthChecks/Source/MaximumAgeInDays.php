@@ -21,7 +21,7 @@ class MaximumAgeInDays extends SourceHealthCheck
             return HealthCheckResult::ok();
         }
 
-        $latestBackup = $source->latestCompletedBackup();
+        $latestBackup = $source->youngestCompletedBackup();
 
         if (! $latestBackup) {
             return HealthCheckResult::failed("No backup found");

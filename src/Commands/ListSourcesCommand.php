@@ -7,15 +7,15 @@ use Spatie\BackupServer\Models\Backup;
 use Spatie\BackupServer\Models\Source;
 use Spatie\BackupServer\Support\Helpers\Format;
 
-class ListCommand extends Command
+class ListSourcesCommand extends Command
 {
     protected $name = 'backup-server:list';
 
-    protected $description = 'Display list of last backup of all sources';
+    protected $description = 'Display a list of the last backup of all sources';
 
     public function handle()
     {
-        $headers = ['Source', 'Healthy', '# of backups', 'Newest backup', 'Youngest Backup size', 'Total backup Size', 'Used storage'];
+        $headers = ['Source', 'Healthy', '# of Backups', 'Youngest backup Age', 'Youngest Backup Size', 'Total Backup Size', 'Used storage'];
 
         $rows = Source::get()
             ->map(fn (Source $source) => $this->convertToRow($source));

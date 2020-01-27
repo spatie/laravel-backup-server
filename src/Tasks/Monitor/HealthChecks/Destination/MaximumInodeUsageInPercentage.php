@@ -2,7 +2,10 @@
 
 namespace Spatie\BackupServer\Tasks\Monitor\HealthChecks\Destination;
 
-class MaximumInodeUsageInPercentage
+use Spatie\BackupServer\Models\Destination;
+use Spatie\BackupServer\Tasks\Monitor\HealthCheckResult;
+
+class MaximumInodeUsageInPercentage extends DestinationHealthCheck
 {
     private int $maximumPercentage;
 
@@ -11,7 +14,10 @@ class MaximumInodeUsageInPercentage
         $this->maximumPercentage = $maximumPercentage;
     }
 
-    public function passes()
+    public function getResult(Destination $destination): HealthCheckResult
     {
+        // TODO: Implement getResults() method.
+
+        return HealthCheckResult::ok();
     }
 }

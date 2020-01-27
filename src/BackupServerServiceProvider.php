@@ -8,7 +8,8 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
 use Spatie\BackupServer\Commands\DispatchPerformBackupJobsCommand;
 use Spatie\BackupServer\Commands\DispatchPerformCleanupJobsCommand;
-use Spatie\BackupServer\Commands\ListCommand;
+use Spatie\BackupServer\Commands\ListDestinationsCommand;
+use Spatie\BackupServer\Commands\ListSourcesCommand;
 use Spatie\BackupServer\Http\App\Middleware\SetBackupServerDefaults;
 use Spatie\BackupServer\Http\Middleware\Authorize;
 use Spatie\BackupServer\Notifications\EventHandler;
@@ -61,7 +62,8 @@ class BackupServerServiceProvider extends EventServiceProvider
             $this->commands([
                 DispatchPerformBackupJobsCommand::class,
                 DispatchPerformCleanupJobsCommand::class,
-                ListCommand::class,
+                ListSourcesCommand::class,
+                ListDestinationsCommand::class,
             ]);
         }
 

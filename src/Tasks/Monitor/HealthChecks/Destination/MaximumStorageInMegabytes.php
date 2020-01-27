@@ -14,7 +14,7 @@ class MaximumStorageInMegabytes extends DestinationHealthCheck
         $this->configuredMaximumStorageInMegabytes = $configuredMaximumStorageInMegabytes;
     }
 
-    public function getResults(Destination $destination): HealthCheckResult
+    public function getResult(Destination $destination): HealthCheckResult
     {
         $actualSizeInMegabytes = $destination->completedBackups()->sum('real_size_in_kb') * 1024;
 
