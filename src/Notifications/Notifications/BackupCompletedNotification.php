@@ -22,8 +22,8 @@ class BackupCompletedNotification extends Notification
     {
         $mailMessage = (new MailMessage)
             ->from($this->fromEmail(), $this->fromName())
-            ->subject(trans('backup::notifications.backup_completed_subject', $this->sourceName()))
-            ->line(trans('backup::notifications.backup_completed_body', $this->sourceName()));
+            ->subject(trans('backup::notifications.backup_completed_subject', ['source_name' => $this->sourceName()]))
+            ->line(trans('backup::notifications.backup_completed_body', ['source_name' => $this->sourceName()]));
 
         return $mailMessage;
     }
