@@ -16,9 +16,13 @@ return [
     'cleanup_failed_subject' => 'Cleaning up the backups of :source_name failed.',
     'cleanup_failed_body' => 'An error occurred while cleaning up the backups of :source_name',
 
-    'cleanup_successful_subject' => 'Clean up of :source_name backups successful',
-    'cleanup_successful_subject_title' => 'Clean up of backups successful!',
-    'cleanup_successful_body' => 'The clean up of the :source_name backups on the disk named :disk_name was successful.',
+    'cleanup_source_successful_subject' => 'Clean up of :source_name backups successful',
+    'cleanup_source_successful_subject_title' => 'Clean up of backups successful!',
+    'cleanup_source_successful_body' => 'The clean up of the :source_name backups.',
+
+    'cleanup_destination_successful_subject' => 'Clean up of backups on :destination_name successful',
+    'cleanup_destination_successful_subject_title' => 'Clean up of backups successful!',
+    'cleanup_destination_successful_body' => 'The clean up of the backups on :destination_name was successful.',
 
     'healthy_backup_found_subject' => 'The backups for :source_name on disk :disk_name are healthy',
     'healthy_backup_found_subject_title' => 'The backups for :source_name are healthy',
