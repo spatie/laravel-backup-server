@@ -5,13 +5,14 @@ namespace Spatie\BackupServer\Models;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
+use Spatie\BackupServer\Models\Concerns\HasBackupRelation;
 use Spatie\BackupServer\Models\Concerns\LogsActivity;
 
 class Destination extends Model
 {
     public $guarded = [];
 
-    use LogsActivity;
+    use LogsActivity, HasBackupRelation;
 
     public function backups()
     {

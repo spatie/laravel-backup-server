@@ -21,6 +21,11 @@ class CreateBackupServerTables extends Migration
             $table->integer('keep_yearly_backups_for_years')->nullable();
             $table->integer('delete_oldest_backups_when_using_more_megabytes_than')->nullable();
 
+            $table->integer('healthy_maximum_backup_age_in_days_per_source')->nullable();
+            $table->integer('healthy_maximum_storage_in_megabytes_per_source')->nullable();
+            $table->integer('healthy_maximum_storage_in_megabytes')->nullable();
+            $table->integer('healthy_maximum_inode_usage_percentage')->nullable();
+
             $table->timestamps();
         });
 
@@ -48,6 +53,9 @@ class CreateBackupServerTables extends Migration
             $table->integer('keep_monthly_backups_for_months')->nullable();
             $table->integer('keep_yearly_backups_for_years')->nullable();
             $table->integer('delete_oldest_backups_when_using_more_megabytes_than')->nullable();
+
+            $table->integer('healthy_maximum_backup_age_in_days')->nullable();
+            $table->integer('healthy_maximum_storage_in_megabytes')->nullable();
 
             $table->timestamps();
 
@@ -83,14 +91,6 @@ class CreateBackupServerTables extends Migration
             $table->string('task');
             $table->string('level');
             $table->longText('message');
-            $table->timestamps();
-        });
-
-        Schema::create('notification_destinations', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->integer('team_id')->unsigned();
-            $table->string('channel');
-            $table->json('accepts_notification_classes');
             $table->timestamps();
         });
     }
