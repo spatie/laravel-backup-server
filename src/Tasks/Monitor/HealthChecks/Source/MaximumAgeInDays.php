@@ -4,7 +4,7 @@ namespace Spatie\BackupServer\Tasks\Monitor\HealthChecks\Source;
 
 use Illuminate\Support\Str;
 use Spatie\BackupServer\Models\Source;
-use Spatie\BackupServer\Tasks\Monitor\HealthCheckResponse;
+use Spatie\BackupServer\Tasks\Monitor\HealthCheckResult;
 
 class MaximumAgeInDays extends SourceHealthCheck
 {
@@ -15,25 +15,25 @@ class MaximumAgeInDays extends SourceHealthCheck
         $this->configuredMaximumAgeInDays = $configuredMaximumAgeInDays;
     }
 
-    public function passes(Source $source): HealthCheckResponse
+    public function getResult(Source $source): HealthCheckResult
     {
         if ($source->created_at->ageInDays() < 1) {
-            return HealthCheckResponse::passes();
+            return HealthCheckResult::ok();
         }
 
         $latestBackup = $source->latestCompletedBackup();
 
         if (! $latestBackup) {
-            return HealthCheckResponse::fails("No backup found");
+            return HealthCheckResult::failed("No backup found");
         }
 
         $maximumHealthAgeInDays = $this->maximumHealthyAgeInDays($source);
 
         if ($latestBackup->created_at->ageInDays() > $this->maximumHealthyAgeInDays($source)) {
-            return HealthCheckResponse::fails("Latest backup iis older then {$maximumHealthAgeInDays}" . Str::plural('day', $maximumHealthAgeInDays));
+            return HealthCheckResult::failed("Latest backup iis older then {$maximumHealthAgeInDays}" . Str::plural('day', $maximumHealthAgeInDays));
         }
 
-        return HealthCheckResponse::passes();
+        return HealthCheckResult::ok();
     }
 
     public function maximumHealthyAgeInDays(Source $source): int

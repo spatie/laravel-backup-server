@@ -10,7 +10,7 @@ use Spatie\BackupServer\Tasks\Cleanup\Jobs\PerformCleanupDestinationJob;
 
 class DispatchPerformCleanupJobsCommand extends Command
 {
-    protected $signature = 'backup:clean';
+    protected $signature = 'backup-server::cleanup';
 
     protected $description = 'Dispatch cleanup jobs';
 

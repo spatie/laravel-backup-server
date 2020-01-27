@@ -9,7 +9,7 @@ use Spatie\BackupServer\Tasks\Backup\Jobs\PerformBackupJob;
 
 class DispatchPerformBackupJobsCommand extends Command
 {
-    protected $signature = 'backup:run';
+    protected $signature = 'backup-server:backup';
 
     protected $description = 'Dispatch backup jobs';
 

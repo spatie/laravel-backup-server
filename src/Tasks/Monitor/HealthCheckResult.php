@@ -2,18 +2,18 @@
 
 namespace Spatie\BackupServer\Tasks\Monitor;
 
-class HealthCheckResponse
+class HealthCheckResult
 {
-    protected bool $passes = true;
+    protected bool $ok = true;
 
     protected string $message = '';
 
-    public static function passes()
+    public static function ok()
     {
         return new static();
     }
 
-    public static function fails(string $message)
+    public static function failed(string $message)
     {
         return (new static($message))->markAsFailed();
     }
@@ -23,9 +23,19 @@ class HealthCheckResponse
         $this->message = $message;
     }
 
+    public function isOk(): bool
+    {
+        return $this->ok;
+    }
+
+    public function getMessage(): string
+    {
+        return $this->message;
+    }
+
     public function markAsFailed(): self
     {
-        $this->passes = false;
+        $this->ok = false;
 
         return $this;
     }

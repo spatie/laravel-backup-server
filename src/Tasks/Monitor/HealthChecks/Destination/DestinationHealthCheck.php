@@ -3,9 +3,9 @@
 namespace Spatie\BackupServer\Tasks\Monitor\HealthChecks\Destination;
 
 use Spatie\BackupServer\Models\Destination;
-use Spatie\BackupServer\Tasks\Monitor\HealthCheckResponse;
+use Spatie\BackupServer\Tasks\Monitor\HealthCheckResult;
 
 abstract class DestinationHealthCheck
 {
-    abstract public function passes(Destination $destination): HealthCheckResponse;
+    abstract public function getResults(Destination $destination): HealthCheckResult;
 }

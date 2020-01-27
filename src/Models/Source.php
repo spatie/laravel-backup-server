@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\BackupServer\Models\Concerns\HasBackupRelation;
 use Spatie\BackupServer\Models\Concerns\LogsActivity;
 use Spatie\BackupServer\Support\Ssh;
+use Spatie\BackupServer\Tasks\Monitor\HealthCheckCollection;
 use Symfony\Component\Process\Process;
 
 class Source extends Model
@@ -32,6 +33,24 @@ class Source extends Model
         $ssh = new Ssh($this->ssh_user, $this->host);
 
         return $ssh->execute($commands);
+    }
+
+    public function isHealthy(): bool
+    {
+        return $this->getHealthChecks()->allPass();
+    }
+
+    public function getHealthChecks(): HealthCheckCollection
+    {
+        static $healthCheckCollection = null;
+
+        if (is_null($healthCheckCollection)) {
+            $healthCheckClassNames = config('laravel-backup-server.monitor.source_health_checks');
+
+            $healthCheckCollection = new HealthCheckCollection($healthCheckClassNames, $this);
+        }
+
+        return $healthCheckCollection;
     }
 
     protected function addMessageToLog(string $task, string $level, string $message)

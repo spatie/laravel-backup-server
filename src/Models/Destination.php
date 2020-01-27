@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Spatie\BackupServer\Models\Concerns\HasBackupRelation;
 use Spatie\BackupServer\Models\Concerns\LogsActivity;
+use Spatie\BackupServer\Tasks\Monitor\HealthCheckCollection;
 
 class Destination extends Model
 {
@@ -31,5 +32,23 @@ class Destination extends Model
             'level' => $level,
             'message' => trim($message),
         ]);
+    }
+
+    public function isHealthy(): bool
+    {
+        return $this->getHealthChecks()->allPass();
+    }
+
+    public function getHealthChecks(): HealthCheckCollection
+    {
+        static $healthCheckCollection = null;
+
+        if (is_null($healthCheckCollection)) {
+            $healthCheckClassNames = config('laravel-backup-server.monitor.destination_health_checks');
+
+            $healthCheckCollection = new HealthCheckCollection($healthCheckClassNames, $this);
+        }
+
+        return $healthCheckCollection;
     }
 }

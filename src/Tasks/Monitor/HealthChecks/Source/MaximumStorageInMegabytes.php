@@ -3,7 +3,7 @@
 namespace Spatie\BackupServer\Tasks\Monitor\HealthChecks\Source;
 
 use Spatie\BackupServer\Models\Source;
-use Spatie\BackupServer\Tasks\Monitor\HealthCheckResponse;
+use Spatie\BackupServer\Tasks\Monitor\HealthCheckResult;
 
 class MaximumStorageInMegabytes extends SourceHealthCheck
 {
@@ -14,17 +14,17 @@ class MaximumStorageInMegabytes extends SourceHealthCheck
         $this->configuredMaximumStorageInMegabytes = $configuredMaximumStorageInMegabytes;
     }
 
-    public function passes(Source $source): HealthCheckResponse
+    public function getResult(Source $source): HealthCheckResult
     {
         $actualSizeInMegabytes = $source->completedBackups()->sum('real_size_in_kb') * 1024;
 
         $maximumSizeInMegabytes = $this->maximumSizeInMegabytes($source);
 
         if ($actualSizeInMegabytes > $maximumSizeInMegabytes) {
-            HealthCheckResponse::fails("The actual storage used ({$actualSizeInMegabytes} MB) is greater than the allowed storage used ({$maximumSizeInMegabytes}).");
+            HealthCheckResult::failed("The actual storage used ({$actualSizeInMegabytes} MB) is greater than the allowed storage used ({$maximumSizeInMegabytes}).");
         }
 
-        return HealthCheckResponse::passes();
+        return HealthCheckResult::ok();
     }
 
     protected function maximumSizeInMegabytes(Source $source): int
