@@ -37,6 +37,6 @@ class CleanupForDestinationCompletedNotification extends Notification
 
     public function destinationName(): string
     {
-        return $this->event->backup->destination->name;
+        return $this->event->destination->name;
     }
 }

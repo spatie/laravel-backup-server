@@ -29,4 +29,14 @@ class BackupFailedNotificationTest extends TestCase
 
         Notification::assertSentTo($this->configuredNotifiable(), BackupFailedNotification::class);
     }
+
+    /** @test */
+    public function the_BackupCompletedNotification_renders_correctly_to_a_mail()
+    {
+        $event = new BackupFailedEvent($this->backup, new Exception());
+
+        $notification = new BackupFailedNotification($event);
+
+        $this->assertIsString((string)$notification->toMail()->render());
+    }
 }

@@ -29,4 +29,14 @@ class CleanupForSourceFailedNotificationTest extends TestCase
 
         Notification::assertSentTo($this->configuredNotifiable(), CleanupForSourceFailedNotification::class);
     }
+
+    /** @test */
+    public function the_CleanupForSourceFailedNotification_renders_correctly_to_a_mail()
+    {
+        $event = new CleanupForSourceFailedEvent($this->source);
+
+        $notification = new CleanupForSourceFailedNotification($event);
+
+        $this->assertIsString((string)$notification->toMail()->render());
+    }
 }

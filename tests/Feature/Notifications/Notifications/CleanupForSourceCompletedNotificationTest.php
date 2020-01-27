@@ -28,4 +28,14 @@ class CleanupForSourceCompletedNotificationTest extends TestCase
 
         Notification::assertSentTo($this->configuredNotifiable(), CleanupForSourceCompletedNotification::class);
     }
+
+    /** @test */
+    public function the_CleanupForSourceCompletedNotification_renders_correctly_to_a_mail()
+    {
+        $event = new CleanupForSourceCompletedEvent($this->source);
+
+        $notification = new CleanupForSourceCompletedNotification($event);
+
+        $this->assertIsString((string)$notification->toMail()->render());
+    }
 }
