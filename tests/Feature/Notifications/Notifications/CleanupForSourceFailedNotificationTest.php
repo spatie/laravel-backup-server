@@ -23,7 +23,7 @@ class CleanupForSourceFailedNotificationTest extends TestCase
     }
 
     /** @test */
-    public function it_will_send_a_notification_when_a_backup_completes()
+    public function it_will_send_a_notification_when_a_cleanup_of_a_source_completes()
     {
         event(new CleanupForSourceFailedEvent($this->source, new Exception()));
 
