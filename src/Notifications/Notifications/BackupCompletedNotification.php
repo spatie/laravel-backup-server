@@ -3,10 +3,11 @@
 namespace Spatie\BackupServer\Notifications\Notifications;
 
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Notifications\Notification;
 use Spatie\BackupServer\Notifications\Notifications\Concerns\HandlesNotifications;
 use Spatie\BackupServer\Tasks\Backup\Events\BackupCompletedEvent;
 
-class BackupCompletedNotification
+class BackupCompletedNotification extends Notification
 {
     use HandlesNotifications;
 

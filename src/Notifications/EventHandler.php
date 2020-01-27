@@ -1,11 +1,12 @@
 <?php
 
-namespace Spatie\Backup\Notifications;
+namespace Spatie\BackupServer\Notifications;
 
 use Illuminate\Contracts\Config\Repository;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Notifications\Notification;
-use Spatie\Backup\Exceptions\NotificationCouldNotBeSent;
+use Illuminate\Support\Str;
+use Spatie\BackupServer\Exceptions\NotificationCouldNotBeSent;
 use Spatie\BackupServer\Tasks\Backup\Events\BackupCompletedEvent;
 use Spatie\BackupServer\Tasks\Backup\Events\BackupFailedEvent;
 use Spatie\BackupServer\Tasks\Cleanup\Jobs\Events\CleanupCompletedEvent;
@@ -38,16 +39,18 @@ class EventHandler
         return app($notifiableClass);
     }
 
-    protected function determineNotification($event): Notification
+    protected function determineNotification(object $event): Notification
     {
         $eventName = class_basename($event);
 
+        $notificationClassName = Str::replaceLast('Event', 'Notification', $eventName);
+
         $notificationClass = collect($this->config->get('backup-server.notifications.notifications'))
             ->keys()
-            ->first(function ($notificationClass) use ($eventName) {
+            ->first(function ($notificationClass) use ($notificationClassName) {
                 $notificationName = class_basename($notificationClass);
 
-                return $notificationName === $eventName;
+                return $notificationName === $notificationClassName;
             });
 
         if (! $notificationClass) {

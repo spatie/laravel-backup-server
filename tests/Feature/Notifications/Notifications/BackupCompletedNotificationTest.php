@@ -1,6 +1,6 @@
 <?php
 
-namespace Spatie\BackupServer\Tests\Feature\Notifications;
+namespace Spatie\BackupServer\Tests\Feature\Notifications\Notifications;
 
 use Illuminate\Support\Facades\Notification;
 use Spatie\BackupServer\Models\Backup;
