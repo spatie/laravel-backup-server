@@ -2,9 +2,9 @@
 
 namespace Spatie\BackupServer\Tasks\Backup\Jobs\BackupTasks;
 
+use Illuminate\Support\Facades\File;
 use Spatie\BackupServer\Models\Backup;
 use Spatie\BackupServer\Support\Enums\Task;
-use Illuminate\Support\Facades\File;
 
 class DetermineDestinationPath implements BackupTask
 {

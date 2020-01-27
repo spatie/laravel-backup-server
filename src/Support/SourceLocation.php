@@ -2,8 +2,6 @@
 
 namespace Spatie\BackupServer\Support;
 
-use Illuminate\Support\Str;
-
 class SourceLocation
 {
     private array $paths;

@@ -2,9 +2,9 @@
 
 namespace Spatie\BackupServer\Tasks\Cleanup\Jobs\Events;
 
-use Spatie\BackupServer\Models\Source;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
+use Spatie\BackupServer\Models\Source;
 use Throwable;
 
 class CleanupFailedEvent

@@ -8,9 +8,10 @@ use Spatie\BackupServer\Support\Enums\Task;
 
 class RecalculateRealBackupSizes implements CleanupTask
 {
-public function execute(Source $source)
-{
-    $source->logInfo(Task::CLEANUP, 'Recalculating real backup sizes...');
+    public function execute(Source $source)
+    {
+        $source->logInfo(Task::CLEANUP, 'Recalculating real backup sizes...');
 
-    $source->completedBackups()->each(fn(Backup $backup) => $backup->recalculateRealBackupSize());
-}}
+        $source->completedBackups()->each(fn (Backup $backup) => $backup->recalculateRealBackupSize());
+    }
+}

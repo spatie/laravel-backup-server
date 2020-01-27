@@ -2,13 +2,13 @@
 
 namespace Spatie\BackupServer\Tasks\Cleanup\Jobs;
 
-use Spatie\BackupServer\Models\Destination;
-use Spatie\BackupServer\Support\Enums\Task;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Spatie\BackupServer\Models\Destination;
+use Spatie\BackupServer\Support\Enums\Task;
 
 class PerformCleanupDestinationJob implements ShouldQueue
 {
@@ -28,6 +28,5 @@ class PerformCleanupDestinationJob implements ShouldQueue
         $this->destination->disk()->allDirectories();
 
         $this->destination->logInfo(Task::CLEANUP, 'Destination cleaned up');
-
     }
 }

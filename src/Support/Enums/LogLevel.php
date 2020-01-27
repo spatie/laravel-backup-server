@@ -6,5 +6,4 @@ class LogLevel
 {
     public const INFO = 'info';
     public const ERROR = 'error';
-
 }

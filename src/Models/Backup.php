@@ -2,18 +2,17 @@
 
 namespace Spatie\BackupServer\Models;
 
-use Spatie\BackupServer\Models\Concerns\LogsActivity;
-use Spatie\BackupServer\Support\DestinationLocation;
-use Spatie\BackupServer\Support\Enums\Task;
-use Spatie\BackupServer\Support\SourceLocation;
-use Spatie\BackupServer\Tasks\Backup\Support\RsyncOutput;
-use Carbon\Carbon;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Spatie\BackupServer\Models\Concerns\LogsActivity;
+use Spatie\BackupServer\Support\DestinationLocation;
+use Spatie\BackupServer\Support\Enums\Task;
+use Spatie\BackupServer\Support\SourceLocation;
+use Spatie\BackupServer\Tasks\Backup\Support\RsyncOutput;
 use Symfony\Component\Process\Process;
 
 class Backup extends Model
@@ -37,7 +36,7 @@ class Backup extends Model
     {
         parent::boot();
 
-        static::deleting(function(Backup $backup) {
+        static::deleting(function (Backup $backup) {
             $backup->disk()->deleteDirectory($backup->path);
         });
     }
@@ -180,8 +179,8 @@ class Backup extends Model
 
         $output = $process->getOutput();
 
-        $directoryLine = collect(explode(PHP_EOL, $output))->first(function(string $line) {
-            return Str::contains($line,$this->destinationLocation()->getDirectory());
+        $directoryLine = collect(explode(PHP_EOL, $output))->first(function (string $line) {
+            return Str::contains($line, $this->destinationLocation()->getDirectory());
         });
 
         $sizeInKb = Str::before($directoryLine, "\t");

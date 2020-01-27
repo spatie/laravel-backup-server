@@ -2,13 +2,13 @@
 
 namespace Spatie\BackupServer\Tasks\Cleanup\Strategies;
 
+use Carbon\Carbon;
+use Illuminate\Support\Collection;
 use Spatie\BackupServer\Models\Backup;
 use Spatie\BackupServer\Models\Source;
 use Spatie\BackupServer\Support\Enums\Task;
 use Spatie\BackupServer\Tasks\Cleanup\Support\DefaultStrategyConfig;
 use Spatie\BackupServer\Tasks\Cleanup\Support\Period;
-use Carbon\Carbon;
-use Illuminate\Support\Collection;
 
 class DefaultCleanupStrategy implements CleanupStrategy
 {
@@ -111,7 +111,7 @@ class DefaultCleanupStrategy implements CleanupStrategy
         }
 
         $actualSizeInKb = $backups
-            ->map(function(Backup $backup) {
+            ->map(function (Backup $backup) {
                 return $backup->recalculateRealBackupSize()->refresh();
             })
             ->filter->exists

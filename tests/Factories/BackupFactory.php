@@ -53,6 +53,5 @@ class BackupFactory
         }
 
         return $backup;
-
     }
 }

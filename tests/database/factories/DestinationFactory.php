@@ -1,8 +1,7 @@
 <?php
 
-use Spatie\BackupServer\Models\Destination;
-use Spatie\BackupServer\Models\Source;
 use Faker\Generator as Faker;
+use Spatie\BackupServer\Models\Destination;
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 $factory->define(Destination::class, function (Faker $faker) {

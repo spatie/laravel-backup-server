@@ -2,11 +2,10 @@
 
 namespace Spatie\BackupServer\Commands;
 
-use Spatie\BackupServer\Models\Destination;
-use Spatie\BackupServer\Tasks\Backup\Jobs\PerformBackupJob;
+use Illuminate\Console\Command;
 use Spatie\BackupServer\Models\Backup;
 use Spatie\BackupServer\Models\Source;
-use Illuminate\Console\Command;
+use Spatie\BackupServer\Tasks\Backup\Jobs\PerformBackupJob;
 
 class DispatchPerformBackupJobsCommand extends Command
 {
@@ -18,7 +17,7 @@ class DispatchPerformBackupJobsCommand extends Command
     {
         $this->info('Dispatching backup jobs...');
 
-        Source::each(function(Source $source) {
+        Source::each(function (Source $source) {
             $this->comment("Dispatching backup job for source id `{$source->id}`");
 
             /** @var \Spatie\BackupServer\Models\Backup $backup */

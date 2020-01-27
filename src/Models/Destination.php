@@ -2,10 +2,10 @@
 
 namespace Spatie\BackupServer\Models;
 
-use Spatie\BackupServer\Models\Concerns\LogsActivity;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
+use Spatie\BackupServer\Models\Concerns\LogsActivity;
 
 class Destination extends Model
 {
@@ -30,4 +30,5 @@ class Destination extends Model
             'level' => $level,
             'message' => trim($message),
         ]);
-    }}
+    }
+}

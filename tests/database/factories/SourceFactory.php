@@ -1,9 +1,9 @@
 <?php
 
+use Faker\Generator as Faker;
 use Spatie\BackupServer\Models\Destination;
 use Spatie\BackupServer\Models\Source;
 use Spatie\BackupServer\Tasks\Cleanup\Strategies\DefaultCleanupStrategy;
-use Faker\Generator as Faker;
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 $factory->define(Source::class, function (Faker $faker) {

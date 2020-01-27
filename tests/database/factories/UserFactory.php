@@ -2,9 +2,9 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use Spatie\BackupServer\Models\User;
 use Faker\Generator as Faker;
 use Illuminate\Support\Str;
+use Spatie\BackupServer\Models\User;
 
 /*
 |--------------------------------------------------------------------------

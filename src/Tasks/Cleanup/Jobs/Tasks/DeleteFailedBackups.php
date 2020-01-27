@@ -11,7 +11,7 @@ class DeleteFailedBackups implements CleanupTask
     public function execute(Source $source)
     {
         $source->backups()->failed()->get()
-            ->filter(fn(Backup $backup) => $backup->created_at->diffInDays() > 1)
+            ->filter(fn (Backup $backup) => $backup->created_at->diffInDays() > 1)
             ->each(function (Backup $backup) use ($source) {
                 $source->logInfo(Task::CLEANUP, "Removing backup id {$backup->id} because it has failed");
 

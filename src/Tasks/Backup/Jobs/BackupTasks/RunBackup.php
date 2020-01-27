@@ -39,7 +39,7 @@ class RunBackup implements BackupTask
 
         $process = Process::fromShellCommandline($command)->setTimeout(null);
 
-        $process->run(fn(string $type, string $buffer) => $progressCallable($type, $buffer));
+        $process->run(fn (string $type, string $buffer) => $progressCallable($type, $buffer));
 
         $didCompleteSuccessFully = $process->getExitCode() === 0;
 
@@ -58,10 +58,9 @@ class RunBackup implements BackupTask
         }
 
         $excludes = collect($pendingBackup->excludedPaths)
-            ->map(fn(string $excludedPath) => "--exclude={$excludedPath}")
+            ->map(fn (string $excludedPath) => "--exclude={$excludedPath}")
             ->implode(' ');
 
         return "rsync -progress -zaHLK  --stats --info=progress2 {$excludes} {$linkFromDestination} -e ssh {$source} {$destination}";
     }
-
 }

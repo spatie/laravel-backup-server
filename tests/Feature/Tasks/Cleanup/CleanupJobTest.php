@@ -2,15 +2,15 @@
 
 namespace Spatie\BackupServer\Tests\Feature\Tasks\Cleanup;
 
-use Spatie\BackupServer\Models\Backup;
-use Spatie\BackupServer\Models\Destination;
-use Spatie\BackupServer\Models\Source;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
-use Spatie\TestTime\TestTime;
+use Spatie\BackupServer\Models\Backup;
+use Spatie\BackupServer\Models\Destination;
+use Spatie\BackupServer\Models\Source;
 use Spatie\BackupServer\Tests\Factories\BackupFactory;
 use Spatie\BackupServer\Tests\TestCase;
+use Spatie\TestTime\TestTime;
 
 class CleanupJobTest extends TestCase
 {
@@ -45,7 +45,6 @@ class CleanupJobTest extends TestCase
                     $this->createBackupOnDate($date->startOfDay()),
                     $this->createBackupOnDate($date->endOfDay()),
                 ];
-
             })->partition(function (Backup $backup) {
                 return in_array($backup->path, [
                     '20191231-000000',
