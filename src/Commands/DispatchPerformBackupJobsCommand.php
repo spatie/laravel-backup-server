@@ -18,7 +18,7 @@ class DispatchPerformBackupJobsCommand extends Command
         $this->info('Dispatching backup jobs...');
 
         Source::each(function (Source $source) {
-            $this->comment("Dispatching backup job for source id `{$source->id}`");
+            $this->comment("Dispatching backup job for source `{$source->name}` (id: {$source->id})");
 
             /** @var \Spatie\BackupServer\Models\Backup $backup */
             $backup = Backup::create([

@@ -1,6 +1,6 @@
 <?php
 
-namespace Spatie\BackupServer\Support;
+namespace Spatie\BackupServer\Support\Helpers;
 
 class SourceLocation
 {

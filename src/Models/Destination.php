@@ -44,7 +44,7 @@ class Destination extends Model
         static $healthCheckCollection = null;
 
         if (is_null($healthCheckCollection)) {
-            $healthCheckClassNames = config('laravel-backup-server.monitor.destination_health_checks');
+            $healthCheckClassNames = config('backup-server.monitor.destination_health_checks');
 
             $healthCheckCollection = new HealthCheckCollection($healthCheckClassNames, $this);
         }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Spatie\BackupServer\Support\Enums;
+namespace Spatie\BackupServer\Support\Helpers\Enums;
 
 class Task
 {

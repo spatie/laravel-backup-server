@@ -10,7 +10,7 @@ use Spatie\BackupServer\Tasks\Cleanup\Jobs\PerformCleanupDestinationJob;
 
 class DispatchPerformCleanupJobsCommand extends Command
 {
-    protected $signature = 'backup-server::cleanup';
+    protected $signature = 'backup-server:cleanup';
 
     protected $description = 'Dispatch cleanup jobs';
 
@@ -19,13 +19,13 @@ class DispatchPerformCleanupJobsCommand extends Command
         $this->info('Dispatching cleanup jobs...');
 
         Source::each(function (Source $source) {
-            $this->comment("Dispatching cleanup job for source id {$source->id}...");
+            $this->comment("Dispatching cleanup job for source `{$source->name}` (id: {$source->id})...");
 
             dispatch(new PerformCleanupBackupsForSourceJob($source));
         });
 
         Destination::each(function (Destination $destination) {
-            $this->comment("Dispatching cleanup job for destination id {$destination->id}...");
+            $this->comment("Dispatching cleanup job for destination `{$destination->name}` (id: {$destination->id})...");
 
             dispatch(new PerformCleanupDestinationJob($destination));
         });

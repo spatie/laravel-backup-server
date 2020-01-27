@@ -2,7 +2,7 @@
 
 namespace Spatie\BackupServer\Tests\Feature;
 
-use Spatie\BackupServer\Support\Ssh;
+use Spatie\BackupServer\Support\Helpers\Ssh;
 use Spatie\BackupServer\Tests\TestCase;
 
 class SshTest extends TestCase

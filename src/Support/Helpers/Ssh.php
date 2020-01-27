@@ -1,6 +1,6 @@
 <?php
 
-namespace Spatie\BackupServer\Support;
+namespace Spatie\BackupServer\Support\Helpers;
 
 use Symfony\Component\Process\Process;
 

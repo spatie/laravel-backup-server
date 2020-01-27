@@ -3,8 +3,8 @@
 namespace Spatie\BackupServer\Tasks\Backup\Support;
 
 use App\Actions\CreateNewBackupAction;
-use Spatie\BackupServer\Support\DestinationLocation;
-use Spatie\BackupServer\Support\SourceLocation;
+use Spatie\BackupServer\Support\Helpers\DestinationLocation;
+use Spatie\BackupServer\Support\Helpers\SourceLocation;
 
 class PendingBackup
 {

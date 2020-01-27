@@ -3,7 +3,7 @@
 namespace Spatie\BackupServer\Tasks\Backup\Jobs\BackupTasks;
 
 use Spatie\BackupServer\Models\Backup;
-use Spatie\BackupServer\Support\Enums\Task;
+use Spatie\BackupServer\Support\Helpers\Enums\Task;
 
 class CalculateBackupSize implements BackupTask
 {

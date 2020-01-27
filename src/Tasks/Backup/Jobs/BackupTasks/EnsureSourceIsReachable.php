@@ -4,7 +4,7 @@ namespace Spatie\BackupServer\Tasks\Backup\Jobs\BackupTasks;
 
 use Spatie\BackupServer\Exceptions\BackupFailed;
 use Spatie\BackupServer\Models\Backup;
-use Spatie\BackupServer\Support\Enums\Task;
+use Spatie\BackupServer\Support\Helpers\Enums\Task;
 
 class EnsureSourceIsReachable implements BackupTask
 {

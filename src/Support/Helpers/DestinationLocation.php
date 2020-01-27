@@ -1,6 +1,6 @@
 <?php
 
-namespace Spatie\BackupServer\Support;
+namespace Spatie\BackupServer\Support\Helpers;
 
 use Illuminate\Contracts\Filesystem\Filesystem;
 

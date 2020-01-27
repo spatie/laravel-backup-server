@@ -9,9 +9,10 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Spatie\BackupServer\Models\Concerns\LogsActivity;
-use Spatie\BackupServer\Support\DestinationLocation;
-use Spatie\BackupServer\Support\Enums\Task;
-use Spatie\BackupServer\Support\SourceLocation;
+use Spatie\BackupServer\Support\Helpers\DestinationLocation;
+use Spatie\BackupServer\Support\Helpers\Enums\Task;
+use Spatie\BackupServer\Support\Helpers\SourceLocation;
+use Spatie\BackupServer\Tasks\Backup\Support\BackupCollection;
 use Spatie\BackupServer\Tasks\Backup\Support\RsyncOutput;
 use Symfony\Component\Process\Process;
 
@@ -39,6 +40,11 @@ class Backup extends Model
         static::deleting(function (Backup $backup) {
             $backup->disk()->deleteDirectory($backup->path);
         });
+    }
+
+    public function newCollection(array $models = [])
+    {
+        return new BackupCollection($models);
     }
 
     public function source()

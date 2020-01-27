@@ -5,7 +5,7 @@ namespace Spatie\BackupServer\Commands;
 use Illuminate\Console\Command;
 use Spatie\BackupServer\Models\Destination;
 use Spatie\BackupServer\Models\Source;
-use Spatie\BackupServer\Support\Enums\Task;
+use Spatie\BackupServer\Support\Helpers\Enums\Task;
 use Spatie\BackupServer\Tasks\Monitor\Events\HealthyDestinationFound;
 use Spatie\BackupServer\Tasks\Monitor\Events\HealthySourceFound;
 use Spatie\BackupServer\Tasks\Monitor\Events\UnhealthyDestinationFound;

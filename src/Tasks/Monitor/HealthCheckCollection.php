@@ -11,7 +11,7 @@ class HealthCheckCollection
 
     private Model $model;
 
-    private array $healthCheckResults;
+    private ?array $healthCheckResults = null;
 
     /**
      * @param \Spatie\BackupServer\Models\Source|\Spatie\BackupServer\Models\Destination $model
@@ -27,9 +27,11 @@ class HealthCheckCollection
 
     public function allPass(): bool
     {
-        return collect($this->healthCheckResults)->contains(function (array $healthCheck) {
+        $containsFailingHealthCheck =  collect($this->healthCheckResults)->contains(function (array $healthCheck) {
             return ! $healthCheck['result']->isOk();
         });
+
+        return ! $containsFailingHealthCheck;
     }
 
     public function getFailureMessages(): array
@@ -47,7 +49,7 @@ class HealthCheckCollection
     protected function performHealthChecks(): array
     {
         if (! is_null($this->healthCheckResults)) {
-            return [];
+            return $this->healthCheckResults;
         }
 
         return collect($this->healthCheckClassNames)
@@ -61,7 +63,7 @@ class HealthCheckCollection
             ->map(function (HealthCheck $healthCheck) {
                 return [
                     'name' => $healthCheck->name(),
-                    'result' => $healthCheck->passes($this->model)
+                    'result' => $healthCheck->getResult($this->model)
                 ];
             })
             ->toArray();

@@ -4,7 +4,7 @@ namespace Spatie\BackupServer\Models\Concerns;
 
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\BackupServer\Models\BackupLogItem;
-use Spatie\BackupServer\Support\Enums\LogLevel;
+use Spatie\BackupServer\Support\Helpers\Enums\LogLevel;
 
 trait LogsActivity
 {

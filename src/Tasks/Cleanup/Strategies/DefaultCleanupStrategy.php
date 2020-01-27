@@ -6,7 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Spatie\BackupServer\Models\Backup;
 use Spatie\BackupServer\Models\Source;
-use Spatie\BackupServer\Support\Enums\Task;
+use Spatie\BackupServer\Support\Helpers\Enums\Task;
 use Spatie\BackupServer\Tasks\Cleanup\Support\DefaultStrategyConfig;
 use Spatie\BackupServer\Tasks\Cleanup\Support\Period;
 

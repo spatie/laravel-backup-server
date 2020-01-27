@@ -17,7 +17,7 @@ class MaximumAgeInDays extends SourceHealthCheck
 
     public function getResult(Source $source): HealthCheckResult
     {
-        if ($source->created_at->ageInDays() < 1) {
+        if ($source->created_at->diffInDays() < 1) {
             return HealthCheckResult::ok();
         }
 
@@ -29,7 +29,7 @@ class MaximumAgeInDays extends SourceHealthCheck
 
         $maximumHealthAgeInDays = $this->maximumHealthyAgeInDays($source);
 
-        if ($latestBackup->created_at->ageInDays() > $this->maximumHealthyAgeInDays($source)) {
+        if ($latestBackup->created_at->diffInDays() > $this->maximumHealthyAgeInDays($source)) {
             return HealthCheckResult::failed("Latest backup iis older then {$maximumHealthAgeInDays}" . Str::plural('day', $maximumHealthAgeInDays));
         }
 

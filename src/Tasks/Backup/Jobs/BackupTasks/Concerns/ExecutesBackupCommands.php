@@ -3,7 +3,7 @@
 namespace Spatie\BackupServer\Tasks\Backup\Jobs\BackupTasks\Concerns;
 
 use Spatie\BackupServer\Models\Backup;
-use Spatie\BackupServer\Support\Enums\Task;
+use Spatie\BackupServer\Support\Helpers\Enums\Task;
 
 trait ExecutesBackupCommands
 {

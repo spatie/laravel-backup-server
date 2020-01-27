@@ -2,6 +2,8 @@
 
 namespace Spatie\BackupServer\Tasks\Monitor\HealthChecks;
 
+use Illuminate\Support\Str;
+
 abstract class HealthCheck
 {
     public function name()

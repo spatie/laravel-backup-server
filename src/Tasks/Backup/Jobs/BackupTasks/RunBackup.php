@@ -3,7 +3,7 @@
 namespace Spatie\BackupServer\Tasks\Backup\Jobs\BackupTasks;
 
 use Spatie\BackupServer\Models\Backup;
-use Spatie\BackupServer\Support\Enums\Task;
+use Spatie\BackupServer\Support\Helpers\Enums\Task;
 use Spatie\BackupServer\Tasks\Backup\Support\PendingBackup;
 use Symfony\Component\Process\Process;
 

@@ -5,8 +5,8 @@ namespace Spatie\BackupServer\Tests\Unit\Models\Concerns;
 use Spatie\BackupServer\Models\Backup;
 use Spatie\BackupServer\Models\Destination;
 use Spatie\BackupServer\Models\Source;
-use Spatie\BackupServer\Support\Enums\LogLevel;
-use Spatie\BackupServer\Support\Enums\Task;
+use Spatie\BackupServer\Support\Helpers\Enums\LogLevel;
+use Spatie\BackupServer\Support\Helpers\Enums\Task;
 use Spatie\BackupServer\Tests\TestCase;
 
 class LogsActivityTest extends TestCase
