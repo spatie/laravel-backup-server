@@ -1,20 +1,15 @@
 <?php
 
 namespace Spatie\BackupServer\Tests;
+
 use CreateBackupServerTables;
 use CreateUsersTable;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Route;
 use Orchestra\Testbench\TestCase as Orchestra;
 use Spatie\BackupServer\BackupServerServiceProvider;
-use Spatie\BladeX\BladeXServiceProvider;
-use Spatie\Feed\FeedServiceProvider;
-use Spatie\Mailcoach\MailcoachServiceProvider;
-use Spatie\MediaLibrary\MediaLibraryServiceProvider;
 use Spatie\TestTime\TestTime;
-
 
 class TestCase extends Orchestra
 {
@@ -66,5 +61,12 @@ class TestCase extends Orchestra
         $user = factory(User::class)->create();
 
         $this->actingAs($user);
+    }
+
+    protected function configuredNotifiable()
+    {
+        $notifiableClass = config('backup-server.notifications.notifiable');
+
+        return app($notifiableClass);
     }
 }

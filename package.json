@@ -1,0 +1,34 @@
+{
+    "private": true,
+    "scripts": {
+        "dev": "yarn run development",
+        "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "watch": "yarn run development -- --watch",
+        "watch-poll": "yarn run watch -- --watch-poll",
+        "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "prod": "yarn run production",
+        "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "format": "prettier 'resources/**/*.{css,js,json,css,ts,tsx}' '*.{js,css}' --write",
+        "type-check": "tsc --noEmit"
+    },
+    "devDependencies": {
+        "choices.js": "^9.0.1",
+        "cross-env": "^5.1",
+        "flatpickr": "^4.6.3",
+        "husky": "^3.0.9",
+        "laravel-mix": "^5.0.0",
+        "laravel-mix-bundle-analyzer": "^1.0.2",
+        "lint-staged": "^9.5.0",
+        "morphdom": "^2.5.10",
+        "postcss-easy-import": "^3.0.0",
+        "prettier": "^1.18.2",
+        "tailwindcss": "^1.0.0",
+        "turbolinks": "^5.2.0",
+        "vue-template-compiler": "^2.6.10"
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "lint-staged"
+        }
+    }
+}

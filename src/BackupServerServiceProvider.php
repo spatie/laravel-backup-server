@@ -3,36 +3,14 @@
 namespace Spatie\BackupServer;
 
 use Illuminate\Foundation\Support\Providers\EventServiceProvider;
-use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\View;
-use Illuminate\Support\Str;
 use Spatie\BackupServer\Commands\DispatchPerformBackupJobsCommand;
 use Spatie\BackupServer\Commands\DispatchPerformCleanupJobsCommand;
 use Spatie\BackupServer\Http\App\Middleware\SetBackupServerDefaults;
 use Spatie\BackupServer\Http\Middleware\Authorize;
-use Spatie\BladeX\Facades\BladeX;
-use Spatie\Mailcoach\Commands\CalculateStatisticsCommand;
-use Spatie\Mailcoach\Commands\DeleteOldUnconfirmedSubscribersCommand;
-use Spatie\Mailcoach\Commands\RetryPendingSendsCommand;
-use Spatie\Mailcoach\Commands\SendCampaignSummaryMailCommand;
-use Spatie\Mailcoach\Commands\SendEmailListSummaryMailCommand;
-use Spatie\Mailcoach\Commands\SendScheduledCampaignsCommand;
-use Spatie\Mailcoach\Events\CampaignSentEvent;
-use Spatie\Mailcoach\Http\App\Controllers\HomeController;
-use Spatie\Mailcoach\Http\App\ViewComposers\FooterComposer;
-use Spatie\Mailcoach\Http\App\ViewComposers\QueryStringComposer;
-use Spatie\Mailcoach\Http\App\ViewModels\BladeX\DateTimeFieldViewModel;
-use Spatie\Mailcoach\Http\App\ViewModels\BladeX\FilterViewModel;
-use Spatie\Mailcoach\Http\App\ViewModels\BladeX\ReplacerHelpTextsViewModel;
-use Spatie\Mailcoach\Http\App\ViewModels\BladeX\SearchViewModel;
-use Spatie\Mailcoach\Http\App\ViewModels\BladeX\THViewModel;
-use Spatie\Mailcoach\Listeners\SendCampaignSentEmail;
-use Spatie\Mailcoach\Support\HttpClient;
-use Spatie\Mailcoach\Support\Version;
+use Spatie\BackupServer\Notifications\EventHandler;
 use Spatie\QueryString\QueryString;
 
 class BackupServerServiceProvider extends EventServiceProvider
@@ -53,6 +31,8 @@ class BackupServerServiceProvider extends EventServiceProvider
     public function register()
     {
         $this->mergeConfigFrom(__DIR__ . '/../config/backup-server.php', 'backup-server');
+
+        $this->app['events']->subscribe(EventHandler::class);
 
         /*
         $this->app->singleton(QueryString::class, fn () => new QueryString(urldecode($this->app->request->getRequestUri())));
