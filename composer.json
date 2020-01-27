@@ -1,0 +1,57 @@
+{
+    "name": "spatie/laravel-backup-server",
+    "description": "Backup all your servers",
+    "keywords": [
+        "spatie",
+        "laravel-backup-server"
+    ],
+    "homepage": "https://github.com/spatie/laravel-backup-server",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Freek Van der Herten",
+            "email": "freek@spatie.be",
+            "homepage": "https://spatie.be",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.4",
+        "friendsofphp/php-cs-fixer": "^2.16",
+        "orchestra/testbench": "^4.5",
+        "spatie/laravel-flash": "^1.4",
+        "spatie/regex": "^1.4"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8.2",
+        "spatie/test-time": "^1.1",
+        "symfony/var-dumper": "^4.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "Spatie\\BackupServer\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Spatie\\BackupServer\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Spatie\\BackupServer\\BackupServerServiceProvider"
+            ],
+            "aliases": {
+                "BackupServer": "Spatie\\BackupServer\\BackupServerFacade"
+            }
+        }
+    }
+}
