@@ -9,8 +9,8 @@ use Illuminate\Support\Str;
 use Spatie\BackupServer\Exceptions\NotificationCouldNotBeSent;
 use Spatie\BackupServer\Tasks\Backup\Events\BackupCompletedEvent;
 use Spatie\BackupServer\Tasks\Backup\Events\BackupFailedEvent;
-use Spatie\BackupServer\Tasks\Cleanup\Jobs\Events\CleanupCompletedEvent;
-use Spatie\BackupServer\Tasks\Cleanup\Jobs\Events\CleanupFailedEvent;
+use Spatie\BackupServer\Tasks\Cleanup\Events\CleanupForSourceCompletedEvent;
+use Spatie\BackupServer\Tasks\Cleanup\Events\CleanupForSourceFailedEvent;
 
 class EventHandler
 {
@@ -65,8 +65,8 @@ class EventHandler
         return [
             BackupCompletedEvent::class,
             BackupFailedEvent::class,
-            CleanupCompletedEvent::class,
-            CleanupFailedEvent::class,
+            CleanupForSourceCompletedEvent::class,
+            CleanupForSourceFailedEvent::class,
         ];
     }
 }

@@ -1,24 +1,19 @@
 <?php
 
-namespace Spatie\BackupServer\Tasks\Cleanup\Jobs\Events;
+namespace Spatie\BackupServer\Tasks\Cleanup\Events;
 
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 use Spatie\BackupServer\Models\Source;
-use Throwable;
 
-class CleanupFailedEvent
+class CleanupForSourceCompletedEvent
 {
     use Dispatchable, SerializesModels;
 
     public Source $source;
 
-    public Throwable $throwable;
-
-    public function __construct(Source $source, Throwable $throwable)
+    public function __construct(Source $source)
     {
         $this->source = $source;
-
-        $this->throwable = $throwable;
     }
 }

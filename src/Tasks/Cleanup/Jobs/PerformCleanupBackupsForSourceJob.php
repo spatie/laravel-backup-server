@@ -9,8 +9,8 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Spatie\BackupServer\Models\Source;
 use Spatie\BackupServer\Support\Enums\Task;
-use Spatie\BackupServer\Tasks\Cleanup\Jobs\Events\CleanupCompletedEvent;
-use Spatie\BackupServer\Tasks\Cleanup\Jobs\Events\CleanupFailedEvent;
+use Spatie\BackupServer\Tasks\Cleanup\Events\CleanupForSourceCompletedEvent;
+use Spatie\BackupServer\Tasks\Cleanup\Events\CleanupForSourceFailedEvent;
 use Spatie\BackupServer\Tasks\Cleanup\Jobs\Tasks\CleanupTask;
 use Spatie\BackupServer\Tasks\Cleanup\Jobs\Tasks\DeleteBackupsWithoutDirectoriesFromDb;
 use Spatie\BackupServer\Tasks\Cleanup\Jobs\Tasks\DeleteFailedBackups;
@@ -45,15 +45,15 @@ class PerformCleanupBackupsForSourceJob implements ShouldQueue
             ->map(fn (string $className) => app($className))
             ->each(fn (CleanupTask $cleanupTask) => $cleanupTask->execute($this->source));
 
-        event(new CleanupCompletedEvent($this->source));
+        event(new CleanupForSourceCompletedEvent($this->source));
 
         $this->source->logInfo(Task::CLEANUP, "Cleanup done!");
     }
 
     public function failed(Throwable $exception)
     {
-        $this->source->logError(Task::CLEANUP, "Error while cleaning up: `{$exception->getMessage()}`");
+        $this->source->logError(Task::CLEANUP, "Error while cleaning up source `{$this->source->name}`: `{$exception->getMessage()}`");
 
-        event(new CleanupFailedEvent($this->source, $exception));
+        event(new CleanupForSourceFailedEvent($this->source, $exception));
     }
 }

@@ -10,8 +10,6 @@ return [
         'notifications' => [
             \Spatie\BackupServer\Notifications\Notifications\BackupCompletedNotification::class => ['mail'],
             \Spatie\BackupServer\Notifications\Notifications\BackupFailedNotification::class => ['mail'],
-
-
         ],
 
         /*
