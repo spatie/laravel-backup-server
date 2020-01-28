@@ -23,7 +23,8 @@ class UnhealthySourceFoundNotification extends Notification
         return (new MailMessage)
             ->from($this->fromEmail(), $this->fromName())
             ->subject(trans('backup::notifications.unhealthy_source_found_subject', ['source_name' => $this->sourceName()]))
-            ->line(trans('backup::notifications.unhealthy_source_found_body', ['source_name' => $this->sourceName()]));
+            ->line(trans('backup::notifications.unhealthy_source_found_body', ['source_name' => $this->sourceName()]))
+            ->line("Found problems: " . collect($this->event->failureMessages)->join(', '));
     }
 
     public function sourceName(): string

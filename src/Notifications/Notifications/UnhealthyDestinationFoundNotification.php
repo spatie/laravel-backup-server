@@ -23,7 +23,8 @@ class UnhealthyDestinationFoundNotification extends Notification
         return (new MailMessage)
             ->from($this->fromEmail(), $this->fromName())
             ->subject(trans('backup::notifications.unhealthy_destination_found_subject', ['destination_name' => $this->destinationName()]))
-            ->line(trans('backup::notifications.unhealthy_destination_found_body', ['destination_name' => $this->destinationName()]));
+            ->line(trans('backup::notifications.unhealthy_destination_found_body', ['destination_name' => $this->destinationName()]))
+            ->line("Found problems: " . collect($this->event->failureMessages)->join(', '));
     }
 
     public function destinationName(): string
