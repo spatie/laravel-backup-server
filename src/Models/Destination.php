@@ -52,11 +52,32 @@ class Destination extends Model
 
     public function getInodeUsagePercentage(): int
     {
-        $diskRootPath = Storage::disk('backups')->path('');
+        $rawOutput = $this->getDfOutput(8, 'ipcent');
 
+        return (int)Str::before($rawOutput, '%');
+    }
+
+    public function getFreeSpaceInKb(): int
+    {
+        $rawOutput = $this->getDfOutput(4, 'avail');
+
+        return (int)$rawOutput;
+    }
+
+    public function getUsedSpaceInPercentage(): int
+    {
+        $rawOutput = $this->getDfOutput(5, 'pcent');
+
+        return (int)Str::before($rawOutput, '%');
+    }
+
+    protected function getDfOutput(int $macOsColumnNumber, $linuxOutputFormat)
+    {
         $command =  PHP_OS === 'Darwin'
-            ? 'df "$PWD" | awk \'{print $8}\''
-            : 'df --output=ipcent "$PWD"';
+            ? 'df -k "$PWD" | awk \'{print $' . $macOsColumnNumber . '}\''
+            : 'df -k --output=' . $linuxOutputFormat . ' "$PWD"';
+
+        $diskRootPath = Storage::disk('backups')->path('');
 
         $process = Process::fromShellCommandline("cd {$diskRootPath}; {$command}");
         $process->run();
@@ -65,10 +86,8 @@ class Destination extends Model
             throw new Exception("Could not determine inode count");
         }
 
-        $lines  = explode(PHP_EOL, $process->getOutput());
+        $lines = explode(PHP_EOL, $process->getOutput());
 
-        $percentageString = $lines[1];
-
-        return (int)Str::before('%', $percentageString);
+        return $lines[1];
     }
 }

@@ -14,7 +14,7 @@ class ListDestinationsCommand extends Command
 
     public function handle()
     {
-        $headers = ['Destination', 'Healthy', 'Total Backup Size', 'Used Storage', 'Inode Usage', 'Free Space'];
+        $headers = ['Destination', 'Healthy', 'Total Backup Size', 'Used Storage', 'Free Space', 'Capacity Used', 'Inode Usage'];
 
         $rows = Destination::get()
             ->map(fn (Destination $destination) => $this->convertToRow($destination));
@@ -31,8 +31,9 @@ class ListDestinationsCommand extends Command
             'healthy' => Format::emoji($destination->isHealthy()),
             'total_backup_size' => Format::humanReadableSize($backups->sizeInKb()),
             'used_storage' => Format::humanReadableSize($destination->backups->realSizeInKb()),
+            'free_space' => Format::humanReadableSize($destination->getFreeSpaceInKb()),
+            'capacity_used' => $destination->getUsedSpaceInPercentage() . '%',
             'inode_usage' => $destination->getInodeUsagePercentage() . '%',
-            'free_space' => 'TODO',
         ];
     }
 }
