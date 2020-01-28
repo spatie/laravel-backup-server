@@ -26,6 +26,15 @@ class HealthyDestinationFoundNotification extends Notification
             ->line(trans('backup::notifications.healthy_destination_found_body', ['destination_name' => $this->destinationName()]));
     }
 
+    public function toSlack(): SlackMessage
+    {
+        return (new SlackMessage)
+            ->success()
+            ->from(config('backup.notifications.slack.username'), config('backup.notifications.slack.icon'))
+            ->to(config('backup.notifications.slack.channel'))
+            ->content(trans('backup::notifications.cleanup_destination_successful_subject_title'));
+    }
+
     public function destinationName(): string
     {
         return $this->event->destination->name;

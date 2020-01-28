@@ -18,12 +18,18 @@
     "require": {
         "php": "^7.4",
         "friendsofphp/php-cs-fixer": "^2.16",
+        "illuminate/console": "^6.13",
+        "illuminate/contracts": "^6.13",
+        "illuminate/events": "^6.13",
         "illuminate/notifications": "^6.12",
-        "orchestra/testbench": "^4.5",
+        "illuminate/queue": "^6.13",
+        "illuminate/support": "^6.13",
+        "maknz/slack": "^1.7",
         "spatie/laravel-flash": "^1.4",
         "spatie/regex": "^1.4"
     },
     "require-dev": {
+        "orchestra/testbench": "^4.5",
         "phpunit/phpunit": "^8.2",
         "spatie/test-time": "^1.1",
         "symfony/var-dumper": "^4.3"

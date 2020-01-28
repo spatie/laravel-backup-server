@@ -21,7 +21,7 @@ trait HandlesNotifications
         return config('backup-server.notifications.mail.from.name', config('mail.from.name'));
     }
 
-    public function slackMessage(): SlackMess
+    public function slackMessage(): SlackMe
     {
         return (new SlackMessage)
             ->success()
