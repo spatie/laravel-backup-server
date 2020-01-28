@@ -46,9 +46,9 @@ class ListSourcesCommand extends Command
             'health' => Format::emoji($source->isHealthy()),
             'backup_count' => $completedBackups->count(),
             'newest_backup' => Format::ageInDays($youngestBackup->created_at),
-            'youngest_backup_size' => Format::humanReadableSize($youngestBackup->size_in_kb),
-            'backup_size' => Format::humanReadableSize($completedBackups->sizeInKb()),
-            'real_used_storage' => Format::humanReadableSize($completedBackups->realSizeInKb()),
+            'youngest_backup_size' => Format::KbTohumanReadableSize($youngestBackup->size_in_kb),
+            'backup_size' => Format::KbTohumanReadableSize($completedBackups->sizeInKb()),
+            'real_used_storage' => Format::KbTohumanReadableSize($completedBackups->realSizeInKb()),
         ];
     }
 
