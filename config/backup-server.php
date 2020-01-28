@@ -19,7 +19,7 @@ return [
             \Spatie\BackupServer\Notifications\Notifications\HealthySourceFoundNotification::class => ['mail'],
             \Spatie\BackupServer\Notifications\Notifications\UnhealthySourceFoundNotification::class => ['mail'],
             \Spatie\BackupServer\Notifications\Notifications\HealthyDestinationFoundNotification::class => ['mail'],
-            \Spatie\BackupServer\Tasks\Monitor\Events\UnhealthyDestinationFoundEvent::class => ['mail'],
+            \Spatie\BackupServer\Notifications\Notifications\UnhealthyDestinationFoundNotification::class => ['mail'],
         ],
 
         /*
