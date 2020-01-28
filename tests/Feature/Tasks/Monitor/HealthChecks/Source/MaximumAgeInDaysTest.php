@@ -45,7 +45,7 @@ class MaximumAgeInDaysTest extends TestCase
     {
         TestTime::addHours(12);
 
-        $backup = (new BackupFactory())->completed()->source($this->source)->create();
+        (new BackupFactory())->completed()->source($this->source)->create();
 
         TestTime::addDay()->subSecond();
         $this->assertHealthCheckSucceeds($this->maximumAgeDaysHealthCheck->getResult($this->source->refresh()));
