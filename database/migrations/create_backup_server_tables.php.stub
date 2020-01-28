@@ -22,8 +22,8 @@ class CreateBackupServerTables extends Migration
             $table->integer('delete_oldest_backups_when_using_more_megabytes_than')->nullable();
 
             $table->integer('healthy_maximum_backup_age_in_days_per_source')->nullable();
-            $table->integer('healthy_maximum_storage_in_megabytes_per_source')->nullable();
-            $table->integer('healthy_maximum_storage_in_megabytes')->nullable();
+            $table->integer('healthy_maximum_storage_in_mb_per_source')->nullable();
+            $table->integer('healthy_maximum_storage_in_mb')->nullable();
             $table->integer('healthy_maximum_inode_usage_percentage')->nullable();
 
             $table->timestamps();
@@ -55,7 +55,7 @@ class CreateBackupServerTables extends Migration
             $table->integer('delete_oldest_backups_when_using_more_megabytes_than')->nullable();
 
             $table->integer('healthy_maximum_backup_age_in_days')->nullable();
-            $table->integer('healthy_maximum_storage_in_megabytes')->nullable();
+            $table->integer('healthy_maximum_storage_in_mb')->nullable();
 
             $table->timestamps();
 

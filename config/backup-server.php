@@ -54,14 +54,14 @@ return [
 
     'monitor' => [
         'source_health_checks' => [
-            \Spatie\BackupServer\Tasks\Monitor\HealthChecks\Source\MaximumStorageInMegabytes::class => 5000,
+            \Spatie\BackupServer\Tasks\Monitor\HealthChecks\Source\MaximumStorageInMB::class => 5000,
             \Spatie\BackupServer\Tasks\Monitor\HealthChecks\Source\MaximumAgeInDays::class => 1,
         ],
 
         'destination_health_checks' => [
             \Spatie\BackupServer\Tasks\Monitor\HealthChecks\Destination\DestinationReachable::class,
             \Spatie\BackupServer\Tasks\Monitor\HealthChecks\Destination\MaximumDiskCapacityUsageInPercentage::class => 90,
-            \Spatie\BackupServer\Tasks\Monitor\HealthChecks\Destination\MaximumStorageInMegabytes::class => 0,
+            \Spatie\BackupServer\Tasks\Monitor\HealthChecks\Destination\MaximumStorageInMB::class => 0,
             \Spatie\BackupServer\Tasks\Monitor\HealthChecks\Destination\MaximumInodeUsageInPercentage::class => 90
         ]
     ],

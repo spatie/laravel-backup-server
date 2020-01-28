@@ -3,10 +3,10 @@
 namespace Spatie\BackupServer\Tests\Feature\Tasks\Monitor\HealthChecks\Destination;
 
 use Spatie\BackupServer\Models\Backup;
-use Spatie\BackupServer\Tasks\Monitor\HealthChecks\Destination\MaximumStorageInMegabytes;
+use Spatie\BackupServer\Tasks\Monitor\HealthChecks\Destination\MaximumStorageInMB;
 use Spatie\BackupServer\Tests\TestCase;
 
-class MaximumStorageInMegabytesTest extends TestCase
+class MaximumStorageInMBTest extends TestCase
 {
     /** @test */
     public function it_can_check_if_the_storage_exceeds_the_maximum_storage()
@@ -19,7 +19,7 @@ class MaximumStorageInMegabytesTest extends TestCase
         ]);
 
         $destination = $backup->destination;
-        $healthCheck= new MaximumStorageInMegabytes($maximumSizeInMB);
+        $healthCheck= new MaximumStorageInMB($maximumSizeInMB);
 
         $healthCheckResult = $healthCheck->getResult($destination);
         $this->assertTrue($healthCheckResult->isOk());
