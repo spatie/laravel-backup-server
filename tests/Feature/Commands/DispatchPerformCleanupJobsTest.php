@@ -1,6 +1,6 @@
 <?php
 
-namespace Spatie\BackupServer\Tests\Feature\Tasks\Cleanup;
+namespace Spatie\BackupServer\Tests\Feature\Commands;
 
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
@@ -12,7 +12,7 @@ use Spatie\BackupServer\Tests\Factories\BackupFactory;
 use Spatie\BackupServer\Tests\TestCase;
 use Spatie\TestTime\TestTime;
 
-class CleanupJobTest extends TestCase
+class DispatchPerformCleanupJobsTest extends TestCase
 {
     private ?Destination $destination;
     private ?Source $source;
