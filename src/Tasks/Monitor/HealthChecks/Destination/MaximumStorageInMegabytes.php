@@ -16,12 +16,12 @@ class MaximumStorageInMegabytes extends DestinationHealthCheck
 
     public function getResult(Destination $destination): HealthCheckResult
     {
-        $actualSizeInMegabytes = $destination->completedBackups()->sum('real_size_in_kb') * 1024;
+        $actualSizeInMegabytes = round($destination->completedBackups()->sum('real_size_in_kb') / 1024, 5);
 
         $maximumSizeInMegabytes = $this->maximumSizeInMegabytes($destination);
 
         if ($actualSizeInMegabytes > $maximumSizeInMegabytes) {
-            HealthCheckResult::failed("The actual storage used ({$actualSizeInMegabytes} MB) is greater than the allowed storage used ({$maximumSizeInMegabytes}).");
+            return HealthCheckResult::failed("The actual storage used ({$actualSizeInMegabytes} MB) is greater than the allowed storage used ({$maximumSizeInMegabytes}).");
         }
 
         return HealthCheckResult::ok();

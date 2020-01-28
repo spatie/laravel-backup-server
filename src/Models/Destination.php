@@ -23,6 +23,17 @@ class Destination extends Model
         return Storage::disk($this->disk);
     }
 
+    public function reachable(): bool
+    {
+        try {
+            $this->disk();
+
+            return true;
+        } catch (Exception $exception) {
+            return false;
+        }
+    }
+
     protected function addMessageToLog(string $task, string $level, string $message)
     {
         $this->logItems()->create([
@@ -89,16 +100,5 @@ class Destination extends Model
         $lines = explode(PHP_EOL, $process->getOutput());
 
         return $lines[1];
-    }
-
-    public function reachable(): bool
-    {
-        try {
-            $this->disk();
-
-            return true;
-        } catch (Exception $exception) {
-            return false;
-        }
     }
 }
