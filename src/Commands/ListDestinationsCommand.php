@@ -31,7 +31,7 @@ class ListDestinationsCommand extends Command
             'healthy' => Format::emoji($destination->isHealthy()),
             'total_backup_size' => Format::humanReadableSize($backups->sizeInKb()),
             'used_storage' => Format::humanReadableSize($destination->backups->realSizeInKb()),
-            'inode_usage' => 'TODO',
+            'inode_usage' => $destination->getInodeUsagePercentage() . '%',
             'free_space' => 'TODO',
         ];
     }
