@@ -33,7 +33,7 @@ class UnhealthySourceFoundNotification extends Notification
     {
         $message = (new SlackMessage)
             ->success()
-            ->content(trans('backup::notifications.unhealthy_source_found_subject', ['destination_name' => $this->destinationName()]));
+            ->content(trans('backup::notifications.unhealthy_source_found_subject', ['destination_name' => $this->sourceName()]));
 
         foreach ($this->event->failureMessages as $failureMessage) {
             $message->attachment(function (SlackAttachment $attachment) use ($failureMessage) {
