@@ -3,6 +3,8 @@
 namespace Spatie\BackupServer\Notifications\Notifications;
 
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Notifications\Messages\SlackAttachment;
+use Illuminate\Notifications\Messages\SlackMessage;
 use Illuminate\Notifications\Notification;
 use Spatie\BackupServer\Notifications\Notifications\Concerns\HandlesNotifications;
 use Spatie\BackupServer\Tasks\Backup\Events\BackupCompletedEvent;
@@ -30,10 +32,8 @@ class BackupCompletedNotification extends Notification
 
     public function toSlack(): SlackMessage
     {
-        return (new SlackMessage)
+        return $this->slackMessage()
             ->success()
-            ->from(config('backup-server.notifications.slack.username'), config('backup-server.notifications.slack.icon'))
-            ->to(config('backup-server.notifications.slack.channel'))
             ->content(trans('backup::notifications.backup_successful_subject_title'))
             ->attachment(function (SlackAttachment $attachment) {
                 $attachment->fields([

@@ -3,6 +3,7 @@
 namespace Spatie\BackupServer\Notifications\Notifications;
 
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Notifications\Messages\SlackMessage;
 use Illuminate\Notifications\Notification;
 use Spatie\BackupServer\Notifications\Notifications\Concerns\HandlesNotifications;
 use Spatie\BackupServer\Tasks\Cleanup\Events\CleanupForDestinationFailedEvent;
@@ -28,10 +29,8 @@ class CleanupForDestinationFailedNotification extends Notification
 
     public function toSlack(): SlackMessage
     {
-        return (new SlackMessage)
+        return $this->slackMessage()
             ->success()
-            ->from(config('backup.notifications.slack.username'), config('backup.notifications.slack.icon'))
-            ->to(config('backup.notifications.slack.channel'))
             ->content(trans('backup::notifications.cleanup_destination_failed_subject_title'));
     }
 

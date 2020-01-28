@@ -2,6 +2,8 @@
 
 namespace Spatie\BackupServer\Notifications\Notifications\Concerns;
 
+use Illuminate\Notifications\Messages\SlackMessage;
+
 trait HandlesNotifications
 {
     public function via(): array
@@ -21,10 +23,9 @@ trait HandlesNotifications
         return config('backup-server.notifications.mail.from.name', config('mail.from.name'));
     }
 
-    public function slackMessage(): SlackMe
+    public function slackMessage(): SlackMessage
     {
         return (new SlackMessage)
-            ->success()
             ->from(config('backup-server.notifications.slack.username'), config('backup-server.notifications.slack.icon'))
             ->to(config('backup-server.notifications.slack.channel'));
     }

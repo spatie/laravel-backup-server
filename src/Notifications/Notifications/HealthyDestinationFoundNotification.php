@@ -3,6 +3,7 @@
 namespace Spatie\BackupServer\Notifications\Notifications;
 
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Notifications\Messages\SlackMessage;
 use Illuminate\Notifications\Notification;
 use Spatie\BackupServer\Notifications\Notifications\Concerns\HandlesNotifications;
 use Spatie\BackupServer\Tasks\Monitor\Events\HealthyDestinationFoundEvent;
@@ -30,9 +31,7 @@ class HealthyDestinationFoundNotification extends Notification
     {
         return (new SlackMessage)
             ->success()
-            ->from(config('backup.notifications.slack.username'), config('backup.notifications.slack.icon'))
-            ->to(config('backup.notifications.slack.channel'))
-            ->content(trans('backup::notifications.cleanup_destination_successful_subject_title'));
+            ->content(trans('backup::notifications.healthy_destination_found_subject', ['destination_name' => $this->destinationName()]));
     }
 
     public function destinationName(): string
