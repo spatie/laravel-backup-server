@@ -10,10 +10,16 @@ return [
         'notifications' => [
             \Spatie\BackupServer\Notifications\Notifications\BackupCompletedNotification::class => ['mail'],
             \Spatie\BackupServer\Notifications\Notifications\BackupFailedNotification::class => ['mail'],
+
             \Spatie\BackupServer\Notifications\Notifications\CleanupForSourceCompletedNotification::class => ['mail'],
             \Spatie\BackupServer\Notifications\Notifications\CleanupForSourceFailedNotification::class => ['mail'],
             \Spatie\BackupServer\Notifications\Notifications\CleanupForDestinationCompletedNotification::class => ['mail'],
             \Spatie\BackupServer\Notifications\Notifications\CleanupForDestinationFailedNotification::class => ['mail'],
+
+            \Spatie\BackupServer\Notifications\Notifications\HealthySourceFoundNotification::class => ['mail'],
+            \Spatie\BackupServer\Notifications\Notifications\UnhealthySourceFoundNotification::class => ['mail'],
+            \Spatie\BackupServer\Notifications\Notifications\HealthyDestinationFoundNotification::class => ['mail'],
+            \Spatie\BackupServer\Tasks\Monitor\Events\UnhealthyDestinationFoundEvent::class => ['mail'],
         ],
 
         /*
@@ -53,6 +59,7 @@ return [
         ],
 
         'destination_health_checks' => [
+            \Spatie\BackupServer\Tasks\Monitor\HealthChecks\Destination\DestinationReachable::class,
             \Spatie\BackupServer\Tasks\Monitor\HealthChecks\Destination\MaximumStorageInMegabytes::class => 0,
             \Spatie\BackupServer\Tasks\Monitor\HealthChecks\Destination\MaximumInodeUsageInPercentage::class => 90
         ]

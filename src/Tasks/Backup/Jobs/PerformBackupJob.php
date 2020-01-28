@@ -12,6 +12,7 @@ use Spatie\BackupServer\Tasks\Backup\Events\BackupCompletedEvent;
 use Spatie\BackupServer\Tasks\Backup\Events\BackupFailedEvent;
 use Spatie\BackupServer\Tasks\Backup\Jobs\BackupTasks\CalculateBackupSize;
 use Spatie\BackupServer\Tasks\Backup\Jobs\BackupTasks\DetermineDestinationPath;
+use Spatie\BackupServer\Tasks\Backup\Jobs\BackupTasks\EnsureDestinationIsReachable;
 use Spatie\BackupServer\Tasks\Backup\Jobs\BackupTasks\EnsureSourceIsReachable;
 use Spatie\BackupServer\Tasks\Backup\Jobs\BackupTasks\PerformPostBackupCommands;
 use Spatie\BackupServer\Tasks\Backup\Jobs\BackupTasks\PerformPreBackupCommands;
@@ -33,6 +34,7 @@ class PerformBackupJob implements ShouldQueue
     {
         $tasks = [
             EnsureSourceIsReachable::class,
+            EnsureDestinationIsReachable::class,
             DetermineDestinationPath::class,
             PerformPreBackupCommands::class,
             RunBackup::class,

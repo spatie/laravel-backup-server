@@ -4,7 +4,7 @@ namespace Spatie\BackupServer\Tasks\Monitor\Events;
 
 use Spatie\BackupServer\Models\Source;
 
-class UnhealthySourceFound
+class UnhealthySourceFoundEvent
 {
     public Source $source;
 

@@ -16,7 +16,11 @@ class MaximumInodeUsageInPercentage extends DestinationHealthCheck
 
     public function getResult(Destination $destination): HealthCheckResult
     {
-        // TODO: Implement getResults() method.
+        $currentInodeUsagePercentage = $destination->getInodeUsagePercentage();
+
+        if ($destination->getInodeUsagePercentage() > $this->maximumPercentage) {
+            HealthCheckResult::failed("The current inode usage percentage ({$currentInodeUsagePercentage}) is higher than the allowed percentage {$this->maximumPercentage}");
+        }
 
         return HealthCheckResult::ok();
     }

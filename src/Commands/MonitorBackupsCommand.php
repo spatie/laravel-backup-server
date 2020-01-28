@@ -6,10 +6,10 @@ use Illuminate\Console\Command;
 use Spatie\BackupServer\Models\Destination;
 use Spatie\BackupServer\Models\Source;
 use Spatie\BackupServer\Support\Helpers\Enums\Task;
-use Spatie\BackupServer\Tasks\Monitor\Events\HealthyDestinationFound;
-use Spatie\BackupServer\Tasks\Monitor\Events\HealthySourceFound;
-use Spatie\BackupServer\Tasks\Monitor\Events\UnhealthyDestinationFound;
-use Spatie\BackupServer\Tasks\Monitor\Events\UnhealthySourceFound;
+use Spatie\BackupServer\Tasks\Monitor\Events\HealthyDestinationFoundEvent;
+use Spatie\BackupServer\Tasks\Monitor\Events\HealthySourceFoundEvent;
+use Spatie\BackupServer\Tasks\Monitor\Events\UnhealthyDestinationFoundEvent;
+use Spatie\BackupServer\Tasks\Monitor\Events\UnhealthySourceFoundEvent;
 
 class MonitorBackupsCommand extends Command
 {
@@ -32,13 +32,13 @@ class MonitorBackupsCommand extends Command
     {
         [$healthySources, $unHealthySources] = collect(Source::all())
             ->partition(function (Source $source) {
-                $this->info("Source `{$source->name}` is healthy");
-
                 return $source->isHealthy();
             });
 
         $healthySources->each(function (Source $source) {
-            event(new HealthySourceFound($source));
+            $this->info("Source `{$source->name}` is healthy");
+
+            event(new HealthySourceFoundEvent($source));
         });
 
         $unHealthySources->each(function (Source $source) {
@@ -50,7 +50,7 @@ class MonitorBackupsCommand extends Command
                 $source->logError(Task::MONITOR, $failureMessage);
             }
 
-            event(new UnhealthySourceFound($source, $failureMessages));
+            event(new UnhealthySourceFoundEvent($source, $failureMessages));
         });
 
         return $this;
@@ -66,7 +66,7 @@ class MonitorBackupsCommand extends Command
         $healthyDestinations->each(function (Destination $destination) {
             $this->info("Destination `{$destination->name}` is healthy");
 
-            event(new HealthyDestinationFound($destination));
+            event(new HealthyDestinationFoundEvent($destination));
         });
 
         $unHealthyDestinations->each(function (Destination $destination) {
@@ -78,7 +78,7 @@ class MonitorBackupsCommand extends Command
                 $destination->logError(Task::MONITOR, $failureMessage);
             }
 
-            event(new UnhealthyDestinationFound($destination, $failureMessages));
+            event(new UnhealthyDestinationFoundEvent($destination, $failureMessages));
         });
 
         return $this;

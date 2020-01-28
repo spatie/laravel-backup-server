@@ -73,21 +73,32 @@ class Destination extends Model
 
     protected function getDfOutput(int $macOsColumnNumber, $linuxOutputFormat)
     {
-        $command =  PHP_OS === 'Darwin'
+        $command = PHP_OS === 'Darwin'
             ? 'df -k "$PWD" | awk \'{print $' . $macOsColumnNumber . '}\''
             : 'df -k --output=' . $linuxOutputFormat . ' "$PWD"';
 
-        $diskRootPath = Storage::disk('backups')->path('');
+        $diskRootPath = $this->disk()->path('');
 
         $process = Process::fromShellCommandline("cd {$diskRootPath}; {$command}");
         $process->run();
 
-        if (! $process->isSuccessful()) {
+        if (!$process->isSuccessful()) {
             throw new Exception("Could not determine inode count");
         }
 
         $lines = explode(PHP_EOL, $process->getOutput());
 
         return $lines[1];
+    }
+
+    public function reachable(): bool
+    {
+        try {
+            $this->disk();
+
+            return true;
+        } catch (Exception $exception) {
+            return false;
+        }
     }
 }

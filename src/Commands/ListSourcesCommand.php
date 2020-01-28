@@ -15,7 +15,7 @@ class ListSourcesCommand extends Command
 
     public function handle()
     {
-        $headers = ['Source', 'Healthy', '# of Backups', 'Youngest backup Age', 'Youngest Backup Size', 'Total Backup Size', 'Used storage'];
+        $headers = ['Source', 'Healthy', '# of Backups', 'Youngest Backup Age', 'Youngest Backup Size', 'Total Backup Size', 'Used storage'];
 
         $rows = Source::get()
             ->map(fn (Source $source) => $this->convertToRow($source));

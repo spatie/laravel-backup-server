@@ -27,52 +27,61 @@ class HealthCheckCollection
 
     public function allPass(): bool
     {
-        $containsFailingHealthCheck =  collect($this->healthCheckResults)->contains(function (array $healthCheck) {
-            return ! $healthCheck['result']->isOk();
+        $containsFailingHealthCheck = collect($this->healthCheckResults)->contains(function (HealthCheckResult $healthCheckResult) {
+            return !$healthCheckResult->isOk();
         });
 
-        return ! $containsFailingHealthCheck;
+        return !$containsFailingHealthCheck;
     }
 
     public function getFailureMessages(): array
     {
         return collect($this->healthCheckResults)
-            ->reject(function (array $healthCheck) {
-                return $healthCheck['result']->isOk();
+            ->reject(function (HealthCheckResult $healthCheckResult) {
+                return $healthCheckResult->isOk();
             })
-            ->map(function (array $healthCheck) {
-                return $healthCheck['result']->getMessage();
+            ->map(function (HealthCheckResult $healthCheckResult) {
+                return $healthCheckResult->getMessage();
             })
             ->toArray();
     }
 
     protected function performHealthChecks(): array
     {
-        if (! is_null($this->healthCheckResults)) {
+        if (!is_null($this->healthCheckResults)) {
             return $this->healthCheckResults;
         }
 
-        return collect($this->healthCheckClassNames)
+        $healthChecks = collect($this->healthCheckClassNames)
             ->map(function ($arguments, string $healthCheckClassName) {
-                if (is_int($healthCheckClassName)) {
+                if (is_numeric($healthCheckClassName)) {
                     $healthCheckClassName = $arguments;
                     $arguments = [];
                 }
                 return $this->instanciateHealthCheck($healthCheckClassName, $arguments);
-            })
-            ->map(function (HealthCheck $healthCheck) {
-                return [
-                    'name' => $healthCheck->name(),
-                    'result' => $healthCheck->getResult($this->model)
-                ];
-            })
-            ->toArray();
+            });
+
+        $healthCheckResults = [];
+        $runRemainingChecks = true;
+
+        /** @var HealthCheck $healthCheck */
+        foreach ($healthChecks as $healthCheck) {
+            if ($runRemainingChecks) {
+                /** @var \Spatie\BackupServer\Tasks\Monitor\HealthCheckResult $healthCheckResult */
+                $healthCheckResult = $healthCheck->getResult($this->model);
+
+                $healthCheckResults[] = $healthCheckResult;
+
+                $runRemainingChecks = $healthCheckResult->shouldContinueRunningRemainingChecks();
+            }
+        }
+        return $healthCheckResults;
     }
 
     protected function instanciateHealthCheck(string $healthCheckClass, $arguments): HealthCheck
     {
         // A single value was passed - we'll instantiate it manually assuming it's the first argument
-        if (! is_array($arguments)) {
+        if (!is_array($arguments)) {
             return new $healthCheckClass($arguments);
         }
 

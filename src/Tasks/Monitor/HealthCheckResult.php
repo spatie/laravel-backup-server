@@ -8,6 +8,8 @@ class HealthCheckResult
 
     protected string $message = '';
 
+    protected bool $runRemainingChecks = true;
+
     public static function ok()
     {
         return new static();
@@ -38,5 +40,17 @@ class HealthCheckResult
         $this->ok = false;
 
         return $this;
+    }
+
+    public function doNotRunRemainingChecks()
+    {
+        $this->runRemainingChecks = false;
+
+        return $this;
+    }
+
+    public function shouldContinueRunningRemainingChecks(): bool
+    {
+        return $this->runRemainingChecks;
     }
 }

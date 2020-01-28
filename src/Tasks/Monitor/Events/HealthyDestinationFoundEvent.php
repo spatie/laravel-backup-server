@@ -4,16 +4,12 @@ namespace Spatie\BackupServer\Tasks\Monitor\Events;
 
 use Spatie\BackupServer\Models\Destination;
 
-class UnhealthyDestinationFound
+class HealthyDestinationFoundEvent
 {
     public Destination $destination;
 
-    public array $failureMessages;
-
-    public function __construct(Destination $destination, array $failureMessages)
+    public function __construct(Destination $destination)
     {
         $this->destination = $destination;
-
-        $this->failureMessages = $failureMessages;
     }
 }

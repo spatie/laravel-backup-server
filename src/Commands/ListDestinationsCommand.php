@@ -26,14 +26,21 @@ class ListDestinationsCommand extends Command
     {
         $backups = $destination->backups;
 
-        return [
+        $rowValues = [
             'name' => $destination->name,
             'healthy' => Format::emoji($destination->isHealthy()),
             'total_backup_size' => Format::humanReadableSize($backups->sizeInKb()),
             'used_storage' => Format::humanReadableSize($destination->backups->realSizeInKb()),
-            'free_space' => Format::humanReadableSize($destination->getFreeSpaceInKb()),
-            'capacity_used' => $destination->getUsedSpaceInPercentage() . '%',
-            'inode_usage' => $destination->getInodeUsagePercentage() . '%',
         ];
+
+        if ($destination->reachable()) {
+            return array_merge($rowValues, [
+                'free_space' => Format::humanReadableSize($destination->getFreeSpaceInKb()),
+                'capacity_used' => $destination->getUsedSpaceInPercentage() . '%',
+                'inode_usage' => $destination->getInodeUsagePercentage() . '%',
+            ]);
+        }
+
+        return $rowValues;
     }
 }

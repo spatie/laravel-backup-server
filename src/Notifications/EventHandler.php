@@ -13,6 +13,10 @@ use Spatie\BackupServer\Tasks\Cleanup\Events\CleanupForDestinationCompletedEvent
 use Spatie\BackupServer\Tasks\Cleanup\Events\CleanupForDestinationFailedEvent;
 use Spatie\BackupServer\Tasks\Cleanup\Events\CleanupForSourceCompletedEvent;
 use Spatie\BackupServer\Tasks\Cleanup\Events\CleanupForSourceFailedEvent;
+use Spatie\BackupServer\Tasks\Monitor\Events\HealthyDestinationFoundEvent;
+use Spatie\BackupServer\Tasks\Monitor\Events\HealthySourceFoundEvent;
+use Spatie\BackupServer\Tasks\Monitor\Events\UnhealthyDestinationFoundEvent;
+use Spatie\BackupServer\Tasks\Monitor\Events\UnhealthySourceFoundEvent;
 
 class EventHandler
 {
@@ -71,6 +75,10 @@ class EventHandler
             CleanupForSourceFailedEvent::class,
             CleanupForDestinationCompletedEvent::class,
             CleanupForDestinationFailedEvent::class,
+            HealthySourceFoundEvent::class,
+            UnhealthySourceFoundEvent::class,
+            HealthyDestinationFoundEvent::class,
+            UnhealthyDestinationFoundEvent::class,
         ];
     }
 }
