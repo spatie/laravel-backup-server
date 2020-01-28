@@ -56,4 +56,22 @@ class MaximumAgeInDaysTest extends TestCase
         (new BackupFactory())->completed()->source($this->source)->create();
         $this->assertHealthCheckSucceeds($this->maximumAgeDaysHealthCheck->getResult($this->source->refresh()));
     }
+
+    /** @test */
+    public function the_value_on_the_destination_overrides_the_configured_amount_of_days()
+    {
+        (new BackupFactory())->completed()->source($this->source)->create();
+
+        TestTime::addDay();
+        $this->assertHealthCheckFails($this->maximumAgeDaysHealthCheck->getResult($this->source->refresh()));
+
+        $this->source->destination->update(['healthy_maximum_backup_age_in_days_per_source' => 2]);
+        $this->assertHealthCheckSucceeds($this->maximumAgeDaysHealthCheck->getResult($this->source->refresh()));
+
+        TestTime::addDay();
+        $this->assertHealthCheckFails($this->maximumAgeDaysHealthCheck->getResult($this->source->refresh()));
+
+        $this->source->update(['healthy_maximum_backup_age_in_days' => 3]);
+        $this->assertHealthCheckSucceeds($this->maximumAgeDaysHealthCheck->getResult($this->source->refresh()));
+    }
 }
