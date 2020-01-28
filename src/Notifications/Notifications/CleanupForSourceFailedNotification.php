@@ -37,6 +37,6 @@ class CleanupForSourceFailedNotification extends Notification
 
     public function sourceName(): string
     {
-        return $this->event->backup->source->name;
+        return $this->event->source->name;
     }
 }

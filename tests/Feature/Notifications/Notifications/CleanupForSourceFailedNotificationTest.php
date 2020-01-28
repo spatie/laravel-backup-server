@@ -33,7 +33,7 @@ class CleanupForSourceFailedNotificationTest extends TestCase
     /** @test */
     public function the_CleanupForSourceFailedNotification_renders_correctly_to_a_mail()
     {
-        $event = new CleanupForSourceFailedEvent($this->source);
+        $event = new CleanupForSourceFailedEvent($this->source, new Exception());
 
         $notification = new CleanupForSourceFailedNotification($event);
 

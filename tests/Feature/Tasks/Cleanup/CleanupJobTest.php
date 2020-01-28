@@ -94,7 +94,7 @@ class CleanupJobTest extends TestCase
             });
 
 
-        $this->artisan('backup:clean')->assertExitCode(0);
+        $this->artisan('backup-server:cleanup')->assertExitCode(0);
 
         $expectedRemainingBackups->each(function (Backup $backup) {
             $this->assertNotNull($backup->fresh());
@@ -115,11 +115,11 @@ class CleanupJobTest extends TestCase
             'created_at' => now(),
         ]);
 
-        $this->artisan('backup:clean')->assertExitCode(0);
+        $this->artisan('backup-server:cleanup')->assertExitCode(0);
         $this->assertNotNull($failedBackup->fresh());
 
         TestTime::addWeek();
-        $this->artisan('backup:clean')->assertExitCode(0);
+        $this->artisan('backup-server:cleanup')->assertExitCode(0);
         $this->assertNull($failedBackup->fresh());
     }
 
@@ -144,7 +144,7 @@ class CleanupJobTest extends TestCase
             ->destination($this->destination)
             ->create(['path' => 'test']);
 
-        $this->artisan('backup:clean')->assertExitCode(0);
+        $this->artisan('backup-server:cleanup')->assertExitCode(0);
 
         $this->assertNotNull($backup->fresh());
         $this->assertNull($backupWithoutDirectory->fresh());
