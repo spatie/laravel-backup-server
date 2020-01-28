@@ -21,15 +21,15 @@ class MaximumAgeInDays extends SourceHealthCheck
             return HealthCheckResult::ok();
         }
 
-        $latestBackup = $source->youngestCompletedBackup();
+        $youngestCompletedBackup = $source->youngestCompletedBackup();
 
-        if (! $latestBackup) {
+        if (! $youngestCompletedBackup) {
             return HealthCheckResult::failed("No backup found");
         }
 
         $maximumHealthAgeInDays = $this->maximumHealthyAgeInDays($source);
 
-        if ($latestBackup->created_at->diffInDays() > $this->maximumHealthyAgeInDays($source)) {
+        if ($youngestCompletedBackup->created_at->diffInDays() >= $this->maximumHealthyAgeInDays($source)) {
             return HealthCheckResult::failed("Latest backup iis older then {$maximumHealthAgeInDays}" . Str::plural('day', $maximumHealthAgeInDays));
         }
 

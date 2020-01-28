@@ -14,9 +14,18 @@ class BackupFactory
 
     private bool $createBackupDirectory = false;
 
+    private ?string $status = null;
+
     public function source(Source $source): self
     {
         $this->source = $source;
+
+        return $this;
+    }
+
+    public function completed()
+    {
+        $this->status = Backup::STATUS_COMPLETED;
 
         return $this;
     }
@@ -44,6 +53,10 @@ class BackupFactory
             'source_id' => $this->source->id,
             'destination_id' => $this->destination->id,
         ], $attributes);
+
+        if ($this->status) {
+            $attributes['status'] = $this->status;
+        }
 
         /** @var \Spatie\BackupServer\Models\Backup $backup */
         $backup = factory(Backup::class)->create($attributes);
