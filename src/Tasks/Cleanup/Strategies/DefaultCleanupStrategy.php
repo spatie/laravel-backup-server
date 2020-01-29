@@ -7,13 +7,14 @@ use Illuminate\Support\Collection;
 use Spatie\BackupServer\Models\Backup;
 use Spatie\BackupServer\Models\Source;
 use Spatie\BackupServer\Support\Helpers\Enums\Task;
+use Spatie\BackupServer\Tasks\Backup\Support\BackupCollection;
 use Spatie\BackupServer\Tasks\Cleanup\Support\DefaultStrategyConfig;
 use Spatie\BackupServer\Tasks\Cleanup\Support\Period;
 
 class DefaultCleanupStrategy implements CleanupStrategy
 {
     /** @var \Spatie\Backup\BackupDestination\Backup */
-    protected $newestBackup;
+    protected ?Backup $youngestBackup;
 
     private DefaultStrategyConfig $config;
 
@@ -21,10 +22,11 @@ class DefaultCleanupStrategy implements CleanupStrategy
     {
         $this->config = new DefaultStrategyConfig($source);
 
+        /** @var \Spatie\BackupServer\Tasks\Backup\Support\BackupCollection $backups */
         $backups = $source->completedBackups()->get();
 
-        // Don't ever delete the newest backup.
-        $this->newestBackup = $backups->shift();
+        // Don't ever delete the youngest backup.
+        $this->youngestBackup = $backups->youngest();
 
         $dateRanges = $this->calculateDateRanges();
 
@@ -104,7 +106,7 @@ class DefaultCleanupStrategy implements CleanupStrategy
         })->each->delete();
     }
 
-    protected function removeOldBackupsUntilUsingLessThanMaximumStorage(Collection $backups, int $sizeLimitInMb)
+    protected function removeOldBackupsUntilUsingLessThanMaximumStorage(BackupCollection $backups, int $sizeLimitInMb)
     {
         if (! $backups->count()) {
             return;
@@ -122,11 +124,11 @@ class DefaultCleanupStrategy implements CleanupStrategy
         }
 
         /** @var Backup $oldestBackup */
-        $oldestBackup = $backups->last();
+        $oldestBackup = $backups->oldest();
 
         $oldestBackup->logInfo(Task::CLEANUP, "Deleting backup because destination uses more space than the limit allows");
 
-        $backups->last()->delete();
+        $oldestBackup->delete();
 
         $backups = $backups->filter->exists();
 
