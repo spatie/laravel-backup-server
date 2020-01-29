@@ -2,13 +2,14 @@
 
 namespace Spatie\BackupServer\Notifications\Notifications;
 
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Messages\SlackMessage;
 use Illuminate\Notifications\Notification;
 use Spatie\BackupServer\Notifications\Notifications\Concerns\HandlesNotifications;
 use Spatie\BackupServer\Tasks\Cleanup\Events\CleanupForDestinationFailedEvent;
 
-class CleanupForDestinationFailedNotification extends Notification
+class CleanupForDestinationFailedNotification extends Notification implements ShouldQueue
 {
     use HandlesNotifications;
 

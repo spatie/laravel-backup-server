@@ -4,6 +4,7 @@ namespace Spatie\BackupServer\Tests\Feature\Commands;
 
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
 use Spatie\BackupServer\Models\Backup;
 use Spatie\BackupServer\Models\Destination;
@@ -32,6 +33,8 @@ class DispatchPerformCleanupJobsTest extends TestCase
         $this->source = factory(Source::class)->create([
             'destination_id' => $this->destination->id,
         ]);
+
+        Notification::fake();
     }
 
     /** @test */

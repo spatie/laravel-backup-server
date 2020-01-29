@@ -123,7 +123,7 @@ class DefaultCleanupStrategy implements CleanupStrategy
         /** @var Backup $oldestBackup */
         $oldestBackup = $backups->oldest();
 
-        $oldestBackup->logInfo(Task::CLEANUP, "Deleting backup because destination uses more space than the limit allows");
+        $oldestBackup->logInfo(Task::CLEANUP, 'Deleting backup because destination uses more space than the limit allows');
 
         $oldestBackup->delete();
 

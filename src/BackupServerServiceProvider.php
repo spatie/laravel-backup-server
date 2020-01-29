@@ -10,6 +10,7 @@ use Spatie\BackupServer\Commands\DispatchPerformBackupJobsCommand;
 use Spatie\BackupServer\Commands\DispatchPerformCleanupJobsCommand;
 use Spatie\BackupServer\Commands\ListDestinationsCommand;
 use Spatie\BackupServer\Commands\ListSourcesCommand;
+use Spatie\BackupServer\Commands\MonitorBackupsCommand;
 use Spatie\BackupServer\Http\App\Middleware\SetBackupServerDefaults;
 use Spatie\BackupServer\Http\Middleware\Authorize;
 use Spatie\BackupServer\Notifications\EventHandler;
@@ -64,6 +65,7 @@ class BackupServerServiceProvider extends EventServiceProvider
                 DispatchPerformCleanupJobsCommand::class,
                 ListSourcesCommand::class,
                 ListDestinationsCommand::class,
+                MonitorBackupsCommand::class,
             ]);
         }
 
