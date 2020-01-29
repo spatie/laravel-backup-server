@@ -62,20 +62,17 @@ class DefaultCleanupStrategy implements CleanupStrategy
 
         $weekly = new Period(
             $daily->endDate(),
-            $daily->endDate()
-                ->subWeeks($this->config->keepWeeklyBackupsForWeeks)
+            $daily->endDate()->subWeeks($this->config->keepWeeklyBackupsForWeeks)
         );
 
         $monthly = new Period(
             $weekly->endDate(),
-            $weekly->endDate()
-                ->subMonths($this->config->keepMonthlyBackupsForMonths)
+            $weekly->endDate()->subMonths($this->config->keepMonthlyBackupsForMonths)
         );
 
         $yearly = new Period(
             $monthly->endDate(),
-            $monthly->endDate()
-                ->subYears($this->config->keepYearlyBackupsForYears)
+            $monthly->endDate()->subYears($this->config->keepYearlyBackupsForYears)
         );
 
         return collect(compact('daily', 'weekly', 'monthly', 'yearly'));
