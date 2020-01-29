@@ -50,13 +50,9 @@ class Destination extends Model
 
     public function getHealthChecks(): HealthCheckCollection
     {
-        static $healthCheckCollection = null;
+        $healthCheckClassNames = config('backup-server.monitor.destination_health_checks');
 
-        if (is_null($healthCheckCollection)) {
-            $healthCheckClassNames = config('backup-server.monitor.destination_health_checks');
-
-            $healthCheckCollection = new HealthCheckCollection($healthCheckClassNames, $this);
-        }
+        $healthCheckCollection = new HealthCheckCollection($healthCheckClassNames, $this);
 
         return $healthCheckCollection;
     }

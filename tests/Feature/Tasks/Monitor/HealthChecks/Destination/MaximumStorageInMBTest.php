@@ -28,9 +28,30 @@ class MaximumStorageInMBTest extends TestCase
 
         factory(Backup::class)->create([
             'status' => Backup::STATUS_COMPLETED,
-           'destination_id' => $destination->id,
+            'destination_id' => $destination->id,
         ]);
 
         $this->assertHealthCheckFails($healthCheck->getResult($destination->refresh()));
+    }
+
+    /** @test */
+    public function it_the_maximum_is_set_to_zero_than_the_check_is_disabled()
+    {
+        $maximumSizeInMB = 0;
+
+        $backup = factory(Backup::class)->create([
+            'status' => Backup::STATUS_COMPLETED,
+            'real_size_in_kb' =>  2 * 1024,
+        ]);
+
+        $destination = $backup->destination;
+
+        $destination->update([
+            'healthy_maximum_storage_in_mb' => $maximumSizeInMB,
+        ]);
+
+        $healthCheck = new MaximumStorageInMB($maximumSizeInMB);
+
+        $this->assertHealthCheckSucceeds($healthCheck->getResult($destination));
     }
 }
