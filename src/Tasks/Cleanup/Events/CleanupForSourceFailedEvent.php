@@ -5,7 +5,6 @@ namespace Spatie\BackupServer\Tasks\Cleanup\Events;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 use Spatie\BackupServer\Models\Source;
-use Throwable;
 
 class CleanupForSourceFailedEvent
 {
@@ -13,12 +12,12 @@ class CleanupForSourceFailedEvent
 
     public Source $source;
 
-    public Throwable $throwable;
+    public string $exceptionMessage;
 
-    public function __construct(Source $source, Throwable $throwable)
+    public function __construct(Source $source, string $exceptionMessage)
     {
         $this->source = $source;
 
-        $this->throwable = $throwable;
+        $this->exceptionMessage = $exceptionMessage;
     }
 }

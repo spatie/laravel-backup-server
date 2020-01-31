@@ -2,7 +2,6 @@
 
 namespace Spatie\BackupServer\Tests\Feature\Notifications\Notifications;
 
-use Exception;
 use Illuminate\Support\Facades\Notification;
 use Spatie\BackupServer\Models\Destination;
 use Spatie\BackupServer\Notifications\Notifications\CleanupForDestinationFailedNotification;
@@ -25,7 +24,7 @@ class CleanupForDestinationFailedNotificationTest extends TestCase
     /** @test */
     public function it_will_send_a_notification_when_a_cleanup_of_a_destination_fails()
     {
-        event(new CleanupForDestinationFailedEvent($this->destination, new Exception()));
+        event(new CleanupForDestinationFailedEvent($this->destination, 'exception message'));
 
         Notification::assertSentTo($this->configuredNotifiable(), CleanupForDestinationFailedNotification::class);
     }
@@ -33,7 +32,7 @@ class CleanupForDestinationFailedNotificationTest extends TestCase
     /** @test */
     public function the_CleanupForDestinationFailedNotification_renders_correctly_to_a_mail()
     {
-        $event = new CleanupForDestinationFailedEvent($this->destination, new Exception());
+        $event = new CleanupForDestinationFailedEvent($this->destination, 'exception message');
 
         $notification = new CleanupForDestinationFailedNotification($event);
 

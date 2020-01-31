@@ -54,6 +54,6 @@ class PerformCleanupBackupsForSourceJob implements ShouldQueue
     {
         $this->source->logError(Task::CLEANUP, "Error while cleaning up source `{$this->source->name}`: `{$exception->getMessage()}`");
 
-        event(new CleanupForSourceFailedEvent($this->source, $exception));
+        event(new CleanupForSourceFailedEvent($this->source, $exception->getMessage()));
     }
 }

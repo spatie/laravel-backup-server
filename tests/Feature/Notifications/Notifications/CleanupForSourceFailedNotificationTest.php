@@ -2,7 +2,6 @@
 
 namespace Spatie\BackupServer\Tests\Feature\Notifications\Notifications;
 
-use Exception;
 use Illuminate\Support\Facades\Notification;
 use Spatie\BackupServer\Models\Source;
 use Spatie\BackupServer\Notifications\Notifications\CleanupForSourceFailedNotification;
@@ -25,7 +24,7 @@ class CleanupForSourceFailedNotificationTest extends TestCase
     /** @test */
     public function it_will_send_a_notification_when_a_cleanup_of_a_source_completes()
     {
-        event(new CleanupForSourceFailedEvent($this->source, new Exception()));
+        event(new CleanupForSourceFailedEvent($this->source, 'exception message'));
 
         Notification::assertSentTo($this->configuredNotifiable(), CleanupForSourceFailedNotification::class);
     }
@@ -33,7 +32,7 @@ class CleanupForSourceFailedNotificationTest extends TestCase
     /** @test */
     public function the_CleanupForSourceFailedNotification_renders_correctly_to_a_mail()
     {
-        $event = new CleanupForSourceFailedEvent($this->source, new Exception());
+        $event = new CleanupForSourceFailedEvent($this->source, 'exception message');
 
         $notification = new CleanupForSourceFailedNotification($event);
 

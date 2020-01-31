@@ -39,6 +39,6 @@ class PerformCleanupDestinationJob implements ShouldQueue
     {
         $this->destination->logError(Task::CLEANUP, "Error while cleaning up destination `{$this->destination->name}`: `{$exception->getMessage()}`");
 
-        event(new CleanupForDestinationFailedEvent($this->destination, $exception));
+        event(new CleanupForDestinationFailedEvent($this->destination, $exception->getMessage()));
     }
 }

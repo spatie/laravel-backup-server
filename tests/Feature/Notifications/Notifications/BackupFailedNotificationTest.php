@@ -2,7 +2,6 @@
 
 namespace Spatie\BackupServer\Tests\Feature\Notifications\Notifications;
 
-use Exception;
 use Illuminate\Support\Facades\Notification;
 use Spatie\BackupServer\Models\Backup;
 use Spatie\BackupServer\Notifications\Notifications\BackupFailedNotification;
@@ -25,7 +24,7 @@ class BackupFailedNotificationTest extends TestCase
     /** @test */
     public function it_will_send_a_notification_when_a_backup_failed()
     {
-        event(new BackupFailedEvent($this->backup, new Exception()));
+        event(new BackupFailedEvent($this->backup, 'exception message'));
 
         Notification::assertSentTo($this->configuredNotifiable(), BackupFailedNotification::class);
     }
@@ -33,7 +32,7 @@ class BackupFailedNotificationTest extends TestCase
     /** @test */
     public function the_BackupCompletedNotification_renders_correctly_to_a_mail()
     {
-        $event = new BackupFailedEvent($this->backup, new Exception());
+        $event = new BackupFailedEvent($this->backup, 'exception message');
 
         $notification = new BackupFailedNotification($event);
 

@@ -2,6 +2,7 @@
 
 namespace Spatie\BackupServer\Notifications\Notifications;
 
+use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Messages\SlackAttachment;
@@ -12,7 +13,7 @@ use Spatie\BackupServer\Tasks\Monitor\Events\UnhealthySourceFoundEvent;
 
 class UnhealthySourceFoundNotification extends Notification implements ShouldQueue
 {
-    use HandlesNotifications;
+    use HandlesNotifications, Queueable;
 
     public UnhealthySourceFoundEvent $event;
 
