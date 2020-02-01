@@ -15,6 +15,12 @@
             "role": "Developer"
         }
     ],
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../docker"
+        }
+    ],
     "require": {
         "php": "^7.4",
         "friendsofphp/php-cs-fixer": "^2.16",
@@ -32,7 +38,8 @@
         "orchestra/testbench": "^4.5",
         "phpunit/phpunit": "^8.2",
         "spatie/test-time": "^1.1",
-        "symfony/var-dumper": "^4.3"
+        "symfony/var-dumper": "^4.3",
+        "spatie/docker": "dev-master"
     },
     "autoload": {
         "psr-4": {
