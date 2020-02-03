@@ -10,18 +10,31 @@ class SourceLocation
 
     private ?string $host;
 
-    public function __construct(array $paths, string $sshUser = null, string $host = null)
-    {
+    private int $port = 22;
+
+    public function __construct(
+        array $paths,
+        string $sshUser = null,
+        string $host = null,
+        int $port = 22
+    ) {
         $this->paths = $paths;
 
         $this->sshUser = $sshUser;
 
         $this->host = $host;
+
+        $this->port = $port;
     }
 
     public function getPaths(): array
     {
         return $this->paths;
+    }
+
+    public function getPort(): int
+    {
+        return $this->port;
     }
 
     public function connectionString(): string

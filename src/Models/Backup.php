@@ -68,6 +68,7 @@ class Backup extends Model
             $this->source->includes,
             $this->source->ssh_user,
             $this->source->host,
+            $this->source->ssh_port,
         );
     }
 
@@ -120,7 +121,7 @@ class Backup extends Model
     public function handleProgress(string $type, string $progressOutput): self
     {
         if ($type === Process::ERR) {
-            $this->logError($progressOutput);
+            $this->logError(Task::BACKUP, $progressOutput);
 
             return $this;
         }
@@ -204,5 +205,10 @@ class Backup extends Model
     public function disk(): Filesystem
     {
         return Storage::disk($this->disk);
+    }
+
+    public function has(string $path): bool
+    {
+        return $this->disk()->exists("{$this->path}/{$path}");
     }
 }

@@ -50,6 +50,8 @@ class RunBackup implements BackupTask
     {
         $source = $pendingBackup->source;
 
+        $port = $pendingBackup->source->getPort();
+
         $destination = $pendingBackup->destination;
 
         $linkFromDestination = '';
@@ -61,6 +63,6 @@ class RunBackup implements BackupTask
             ->map(fn (string $excludedPath) => "--exclude={$excludedPath}")
             ->implode(' ');
 
-        return "rsync -progress -zaHLK  --stats --info=progress2 {$excludes} {$linkFromDestination} -e ssh {$source} {$destination}";
+        return "rsync -progress -zaHLK  --stats --info=progress2 {$excludes} {$linkFromDestination} -e \"ssh -p {$port}\" {$source} {$destination}";
     }
 }

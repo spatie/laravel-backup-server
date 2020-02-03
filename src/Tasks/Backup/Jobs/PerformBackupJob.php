@@ -32,29 +32,28 @@ class PerformBackupJob implements ShouldQueue
 
     public function handle()
     {
-        $tasks = [
-            EnsureSourceIsReachable::class,
-            EnsureDestinationIsReachable::class,
-            DetermineDestinationPath::class,
-            PerformPreBackupCommands::class,
-            RunBackup::class,
-            PerformPostBackupCommands::class,
-            CalculateBackupSize::class,
-        ];
+        try {
+            $tasks = [
+                EnsureSourceIsReachable::class,
+                EnsureDestinationIsReachable::class,
+                DetermineDestinationPath::class,
+                PerformPreBackupCommands::class,
+                RunBackup::class,
+                PerformPostBackupCommands::class,
+                CalculateBackupSize::class,
+            ];
 
-        collect($tasks)
-            ->map(fn (string $backupTaskClass) => app($backupTaskClass))
-            ->each->execute($this->backup);
+            collect($tasks)
+                ->map(fn (string $backupTaskClass) => app($backupTaskClass))
+                ->each->execute($this->backup);
 
-        $this->backup->markAsCompleted();
+            $this->backup->markAsCompleted();
 
-        event(new BackupCompletedEvent($this->backup));
-    }
+            event(new BackupCompletedEvent($this->backup));
+        } catch (Throwable $exception) {
+            $this->backup->markAsFailed($exception->getMessage());
 
-    public function failed(Throwable $exception)
-    {
-        $this->backup->markAsFailed($exception->getMessage());
-
-        event(new BackupFailedEvent($this->backup, $exception));
+            event(new BackupFailedEvent($this->backup, $exception));
+        }
     }
 }

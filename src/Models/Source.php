@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\BackupServer\Models\Concerns\HasBackupRelation;
 use Spatie\BackupServer\Models\Concerns\LogsActivity;
-use Spatie\BackupServer\Support\Helpers\Ssh;
 use Spatie\BackupServer\Tasks\Monitor\HealthCheckCollection;
+use Spatie\Ssh\Ssh;
 use Symfony\Component\Process\Process;
 
 class Source extends Model
@@ -31,6 +31,10 @@ class Source extends Model
     public function executeSshCommands(array $commands): Process
     {
         $ssh = new Ssh($this->ssh_user, $this->host);
+
+        if ($this->ssh_port) {
+            $ssh->port($this->ssh_port);
+        }
 
         return $ssh->execute($commands);
     }
