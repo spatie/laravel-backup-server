@@ -35,7 +35,7 @@ class RunBackup implements BackupTask
     protected function runBackup(PendingBackup $pendingBackup): bool
     {
         $command = $this->getBackupCommand($pendingBackup);
-        dump($command);
+
         $progressCallable = $pendingBackup->progressCallable;
 
         $process = Process::fromShellCommandline($command)->setTimeout(null);
@@ -70,6 +70,6 @@ class RunBackup implements BackupTask
             ->map(fn (string $excludedPath) => "--exclude={$excludedPath}")
             ->implode(' ');
 
-        return "rsync -progress -zaHLK  --stats --info=progress2 {$excludes} {$linkFromDestination} -e \"ssh -p {$privateKeyFile} {$port}\" {$source} {$destination}";
+        return "rsync -progress -zaHLK  --stats --info=progress2 {$excludes} {$linkFromDestination} -e \"ssh {$privateKeyFile} -p {$port}\" {$source} {$destination}";
     }
 }
