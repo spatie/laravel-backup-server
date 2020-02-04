@@ -115,16 +115,6 @@ class PerformBackupJobTest extends TestCase
         $this->assertEquals(Backup::STATUS_FAILED, $this->source->backups()->first()->status);
     }
 
-    /** @test */
-    public function it_will_fail_if_the_destination_is_not_set()
-    {
-        $this->destination->delete();
-
-        $this->artisan('backup-server:backup')->assertExitCode(0);
-
-        $this->assertEquals(Backup::STATUS_FAILED, $this->source->backups()->first()->status);
-    }
-
     public function tearDown(): void
     {
         parent::tearDown();
