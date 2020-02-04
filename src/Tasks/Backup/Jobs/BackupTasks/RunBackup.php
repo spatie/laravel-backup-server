@@ -19,6 +19,7 @@ class RunBackup implements BackupTask
             ->from($backup->sourceLocation())
             ->exclude($backup->source->excludes ?? [])
             ->to($backup->destinationLocation())
+            ->usePrivateKeyFile($this->ssh_private_key_file ?? '')
             ->reportProgress(function (string $type, string $progress) use ($backup) {
                 $backup->handleProgress($type, $progress);
             });
@@ -59,10 +60,15 @@ class RunBackup implements BackupTask
             $linkFromDestination = "--link-dest {$pendingBackup->incrementalFromDirectory}";
         }
 
+        $privateKeyFile = '';
+        if ($pendingBackup->privateKeyFile !== '') {
+            $privateKeyFile = "-i {$pendingBackup->privateKeyFile}";
+        }
+
         $excludes = collect($pendingBackup->excludedPaths)
             ->map(fn (string $excludedPath) => "--exclude={$excludedPath}")
             ->implode(' ');
 
-        return "rsync -progress -zaHLK  --stats --info=progress2 {$excludes} {$linkFromDestination} -e \"ssh -p {$port}\" {$source} {$destination}";
+        return "rsync -progress -zaHLK  --stats --info=progress2 {$excludes} {$linkFromDestination} -e \"ssh -p {$privateKeyFile} {$port}\" {$source} {$destination}";
     }
 }

@@ -16,6 +16,8 @@ class PendingBackup
 
     public array $excludedPaths = [];
 
+    public string $privateKeyFile = '';
+
     public $progressCallable;
 
     public function from(SourceLocation $location): self
@@ -42,6 +44,13 @@ class PendingBackup
     public function incrementalFrom(string $directory): self
     {
         $this->incrementalFromDirectory = $directory;
+
+        return $this;
+    }
+
+    public function usePrivateKeyFile(string $privateKeyFile): self
+    {
+        $this->privateKeyFile = $privateKeyFile;
 
         return $this;
     }

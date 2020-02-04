@@ -69,4 +69,14 @@ class TestCase extends Orchestra
 
         return app($notifiableClass);
     }
+
+    public function publicKeyPath(): string
+    {
+        return __DIR__ . '/docker/keys/laravel_backup_server_id_rsa.pub';
+    }
+
+    public function privateKeyPath(): string
+    {
+        return __DIR__ . '/docker/keys/laravel_backup_server_id_rsa.pub';
+    }
 }

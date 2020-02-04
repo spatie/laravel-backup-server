@@ -36,6 +36,10 @@ class Source extends Model
             $ssh->usePort($this->ssh_port);
         }
 
+        if ($this->ssh_private_key_file) {
+            $ssh->usePrivateKey($this->ssh_private_key_file);
+        }
+
         return $ssh->execute($commands);
     }
 

@@ -28,12 +28,13 @@ class PerformBackupJobTest extends TestCase
             ->name('laravel-backup-server-tests')
             ->mapPort(4848, 22)
             ->start()
-            ->addPublicKey('/Users/freek/.ssh/id_rsa.pub');
+            ->addPublicKey($this->publicKeyPath());
 
         $this->source = factory(Source::class)->create([
             'host' => '0.0.0.0',
             'ssh_port' => '4848',
             'ssh_user' => 'root',
+            'ssh_private_key_file' => $this->privateKeyPath(),
             'includes' => ['/src']
         ]);
 
