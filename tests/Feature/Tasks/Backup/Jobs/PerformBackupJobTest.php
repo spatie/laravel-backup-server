@@ -24,7 +24,7 @@ class PerformBackupJobTest extends TestCase
 
         Storage::fake('backups');
 
-        $this->container = (new DockerContainer('spatie/laravel-backup-server-tests'))
+        $this->container = DockerContainer::create('spatie/laravel-backup-server-tests')
             ->name('laravel-backup-server-tests')
             ->mapPort(4848, 22)
             ->stopOnDestruct()
@@ -85,6 +85,8 @@ class PerformBackupJobTest extends TestCase
     /** @test */
     public function it_can_perform_post_backup_commands()
     {
+        $this->container->addFiles(__DIR__ . '/stubs/serverContent/testServer', '/src');
+
         $this->source->update(['post_backup_commands' => ['echo "ok" >> /post_backup_command.txt']]);
 
         $this->artisan('backup-server:backup')->assertExitCode(0);
@@ -110,6 +112,16 @@ class PerformBackupJobTest extends TestCase
     public function it_will_fail_if_the_source_is_not_reachable()
     {
         $this->source->update(['host' => 'non-existing-host']);
+
+        $this->artisan('backup-server:backup')->assertExitCode(0);
+
+        $this->assertEquals(Backup::STATUS_FAILED, $this->source->backups()->first()->status);
+    }
+
+    /** @test */
+    public function it_will_fail_if_it_cannot_login()
+    {
+        $this->source->update(['ssh_private_key_file' => null]);
 
         $this->artisan('backup-server:backup')->assertExitCode(0);
 

@@ -12,6 +12,11 @@ class BackupFailed extends Exception
         return new static("Backup for `{$backup->source->name}` failed because {$backup->sourceLocation()->connectionString()} could not be reached. Response: {$response}");
     }
 
+    public static function rsyncDidFail(Backup $backup, string $commandOutput)
+    {
+        return new static("Backup for `{$backup->source->name}` failed because rsync failed. Output: {$commandOutput}");
+    }
+
     public static function BackupCommandsFailed(Backup $backup, string $attribute, string $commandOutput)
     {
         return new static("Backup for `{$backup->source->name}` failed because the backup commands in attribute `{$attribute}` failed. Output: {$commandOutput}");

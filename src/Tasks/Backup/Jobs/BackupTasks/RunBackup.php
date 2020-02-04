@@ -2,6 +2,7 @@
 
 namespace Spatie\BackupServer\Tasks\Backup\Jobs\BackupTasks;
 
+use Spatie\BackupServer\Exceptions\BackupFailed;
 use Spatie\BackupServer\Models\Backup;
 use Spatie\BackupServer\Support\Helpers\Enums\Task;
 use Spatie\BackupServer\Tasks\Backup\Support\PendingBackup;
@@ -29,10 +30,10 @@ class RunBackup implements BackupTask
             $pendingBackup->incrementalFrom($previousCompletedBackup->destinationLocation()->getFullPath());
         }
 
-        $this->runBackup($pendingBackup);
+        $this->runBackup($pendingBackup, $backup);
     }
 
-    protected function runBackup(PendingBackup $pendingBackup): bool
+    protected function runBackup(PendingBackup $pendingBackup, Backup $backup)
     {
         $command = $this->getBackupCommand($pendingBackup);
 
@@ -44,7 +45,9 @@ class RunBackup implements BackupTask
 
         $didCompleteSuccessFully = $process->getExitCode() === 0;
 
-        return $didCompleteSuccessFully;
+        if (! $didCompleteSuccessFully) {
+            throw BackupFailed::rsyncDidFail($backup, $process->getErrorOutput());
+        }
     }
 
     protected function getBackupCommand(PendingBackup $pendingBackup): string
