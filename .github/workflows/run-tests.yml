@@ -42,8 +42,8 @@ jobs:
 
       - name: Set permissions for keys
         run: |
-          chmod 600 tests/docker/keys/spatie_docker_package_id_rsa
-          chmod 600 tests/docker/keys/spatie_docker_package_id_rsa.pub
+          chmod 600 tests/docker/keys/laravel_backup_server_id_rsa
+          chmod 600 tests/docker/keys/laravel_backup_server_id_rsa.pub
 
       - name: Execute tests
         run: vendor/bin/phpunit
