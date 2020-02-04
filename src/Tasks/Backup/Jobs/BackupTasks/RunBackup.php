@@ -35,7 +35,7 @@ class RunBackup implements BackupTask
     protected function runBackup(PendingBackup $pendingBackup): bool
     {
         $command = $this->getBackupCommand($pendingBackup);
-
+        dump($command);
         $progressCallable = $pendingBackup->progressCallable;
 
         $process = Process::fromShellCommandline($command)->setTimeout(null);
