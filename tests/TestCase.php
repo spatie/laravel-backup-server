@@ -77,6 +77,6 @@ class TestCase extends Orchestra
 
     public function privateKeyPath(): string
     {
-        return __DIR__ . '/docker/keys/laravel_backup_server_id_rsa.pub';
+        return __DIR__ . '/docker/keys/laravel_backup_server_id_rsa';
     }
 }
