@@ -27,8 +27,8 @@ jobs:
 
       - name: Set permissions for keys
         run: |
-          chmod 700 tests/keys/laravel_backup_server_id_rsa
-          chmod 700 tests/keys/laravel_backup_server_id_rsa.pub
+          chmod 700 tests/docker/keys/laravel_backup_server_id_rsa
+          chmod 700 tests/docker/keys/laravel_backup_server_id_rsa.pub
 
       - name: Patch SSH Daemon
         run: sudo sed -ri 's/^#?   StrictHostKeyChecking ask/StrictHostKeyChecking no/g' /etc/ssh/ssh_config
