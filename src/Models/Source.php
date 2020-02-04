@@ -33,7 +33,7 @@ class Source extends Model
         $ssh = new Ssh($this->ssh_user, $this->host);
 
         if ($this->ssh_port) {
-            $ssh->port($this->ssh_port);
+            $ssh->usePort($this->ssh_port);
         }
 
         return $ssh->execute($commands);

@@ -24,12 +24,11 @@ class PerformBackupJobTest extends TestCase
 
         Storage::fake('backups');
 
-        $this->container = DockerContainer::new()
-            ->image('spatie/dock')
-            ->named('spatie_docker_test')
-            ->port(4848)
+        $this->container = (new DockerContainer('spatie/laravel-backup-server-tests'))
+            ->name('laravel-backup-server-tests')
+            ->mapPort(4848, 22)
             ->start()
-            ->addPublicKey(file_get_contents('/Users/freek/.ssh/id_rsa.pub'));
+            ->addPublicKey('/Users/freek/.ssh/id_rsa.pub');
 
         $this->source = factory(Source::class)->create([
             'host' => '0.0.0.0',
@@ -49,7 +48,6 @@ class PerformBackupJobTest extends TestCase
         $this->artisan('backup-server:backup')->assertExitCode(0);
 
         $this->assertTrue($this->source->backups()->first()->has('src/1.txt'));
-
         $this->assertEquals(Backup::STATUS_COMPLETED, $this->source->backups()->first()->status);
     }
 
@@ -86,7 +84,7 @@ class PerformBackupJobTest extends TestCase
 
         $this->artisan('backup-server:backup')->assertExitCode(0);
 
-        $process = $this->container->run('cat /post_backup_command.txt');
+        $process = $this->container->execute('cat /post_backup_command.txt');
 
         $this->assertEquals("ok", trim($process->getOutput()));
 
