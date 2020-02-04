@@ -54,7 +54,6 @@ class MonitorBackupsCommandTest extends TestCase
         Notification::assertSentTo($this->configuredNotifiable(), HealthyDestinationFoundNotification::class);
         Notification::assertNotSentTo($this->configuredNotifiable(), UnhealthyDestinationFoundNotification::class);
 
-
         factory(Backup::class)->create([
             'status' => Backup::STATUS_COMPLETED,
             'real_size_in_kb' => 1 * 1024,

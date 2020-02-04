@@ -96,7 +96,6 @@ class DispatchPerformCleanupJobsTest extends TestCase
                 ]);
             });
 
-
         $this->artisan('backup-server:cleanup')->assertExitCode(0);
 
         $expectedRemainingBackups->each(function (Backup $backup) {

@@ -22,6 +22,17 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v1
 
+      - name: Install sed
+        run: sudo apt-get install sed
+
+      - name: Set permissions for keys
+        run: |
+          chmod 700 tests/keys/laravel_backup_server_id_rsa
+          chmod 700 tests/keys/laravel_backup_server_id_rsa.pub
+
+      - name: Patch SSH Daemon
+        run: sudo sed -ri 's/^#?   StrictHostKeyChecking ask/StrictHostKeyChecking no/g' /etc/ssh/ssh_config
+
       - name: Cache dependencies
         uses: actions/cache@v1
         with:

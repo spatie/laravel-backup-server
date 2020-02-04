@@ -40,6 +40,8 @@ class PerformBackupJobTest extends TestCase
         ]);
 
         $this->destination = factory(Destination::class)->create();
+
+        $this->source->update(['destination_id' => $this->destination->id]);
     }
 
     /** @test */
@@ -97,6 +99,26 @@ class PerformBackupJobTest extends TestCase
     public function it_will_mark_the_backup_as_failed_if_the_post_backup_commands_cannot_execute()
     {
         $this->source->update(['post_backup_commands' => ['invalid-command']]);
+
+        $this->artisan('backup-server:backup')->assertExitCode(0);
+
+        $this->assertEquals(Backup::STATUS_FAILED, $this->source->backups()->first()->status);
+    }
+
+    /** @test */
+    public function it_will_fail_if_the_source_is_not_reachable()
+    {
+        $this->source->update(['host' => 'non-existing-host']);
+
+        $this->artisan('backup-server:backup')->assertExitCode(0);
+
+        $this->assertEquals(Backup::STATUS_FAILED, $this->source->backups()->first()->status);
+    }
+
+    /** @test */
+    public function it_will_fail_if_the_destination_is_not_set()
+    {
+        $this->destination->delete();
 
         $this->artisan('backup-server:backup')->assertExitCode(0);
 
