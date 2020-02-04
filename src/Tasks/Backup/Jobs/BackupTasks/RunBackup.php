@@ -19,7 +19,7 @@ class RunBackup implements BackupTask
             ->from($backup->sourceLocation())
             ->exclude($backup->source->excludes ?? [])
             ->to($backup->destinationLocation())
-            ->usePrivateKeyFile($this->ssh_private_key_file ?? '')
+            ->usePrivateKeyFile($backup->source->ssh_private_key_file ?? '')
             ->reportProgress(function (string $type, string $progress) use ($backup) {
                 $backup->handleProgress($type, $progress);
             });
@@ -61,6 +61,7 @@ class RunBackup implements BackupTask
         }
 
         $privateKeyFile = '';
+
         if ($pendingBackup->privateKeyFile !== '') {
             $privateKeyFile = "-i {$pendingBackup->privateKeyFile}";
         }
