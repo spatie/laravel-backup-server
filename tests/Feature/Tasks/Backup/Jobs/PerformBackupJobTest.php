@@ -51,9 +51,8 @@ class PerformBackupJobTest extends TestCase
 
         $this->artisan('backup-server:backup')->assertExitCode(0);
 
-        dump($this->source->logItems()->pluck('message')->toArray());
-
         $this->assertTrue($this->source->backups()->first()->has('src/1.txt'));
+
         $this->assertEquals(Backup::STATUS_COMPLETED, $this->source->backups()->first()->status);
     }
 
