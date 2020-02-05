@@ -181,7 +181,11 @@ class Backup extends Model
             return $this;
         }
 
-        $process = Process::fromShellCommandline("du -krd 1 ..", $this->destinationLocation()->getFullPath());
+        $command = PHP_OS === 'Darwin'
+            ? 'du -kd 1 ..'
+            : 'du -bd 1 ..';
+
+        $process = Process::fromShellCommandline($command, $this->destinationLocation()->getFullPath());
         $process->run();
 
         $output = $process->getOutput();
@@ -191,7 +195,6 @@ class Backup extends Model
         });
 
         $sizeInKb = Str::before($directoryLine, "\t");
-        dump('sizeInKb: ' . $sizeInKb . ' ok: ' . $process->isSuccessful() . ' error:' . $process->getErrorOutput());
 
         $this->update(['real_size_in_kb' => (int)trim($sizeInKb)]);
 
