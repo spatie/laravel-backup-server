@@ -2,6 +2,7 @@
 
 namespace Spatie\BackupServer\Tests\Factories;
 
+use Illuminate\Support\Facades\File;
 use Spatie\BackupServer\Models\Backup;
 use Spatie\BackupServer\Models\Destination;
 use Spatie\BackupServer\Models\Source;
@@ -14,6 +15,8 @@ class BackupFactory
 
     private bool $createBackupDirectory = false;
 
+    private array $files = [];
+
     private ?string $status = null;
 
     public function source(Source $source): self
@@ -23,7 +26,7 @@ class BackupFactory
         return $this;
     }
 
-    public function completed()
+    public function completed(): self
     {
         $this->status = Backup::STATUS_COMPLETED;
 
@@ -37,9 +40,18 @@ class BackupFactory
         return $this;
     }
 
-    public function makeSureBackupDirectoryExists($createBackupDirectory = true)
+    public function makeSureBackupDirectoryExists($createBackupDirectory = true): self
     {
         $this->createBackupDirectory = $createBackupDirectory;
+
+        return $this;
+    }
+
+    public function addFiles(array $files): self
+    {
+        $this->makeSureBackupDirectoryExists();
+
+        $this->files = array_merge($files, $this->files);
 
         return $this;
     }
@@ -63,6 +75,12 @@ class BackupFactory
 
         if ($this->createBackupDirectory) {
             $backup->disk()->makeDirectory($backup->destinationLocation()->getPath());
+
+            collect($this->files)->each(function (string $filePath) use ($backup) {
+                $destination = $backup->destinationLocation()->getFullPath() .'/' . pathinfo($filePath, PATHINFO_BASENAME);
+
+                File::copy($filePath, $destination);
+            });
         }
 
         return $backup;

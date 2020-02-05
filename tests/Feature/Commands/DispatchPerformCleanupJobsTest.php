@@ -22,7 +22,7 @@ class DispatchPerformCleanupJobsTest extends TestCase
     {
         parent::setUp();
 
-        Storage::fake();
+        Storage::fake('backups');
 
         TestTime::freeze('Y-m-d H:i:s', '2020-01-01 00:00:00');
 
@@ -128,7 +128,18 @@ class DispatchPerformCleanupJobsTest extends TestCase
     /** @test */
     public function it_will_delete_all_backups_until_the_total_size_is_under_the_limit()
     {
-        //TODO
+        /** @var Source $source */
+        $source = factory(Source::class)->create([
+            'delete_oldest_backups_when_using_more_megabytes_than' => 5
+        ]);
+
+        foreach (range(1, 10) as $i) {
+            (new BackupFactory())->addFiles([__DIR__ . '/stubs/1Mb.file'])->source($source)->create();
+        }
+
+        $this->artisan('backup-server:cleanup')->assertExitCode(0);
+
+        $this->assertCount(5, $source->backups);
     }
 
     /** @test */

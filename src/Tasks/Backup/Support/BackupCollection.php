@@ -28,6 +28,6 @@ class BackupCollection extends Collection
 
     public function oldest(): ?Backup
     {
-        $this->reverse()->last();
+        return $this->reverse()->last();
     }
 }

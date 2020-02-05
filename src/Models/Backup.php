@@ -181,7 +181,7 @@ class Backup extends Model
             return $this;
         }
 
-        $process = Process::fromShellCommandline("du -rd 1 ..", $this->destinationLocation()->getFullPath());
+        $process = Process::fromShellCommandline("du -krd 1 ..", $this->destinationLocation()->getFullPath());
         $process->run();
 
         $output = $process->getOutput();

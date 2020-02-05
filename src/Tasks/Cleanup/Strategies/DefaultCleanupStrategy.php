@@ -111,23 +111,24 @@ class DefaultCleanupStrategy implements CleanupStrategy
 
         $actualSizeInKb = $backups
             ->map(function (Backup $backup) {
-                return $backup->recalculateRealBackupSize()->refresh();
+                $model =  $backup->recalculateRealBackupSize()->refresh();
+                return $model;
             })
             ->filter->exists
             ->sum('real_size_in_kb');
 
-        if (($actualSizeInKb * 1024) < $sizeLimitInMb * 1024 * 1024) {
+        if ($actualSizeInKb <= ($sizeLimitInMb * 1024)) {
             return;
         }
 
-        /** @var Backup $oldestBackup */
+        /** @var \Spatie\BackupServer\Models\Backup $oldestBackup */
         $oldestBackup = $backups->oldest();
 
         $oldestBackup->logInfo(Task::CLEANUP, 'Deleting backup because destination uses more space than the limit allows');
 
         $oldestBackup->delete();
 
-        $backups = $backups->filter->exists();
+        $backups = $backups->filter->exists;
 
         $this->removeOldBackupsUntilUsingLessThanMaximumStorage($backups, $sizeLimitInMb);
     }
