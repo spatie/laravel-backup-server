@@ -20,13 +20,14 @@ class DefaultCleanupStrategy implements CleanupStrategy
 
     public function deleteOldBackups(Source $source)
     {
+        dump('start deleting...');
         $this->config = new DefaultStrategyConfig($source);
 
         /** @var \Spatie\BackupServer\Tasks\Backup\Support\BackupCollection $backups */
         $backups = $source->completedBackups()->get();
 
         // Don't ever delete the youngest backup.
-        $this->youngestBackup = $backups->youngest();
+        $this->youngestBackup = $backups->shift();
 
         $dateRanges = $this->calculateDateRanges();
 

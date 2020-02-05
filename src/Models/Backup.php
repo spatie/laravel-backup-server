@@ -183,7 +183,7 @@ class Backup extends Model
 
         $command = PHP_OS === 'Darwin'
             ? 'du -kd 1 ..'
-            : 'du -bd 1 ..';
+            : 'du -kd 1 ..';
 
         $process = Process::fromShellCommandline($command, $this->destinationLocation()->getFullPath());
         $process->run();

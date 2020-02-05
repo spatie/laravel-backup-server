@@ -130,18 +130,35 @@ class DispatchPerformCleanupJobsTest extends TestCase
     /** @test */
     public function it_will_delete_all_backups_until_the_total_size_is_under_the_limit()
     {
-        /** @var Source $source */
+        /** @var \Spatie\BackupServer\Models\Source $source */
         $source = factory(Source::class)->create([
             'delete_oldest_backups_when_using_more_megabytes_than' => 5
         ]);
 
         foreach (range(1, 10) as $i) {
-            (new BackupFactory())->addFiles([__DIR__ . '/stubs/1Mb.file'])->source($source)->create();
+            (new BackupFactory())->addFiles([__DIR__ . '/stubs/1MB.file'])->source($source)->create();
         }
 
         $this->artisan('backup-server:cleanup')->assertExitCode(0);
 
-        $this->assertCount(5, $source->backups);
+        $this->assertCount(6, $source->backups);
+    }
+
+    /** @test */
+    public function it_the_delete_oldest_backups_when_using_more_megabytes_than_field_is_lower_that_the_backup_size_it_will_not_delete_the_youngest_backup()
+    {
+        /** @var \Spatie\BackupServer\Models\Source $source */
+        $source = factory(Source::class)->create([
+            'delete_oldest_backups_when_using_more_megabytes_than' => 1
+        ]);
+
+        foreach (range(1, 10) as $i) {
+            (new BackupFactory())->addFiles([__DIR__ . '/stubs/2MB.file'])->source($source)->create();
+        }
+
+        $this->artisan('backup-server:cleanup')->assertExitCode(0);
+
+        $this->assertCount(1, $source->backups);
     }
 
     /** @test */
