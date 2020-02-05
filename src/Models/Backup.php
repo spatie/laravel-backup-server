@@ -191,6 +191,7 @@ class Backup extends Model
         });
 
         $sizeInKb = Str::before($directoryLine, "\t");
+        dump('sizeInKb: ' . $sizeInKb . ' ok: ' . $process->isSuccessful() . ' error:' . $process->getErrorOutput());
 
         $this->update(['real_size_in_kb' => (int)trim($sizeInKb)]);
 
