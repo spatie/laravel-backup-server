@@ -20,7 +20,6 @@ class DefaultCleanupStrategy implements CleanupStrategy
 
     public function deleteOldBackups(Source $source)
     {
-        dump('start deleting...');
         $this->config = new DefaultStrategyConfig($source);
 
         /** @var \Spatie\BackupServer\Tasks\Backup\Support\BackupCollection $backups */
