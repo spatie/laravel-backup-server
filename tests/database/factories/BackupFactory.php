@@ -18,5 +18,7 @@ $factory->define(Backup::class, function (Faker $faker) {
 });
 
 $factory->afterCreating(Backup::class, function (Backup $backup, $faker) {
-    $backup->update(['path' => $backup->id . '/test-backup']);
+    if ($backup->path === null) {
+        $backup->update(['path' => $backup->id . '/test-backup']);
+    }
 });

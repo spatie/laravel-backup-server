@@ -32,6 +32,8 @@ class DispatchPerformCleanupJobsTest extends TestCase
 
         $this->source = factory(Source::class)->create([
             'destination_id' => $this->destination->id,
+            'delete_oldest_backups_when_using_more_megabytes_than' => 5000
+
         ]);
 
         Notification::fake();
