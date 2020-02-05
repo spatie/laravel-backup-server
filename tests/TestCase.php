@@ -79,4 +79,9 @@ class TestCase extends Orchestra
     {
         return __DIR__ . '/docker/keys/laravel_backup_server_id_rsa';
     }
+
+    public function runningOnGitHubActions(): bool
+    {
+        return env('GITHUB_WORKFLOW') !== null;
+    }
 }

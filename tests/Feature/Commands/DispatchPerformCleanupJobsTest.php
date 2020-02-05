@@ -140,8 +140,11 @@ class DispatchPerformCleanupJobsTest extends TestCase
         }
 
         $this->artisan('backup-server:cleanup')->assertExitCode(0);
+        $expectedNumberOfBackups = $this->runningOnGitHubActions()
+            ? 5 // on github actions files are slightly bigger due to blocksize, so one more backup gets deleted
+            : 6;
 
-        $this->assertCount(6, $source->backups);
+        $this->assertCount($expectedNumberOfBackups, $source->backups);
     }
 
     /** @test */

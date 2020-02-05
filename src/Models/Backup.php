@@ -181,9 +181,7 @@ class Backup extends Model
             return $this;
         }
 
-        $command = PHP_OS === 'Darwin'
-            ? 'du -kd 1 ..'
-            : 'du -kd 1 ..';
+        $command = 'du -kd 1 ..';
 
         $process = Process::fromShellCommandline($command, $this->destinationLocation()->getFullPath());
         $process->run();
@@ -195,7 +193,7 @@ class Backup extends Model
         });
 
         $sizeInKb = Str::before($directoryLine, "\t");
-        dump('size in kb ' . $sizeInKb);
+
         $this->update(['real_size_in_kb' => (int)trim($sizeInKb)]);
 
         return $this;
