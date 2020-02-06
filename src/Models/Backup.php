@@ -160,7 +160,7 @@ class Backup extends Model
 
     public function recalculateBackupSize()
     {
-        $process = Process::fromShellCommandline("du -rd 0", $this->destinationLocation()->getFullPath());
+        $process = Process::fromShellCommandline("du -kd 0", $this->destinationLocation()->getFullPath());
 
         $process->run();
 

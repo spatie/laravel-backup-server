@@ -2,7 +2,7 @@
 
 namespace Spatie\BackupServer\Tasks\Backup\Support;
 
-use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Collection;
 use Spatie\BackupServer\Models\Backup;
 
 class BackupCollection extends Collection

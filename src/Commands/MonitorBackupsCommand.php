@@ -36,7 +36,7 @@ class MonitorBackupsCommand extends Command
             });
 
         $healthySources->each(function (Source $source) {
-            $this->info("Source `{$source->name}` is healthy");
+            $this->comment("Source `{$source->name}` is healthy");
 
             event(new HealthySourceFoundEvent($source));
         });
@@ -64,7 +64,7 @@ class MonitorBackupsCommand extends Command
             });
 
         $healthyDestinations->each(function (Destination $destination) {
-            $this->info("Destination `{$destination->name}` is healthy");
+            $this->comment("Destination `{$destination->name}` is healthy");
 
             event(new HealthyDestinationFoundEvent($destination));
         });
