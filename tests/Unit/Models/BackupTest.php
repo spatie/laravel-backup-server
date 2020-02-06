@@ -3,8 +3,10 @@
 namespace Spatie\BackupServer\Tests\Unit\Models;
 
 use Illuminate\Support\Facades\Storage;
+use Spatie\BackupServer\Models\Backup;
 use Spatie\BackupServer\Tests\Factories\BackupFactory;
 use Spatie\BackupServer\Tests\TestCase;
+use Spatie\TestTime\TestTime;
 
 class BackupTest extends TestCase
 {
@@ -33,5 +35,19 @@ class BackupTest extends TestCase
 
         $backup->delete();
         $this->assertFalse($backup->existsOnDisk());
+    }
+
+    /** @test */
+    public function it_will_fill_the_completed_at_field_when_marking_a_backup_as_completed()
+    {
+        TestTime::freeze();
+
+        /** @var \Spatie\BackupServer\Models\Backup $backup */
+        $backup = factory(Backup::class)->create();
+
+        $backup->markAsCompleted();
+
+        $this->assertEquals(Backup::STATUS_COMPLETED, $backup->status);
+        $this->assertEquals(now()->format('YmdHis'), $backup->completed_at->format('YmdHis'));
     }
 }

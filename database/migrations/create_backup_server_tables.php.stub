@@ -79,6 +79,7 @@ class CreateBackupServerTables extends Migration
             $table->unsignedBigInteger('real_size_in_kb')->nullable();
 
             $table->timestamps();
+            $table->timestamp('completed_at')->nullable();
 
             $table->foreign('source_id')->references('id')->on('sources')->onDelete('cascade');
             $table->foreign('destination_id')->references('id')->on('destinations')->onDelete('cascade');

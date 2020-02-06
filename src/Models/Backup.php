@@ -31,6 +31,7 @@ class Backup extends Model
         'log' => 'array',
         'size_in_kb' => 'int',
         'real_size_in_kb' => 'int',
+        'completed_at' => 'datetime',
     ];
 
     public static function boot()
@@ -92,6 +93,7 @@ class Backup extends Model
 
         $this->update([
             'status' => self::STATUS_COMPLETED,
+            'completed_at' => now(),
         ]);
 
         return $this;
