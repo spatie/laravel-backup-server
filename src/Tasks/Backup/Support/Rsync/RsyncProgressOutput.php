@@ -1,11 +1,11 @@
 <?php
 
-namespace Spatie\BackupServer\Tasks\Backup\Support;
+namespace Spatie\BackupServer\Tasks\Backup\Support\Rsync;
 
 use Illuminate\Support\Str;
 use Spatie\Regex\Regex;
 
-class RsyncOutput
+class RsyncProgressOutput
 {
     private string $output;
 

@@ -32,6 +32,8 @@ class PerformBackupJob implements ShouldQueue
 
     public function handle()
     {
+        $this->backup->markAsInProgress();
+
         try {
             $tasks = [
                 EnsureSourceIsReachable::class,

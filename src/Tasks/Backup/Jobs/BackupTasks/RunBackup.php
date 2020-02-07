@@ -6,6 +6,7 @@ use Spatie\BackupServer\Exceptions\BackupFailed;
 use Spatie\BackupServer\Models\Backup;
 use Spatie\BackupServer\Support\Helpers\Enums\Task;
 use Spatie\BackupServer\Tasks\Backup\Support\PendingBackup;
+use Spatie\BackupServer\Tasks\Backup\Support\Rsync\RsyncSummaryOuput;
 use Symfony\Component\Process\Process;
 
 class RunBackup implements BackupTask
@@ -13,8 +14,6 @@ class RunBackup implements BackupTask
     public function execute(Backup $backup)
     {
         $backup->logInfo(Task::BACKUP, 'Running backup...');
-
-        $backup->markAsInProgress();
 
         $pendingBackup = (new PendingBackup())
             ->from($backup->sourceLocation())
@@ -41,9 +40,15 @@ class RunBackup implements BackupTask
 
         $process = Process::fromShellCommandline($command)->setTimeout(null);
 
+        $rsyncStart = now();
         $process->run(fn (string $type, string $buffer) => $progressCallable($type, $buffer));
+        $rsyncEnd = now();
+
+        $backup->update(['rsync_time_in_seconds' => $rsyncStart->diffInSeconds($rsyncEnd)]);
 
         $didCompleteSuccessFully = $process->getExitCode() === 0;
+
+        $this->saveRsyncSummary($backup, $process->getOutput());
 
         if (! $didCompleteSuccessFully) {
             throw BackupFailed::rsyncDidFail($backup, $process->getErrorOutput());
@@ -74,5 +79,19 @@ class RunBackup implements BackupTask
             ->implode(' ');
 
         return "rsync -progress -zaHLK  --stats --info=progress2 {$excludes} {$linkFromDestination} -e \"ssh {$privateKeyFile} -p {$port}\" {$source} {$destination}";
+    }
+
+    protected function saveRsyncSummary(Backup $backup, string $output)
+    {
+        $startingPosition = strpos($output, "Number of files");
+
+        $summary = substr($output, $startingPosition);
+
+        $backup->logInfo(Task::BACKUP, trim($summary));
+
+        $backup->update([
+            'rsync_summary' => trim($summary),
+            'rsync_average_transfer_speed_in_MB_per_second' => (new RsyncSummaryOuput($output))->averageSpeedInMB(),
+        ]);
     }
 }

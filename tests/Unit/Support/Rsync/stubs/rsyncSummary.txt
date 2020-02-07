@@ -1,0 +1,16 @@
+Number of files: 472 (reg: 345, dir: 127)
+Number of created files: 472 (reg: 345, dir: 127)
+Number of deleted files: 0
+Number of regular files transferred: 345
+Total file size: 40,522,174 bytes
+Total transferred file size: 40,522,174 bytes
+Literal data: 40,522,174 bytes
+Matched data: 0 bytes
+File list size: 14,686
+File list generation time: 0.001 seconds
+File list transfer time: 0.000 seconds
+Total bytes sent: 7,525
+Total bytes received: 18,973,543
+
+sent 7,525 bytes  received 18,973,543 bytes  5,423,162.29 bytes/sec
+total size is 40,522,174  speedup is 2.13

@@ -13,7 +13,7 @@ use Spatie\BackupServer\Support\Helpers\DestinationLocation;
 use Spatie\BackupServer\Support\Helpers\Enums\Task;
 use Spatie\BackupServer\Support\Helpers\SourceLocation;
 use Spatie\BackupServer\Tasks\Backup\Support\BackupCollection;
-use Spatie\BackupServer\Tasks\Backup\Support\RsyncOutput;
+use Spatie\BackupServer\Tasks\Backup\Support\Rsync\RsyncProgressOutput;
 use Symfony\Component\Process\Process;
 
 class Backup extends Model
@@ -128,20 +128,12 @@ class Backup extends Model
             return $this;
         }
 
-        $rsyncOutput = new RsyncOutput($progressOutput);
+        $rsyncOutput = new RsyncProgressOutput($progressOutput);
 
         if ($rsyncOutput->concernsProgress()) {
             $this->update([
-                'transfer_speed' => $rsyncOutput->getTransferSpeed()
+                'rsync_current_transfer_speed' => $rsyncOutput->getTransferSpeed()
             ]);
-
-            return $this;
-        }
-
-        if ($rsyncOutput->isSummpary()) {
-            $this->logInfo(Task::BACKUP, $progressOutput);
-
-            return $this;
         }
 
         return $this;
