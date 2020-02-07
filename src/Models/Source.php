@@ -2,6 +2,7 @@
 
 namespace Spatie\BackupServer\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\BackupServer\Models\Concerns\HasBackupRelation;
@@ -26,6 +27,11 @@ class Source extends Model
     public function destination(): BelongsTo
     {
         return $this->belongsTo(Destination::class);
+    }
+
+    public function scopeNamed(Builder $builder, string $name): void
+    {
+        $builder->where('name', $name)->first();
     }
 
     public function executeSshCommands(array $commands): Process

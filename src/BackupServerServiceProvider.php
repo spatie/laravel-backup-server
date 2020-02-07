@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
 use Spatie\BackupServer\Commands\DispatchPerformBackupJobsCommand;
 use Spatie\BackupServer\Commands\DispatchPerformCleanupJobsCommand;
+use Spatie\BackupServer\Commands\FindFileCommand;
 use Spatie\BackupServer\Commands\ListDestinationsCommand;
 use Spatie\BackupServer\Commands\ListSourcesCommand;
 use Spatie\BackupServer\Commands\MonitorBackupsCommand;
@@ -66,6 +67,7 @@ class BackupServerServiceProvider extends EventServiceProvider
                 ListSourcesCommand::class,
                 ListDestinationsCommand::class,
                 MonitorBackupsCommand::class,
+                FindFileCommand::class,
             ]);
         }
 

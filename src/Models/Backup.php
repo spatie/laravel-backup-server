@@ -207,4 +207,21 @@ class Backup extends Model
     {
         return $this->disk()->exists("{$this->path}/{$path}");
     }
+
+    public function findFile(string $searchFor, callable $handleSearchResult): bool
+    {
+        $path = $this->destinationLocation()->getFullPath();
+
+        $process = Process::fromShellCommandline("find . -name \"{$searchFor}\" -print", $path);
+
+        $process->run(function ($type, $buffer) use ($handleSearchResult) {
+            if ($type === Process::ERR) {
+                return null;
+            }
+
+            return $handleSearchResult($buffer);
+        });
+
+        return $process->isSuccessful();
+    }
 }
