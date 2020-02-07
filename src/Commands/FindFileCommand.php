@@ -4,14 +4,19 @@ namespace Spatie\BackupServer\Commands;
 
 use Closure;
 use Illuminate\Console\Command;
+use Illuminate\Support\Collection;
 use Spatie\BackupServer\Models\Backup;
 use Spatie\BackupServer\Models\Source;
+use Spatie\BackupServer\Tasks\Search\FileSearchResult;
+use Symfony\Component\Console\Helper\Table;
 
 class FindFileCommand extends Command
 {
     protected $signature = 'backup-server:find-file {sourceName} {searchFor}';
 
     protected $description = 'Find files in the backups of a source';
+
+    protected ?Table $table;
 
     public function handle()
     {
@@ -26,11 +31,18 @@ class FindFileCommand extends Command
             return true;
         }
 
+        $section = $this->output->output->section();
+        $this->table = new Table($section);
+
+        $this->table->setHeaders(['File', 'Age']);
+        $this->table->render();
+
         $source->completedBackups
             ->each(function (Backup $backup) use ($searchFor) {
                 $backup->findFile($searchFor, Closure::fromCallable([$this, 'handleFoundFile']));
             });
 
+        $this->info('');
         $this->info('All done!');
     }
 
@@ -38,7 +50,9 @@ class FindFileCommand extends Command
     protected function handleFoundFile(Collection $fileSearchResults)
     {
         $fileSearchResults->each(function (FileSearchResult $fileSearchResult) {
-            $this->info("{$fileSearchResult->path()} {$fileSearchResult->backup->created_at->diffForHumans()}");
+            $this->table->appendRow([$fileSearchResult->getAbsolutePath(), $fileSearchResult->backup->created_at->diffForHumans()]);
+
+            //$this->info("{$fileSearchResult->path()} {$fileSearchResult->backup->created_at->diffForHumans()}");
         });
     }
 }

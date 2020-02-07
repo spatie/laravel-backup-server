@@ -14,6 +14,7 @@ use Spatie\BackupServer\Support\Helpers\Enums\Task;
 use Spatie\BackupServer\Support\Helpers\SourceLocation;
 use Spatie\BackupServer\Tasks\Backup\Support\BackupCollection;
 use Spatie\BackupServer\Tasks\Backup\Support\Rsync\RsyncProgressOutput;
+use Spatie\BackupServer\Tasks\Search\FileSearchResultFactory;
 use Symfony\Component\Process\Process;
 
 class Backup extends Model
@@ -219,7 +220,9 @@ class Backup extends Model
                 return null;
             }
 
-            return $handleSearchResult($buffer);
+            $fileSearchResults = FileSearchResultFactory::create($buffer, $this);
+
+            return $handleSearchResult($fileSearchResults);
         });
 
         return $process->isSuccessful();
