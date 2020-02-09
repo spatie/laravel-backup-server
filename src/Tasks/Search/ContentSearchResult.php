@@ -5,17 +5,24 @@ namespace Spatie\BackupServer\Tasks\Search;
 use Illuminate\Support\Str;
 use Spatie\BackupServer\Models\Backup;
 
-class FileSearchResult
+class ContentSearchResult
 {
-    protected string $relativePath;
+    private string $relativePath;
 
-    protected Backup $backup;
+    private int $lineNumber;
 
-    public function __construct(string $relativePath, Backup $backup)
+    private Backup $backup;
+
+    public function __construct(string $grepResultLine, Backup $backup)
     {
-        $this->relativePath = $relativePath;
+        [$this->relativePath, $this->lineNumber] = explode(':', $grepResultLine);
 
         $this->backup = $backup;
+    }
+
+    public function lineNumber(): string
+    {
+        return $this->lineNumber;
     }
 
     public function getAbsolutePath(): string

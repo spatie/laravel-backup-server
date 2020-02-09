@@ -14,6 +14,7 @@ use Spatie\BackupServer\Support\Helpers\Enums\Task;
 use Spatie\BackupServer\Support\Helpers\SourceLocation;
 use Spatie\BackupServer\Tasks\Backup\Support\BackupCollection;
 use Spatie\BackupServer\Tasks\Backup\Support\Rsync\RsyncProgressOutput;
+use Spatie\BackupServer\Tasks\Search\ContentSearchResultFactory;
 use Spatie\BackupServer\Tasks\Search\FileSearchResultFactory;
 use Symfony\Component\Process\Process;
 
@@ -221,6 +222,25 @@ class Backup extends Model
             }
 
             $fileSearchResults = FileSearchResultFactory::create($buffer, $this);
+
+            return $handleSearchResult($fileSearchResults);
+        });
+
+        return $process->isSuccessful();
+    }
+
+    public function findContent(string $searchFor, callable $handleSearchResult): bool
+    {
+        $path = $this->destinationLocation()->getFullPath();
+
+        $process = Process::fromShellCommandline("grep -onIir '{$searchFor} '  .", $path);
+
+        $process->run(function ($type, $buffer) use ($handleSearchResult) {
+            if ($type === Process::ERR) {
+                return null;
+            }
+
+            $fileSearchResults = ContentSearchResultFactory::create($buffer, $this);
 
             return $handleSearchResult($fileSearchResults);
         });

@@ -77,7 +77,11 @@ class TestCase extends Orchestra
 
     public function privateKeyPath(): string
     {
-        return __DIR__ . '/docker/keys/laravel_backup_server_id_rsa';
+        $keyPath = __DIR__ . '/docker/keys/laravel_backup_server_id_rsa';
+
+        chmod($keyPath, 0700);
+
+        return $keyPath;
     }
 
     public function runningOnGitHubActions(): bool
