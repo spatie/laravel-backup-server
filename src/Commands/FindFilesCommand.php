@@ -10,6 +10,8 @@ use Spatie\BackupServer\Models\Backup;
 use Spatie\BackupServer\Models\Source;
 use Spatie\BackupServer\Tasks\Search\FileSearchResult;
 use Symfony\Component\Console\Helper\Table;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 
 class FindFilesCommand extends Command
 {
@@ -21,9 +23,19 @@ class FindFilesCommand extends Command
 
     protected int $resultCounter = 0;
 
+    private OutputInterface $symfonyOutput;
+
+    public function run(InputInterface $input, OutputInterface $output)
+    {
+        $this->symfonyOutput = $output;
+
+        return parent::run($input, $output);
+    }
+
     public function handle()
     {
         $sourceName = $this->argument('sourceName');
+
         $searchFor = $this->argument('searchFor');
 
         $this->info("Searching all backups of `{$sourceName}` for files named `{$searchFor}`...");
@@ -34,9 +46,7 @@ class FindFilesCommand extends Command
             return true;
         }
 
-        $section = $this->output->output->section();
-
-        $this->table = new Table($section);
+        $this->table = new Table($this->symfonyOutput->section());
 
         $this->table->setHeaders(['File', 'Age']);
         $this->table->render();
@@ -47,9 +57,11 @@ class FindFilesCommand extends Command
             });
 
         $this->info('');
-        $this->info(Str::plural($this->resultCounter, 'search result') . ' found.');
-    }
 
+        $this->info(Str::plural($this->resultCounter, 'search result') . ' found.');
+
+        return 0;
+    }
 
     protected function handleFoundFile(Collection $fileSearchResults)
     {
@@ -58,5 +70,7 @@ class FindFilesCommand extends Command
 
             $this->table->appendRow([$fileSearchResult->getAbsolutePath(), $fileSearchResult->age()]);
         });
+
+        $this->output;
     }
 }

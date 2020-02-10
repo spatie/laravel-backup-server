@@ -39,9 +39,9 @@ class PerformBackupJobTest extends TestCase
             'includes' => ['/src']
         ]);
 
-        $this->destination = factory(Destination::class)->create();
+        // $this->destination = factory(Destination::class)->create();
 
-        $this->source->update(['destination_id' => $this->destination->id]);
+        // $this->source->update(['destination_id' => $this->destination->id]);
     }
 
     /** @test */

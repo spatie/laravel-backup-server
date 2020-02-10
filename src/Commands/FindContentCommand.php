@@ -9,6 +9,8 @@ use Spatie\BackupServer\Models\Backup;
 use Spatie\BackupServer\Models\Source;
 use Spatie\BackupServer\Tasks\Search\ContentSearchResult;
 use Symfony\Component\Console\Helper\Table;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 
 class FindContentCommand extends Command
 {
@@ -17,6 +19,15 @@ class FindContentCommand extends Command
     protected $description = 'Find content in the backups of a source';
 
     protected ?Table $table;
+
+    protected OutputInterface $symfonyOutput;
+
+    public function run(InputInterface $input, OutputInterface $output)
+    {
+        $this->symfonyOutput = $output;
+
+        return parent::run($input, $output);
+    }
 
     public function handle()
     {
@@ -29,9 +40,7 @@ class FindContentCommand extends Command
             return -1;
         }
 
-        $section = $this->output;
-
-        $this->table = new Table($section);
+        $this->table = new Table($this->symfonyOutput->section());
 
         $this->table->setHeaders(['File', 'Line', 'Age']);
         $this->table->render();
