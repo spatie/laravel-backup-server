@@ -10,7 +10,6 @@ use Spatie\BackupServer\Models\Backup;
 use Spatie\BackupServer\Models\Source;
 use Spatie\BackupServer\Tasks\Search\FileSearchResult;
 use Symfony\Component\Console\Helper\Table;
-use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class FindFilesCommand extends Command
@@ -19,18 +18,11 @@ class FindFilesCommand extends Command
 
     protected $description = 'Find files in the backups of a source';
 
-    protected ?Table $table;
+    protected Table $table;
 
     protected int $resultCounter = 0;
 
     private OutputInterface $symfonyOutput;
-
-    public function run(InputInterface $input, OutputInterface $output)
-    {
-        $this->symfonyOutput = $output;
-
-        return parent::run($input, $output);
-    }
 
     public function handle()
     {
@@ -46,10 +38,7 @@ class FindFilesCommand extends Command
             return true;
         }
 
-        $this->table = new Table($this->symfonyOutput->section());
-
-        $this->table->setHeaders(['File', 'Age']);
-        $this->table->render();
+        $this->table = $this->table(['File', 'Age'], []);
 
         $source->completedBackups
             ->each(function (Backup $backup) use ($searchFor) {
