@@ -33,7 +33,7 @@
         "laravel/slack-notification-channel": "^2.0",
         "spatie/laravel-flash": "^1.4",
         "spatie/regex": "^1.4",
-        "spatie/ssh": "dev-master"
+        "spatie/ssh": "^1.3"
     },
     "require-dev": {
         "orchestra/testbench": "^4.5",
