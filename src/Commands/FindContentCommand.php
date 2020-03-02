@@ -5,19 +5,19 @@ namespace Spatie\BackupServer\Commands;
 use Closure;
 use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
+use Spatie\BackupServer\Commands\Concerns\HasOutputSection;
 use Spatie\BackupServer\Models\Backup;
 use Spatie\BackupServer\Models\Source;
 use Spatie\BackupServer\Tasks\Search\ContentSearchResult;
 use Symfony\Component\Console\Helper\Table;
-use Symfony\Component\Console\Output\OutputInterface;
 
 class FindContentCommand extends Command
 {
+    use HasOutputSection;
+
     protected $signature = 'backup-server:find-content {sourceName} {searchFor}';
 
     protected $description = 'Find content in the backups of a source';
-
-    protected OutputInterface $symfonyOutput;
 
     protected Table $table;
 
@@ -33,7 +33,9 @@ class FindContentCommand extends Command
             return -1;
         }
 
-        $this->table = $this->table(['File', 'Line', 'Age'], []);
+        $this->table = new Table($this->getSection());
+
+        $this->table->setHeaders(['File', 'Line', 'Age']);
 
         $source->completedBackups
             ->each(function (Backup $backup) use ($searchFor) {

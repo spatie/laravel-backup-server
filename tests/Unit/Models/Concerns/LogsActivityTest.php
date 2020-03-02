@@ -17,7 +17,7 @@ class LogsActivityTest extends TestCase
         $source = factory(Source::class)->create();
 
         $source->logInfo(Task::BACKUP, 'info for backup task');
-        $this->assertDatabaseHas('backup_log', [
+        $this->assertDatabaseHas('backup_server_backup_log', [
             'source_id' => $source->id,
             'backup_id' => null,
             'destination_id' => $source->destination->id,
@@ -27,7 +27,7 @@ class LogsActivityTest extends TestCase
         ]);
 
         $source->logError(Task::CLEANUP, 'error for cleanup task');
-        $this->assertDatabaseHas('backup_log', [
+        $this->assertDatabaseHas('backup_server_backup_log', [
             'source_id' => $source->id,
             'backup_id' => null,
             'destination_id' => $source->destination->id,
@@ -43,7 +43,7 @@ class LogsActivityTest extends TestCase
         $backup = factory(Backup::class)->create();
 
         $backup->logInfo(Task::BACKUP, 'info for backup task');
-        $this->assertDatabaseHas('backup_log', [
+        $this->assertDatabaseHas('backup_server_backup_log', [
             'source_id' => $backup->source->id,
             'backup_id' => $backup->id,
             'destination_id' => $backup->destination->id,
@@ -53,7 +53,7 @@ class LogsActivityTest extends TestCase
         ]);
 
         $backup->logError(Task::CLEANUP, 'error for cleanup task');
-        $this->assertDatabaseHas('backup_log', [
+        $this->assertDatabaseHas('backup_server_backup_log', [
             'source_id' => $backup->source->id,
             'backup_id' => $backup->id,
             'destination_id' => $backup->destination->id,
@@ -69,7 +69,7 @@ class LogsActivityTest extends TestCase
         $destination = factory(Destination::class)->create();
 
         $destination->logInfo(Task::BACKUP, 'info for backup task');
-        $this->assertDatabaseHas('backup_log', [
+        $this->assertDatabaseHas('backup_server_backup_log', [
             'source_id' => null,
             'backup_id' => null,
             'destination_id' => $destination->id,
@@ -79,7 +79,7 @@ class LogsActivityTest extends TestCase
         ]);
 
         $destination->logError(Task::CLEANUP, 'error for cleanup task');
-        $this->assertDatabaseHas('backup_log', [
+        $this->assertDatabaseHas('backup_server_backup_log', [
             'source_id' => null,
             'backup_id' => null,
             'destination_id' => $destination->id,

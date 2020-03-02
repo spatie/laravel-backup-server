@@ -15,6 +15,8 @@ class Source extends Model
 {
     use LogsActivity, HasBackupRelation;
 
+    public $table = 'backup_server_sources';
+
     public $guarded = [];
 
     public $casts = [

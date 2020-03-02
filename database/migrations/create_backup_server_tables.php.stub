@@ -8,7 +8,7 @@ class CreateBackupServerTables extends Migration
 {
     public function up()
     {
-        Schema::create('destinations', function (Blueprint $table) {
+        Schema::create('backup_server_destinations', function (Blueprint $table) {
             $table->bigIncrements('id');
 
             $table->string('name');
@@ -29,7 +29,7 @@ class CreateBackupServerTables extends Migration
             $table->timestamps();
         });
 
-        Schema::create('sources', function (Blueprint $table) {
+        Schema::create('backup_server_sources', function (Blueprint $table) {
             $table->bigIncrements('id');
 
             $table->string('name');
@@ -63,11 +63,11 @@ class CreateBackupServerTables extends Migration
             $table
                 ->foreign('destination_id')
                 ->references('id')
-                ->on('destinations')
+                ->on('backup_server_destinations')
                 ->onDelete('set null');
         });
 
-        Schema::create('backups', function (Blueprint $table) {
+        Schema::create('backup_server_backups', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('status');
             $table->unsignedBigInteger('source_id');
@@ -85,11 +85,11 @@ class CreateBackupServerTables extends Migration
             $table->string('rsync_current_transfer_speed')->nullable();
             $table->string('rsync_average_transfer_speed_in_MB_per_second')->nullable();
 
-            $table->foreign('source_id')->references('id')->on('sources')->onDelete('cascade');
-            $table->foreign('destination_id')->references('id')->on('destinations')->onDelete('cascade');
+            $table->foreign('source_id')->references('id')->on('backup_server_sources')->onDelete('cascade');
+            $table->foreign('destination_id')->references('id')->on('backup_server_destinations')->onDelete('cascade');
         });
 
-        Schema::create('backup_log', function (Blueprint $table) {
+        Schema::create('backup_server_backup_log', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('source_id')->nullable();
             $table->unsignedBigInteger('backup_id')->nullable();

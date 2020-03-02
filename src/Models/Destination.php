@@ -14,6 +14,9 @@ use Symfony\Component\Process\Process;
 
 class Destination extends Model
 {
+    public $table = 'backup_server_destinations';
+
+
     public $guarded = [];
 
     use LogsActivity, HasBackupRelation;

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class BackupLogItem extends Model
 {
-    protected $table = 'backup_log';
+    protected $table = 'backup_server_backup_log';
 
     protected $guarded = [];
 
