@@ -247,4 +247,9 @@ class Backup extends Model
 
         return $process->isSuccessful();
     }
+
+    public function isCompleted(): bool
+    {
+        return $this->status === static::STATUS_COMPLETED;
+    }
 }
