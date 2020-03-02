@@ -103,7 +103,7 @@ class Backup extends Model
 
     public function markAsFailed(string $errorMessage): self
     {
-        $this->logError(Task::BACKUP, "Backup failed: `{$errorMessage}`");
+        $this->logError(Task::BACKUP, "Backup failed: {$errorMessage}");
 
         $this->update([
             'status' => self::STATUS_FAILED,
