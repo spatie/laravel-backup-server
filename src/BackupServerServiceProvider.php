@@ -71,6 +71,10 @@ class BackupServerServiceProvider extends EventServiceProvider
     protected function bootPublishables()
     {
         $this->publishes([
+            __DIR__ . '/../config/backup-server.php' => config_path('backup-server.php'),
+        ], 'backup-server-config');
+
+        $this->publishes([
             __DIR__ . '/../resources/views' => resource_path('views/vendor/backup-server'),
         ], 'backup-server-views');
 
