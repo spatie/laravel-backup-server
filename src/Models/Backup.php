@@ -136,7 +136,7 @@ class Backup extends Model
 
         if ($rsyncOutput->concernsProgress()) {
             $this->update([
-                'rsync_current_transfer_speed' => $rsyncOutput->getTransferSpeed()
+                'rsync_current_transfer_speed' => $rsyncOutput->getTransferSpeed(),
             ]);
         }
 

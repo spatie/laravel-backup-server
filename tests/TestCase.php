@@ -39,7 +39,7 @@ class TestCase extends Orchestra
     {
         $app['config']->set('filesystems.disks.backups', [
             'driver' => 'local',
-            'root' => storage_path('app/backups')
+            'root' => storage_path('app/backups'),
         ]);
 
         $app['config']->set('database.default', 'sqlite');

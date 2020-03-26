@@ -90,7 +90,7 @@ class BackupServerServiceProvider extends EventServiceProvider
             __DIR__ . '/../resources/views' => resource_path('views/vendor/backup-server'),
         ], 'backup-server-views');
 
-        if (!class_exists('CreateBackupServerTables')) {
+        if (! class_exists('CreateBackupServerTables')) {
             $this->publishes([
                 __DIR__ . '/../database/migrations/create_backup_server_tables.php.stub' => database_path('migrations/' . date('Y_m_d_His', time()) . '_create_backup_server_tables.php'),
             ], 'backup-server-migrations');

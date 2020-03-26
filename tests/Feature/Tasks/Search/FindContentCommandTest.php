@@ -23,7 +23,7 @@ class FindContentCommandTest extends TestCase
 
         $this->artisan('backup-server:find-files', [
             'sourceName' => $this->source->name,
-             'searchFor' =>'*.json'
+             'searchFor' => '*.json',
         ])->assertExitCode(0)->expectsOutput('0 search results found.');
     }
 }

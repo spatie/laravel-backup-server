@@ -13,7 +13,7 @@ class DeleteBackupsWithoutDirectoriesFromDb implements CleanupTask
         $source
             ->completedBackups()
             ->each(function (Backup $backup) {
-                if (!$backup->existsOnDisk()) {
+                if (! $backup->existsOnDisk()) {
                     $backup->source->logInfo(Task::CLEANUP, "Removing backup id `{$backup->id}` because its directory `{$backup->destinationLocation()->getPath()}` on disk `{$backup->disk}` does not exist anymore ");
                     $backup->delete();
                 };

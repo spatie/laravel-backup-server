@@ -92,7 +92,7 @@ class Destination extends Model
         $process = Process::fromShellCommandline("cd {$diskRootPath}; {$command}");
         $process->run();
 
-        if (!$process->isSuccessful()) {
+        if (! $process->isSuccessful()) {
             throw new Exception("Could not determine inode count");
         }
 

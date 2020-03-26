@@ -32,7 +32,7 @@ class DispatchPerformCleanupJobsTest extends TestCase
 
         $this->source = factory(Source::class)->create([
             'destination_id' => $this->destination->id,
-            'delete_oldest_backups_when_using_more_megabytes_than' => 5000
+            'delete_oldest_backups_when_using_more_megabytes_than' => 5000,
 
         ]);
 
@@ -132,7 +132,7 @@ class DispatchPerformCleanupJobsTest extends TestCase
     {
         /** @var \Spatie\BackupServer\Models\Source $source */
         $source = factory(Source::class)->create([
-            'delete_oldest_backups_when_using_more_megabytes_than' => 5
+            'delete_oldest_backups_when_using_more_megabytes_than' => 5,
         ]);
 
         foreach (range(1, 10) as $i) {
@@ -152,7 +152,7 @@ class DispatchPerformCleanupJobsTest extends TestCase
     {
         /** @var \Spatie\BackupServer\Models\Source $source */
         $source = factory(Source::class)->create([
-            'delete_oldest_backups_when_using_more_megabytes_than' => 1
+            'delete_oldest_backups_when_using_more_megabytes_than' => 1,
         ]);
 
         foreach (range(1, 10) as $i) {

@@ -28,10 +28,10 @@ class HealthCheckCollection
     public function allPass(): bool
     {
         $containsFailingHealthCheck = collect($this->healthCheckResults)->contains(function (HealthCheckResult $healthCheckResult) {
-            return !$healthCheckResult->isOk();
+            return ! $healthCheckResult->isOk();
         });
 
-        return !$containsFailingHealthCheck;
+        return ! $containsFailingHealthCheck;
     }
 
     public function getFailureMessages(): array
@@ -48,7 +48,7 @@ class HealthCheckCollection
 
     protected function performHealthChecks(): array
     {
-        if (!is_null($this->healthCheckResults)) {
+        if (! is_null($this->healthCheckResults)) {
             return $this->healthCheckResults;
         }
 
@@ -58,6 +58,7 @@ class HealthCheckCollection
                     $healthCheckClassName = $arguments;
                     $arguments = [];
                 }
+
                 return $this->instanciateHealthCheck($healthCheckClassName, $arguments);
             });
 
@@ -75,13 +76,14 @@ class HealthCheckCollection
                 $runRemainingChecks = $healthCheckResult->shouldContinueRunningRemainingChecks();
             }
         }
+
         return $healthCheckResults;
     }
 
     protected function instanciateHealthCheck(string $healthCheckClass, $arguments): HealthCheck
     {
         // A single value was passed - we'll instantiate it manually assuming it's the first argument
-        if (!is_array($arguments)) {
+        if (! is_array($arguments)) {
             return new $healthCheckClass($arguments);
         }
 

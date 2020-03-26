@@ -36,7 +36,7 @@ class PerformBackupJobTest extends TestCase
             'ssh_port' => '4848',
             'ssh_user' => 'root',
             'ssh_private_key_file' => $this->privateKeyPath(),
-            'includes' => ['/src']
+            'includes' => ['/src'],
         ]);
 
         // $this->destination = factory(Destination::class)->create();

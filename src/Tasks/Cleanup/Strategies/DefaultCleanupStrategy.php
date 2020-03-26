@@ -111,7 +111,8 @@ class DefaultCleanupStrategy implements CleanupStrategy
 
         $actualSizeInKb = $backups
             ->map(function (Backup $backup) {
-                $model =  $backup->recalculateRealBackupSize()->refresh();
+                $model = $backup->recalculateRealBackupSize()->refresh();
+
                 return $model;
             })
             ->filter->exists

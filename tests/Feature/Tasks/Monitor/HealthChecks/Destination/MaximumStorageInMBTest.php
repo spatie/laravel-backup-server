@@ -41,7 +41,7 @@ class MaximumStorageInMBTest extends TestCase
 
         $backup = factory(Backup::class)->create([
             'status' => Backup::STATUS_COMPLETED,
-            'real_size_in_kb' =>  2 * 1024,
+            'real_size_in_kb' => 2 * 1024,
         ]);
 
         $destination = $backup->destination;

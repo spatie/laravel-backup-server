@@ -27,7 +27,7 @@ class FindContentCommand extends Command
 
         $searchFor = $this->argument('searchFor');
 
-        if (!$source = Source::named($this->argument('sourceName'))->first()) {
+        if (! $source = Source::named($this->argument('sourceName'))->first()) {
             $this->info("Did not find a source named {$sourceName}");
 
             return -1;
@@ -53,7 +53,7 @@ class FindContentCommand extends Command
             $this->table->appendRow([
                 $contentSearchResult->getAbsolutePath(),
                 $contentSearchResult->lineNumber(),
-                $contentSearchResult->age()
+                $contentSearchResult->age(),
             ]);
         });
     }
