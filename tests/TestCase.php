@@ -6,7 +6,6 @@ use CreateBackupServerTables;
 use CreateUsersTable;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Route;
 use Orchestra\Testbench\TestCase as Orchestra;
 use Spatie\BackupServer\BackupServerServiceProvider;
 use Spatie\TestTime\TestTime;
@@ -18,8 +17,6 @@ class TestCase extends Orchestra
         parent::setUp();
 
         $this->withFactories(__DIR__.'/database/factories');
-
-        Route::backupServer('backups');
 
         $this->withoutExceptionHandling();
 
