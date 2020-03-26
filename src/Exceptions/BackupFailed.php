@@ -12,6 +12,11 @@ class BackupFailed extends Exception
         return new static("{$backup->sourceLocation()->connectionString()} could not be reached. Response: {$response}");
     }
 
+    public static function destinationNotReachable(Backup $backup): self
+    {
+        return new static("The destination disk `{$backup->destination->disk}` could not be reached.");
+    }
+
     public static function rsyncDidFail(Backup $backup, string $commandOutput)
     {
         return new static("rsync failed. Output: {$commandOutput}");

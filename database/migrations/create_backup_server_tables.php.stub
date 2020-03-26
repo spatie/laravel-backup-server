@@ -36,7 +36,7 @@ class CreateBackupServerTables extends Migration
             $table->string('host');
             $table->string('ssh_user');
             $table->integer('ssh_port')->default(22);
-            $table->integer('ssh_private_key_file')->nullable();
+            $table->string('ssh_private_key_file', 512)->nullable();
 
             $table->json('pre_backup_commands')->nullable();
             $table->json('post_backup_commands')->nullable();

@@ -13,7 +13,7 @@ class EnsureDestinationIsReachable implements BackupTask
         $backup->logInfo(Task::BACKUP, 'Ensuring destination is reachable...');
 
         if (! $backup->destination->reachable()) {
-            throw BackupFailed::sourceNotReachable($backup, 'The destination is not reachable');
+            throw BackupFailed::destinationNotReachable($backup);
         }
     }
 }
