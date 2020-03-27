@@ -38,10 +38,6 @@ class PerformBackupJobTest extends TestCase
             'ssh_private_key_file' => $this->privateKeyPath(),
             'includes' => ['/src'],
         ]);
-
-        // $this->destination = factory(Destination::class)->create();
-
-        // $this->source->update(['destination_id' => $this->destination->id]);
     }
 
     /** @test */

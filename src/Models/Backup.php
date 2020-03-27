@@ -13,6 +13,7 @@ use Spatie\BackupServer\Support\Helpers\DestinationLocation;
 use Spatie\BackupServer\Support\Helpers\Enums\Task;
 use Spatie\BackupServer\Support\Helpers\SourceLocation;
 use Spatie\BackupServer\Tasks\Backup\Support\BackupCollection;
+use Spatie\BackupServer\Tasks\Backup\Support\FileList\FileList;
 use Spatie\BackupServer\Tasks\Backup\Support\Rsync\RsyncProgressOutput;
 use Spatie\BackupServer\Tasks\Search\ContentSearchResultFactory;
 use Spatie\BackupServer\Tasks\Search\FileSearchResultFactory;
@@ -253,5 +254,10 @@ class Backup extends Model
     public function isCompleted(): bool
     {
         return $this->status === static::STATUS_COMPLETED;
+    }
+
+    public function fileList(string $relativeDirectory = '/'): FileList
+    {
+        return new FileList($this, $relativeDirectory);
     }
 }
