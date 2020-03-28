@@ -260,4 +260,9 @@ class Backup extends Model
     {
         return new FileList($this, $relativeDirectory);
     }
+
+    public function name(): string
+    {
+        return $this->source->name . '-' . optional($this->completed_at)->format('Y-m-d-His');
+    }
 }
