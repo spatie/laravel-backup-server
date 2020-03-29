@@ -25,6 +25,8 @@ class PerformBackupJob implements ShouldQueue
 
     public Backup $backup;
 
+    public $timeout = 60 * 60;
+
     public function __construct(Backup $backup)
     {
         $this->backup = $backup;

@@ -251,6 +251,14 @@ class Backup extends Model
         return $process->isSuccessful();
     }
 
+    public function isPendingOrInProgress(): bool
+    {
+        return in_array($this->status, [
+            Backup::STATUS_PENDING,
+            Backup::STATUS_IN_PROGRESS,
+        ]);
+    }
+
     public function isCompleted(): bool
     {
         return $this->status === static::STATUS_COMPLETED;
