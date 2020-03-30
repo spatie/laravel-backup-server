@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Spatie\BackupServer\Models\Concerns;
 
 trait HasAsyncDelete
