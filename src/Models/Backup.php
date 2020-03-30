@@ -40,6 +40,10 @@ class Backup extends Model
         'size_in_kb' => 'int',
         'real_size_in_kb' => 'int',
         'completed_at' => 'datetime',
+        'pre_backup_commands' => 'array',
+        'post_backup_commands' => 'array',
+        'includes' => 'array',
+        'excludes' => 'array',
     ];
 
     public static function booted()
