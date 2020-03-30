@@ -5,19 +5,24 @@ namespace Spatie\BackupServer\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Spatie\BackupServer\Models\Concerns\HasAsyncDelete;
 use Spatie\BackupServer\Models\Concerns\HasBackupRelation;
 use Spatie\BackupServer\Models\Concerns\LogsActivity;
+use Spatie\BackupServer\Tasks\Cleanup\Jobs\DeleteSourceJob;
 use Spatie\BackupServer\Tasks\Monitor\HealthCheckCollection;
 use Spatie\Ssh\Ssh;
 use Symfony\Component\Process\Process;
 
 class Source extends Model
 {
-    use LogsActivity, HasBackupRelation;
+    use LogsActivity, HasBackupRelation, HasAsyncDelete;
 
     public $table = 'backup_server_sources';
 
     public $guarded = [];
+
+    const STATUS_ACTIVE = 'active';
+    const STATUS_DELETING = 'deleting';
 
     public $casts = [
         'includes' => 'array',
@@ -25,6 +30,18 @@ class Source extends Model
         'pre_backup_commands' => 'array',
         'post_backup_commands' => 'array',
     ];
+
+    public static function booted()
+    {
+        static::creating(function (Source $source) {
+            $source->status = static::STATUS_ACTIVE;
+        });
+    }
+
+    public function getDeletionJobClassName(): string
+    {
+        return DeleteSourceJob::class;
+    }
 
     public function destination(): BelongsTo
     {

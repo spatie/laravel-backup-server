@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Spatie\BackupServer\Models\Concerns\HasAsyncDelete;
 use Spatie\BackupServer\Models\Concerns\LogsActivity;
 use Spatie\BackupServer\Support\Helpers\DestinationLocation;
 use Spatie\BackupServer\Support\Helpers\Enums\Task;
@@ -15,6 +16,7 @@ use Spatie\BackupServer\Support\Helpers\SourceLocation;
 use Spatie\BackupServer\Tasks\Backup\Support\BackupCollection;
 use Spatie\BackupServer\Tasks\Backup\Support\FileList\FileList;
 use Spatie\BackupServer\Tasks\Backup\Support\Rsync\RsyncProgressOutput;
+use Spatie\BackupServer\Tasks\Cleanup\Jobs\DeleteBackupJob;
 use Spatie\BackupServer\Tasks\Search\ContentSearchResultFactory;
 use Spatie\BackupServer\Tasks\Search\FileSearchResultFactory;
 use Symfony\Component\Process\Process;
@@ -23,7 +25,7 @@ class Backup extends Model
 {
     public $table = 'backup_server_backups';
 
-    use LogsActivity;
+    use LogsActivity, HasAsyncDelete;
 
     public $guarded = [];
 
@@ -31,6 +33,7 @@ class Backup extends Model
     const STATUS_IN_PROGRESS = 'in_progress';
     const STATUS_COMPLETED = 'completed';
     const STATUS_FAILED = 'failed';
+    const STATUS_DELETING = 'deleting';
 
     protected $casts = [
         'log' => 'array',
@@ -39,13 +42,16 @@ class Backup extends Model
         'completed_at' => 'datetime',
     ];
 
-    public static function boot()
+    public static function booted()
     {
-        parent::boot();
-
         static::deleting(function (Backup $backup) {
             $backup->disk()->deleteDirectory($backup->path);
         });
+    }
+
+    public function getDeletionJobClassName(): string
+    {
+        return DeleteBackupJob::class;
     }
 
     public function newCollection(array $models = [])

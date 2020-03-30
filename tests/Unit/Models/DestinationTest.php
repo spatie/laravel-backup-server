@@ -2,12 +2,14 @@
 
 namespace Spatie\BackupServer\Tests\Unit\Models;
 
+use Illuminate\Support\Facades\Queue;
 use Spatie\BackupServer\Models\Destination;
+use Spatie\BackupServer\Tasks\Cleanup\Jobs\DeleteDestinationJob;
 use Spatie\BackupServer\Tests\TestCase;
 
 class DestinationTest extends TestCase
 {
-    private ?Destination $destination;
+    private Destination $destination;
 
     public function setUp(): void
     {
@@ -40,5 +42,24 @@ class DestinationTest extends TestCase
 
         $this->assertGreaterThanOrEqual(0, $usedSpaceInPercentage);
         $this->assertLessThanOrEqual(100, $usedSpaceInPercentage);
+    }
+
+    /** @test */
+    public function it_can_delete_a_destination_in_an_async_way()
+    {
+        $this->destination->asyncDelete();
+
+        $this->assertCount(0, Destination::get());
+    }
+
+    /** @test */
+    public function an_async_delete_of_a_destination_will_get_queued()
+    {
+        Queue::fake();
+
+        $this->destination->asyncDelete();
+
+        $this->assertCount(1, Destination::get());
+        Queue::assertPushed(DeleteDestinationJob::class);
     }
 }

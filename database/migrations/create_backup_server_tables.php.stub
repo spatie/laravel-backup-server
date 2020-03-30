@@ -11,6 +11,8 @@ class CreateBackupServerTables extends Migration
         Schema::create('backup_server_destinations', function (Blueprint $table) {
             $table->bigIncrements('id');
 
+            $table->string('status');
+
             $table->string('name');
             $table->string('disk');
 
@@ -31,6 +33,8 @@ class CreateBackupServerTables extends Migration
 
         Schema::create('backup_server_sources', function (Blueprint $table) {
             $table->bigIncrements('id');
+
+            $table->string('status');
 
             $table->string('name');
             $table->string('host');

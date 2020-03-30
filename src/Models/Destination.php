@@ -7,19 +7,35 @@ use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Spatie\BackupServer\Models\Concerns\HasAsyncDelete;
 use Spatie\BackupServer\Models\Concerns\HasBackupRelation;
 use Spatie\BackupServer\Models\Concerns\LogsActivity;
+use Spatie\BackupServer\Tasks\Cleanup\Jobs\DeleteDestinationJob;
 use Spatie\BackupServer\Tasks\Monitor\HealthCheckCollection;
 use Symfony\Component\Process\Process;
 
 class Destination extends Model
 {
+    use LogsActivity, HasBackupRelation, HasAsyncDelete;
+
     public $table = 'backup_server_destinations';
 
+    const STATUS_ACTIVE = 'active';
+    const STATUS_DELETING = 'deleting';
 
     public $guarded = [];
 
-    use LogsActivity, HasBackupRelation;
+    public static function booted()
+    {
+        static::creating(function (Destination $source) {
+            $source->status = static::STATUS_ACTIVE;
+        });
+    }
+
+    public function getDeletionJobClassName(): string
+    {
+        return DeleteDestinationJob::class;
+    }
 
     public function disk(): Filesystem
     {
