@@ -12,8 +12,8 @@ class CalculateBackupSize implements BackupTask
         $backup->logInfo(Task::BACKUP, 'Calculating backup size...');
 
         $backup->recalculateBackupSize();
-        $backup->recalculateRealBackupSize();
+        //$backup->recalculateRealBackupSize();
 
-        $backup->source->completedBackups->each(fn (Backup $backup) => $backup->recalculateRealBackupSize());
+        //$backup->source->completedBackups->each(fn (Backup $backup) => $backup->recalculateRealBackupSize());
     }
 }

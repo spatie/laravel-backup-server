@@ -217,7 +217,7 @@ class Backup extends Model
 
     public function disk(): Filesystem
     {
-        return Storage::disk($this->disk);
+        return Storage::disk($this->disk_name);
     }
 
     public function has(string $path): bool

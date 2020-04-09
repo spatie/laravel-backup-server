@@ -27,7 +27,7 @@ class DispatchPerformCleanupJobsTest extends TestCase
         TestTime::freeze('Y-m-d H:i:s', '2020-01-01 00:00:00');
 
         $this->destination = factory(Destination::class)->create([
-            'disk' => 'backups',
+            'disk_name' => 'backups',
         ]);
 
         $this->source = factory(Source::class)->create([

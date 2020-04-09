@@ -14,7 +14,7 @@ class CreateBackupServerTables extends Migration
             $table->string('status');
 
             $table->string('name');
-            $table->string('disk');
+            $table->string('disk_name');
 
             $table->integer('keep_all_backups_for_days')->nullable();
             $table->integer('keep_daily_backups_for_days')->nullable();
@@ -76,7 +76,7 @@ class CreateBackupServerTables extends Migration
             $table->string('status');
             $table->unsignedBigInteger('source_id');
             $table->unsignedBigInteger('destination_id');
-            $table->string('disk');
+            $table->string('disk_name');
             $table->string('path')->nullable();
             $table->unsignedBigInteger('size_in_kb')->nullable();
             $table->unsignedBigInteger('real_size_in_kb')->nullable();

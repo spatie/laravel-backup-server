@@ -16,7 +16,7 @@ class CreateBackupAction
             'status' => Backup::STATUS_PENDING,
             'source_id' => $source->id,
             'destination_id' => $source->destination->id,
-            'disk' => $source->destination->disk,
+            'disk_name' => $source->destination->disk_name,
         ]);
 
         $backup->logInfo(Task::BACKUP, 'Dispatching backup job...');

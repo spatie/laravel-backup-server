@@ -31,7 +31,7 @@ class MonitorBackupsCommandTest extends TestCase
     public function it_will_send_a_notification_if_a_destination_is_not_reachable()
     {
         factory(Destination::class)->create([
-           'disk' => 'non-existing-disk',
+           'disk_name' => 'non-existing-disk',
         ]);
 
         $this->artisan('backup-server:monitor')->assertExitCode(0);

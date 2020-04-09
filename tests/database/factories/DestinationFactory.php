@@ -7,7 +7,7 @@ use Spatie\BackupServer\Models\Destination;
 $factory->define(Destination::class, function (Faker $faker) {
     return [
         'name' => $faker->name,
-        'disk' => 'backups',
+        'disk_name' => 'backups',
         'keep_all_backups_for_days' => 7,
         'keep_daily_backups_for_days' => 16,
         'keep_weekly_backups_for_weeks' => 8,

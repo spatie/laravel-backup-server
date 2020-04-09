@@ -39,7 +39,7 @@ class Destination extends Model
 
     public function disk(): Filesystem
     {
-        return Storage::disk($this->disk);
+        return Storage::disk($this->disk_name);
     }
 
     public function reachable(): bool
