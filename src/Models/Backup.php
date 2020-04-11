@@ -229,6 +229,10 @@ class Backup extends Model
     {
         $path = $this->destinationLocation()->getFullPath();
 
+        if (! file_exists($path)) {
+            return false;
+        }
+
         $process = Process::fromShellCommandline("find . -name \"{$searchFor}\" -print", $path);
 
         $process->run(function ($type, $buffer) use ($handleSearchResult) {
