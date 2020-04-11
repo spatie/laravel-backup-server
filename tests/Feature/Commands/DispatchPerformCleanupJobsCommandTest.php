@@ -13,7 +13,7 @@ use Spatie\BackupServer\Tests\Factories\BackupFactory;
 use Spatie\BackupServer\Tests\TestCase;
 use Spatie\TestTime\TestTime;
 
-class DispatchPerformCleanupJobsTest extends TestCase
+class DispatchPerformCleanupJobsCommandTest extends TestCase
 {
     private ?Destination $destination;
     private ?Source $source;
@@ -33,7 +33,6 @@ class DispatchPerformCleanupJobsTest extends TestCase
         $this->source = factory(Source::class)->create([
             'destination_id' => $this->destination->id,
             'delete_oldest_backups_when_using_more_megabytes_than' => 5000,
-
         ]);
 
         Notification::fake();

@@ -37,6 +37,7 @@ class PerformBackupJobTest extends TestCase
             'ssh_user' => 'root',
             'ssh_private_key_file' => $this->privateKeyPath(),
             'includes' => ['/src'],
+            'backup_hour' => now()->hour,
         ]);
     }
 

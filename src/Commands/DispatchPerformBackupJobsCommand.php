@@ -5,6 +5,7 @@ namespace Spatie\BackupServer\Commands;
 use Illuminate\Console\Command;
 use Spatie\BackupServer\Models\Source;
 use Spatie\BackupServer\Tasks\Backup\Actions\CreateBackupAction;
+use Spatie\BackupServer\Tasks\Backup\Support\BackupScheduler\DefaultBackupScheduler;
 
 class DispatchPerformBackupJobsCommand extends Command
 {
@@ -16,11 +17,15 @@ class DispatchPerformBackupJobsCommand extends Command
     {
         $this->info('Dispatching backup jobs...');
 
-        Source::each(function (Source $source) {
-            $this->comment("Dispatching backup job for source `{$source->name}` (id: {$source->id})");
+        $backupScheduler = app(DefaultBackupScheduler::class);
 
-            (new CreateBackupAction())->execute($source);
-        });
+        Source::cursor()
+            ->filter(fn (Source $source) => $backupScheduler->shouldBackupNow($source))
+            ->each(function (Source $source) {
+                $this->comment("Dispatching backup job for source `{$source->name}` (id: {$source->id})");
+
+                (new CreateBackupAction())->execute($source);
+            });
 
         $this->info('All done!');
     }
