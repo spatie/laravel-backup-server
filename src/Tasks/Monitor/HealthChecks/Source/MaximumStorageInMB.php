@@ -30,7 +30,7 @@ class MaximumStorageInMB extends SourceHealthCheck
     protected function maximumSizeInMB(Source $source): int
     {
         $maximumSizeOnSource = $source->healthy_maximum_storage_in_mb;
-        $maximumAgeOnDestination = $source->destination->healthy_maximum_storage_in_mb;
+        $maximumAgeOnDestination = optional($source->destination)->healthy_maximum_storage_in_mb;
 
         return $maximumSizeOnSource ?? $maximumAgeOnDestination ?? $this->configuredMaximumStorageInMB;
     }

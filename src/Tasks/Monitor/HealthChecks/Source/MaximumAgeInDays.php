@@ -39,7 +39,7 @@ class MaximumAgeInDays extends SourceHealthCheck
     public function maximumHealthyAgeInDays(Source $source): int
     {
         $maximumAgeOnSource = $source->healthy_maximum_backup_age_in_days;
-        $maximumAgeOnDestination = $source->destination->healthy_maximum_backup_age_in_days_per_source;
+        $maximumAgeOnDestination = optional($source->destination)->healthy_maximum_backup_age_in_days_per_source;
 
         return $maximumAgeOnSource ?? $maximumAgeOnDestination ?? $this->configuredMaximumAgeInDays;
     }
