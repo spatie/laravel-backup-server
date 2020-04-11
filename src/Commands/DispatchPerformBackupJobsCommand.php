@@ -5,7 +5,7 @@ namespace Spatie\BackupServer\Commands;
 use Illuminate\Console\Command;
 use Spatie\BackupServer\Models\Source;
 use Spatie\BackupServer\Tasks\Backup\Actions\CreateBackupAction;
-use Spatie\BackupServer\Tasks\Backup\Support\BackupScheduler\DefaultBackupScheduler;
+use Spatie\BackupServer\Tasks\Backup\Support\BackupScheduler\BackupScheduler;
 
 class DispatchPerformBackupJobsCommand extends Command
 {
@@ -17,7 +17,7 @@ class DispatchPerformBackupJobsCommand extends Command
     {
         $this->info('Dispatching backup jobs...');
 
-        $backupScheduler = app(DefaultBackupScheduler::class);
+        $backupScheduler = app(BackupScheduler::class);
 
         Source::cursor()
             ->filter(fn (Source $source) => $backupScheduler->shouldBackupNow($source))

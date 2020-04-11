@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\File;
 use Spatie\BackupServer\Models\Backup;
 use Spatie\BackupServer\Tests\TestCase;
 
-class FindContentCommandTest extends TestCase
+class FindFilesCommandTest extends TestCase
 {
     private Backup $backup;
 
@@ -24,18 +24,23 @@ class FindContentCommandTest extends TestCase
     }
 
     /** @test */
-    public function it_can_find_files_with_content()
+    public function it_can_find_files_by_name()
     {
-        $this->addFileToBackup($this->backup, __DIR__ . '/stubs/test.txt');
-
-        $this->artisan('backup-server:find-content', [
+        $this->artisan('backup-server:find-files', [
             'sourceName' => $this->backup->source->name,
-            'searchFor' => 'not found',
+            'searchFor' => '*.txt',
         ])->assertExitCode(0)->expectsOutput('0 search results found.');
 
-        $this->artisan('backup-server:find-content', [
+        $this->addFileToBackup($this->backup, __DIR__ . '/stubs/test.txt');
+
+        $this->artisan('backup-server:find-files', [
             'sourceName' => $this->backup->source->name,
-            'searchFor' => 'rum',
+            'searchFor' => '*.json',
+        ])->assertExitCode(0)->expectsOutput('0 search results found.');
+
+        $this->artisan('backup-server:find-files', [
+            'sourceName' => $this->backup->source->name,
+            'searchFor' => '*.txt',
         ])->assertExitCode(0)->expectsOutput('1 search result found.');
     }
 
