@@ -28,7 +28,7 @@ class CreateBackupCommand extends Command
             return -1;
         }
 
-        $this->info("Creating new backup for {$sourceName}");
+        $this->info("Creating new backup for {$sourceName}...");
 
         $writeLogItemsToConsole = function (Backup $backup) {
             Event::listen('eloquent.saving: ' . BackupLogItem::class, function (BackupLogItem $backupLogItem) use ($backup) {
