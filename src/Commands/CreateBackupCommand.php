@@ -47,7 +47,7 @@ class CreateBackupCommand extends Command
         (new CreateBackupAction())
             ->doNotUseQueue()
             ->afterBackupModelCreated($writeLogItemsToConsole)
-            ->execute($source, $writeLogItemsToConsole);
+            ->execute($source);
 
         return 0;
     }
