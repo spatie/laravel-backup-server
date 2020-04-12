@@ -14,6 +14,8 @@ class DeleteSourceJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+    public $timeout = 60 * 60;
+
     private Source $source;
 
     public function __construct(Source $source)

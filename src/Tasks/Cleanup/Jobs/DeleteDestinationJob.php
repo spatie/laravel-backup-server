@@ -14,6 +14,8 @@ class DeleteDestinationJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+    public $timeout = 60 * 60;
+
     private Destination $destination;
 
     public function __construct(Destination $destination)

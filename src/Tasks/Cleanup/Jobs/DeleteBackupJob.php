@@ -13,6 +13,8 @@ class DeleteBackupJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+    public $timeout = 60 * 60;
+
     private Backup $backup;
 
     public function __construct(Backup $backup)
