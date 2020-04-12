@@ -1,11 +1,40 @@
-<?php
+---
+title: Installation & setup
+weight: 4
+---
 
+laravel-backup-server can be installed via composer:
+
+```bash
+composer require spatie/laravel-backup-server
+```
+
+### Migrate the database
+
+You need to publish and run the migrations to create the `stored_events` table:
+
+```bash
+php artisan vendor:publish --provider="Spatie\BackupServer\BackupServerServiceProvider" --tag="migrations"
+php artisan migrate
+```
+
+### Publish the config file
+
+You must publish the config file with this command:
+
+```bash
+php artisan vendor:publish --provider="Spatie\BackupServer\BackupServerServiceProvider" --tag="config"
+```
+
+This is the default content of the config file that will be published at `config/backup-server.php`:
+
+```php
 return [
     /*
      * This is the date format that will be used when displaying time related information on backups.
      */
     'date_format' => 'Y-m-d H:i',
-
+    
     'notifications' => [
 
         /*
@@ -85,3 +114,27 @@ return [
      */
     'scheduler' => \Spatie\BackupServer\Tasks\Backup\Support\BackupScheduler\DefaultBackupScheduler::class,
 ];
+```
+
+### Schedule the commands
+
+You must schedule these commands in `app\Console\Kernel.php`:
+
+```php
+// in app\Console\Kernel.php
+
+protected function schedule(Schedule $schedule)
+{
+    $schedule->command('backup-server:backup')->hourly();
+    $schedule->command('backup-server:cleanup')->daily();
+    $schedule->command('backup-server:hourly')->daily();
+}
+```
+
+### Configure the queues
+
+Backup server uses queued jobs to perform various tasks. We recommend setting up the queues. Any driver will do, just don't use the `sync` driver.
+
+## Setting up block storage
+
+Backup server can copy the contents of several several servers onto block storage. Make sure that the system where you run backup server on has plenty of block storage available.
