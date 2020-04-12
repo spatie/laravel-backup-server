@@ -9,6 +9,25 @@ use Spatie\BackupServer\Tasks\Backup\Jobs\PerformBackupJob;
 
 class CreateBackupAction
 {
+    protected $dispatchOnQueue = true;
+
+    /** @var callable|null */
+    protected $afterBackupModelCreated = null;
+
+    public function afterBackupModelCreated(callable $afterBackupModelCreated): self
+    {
+        $this->afterBackupModelCreated = $afterBackupModelCreated;
+
+        return $this;
+    }
+
+    public function doNotUseQueue(): self
+    {
+        $this->dispatchOnQueue = false;
+
+        return $this;
+    }
+
     public function execute(Source $source): Backup
     {
         /** @var \Spatie\BackupServer\Models\Backup $backup */
@@ -19,9 +38,17 @@ class CreateBackupAction
             'disk_name' => $source->destination->disk_name,
         ]);
 
+        if ($this->afterBackupModelCreated) {
+            ($this->afterBackupModelCreated)($backup);
+        }
+
         $backup->logInfo(Task::BACKUP, 'Dispatching backup job...');
 
-        dispatch(new PerformBackupJob($backup));
+        $job = (new PerformBackupJob($backup));
+
+        $this->dispatchOnQueue
+            ? dispatch($job)
+            : dispatch_now($job);
 
         return $backup;
     }

@@ -21,15 +21,15 @@ class DispatchPerformBackupJobsCommandTest extends TestCase
             'backup_hour' => 2,
         ]);
 
-        $this->artisan('backup-server:backup');
+        $this->artisan('backup-server:dispatch-backups');
         $this->assertCount(0, Backup::all());
 
         TestTime::addHour();
-        $this->artisan('backup-server:backup');
+        $this->artisan('backup-server:dispatch-backups');
         $this->assertCount(0, Backup::all());
 
         TestTime::addHour();
-        $this->artisan('backup-server:backup');
+        $this->artisan('backup-server:dispatch-backups');
         $this->assertCount(1, Backup::all());
     }
 }

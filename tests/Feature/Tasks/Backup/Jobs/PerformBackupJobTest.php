@@ -46,7 +46,7 @@ class PerformBackupJobTest extends TestCase
     {
         $this->container->addFiles(__DIR__ . '/stubs/serverContent/testServer', '/src');
 
-        $this->artisan('backup-server:backup')->assertExitCode(0);
+        $this->artisan('backup-server:dispatch-backups')->assertExitCode(0);
 
         $this->assertTrue($this->source->backups()->first()->has('src/1.txt'));
 
@@ -60,7 +60,7 @@ class PerformBackupJobTest extends TestCase
 
         $this->source->update(['pre_backup_commands' => ['cd /src', 'touch newfile.txt']]);
 
-        $this->artisan('backup-server:backup')->assertExitCode(0);
+        $this->artisan('backup-server:dispatch-backups')->assertExitCode(0);
 
         $this->assertTrue($this->source->backups()->first()->has('src/newfile.txt'));
 
@@ -74,7 +74,7 @@ class PerformBackupJobTest extends TestCase
 
         $this->source->update(['pre_backup_commands' => ['this-is-a-non-valid-command']]);
 
-        $this->artisan('backup-server:backup')->assertExitCode(0);
+        $this->artisan('backup-server:dispatch-backups')->assertExitCode(0);
 
         $this->assertEquals(Backup::STATUS_FAILED, $this->source->backups()->first()->status);
     }
@@ -86,7 +86,7 @@ class PerformBackupJobTest extends TestCase
 
         $this->source->update(['post_backup_commands' => ['echo "ok" >> /post_backup_command.txt']]);
 
-        $this->artisan('backup-server:backup')->assertExitCode(0);
+        $this->artisan('backup-server:dispatch-backups')->assertExitCode(0);
 
         $process = $this->container->execute('cat /post_backup_command.txt');
 
@@ -100,7 +100,7 @@ class PerformBackupJobTest extends TestCase
     {
         $this->source->update(['post_backup_commands' => ['invalid-command']]);
 
-        $this->artisan('backup-server:backup')->assertExitCode(0);
+        $this->artisan('backup-server:dispatch-backups')->assertExitCode(0);
 
         $this->assertEquals(Backup::STATUS_FAILED, $this->source->backups()->first()->status);
     }
@@ -110,7 +110,7 @@ class PerformBackupJobTest extends TestCase
     {
         $this->source->update(['host' => 'non-existing-host']);
 
-        $this->artisan('backup-server:backup')->assertExitCode(0);
+        $this->artisan('backup-server:dispatch-backups')->assertExitCode(0);
 
         $this->assertEquals(Backup::STATUS_FAILED, $this->source->backups()->first()->status);
     }
@@ -120,7 +120,7 @@ class PerformBackupJobTest extends TestCase
     {
         $this->source->update(['ssh_private_key_file' => null]);
 
-        $this->artisan('backup-server:backup')->assertExitCode(0);
+        $this->artisan('backup-server:dispatch-backups')->assertExitCode(0);
 
         $this->assertEquals(Backup::STATUS_FAILED, $this->source->backups()->first()->status);
     }

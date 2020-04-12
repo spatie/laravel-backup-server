@@ -5,6 +5,7 @@ namespace Spatie\BackupServer;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Gate;
+use Spatie\BackupServer\Commands\CreateBackupCommand;
 use Spatie\BackupServer\Commands\DispatchPerformBackupJobsCommand;
 use Spatie\BackupServer\Commands\DispatchPerformCleanupJobsCommand;
 use Spatie\BackupServer\Commands\FindContentCommand;
@@ -51,6 +52,7 @@ class BackupServerServiceProvider extends EventServiceProvider
     {
         if ($this->app->runningInConsole()) {
             $this->commands([
+                CreateBackupCommand::class,
                 DispatchPerformBackupJobsCommand::class,
                 DispatchPerformCleanupJobsCommand::class,
                 ListSourcesCommand::class,
