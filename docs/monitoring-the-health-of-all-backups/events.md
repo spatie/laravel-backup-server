@@ -15,7 +15,6 @@ This event will be fired when a unhealthy backup is found.
 
 It has two public properties: `$source` and `$failureMessages`, which is an array.
 
-
 ## HealthyDestinationFoundEvent
 
 It has one public property: `$destination`
