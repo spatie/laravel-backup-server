@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Event;
 use Spatie\BackupServer\Models\Backup;
 use Spatie\BackupServer\Models\BackupLogItem;
 use Spatie\BackupServer\Models\Source;
+use Spatie\BackupServer\Support\Helpers\Enums\LogLevel;
 use Spatie\BackupServer\Tasks\Backup\Actions\CreateBackupAction;
 
 class CreateBackupCommand extends Command
@@ -27,13 +28,19 @@ class CreateBackupCommand extends Command
             return -1;
         }
 
+        $this->info("Creating new backup for {$sourceName}");
+
         $writeLogItemsToConsole = function (Backup $backup) {
             Event::listen('eloquent.saving: ' . BackupLogItem::class, function (BackupLogItem $backupLogItem) use ($backup) {
                 if ($backupLogItem->backup_id !== $backup->id) {
                     return;
                 }
 
-                $this->info($backupLogItem->message);
+                $outputMethod = $backupLogItem->level === LogLevel::ERROR
+                    ? 'error'
+                    : 'comment';
+
+                $this->$outputMethod($backupLogItem->message);
             });
         };
 
