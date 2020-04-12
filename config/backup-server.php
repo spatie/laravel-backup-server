@@ -6,6 +6,14 @@ return [
      */
     'date_format' => 'Y-m-d H:i',
 
+    'backup' => [
+        /*
+         * This class is responsible for deciding when sources should be backed up. An valid backup scheduler
+         * is any class that implements `Spatie\BackupServer\Tasks\Backup\Support\BackupScheduler\BackupScheduler`.
+         */
+        'scheduler' => \Spatie\BackupServer\Tasks\Backup\Support\BackupScheduler\DefaultBackupScheduler::class,
+    ],
+
     'notifications' => [
 
         /*
@@ -79,9 +87,50 @@ return [
         ],
     ],
 
-    /*
-     * This class is responsible for deciding when sources should be backed up. An valid backup scheduler
-     * is any class that implements `Spatie\BackupServer\Tasks\Backup\Support\BackupScheduler\BackupScheduler`.
-     */
-    'scheduler' => \Spatie\BackupServer\Tasks\Backup\Support\BackupScheduler\DefaultBackupScheduler::class,
+    'cleanup' => [
+        /*
+         * The strategy that will be used to cleanup old backups. The default strategy
+         * will keep all backups for a certain amount of days. After that period only
+         * a daily backup will be kept. After that period only weekly backups will
+         * be kept and so on.
+         *
+         * No matter how you configure it the default strategy will never
+         * delete the newest backup.
+         */
+        'strategy' => \Spatie\BackupServer\Tasks\Cleanup\Strategies\DefaultCleanupStrategy::class,
+
+        'default_strategy' => [
+
+            /*
+             * The number of days for which backups must be kept.
+             */
+            'keep_all_backups_for_days' => 7,
+
+            /*
+             * The number of days for which daily backups must be kept.
+             */
+            'keep_daily_backups_for_days' => 31,
+
+            /*
+             * The number of weeks for which one weekly backup must be kept.
+             */
+            'keep_weekly_backups_for_weeks' => 8,
+
+            /*
+             * The number of months for which one monthly backup must be kept.
+             */
+            'keep_monthly_backups_for_months' => 4,
+
+            /*
+             * The number of years for which one yearly backup must be kept.
+             */
+            'keep_yearly_backups_for_years' => 2,
+
+            /*
+             * After cleaning up the backups remove the oldest backup until
+             * this amount of megabytes has been reached.
+             */
+            'delete_oldest_backups_when_using_more_megabytes_than' => 5000,
+        ],
+    ],
 ];

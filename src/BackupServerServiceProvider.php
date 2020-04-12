@@ -15,7 +15,7 @@ use Spatie\BackupServer\Commands\ListSourcesCommand;
 use Spatie\BackupServer\Commands\MonitorBackupsCommand;
 use Spatie\BackupServer\Notifications\EventHandler;
 use Spatie\BackupServer\Tasks\Backup\Support\BackupScheduler\BackupScheduler;
-use Spatie\BackupServer\Tasks\Backup\Support\BackupScheduler\DefaultBackupScheduler;
+use Spatie\BackupServer\Tasks\Cleanup\Strategies\CleanupStrategy;
 
 class BackupServerServiceProvider extends EventServiceProvider
 {
@@ -36,7 +36,17 @@ class BackupServerServiceProvider extends EventServiceProvider
 
         $this->app['events']->subscribe(EventHandler::class);
 
-        $this->app->bind(BackupScheduler::class, fn () => new DefaultBackupScheduler());
+        $this->app->bind(BackupScheduler::class, function () {
+            $schedulerClass = config('backup-server.backup.scheduler');
+
+            return new $schedulerClass;
+        });
+
+        $this->app->bind(CleanupStrategy::class, function () {
+            $strategyClass = config('backup-server.cleanup.strategy');
+
+            return new $strategyClass;
+        });
     }
 
     protected function bootCarbon()

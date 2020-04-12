@@ -29,6 +29,8 @@ class DefaultStrategyConfig
 
     private function getConfigValue(string $attribute): int
     {
-        return $this->source->$attribute ?? $this->source->destination->$attribute;
+        return $this->source->$attribute
+            ?? $this->source->destination->$attribute
+            ?? config("backup-server.cleanup.default_strategy.{$attribute}");
     }
 }
