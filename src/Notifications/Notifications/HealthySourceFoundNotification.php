@@ -25,15 +25,15 @@ class HealthySourceFoundNotification extends Notification implements ShouldQueue
     {
         return (new MailMessage)
             ->from($this->fromEmail(), $this->fromName())
-            ->subject(trans('backup::notifications.healthy_source_found_subject', ['source_name' => $this->sourceName()]))
-            ->line(trans('backup::notifications.healthy_source_found_body', ['source_name' => $this->sourceName()]));
+            ->subject(trans('backup-server::notifications.healthy_source_found_subject', ['source_name' => $this->sourceName()]))
+            ->line(trans('backup-server::notifications.healthy_source_found_body', ['source_name' => $this->sourceName()]));
     }
 
     public function toSlack(): SlackMessage
     {
         return (new SlackMessage)
             ->success()
-            ->content(trans('backup::notifications.healthy_source_found_subject', ['source_name' => $this->sourceName()]));
+            ->content(trans('backup-server::notifications.healthy_source_found_subject', ['source_name' => $this->sourceName()]));
     }
 
     public function sourceName(): string

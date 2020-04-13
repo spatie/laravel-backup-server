@@ -25,15 +25,15 @@ class CleanupForDestinationCompletedNotification extends Notification implements
     {
         return (new MailMessage)
             ->from($this->fromEmail(), $this->fromName())
-            ->subject(trans('backup::notifications.cleanup_destination_successful_subject', ['destination_name' => $this->destinationName()]))
-            ->line(trans('backup::notifications.cleanup_successful_body', ['destination_name' => $this->destinationName()]));
+            ->subject(trans('backup-server::notifications.cleanup_destination_successful_subject', ['destination_name' => $this->destinationName()]))
+            ->line(trans('backup-server::notifications.cleanup_successful_body', ['destination_name' => $this->destinationName()]));
     }
 
     public function toSlack(): SlackMessage
     {
         return $this->slackMessage()
             ->success()
-            ->content(trans('backup::notifications.cleanup_destination_successful_subject_title'));
+            ->content(trans('backup-server::notifications.cleanup_destination_successful_subject_title'));
     }
 
     public function destinationName(): string

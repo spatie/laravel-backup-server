@@ -26,8 +26,8 @@ class UnhealthyDestinationFoundNotification extends Notification implements Shou
     {
         return (new MailMessage)
             ->from($this->fromEmail(), $this->fromName())
-            ->subject(trans('backup::notifications.unhealthy_destination_found_subject', ['destination_name' => $this->destinationName()]))
-            ->line(trans('backup::notifications.unhealthy_destination_found_body', ['destination_name' => $this->destinationName()]))
+            ->subject(trans('backup-server::notifications.unhealthy_destination_found_subject', ['destination_name' => $this->destinationName()]))
+            ->line(trans('backup-server::notifications.unhealthy_destination_found_body', ['destination_name' => $this->destinationName()]))
             ->line("Found problems: " . collect($this->event->failureMessages)->join(', '));
     }
 
@@ -35,7 +35,7 @@ class UnhealthyDestinationFoundNotification extends Notification implements Shou
     {
         $message = (new SlackMessage)
             ->success()
-            ->content(trans('backup::notifications.unhealthy_destination_found_subject', ['destination_name' => $this->destinationName()]));
+            ->content(trans('backup-server::notifications.unhealthy_destination_found_subject', ['destination_name' => $this->destinationName()]));
 
         foreach ($this->event->failureMessages as $failureMessage) {
             $message->attachment(function (SlackAttachment $attachment) use ($failureMessage) {

@@ -27,10 +27,10 @@ class BackupFailedNotification extends Notification implements ShouldQueue
         $mailMessage = (new MailMessage)
             ->error()
             ->from($this->fromEmail(), $this->fromName())
-            ->subject(trans('backup::notifications.backup_failed_subject', ['source_name' => $this->sourceName()]))
-            ->line(trans('backup::notifications.backup_failed_body', ['application_name' => $this->sourceName()]))
-            ->line(trans('backup::notifications.exception_message', ['message' => $this->event->exceptionMessage]))
-            ->line(trans('backup::notifications.exception_trace', ['trace' => $this->event->exceptionMessage]));
+            ->subject(trans('backup-server::notifications.backup_failed_subject', ['source_name' => $this->sourceName()]))
+            ->line(trans('backup-server::notifications.backup_failed_body', ['application_name' => $this->sourceName()]))
+            ->line(trans('backup-server::notifications.exception_message', ['message' => $this->event->exceptionMessage]))
+            ->line(trans('backup-server::notifications.exception_trace', ['trace' => $this->event->exceptionMessage]));
 
         return $mailMessage;
     }
@@ -39,15 +39,15 @@ class BackupFailedNotification extends Notification implements ShouldQueue
     {
         return $this->slackMessage()
             ->error()
-            ->content(trans('backup::notifications.backup_failed_subject', ['source_name' => $this->sourceName()]))
+            ->content(trans('backup-server::notifications.backup_failed_subject', ['source_name' => $this->sourceName()]))
             ->attachment(function (SlackAttachment $attachment) {
                 $attachment
-                    ->title(trans('backup::notifications.exception_message_title'))
+                    ->title(trans('backup-server::notifications.exception_message_title'))
                     ->content($this->event->exceptionMessage);
             })
             ->attachment(function (SlackAttachment $attachment) {
                 $attachment
-                    ->title(trans('backup::notifications.exception_trace_title'))
+                    ->title(trans('backup-server::notifications.exception_trace_title'))
                     ->content($this->event->exceptionMessage);
             });
     }

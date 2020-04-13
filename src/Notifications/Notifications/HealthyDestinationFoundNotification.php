@@ -25,15 +25,15 @@ class HealthyDestinationFoundNotification extends Notification implements Should
     {
         return (new MailMessage)
             ->from($this->fromEmail(), $this->fromName())
-            ->subject(trans('backup::notifications.healthy_destination_found_subject', ['destination_name' => $this->destinationName()]))
-            ->line(trans('backup::notifications.healthy_destination_found_body', ['destination_name' => $this->destinationName()]));
+            ->subject(trans('backup-server::notifications.healthy_destination_found_subject', ['destination_name' => $this->destinationName()]))
+            ->line(trans('backup-server::notifications.healthy_destination_found_body', ['destination_name' => $this->destinationName()]));
     }
 
     public function toSlack(): SlackMessage
     {
         return (new SlackMessage)
             ->success()
-            ->content(trans('backup::notifications.healthy_destination_found_subject', ['destination_name' => $this->destinationName()]));
+            ->content(trans('backup-server::notifications.healthy_destination_found_subject', ['destination_name' => $this->destinationName()]));
     }
 
     public function destinationName(): string

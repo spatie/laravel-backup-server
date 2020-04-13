@@ -25,15 +25,15 @@ class CleanupForSourceCompletedNotification extends Notification implements Shou
     {
         return (new MailMessage)
             ->from($this->fromEmail(), $this->fromName())
-            ->subject(trans('backup::notifications.cleanup_source_successful_subject', ['source_name' => $this->sourceName()]))
-            ->line(trans('backup::notifications.cleanup_successful_body', ['source_name' => $this->sourceName()]));
+            ->subject(trans('backup-server::notifications.cleanup_source_successful_subject', ['source_name' => $this->sourceName()]))
+            ->line(trans('backup-server::notifications.cleanup_successful_body', ['source_name' => $this->sourceName()]));
     }
 
     public function toSlack(): SlackMessage
     {
         return $this->slackMessage()
             ->success()
-            ->content(trans('backup::notifications.cleanup_source_successful_subject_title'));
+            ->content(trans('backup-server::notifications.cleanup_source_successful_subject_title'));
     }
 
     public function sourceName(): string
