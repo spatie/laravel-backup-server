@@ -135,6 +135,62 @@ protected function schedule(Schedule $schedule)
 
 Backup server uses queued jobs to perform various tasks. We recommend setting up the queues. Any driver will do, just don't use the `sync` driver.
 
+When you use horizon we recommend adding a separate queue connection so the `retry_after` can be set to a high value.
+
+```php
+// in config/queue.php
+
+'connections' => [
+    'backup-server-redis' => [
+        'driver' => 'redis',
+        'connection' => 'default',
+        'queue' => env('REDIS_QUEUE', 'default'),
+        'retry_after' => \Carbon\CarbonInterval::day(1)->seconds,
+        'block_for' => null,
+    ],
+```
+
+In the backup server configuration you must set the `queue_connection` to `backup-server-redis`.
+
+```php
+// in config/backup-server.php
+
+'connection' => 'backup-server-redis',
+```
+
+In the Horizon config you can add extra configuration for backup server.
+
+```php
+// in config/horizon.php
+
+'environments' => [
+    'production' => [
+        // ..
+
+        'backup-server' => [
+            'connection' => 'backup-server-redis',
+            'queue' => ['backups', 'cleanups'],
+            'balance' => 'auto',
+            'processes' => 3,
+            'tries' => 1,
+            'timeout' => \Carbon\CarbonInterval::day()->seconds,
+        ],
+    ],
+
+    'local' => [
+        // ...
+
+        'backup-server' => [
+            'connection' => 'backup-server-redis',
+            'queue' => ['backup-server', 'backup-server-backup', 'backup-server-cleanup'],
+            'balance' => 'auto',
+            'processes' => 3,
+            'tries' => 1,
+            'timeout' => \Carbon\CarbonInterval::day()->seconds,
+        ],
+    ],
+],
+```
 
 
 ## Setting up block storage
