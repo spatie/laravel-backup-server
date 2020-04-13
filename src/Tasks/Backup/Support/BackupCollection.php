@@ -3,7 +3,9 @@
 namespace Spatie\BackupServer\Tasks\Backup\Support;
 
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Str;
 use Spatie\BackupServer\Models\Backup;
+use Symfony\Component\Process\Process;
 
 class BackupCollection extends Collection
 {
@@ -29,5 +31,42 @@ class BackupCollection extends Collection
     public function oldest(): ?Backup
     {
         return $this->reverse()->last();
+    }
+
+    public function recalculateRealSizeInKb(): self
+    {
+        info('recalculateRealSizeInKb');
+
+        if ($this->count() === 0) {
+            return $this;
+        }
+
+        $firstBackup = $this->first();
+
+        $command = 'du -kd 1 ..';
+
+        $process = Process::fromShellCommandline($command, $firstBackup->destinationLocation()->getFullPath());
+        $process->run();
+
+        $output = $process->getOutput();
+
+        $this->each(function (Backup $backup) use ($output) {
+            $directoryLine = collect(explode(PHP_EOL, $output))->first(function (string $line) use ($backup) {
+                return Str::contains($line, $backup->destinationLocation()->getDirectory());
+            });
+
+            if (! $directoryLine) {
+                $backup->update(['real_size_in_kb' => 0]);
+
+                return;
+            }
+
+            $sizeInKb = Str::before($directoryLine, "\t");
+
+            $backup->update(['real_size_in_kb' => (int)trim($sizeInKb)]);
+        });
+        info('recalculateRealSizeInKb done');
+
+        return $this;
     }
 }

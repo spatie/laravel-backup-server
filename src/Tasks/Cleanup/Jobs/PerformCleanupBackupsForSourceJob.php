@@ -45,7 +45,11 @@ class PerformCleanupBackupsForSourceJob implements ShouldQueue
 
         collect($tasks)
             ->map(fn (string $className) => app($className))
-            ->each(fn (CleanupTask $cleanupTask) => $cleanupTask->execute($this->source));
+            ->each(function (CleanupTask $cleanupTask) {
+                info('starting ' . get_class($cleanupTask));
+                $cleanupTask->execute($this->source);
+                info('ended ' . get_class($cleanupTask));
+            });
 
         event(new CleanupForSourceCompletedEvent($this->source));
 
@@ -55,6 +59,8 @@ class PerformCleanupBackupsForSourceJob implements ShouldQueue
     public function failed(Throwable $exception)
     {
         $this->source->logError(Task::CLEANUP, "Error while cleaning up source `{$this->source->name}`: `{$exception->getMessage()}`");
+
+        report($exception);
 
         event(new CleanupForSourceFailedEvent($this->source, $exception->getMessage()));
     }

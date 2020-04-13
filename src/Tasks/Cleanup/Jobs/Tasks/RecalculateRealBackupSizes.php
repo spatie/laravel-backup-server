@@ -2,7 +2,6 @@
 
 namespace Spatie\BackupServer\Tasks\Cleanup\Jobs\Tasks;
 
-use Spatie\BackupServer\Models\Backup;
 use Spatie\BackupServer\Models\Source;
 use Spatie\BackupServer\Support\Helpers\Enums\Task;
 
@@ -12,6 +11,9 @@ class RecalculateRealBackupSizes implements CleanupTask
     {
         $source->logInfo(Task::CLEANUP, 'Recalculating real backup sizes...');
 
-        $source->completedBackups()->each(fn (Backup $backup) => $backup->recalculateRealBackupSize());
+        /** @var \Spatie\BackupServer\Tasks\Backup\Support\BackupCollection $backupCollection */
+        $backupCollection = $source->completedBackups()->get();
+
+        $backupCollection->recalculateRealSizeInKb();
     }
 }
