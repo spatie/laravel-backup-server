@@ -8,6 +8,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Spatie\BackupServer\Models\Destination;
+use Spatie\BackupServer\Support\Helpers\Config;
 use Spatie\BackupServer\Support\Helpers\Enums\Task;
 use Spatie\BackupServer\Tasks\Cleanup\Events\CleanupForDestinationCompletedEvent;
 use Spatie\BackupServer\Tasks\Cleanup\Events\CleanupForDestinationFailedEvent;
@@ -26,6 +27,8 @@ class PerformCleanupDestinationJob implements ShouldQueue
         $this->timeout = config('backup-server.jobs.perform_cleanup_for_destination_job.timeout');
 
         $this->queue = config('backup-server.jobs.perform_cleanup_for_destination_job.queue');
+
+        $this->connection = $this->connection ?? Config::getQueueConnection();
     }
 
     public function handle()

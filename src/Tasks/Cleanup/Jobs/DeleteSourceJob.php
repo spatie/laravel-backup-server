@@ -9,6 +9,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Spatie\BackupServer\Models\Backup;
 use Spatie\BackupServer\Models\Source;
+use Spatie\BackupServer\Support\Helpers\Config;
 
 class DeleteSourceJob implements ShouldQueue
 {
@@ -23,6 +24,8 @@ class DeleteSourceJob implements ShouldQueue
         $this->timeout = config('backup-server.jobs.delete_source_job.timeout');
 
         $this->queue = config('backup-server.jobs.delete_source_job.queue');
+
+        $this->connection = $this->connection ?? Config::getQueueConnection();
     }
 
     public function handle()

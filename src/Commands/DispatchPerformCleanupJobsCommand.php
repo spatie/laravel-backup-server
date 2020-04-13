@@ -24,7 +24,6 @@ class DispatchPerformCleanupJobsCommand extends Command
             dispatch(new PerformCleanupSourceJob($source));
         });
 
-        /*
         Destination::each(function (Destination $destination) {
             $this->comment("Dispatching cleanup job for destination `{$destination->name}` (id: {$destination->id})...");
 
@@ -32,6 +31,5 @@ class DispatchPerformCleanupJobsCommand extends Command
         });
 
         $this->info('All done!');
-        */
     }
 }

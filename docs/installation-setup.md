@@ -135,6 +135,8 @@ protected function schedule(Schedule $schedule)
 
 Backup server uses queued jobs to perform various tasks. We recommend setting up the queues. Any driver will do, just don't use the `sync` driver.
 
+
+
 ## Setting up block storage
 
 Backup server can copy the contents of several several servers onto block storage. Make sure that the system where you run backup server on has plenty of block storage available.
