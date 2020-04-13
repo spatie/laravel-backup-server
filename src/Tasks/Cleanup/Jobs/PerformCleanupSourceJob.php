@@ -18,11 +18,9 @@ use Spatie\BackupServer\Tasks\Cleanup\Jobs\Tasks\DeleteOldBackups;
 use Spatie\BackupServer\Tasks\Cleanup\Jobs\Tasks\RecalculateRealBackupSizes;
 use Throwable;
 
-class PerformCleanupBackupsForSourceJob implements ShouldQueue
+class PerformCleanupSourceJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-
-    public $timeout = 60 * 60;
 
     /** @var \Spatie\BackupServer\Models\Source */
     public Source $source;
@@ -30,6 +28,10 @@ class PerformCleanupBackupsForSourceJob implements ShouldQueue
     public function __construct(Source $source)
     {
         $this->source = $source;
+
+        $this->timeout = config('backup-server.jobs.perform_cleanup_backups_for_source_job.timeout');
+
+        $this->queue = config('backup-server.jobs.perform_cleanup_for_source_job.queue');
     }
 
     public function handle()

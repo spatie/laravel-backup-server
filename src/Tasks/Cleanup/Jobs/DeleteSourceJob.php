@@ -14,13 +14,15 @@ class DeleteSourceJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public $timeout = 60 * 60;
-
     private Source $source;
 
     public function __construct(Source $source)
     {
         $this->source = $source;
+
+        $this->timeout = config('backup-server.jobs.delete_source_job.timeout');
+
+        $this->queue = config('backup-server.jobs.delete_source_job.queue');
     }
 
     public function handle()

@@ -1,5 +1,7 @@
 <?php
 
+use Carbon\CarbonInterval;
+
 return [
     /*
      * This is the date format that will be used when displaying time related information on backups.
@@ -131,6 +133,34 @@ return [
              * this amount of megabytes has been reached.
              */
             'delete_oldest_backups_when_using_more_megabytes_than' => 5000,
+        ],
+    ],
+
+
+    'jobs' => [
+        'perform_backup_job' => [
+            'queue' => 'backup-server-backup',
+            'timeout' => CarbonInterval::hour(1)->seconds,
+        ],
+        'delete_backup_job' => [
+            'queue' => 'backup-server',
+            'timeout' => CarbonInterval::minutes(1)->seconds,
+        ],
+        'delete_destination_job' => [
+            'queue' => 'backup-server',
+            'timeout' => CarbonInterval::hour(1)->seconds,
+        ],
+        'delete_source_job' => [
+            'queue' => 'backup-server',
+            'timeout' => CarbonInterval::hour(1)->seconds,
+        ],
+        'perform_cleanup_for_source_job' => [
+            'queue' => 'backup-server-cleanup',
+            'timeout' => CarbonInterval::hour(1)->seconds,
+        ],
+        'perform_cleanup_for_destination_job' => [
+            'queue' => 'backup-server-cleanup',
+            'timeout' => CarbonInterval::hour(1)->seconds,
         ],
     ],
 ];

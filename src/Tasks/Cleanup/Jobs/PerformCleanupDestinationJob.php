@@ -17,13 +17,15 @@ class PerformCleanupDestinationJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public $timeout = 60 * 60;
-
     public Destination $destination;
 
     public function __construct(Destination $destination)
     {
         $this->destination = $destination;
+
+        $this->timeout = config('backup-server.jobs.perform_cleanup_for_destination_job.timeout');
+
+        $this->queue = config('backup-server.jobs.perform_cleanup_for_destination_job.queue');
     }
 
     public function handle()

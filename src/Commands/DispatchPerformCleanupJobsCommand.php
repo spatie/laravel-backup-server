@@ -5,8 +5,8 @@ namespace Spatie\BackupServer\Commands;
 use Illuminate\Console\Command;
 use Spatie\BackupServer\Models\Destination;
 use Spatie\BackupServer\Models\Source;
-use Spatie\BackupServer\Tasks\Cleanup\Jobs\PerformCleanupBackupsForSourceJob;
 use Spatie\BackupServer\Tasks\Cleanup\Jobs\PerformCleanupDestinationJob;
+use Spatie\BackupServer\Tasks\Cleanup\Jobs\PerformCleanupSourceJob;
 
 class DispatchPerformCleanupJobsCommand extends Command
 {
@@ -21,7 +21,7 @@ class DispatchPerformCleanupJobsCommand extends Command
         Source::each(function (Source $source) {
             $this->comment("Dispatching cleanup job for source `{$source->name}` (id: {$source->id})...");
 
-            dispatch(new PerformCleanupBackupsForSourceJob($source));
+            dispatch(new PerformCleanupSourceJob($source));
         });
 
         /*
