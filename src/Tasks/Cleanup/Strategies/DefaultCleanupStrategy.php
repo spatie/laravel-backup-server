@@ -20,8 +20,6 @@ class DefaultCleanupStrategy implements CleanupStrategy
 
     public function deleteOldBackups(Source $source)
     {
-        info('start deleting old backups');
-
         $this->config = new DefaultStrategyConfig($source);
 
         /** @var \Spatie\BackupServer\Tasks\Backup\Support\BackupCollection $backups */
@@ -32,22 +30,16 @@ class DefaultCleanupStrategy implements CleanupStrategy
 
         $dateRanges = $this->calculateDateRanges();
 
-        info('date ranges calculated');
-
         $backupsPerPeriod = $dateRanges->map(function (Period $period) use ($backups) {
             return $backups->filter(function (Backup $backup) use ($period) {
                 return $backup->created_at->between($period->startDate(), $period->endDate());
             });
         });
 
-        info('backups mapped');
-
         $backupsPerPeriod['daily'] = $this->groupByDateFormat($backupsPerPeriod['daily'], 'Ymd');
         $backupsPerPeriod['weekly'] = $this->groupByDateFormat($backupsPerPeriod['weekly'], 'YW');
         $backupsPerPeriod['monthly'] = $this->groupByDateFormat($backupsPerPeriod['monthly'], 'Ym');
         $backupsPerPeriod['yearly'] = $this->groupByDateFormat($backupsPerPeriod['yearly'], 'Y');
-
-        info('backups grouped');
 
         $this->removeBackupsForAllPeriodsExceptOne($backupsPerPeriod);
 

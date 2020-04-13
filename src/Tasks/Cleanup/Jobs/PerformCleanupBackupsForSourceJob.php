@@ -45,11 +45,7 @@ class PerformCleanupBackupsForSourceJob implements ShouldQueue
 
         collect($tasks)
             ->map(fn (string $className) => app($className))
-            ->each(function (CleanupTask $cleanupTask) {
-                info('starting ' . get_class($cleanupTask));
-                $cleanupTask->execute($this->source);
-                info('ended ' . get_class($cleanupTask));
-            });
+            ->each(fn (CleanupTask $cleanupTask) => $cleanupTask->execute($this->source));
 
         event(new CleanupForSourceCompletedEvent($this->source));
 

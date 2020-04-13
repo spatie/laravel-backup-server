@@ -35,8 +35,6 @@ class BackupCollection extends Collection
 
     public function recalculateRealSizeInKb(): self
     {
-        info('recalculateRealSizeInKb');
-
         if ($this->count() === 0) {
             return $this;
         }
@@ -65,7 +63,6 @@ class BackupCollection extends Collection
 
             $backup->update(['real_size_in_kb' => (int)trim($sizeInKb)]);
         });
-        info('recalculateRealSizeInKb done');
 
         return $this;
     }
