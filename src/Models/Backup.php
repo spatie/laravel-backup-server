@@ -83,7 +83,7 @@ class Backup extends Model
     public function sourceLocation()
     {
         return new SourceLocation(
-            $this->source->includes,
+            $this->source->includes ?? [],
             $this->source->ssh_user,
             $this->source->host,
             $this->source->ssh_port,

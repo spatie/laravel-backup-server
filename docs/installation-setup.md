@@ -169,7 +169,7 @@ In the Horizon config you can add extra configuration for backup server.
 
         'backup-server' => [
             'connection' => 'backup-server-redis',
-            'queue' => ['backups', 'cleanups'],
+            'queue' => ['backup-server', 'backup-server-backup', 'backup-server-cleanup'],
             'balance' => 'auto',
             'processes' => 3,
             'tries' => 1,
