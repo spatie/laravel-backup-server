@@ -14,7 +14,7 @@ composer require spatie/laravel-backup-server
 You need to publish and run the migrations to create the `stored_events` table:
 
 ```bash
-php artisan vendor:publish --provider="Spatie\BackupServer\BackupServerServiceProvider" --tag="migrations"
+php artisan vendor:publish --provider="Spatie\BackupServer\BackupServerServiceProvider" --tag="backup-server-migrations"
 php artisan migrate
 ```
 
@@ -23,7 +23,7 @@ php artisan migrate
 You must publish the config file with this command:
 
 ```bash
-php artisan vendor:publish --provider="Spatie\BackupServer\BackupServerServiceProvider" --tag="config"
+php artisan vendor:publish --provider="Spatie\BackupServer\BackupServerServiceProvider" --tag="backup-server-config"
 ```
 
 This is the default content of the config file that will be published at `config/backup-server.php`:
@@ -127,7 +127,7 @@ protected function schedule(Schedule $schedule)
 {
     $schedule->command('backup-server:dispatch-backups')->hourly();
     $schedule->command('backup-server:cleanup')->daily();
-    $schedule->command('backup-server:hourly')->daily();
+    $schedule->command('backup-server:monitor')->daily();
 }
 ```
 

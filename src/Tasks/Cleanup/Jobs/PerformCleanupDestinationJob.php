@@ -35,7 +35,7 @@ class PerformCleanupDestinationJob implements ShouldQueue
     {
         $this->destination->logInfo(Task::CLEANUP, 'Starting cleanup of destination');
 
-        $this->destination->disk()->allDirectories();
+        //TODO: implement
 
         $this->destination->logInfo(Task::CLEANUP, 'Destination cleaned up');
 
