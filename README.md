@@ -17,7 +17,7 @@ All pledges will be dedicated to allocating workforce on maintenance and new awe
 
 ## Documentation
 
-Extensive documention is available [on our documentation site](https://docs.spatie.be/laravel-backup-server)
+Extensive documention is available [on our documentation site](https://docs.spatie.be/laravel-backup-server/)
 
 ### Testing
 
