@@ -1,26 +1,23 @@
-# Very short description of the package
+# Back up multiple applications
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/spatie/laravel-backup-server.svg?style=flat-square)](https://packagist.org/packages/spatie/:package_name)
 [![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/spatie/laravel-backup-server/run-tests?label=tests)](https://github.com/spatie/:package_name/actions?query=workflow%3Arun-tests+branch%3Amaster)
 [![Total Downloads](https://img.shields.io/packagist/dt/spatie/laravel-backup-server.svg?style=flat-square)](https://packagist.org/packages/spatie/:package_name)
 
+This package backs up one or more servers that use either the `ext3` or `ext4` filesystem, which is the default file system for many *nix distributions. When a backup contains files also present in a previous backup, deduplication using hard links will be performed. Even though you will see full backups in the filesystem, only changed files will take up disk space.
 
-This is where your description should go. Try and limit it to a paragraph or two. Consider adding a small example.
+The package can also search for file names and content in backups, clean up old backups, and notify you when there were problems running the backups.
 
-## Installation
+## Support us
 
-You can install the package via composer:
+Spatie is a webdesign agency based in Antwerp, Belgium. You'll find an overview of all our open source projects [on our website](https://spatie.be/opensource).
 
-```bash
-composer require spatie/laravel-backup-server
-```
+Does your business depend on our contributions? Reach out and support us on [Patreon](https://www.patreon.com/spatie). 
+All pledges will be dedicated to allocating workforce on maintenance and new awesome stuff.
 
-## Usage
+## Documentation
 
-``` php
-$skeleton = new Spatie\BackupServer();
-echo $skeleton->echoPhrase('Hello, Spatie!');
-```
+Extensive documention is available [on our documentation site](https://docs.spatie.be/laravel-backup-server)
 
 ### Testing
 
@@ -40,25 +37,13 @@ Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
 If you discover any security related issues, please email freek@spatie.be instead of using the issue tracker.
 
-## Postcardware
-
-You're free to use this package, but if it makes it to your production environment we highly appreciate you sending us a postcard from your hometown, mentioning which of our package(s) you are using.
-
-Our address is: Spatie, Samberstraat 69D, 2060 Antwerp, Belgium.
-
-We publish all received postcards [on our company website](https://spatie.be/en/opensource/postcards).
 
 ## Credits
 
 - [Freek Van der Herten](https://github.com/freekmurze)
 - [All Contributors](../../contributors)
 
-## Support us
 
-Spatie is a webdesign agency based in Antwerp, Belgium. You'll find an overview of all our open source projects [on our website](https://spatie.be/opensource).
-
-Does your business depend on our contributions? Reach out and support us on [Patreon](https://www.patreon.com/spatie). 
-All pledges will be dedicated to allocating workforce on maintenance and new awesome stuff.
 
 ## License
 

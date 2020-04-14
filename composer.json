@@ -1,6 +1,6 @@
 {
     "name": "spatie/laravel-backup-server",
-    "description": "Backup all your servers",
+    "description": "Backup multiple applications",
     "keywords": [
         "spatie",
         "laravel-backup-server"
