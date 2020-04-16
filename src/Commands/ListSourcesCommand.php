@@ -18,6 +18,7 @@ class ListSourcesCommand extends Command
         $headers = ['Source', 'Healthy', '# of Backups', 'Youngest Backup Age', 'Youngest Backup Size', 'Total Backup Size', 'Used storage'];
 
         $rows = Source::get()
+            ->sort(fn (Source $source) => $source->name)
             ->map(fn (Source $source) => $this->convertToRow($source));
 
         $this->table($headers, $rows);
@@ -42,7 +43,7 @@ class ListSourcesCommand extends Command
         $youngestBackup = $completedBackups->youngest();
 
         return [
-            'name' => $source->name,
+            'name' => "{$source->name} ($source->id)",
             'health' => Format::emoji($source->isHealthy()),
             'backup_count' => $completedBackups->count(),
             'newest_backup' => Format::ageInDays($youngestBackup->created_at),
