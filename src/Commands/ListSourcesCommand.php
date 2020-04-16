@@ -18,7 +18,7 @@ class ListSourcesCommand extends Command
         $headers = ['Source', 'Id', 'Healthy', '# of Backups', 'Youngest Backup Age', 'Youngest Backup Size', 'Total Backup Size', 'Used storage'];
 
         $rows = Source::get()
-            ->sort(fn (Source $source) => $source->name)
+            ->sortBy(fn (Source $source) => $source->name)
             ->map(fn (Source $source) => $this->convertToRow($source));
 
         $this->table($headers, $rows);
