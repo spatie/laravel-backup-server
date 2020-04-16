@@ -30,7 +30,7 @@ class ListSourcesCommand extends Command
 
         if ($source->completedBackups->isEmpty()) {
             return [
-                'name' => $source->name,
+                'name' => "{$source->name} ($source->id)",
                 'healthy' => Format::emoji(false),
                 'backup_count' => '0',
                 'newest_backup' => 'No backups present',
