@@ -15,7 +15,7 @@ class ListSourcesCommand extends Command
 
     public function handle()
     {
-        $headers = ['Source', 'Healthy', '# of Backups', 'Youngest Backup Age', 'Youngest Backup Size', 'Total Backup Size', 'Used storage'];
+        $headers = ['Source', 'Id', 'Healthy', '# of Backups', 'Youngest Backup Age', 'Youngest Backup Size', 'Total Backup Size', 'Used storage'];
 
         $rows = Source::get()
             ->sort(fn (Source $source) => $source->name)
@@ -30,7 +30,8 @@ class ListSourcesCommand extends Command
 
         if ($source->completedBackups->isEmpty()) {
             return [
-                'name' => "{$source->name} ($source->id)",
+                'name' => $source->name,
+                'id' => $source->id,
                 'healthy' => Format::emoji(false),
                 'backup_count' => '0',
                 'newest_backup' => 'No backups present',
@@ -43,7 +44,8 @@ class ListSourcesCommand extends Command
         $youngestBackup = $completedBackups->youngest();
 
         return [
-            'name' => "{$source->name} ($source->id)",
+            'name' => $source->name,
+            'id' => $source->id,
             'health' => Format::emoji($source->isHealthy()),
             'backup_count' => $completedBackups->count(),
             'newest_backup' => Format::ageInDays($youngestBackup->created_at),
