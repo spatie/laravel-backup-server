@@ -5,6 +5,7 @@ namespace Spatie\BackupServer\Commands;
 use Illuminate\Console\Command;
 use Spatie\BackupServer\Models\Backup;
 use Spatie\BackupServer\Models\Source;
+use Spatie\BackupServer\Support\AlignRightTableStyle;
 use Spatie\BackupServer\Support\Helpers\Format;
 
 class ListSourcesCommand extends Command
@@ -15,13 +16,27 @@ class ListSourcesCommand extends Command
 
     public function handle()
     {
-        $headers = ['Source', 'Id', 'Healthy', '# of Backups', 'Youngest Backup Age', 'Youngest Backup Size', 'Total Backup Size', 'Used storage'];
+        $headers = [
+            'Source',
+            'Id',
+            'Healthy',
+            '# of Backups',
+            'Youngest Backup Age',
+            'Youngest Backup Size',
+            'Total Backup Size',
+            'Used storage',
+        ];
 
         $rows = Source::get()
             ->sortBy(fn (Source $source) => $source->name)
             ->map(fn (Source $source) => $this->convertToRow($source));
 
-        $this->table($headers, $rows);
+        $columnStyles = collect($headers)
+            ->filter(fn (string $header) => in_array($header, ['# of Backups', 'Total Backup Size', 'Used storage']))
+            ->map(fn () => new AlignRightTableStyle())
+            ->all();
+
+        $this->table($headers, $rows, 'default', $columnStyles);
     }
 
     protected function convertToRow(Source $source)
