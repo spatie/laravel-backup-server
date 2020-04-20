@@ -24,36 +24,47 @@ class BackupFailedNotification extends Notification implements ShouldQueue
 
     public function toMail(): MailMessage
     {
-        $mailMessage = (new MailMessage)
+        return (new MailMessage())
             ->error()
             ->from($this->fromEmail(), $this->fromName())
-            ->subject(trans('backup-server::notifications.backup_failed_subject', ['source_name' => $this->sourceName()]))
-            ->line(trans('backup-server::notifications.backup_failed_body', ['application_name' => $this->sourceName()]))
-            ->line(trans('backup-server::notifications.exception_message', ['message' => $this->event->exceptionMessage]))
-            ->line(trans('backup-server::notifications.exception_trace', ['trace' => $this->event->exceptionMessage]));
-
-        return $mailMessage;
+            ->subject(trans('backup-server::notifications.backup_failed_subject', $this->translationParameters()))
+            ->line(trans('backup-server::notifications.backup_failed_body', $this->translationParameters()))
+            ->line(trans('backup-server::notifications.exception_message', $this->translationParameters()))
+            ->line(trans('backup-server::notifications.exception_trace', $this->translationParameters()));
     }
 
     public function toSlack(): SlackMessage
     {
         return $this->slackMessage()
             ->error()
-            ->content(trans('backup-server::notifications.backup_failed_subject', ['source_name' => $this->sourceName()]))
+            ->content(trans('backup-server::notifications.backup_failed_subject', $this->translationParameters()))
             ->attachment(function (SlackAttachment $attachment) {
                 $attachment
                     ->title(trans('backup-server::notifications.exception_message_title'))
-                    ->content($this->event->exceptionMessage);
+                    ->fields([
+                        'Source' => $this->event->backup->source->name,
+                        'Destination' => $this->event->backup->destination->name,
+                    ]);
+            })
+            ->attachment(function (SlackAttachment $attachment) {
+                $attachment
+                    ->title(trans('backup-server::notifications.exception_message_title'))
+                    ->content($this->event->getExceptionMessage());
             })
             ->attachment(function (SlackAttachment $attachment) {
                 $attachment
                     ->title(trans('backup-server::notifications.exception_trace_title'))
-                    ->content($this->event->exceptionMessage);
+                    ->content($this->event->getTrace());
             });
     }
 
-    public function sourceName(): string
+    protected function translationParameters(): array
     {
-        return $this->event->backup->source->name;
+        return [
+            'source_name' => $this->event->backup->source->name,
+            'destination_name' => $this->event->backup->destination->name,
+            'message' => $this->event->getExceptionMessage(),
+            'trace' => $this->event->getTrace(),
+        ];
     }
 }
