@@ -24,12 +24,10 @@ class BackupCompletedNotification extends Notification implements ShouldQueue
 
     public function toMail(): MailMessage
     {
-        $mailMessage = (new MailMessage)
+        return (new MailMessage)
             ->from($this->fromEmail(), $this->fromName())
-            ->subject(trans('backup-server::notifications.backup_completed_subject', ['source_name' => $this->sourceName()]))
-            ->line(trans('backup-server::notifications.backup_completed_body', ['source_name' => $this->sourceName()]));
-
-        return $mailMessage;
+            ->subject(trans('backup-server::notifications.backup_completed_subject', $this->translationParameters()))
+            ->line(trans('backup-server::notifications.backup_completed_body', $this->translationParameters()));
     }
 
     public function toSlack(): SlackMessage
@@ -39,13 +37,16 @@ class BackupCompletedNotification extends Notification implements ShouldQueue
             ->content(trans('backup-server::notifications.backup_successful_subject_title'))
             ->attachment(function (SlackAttachment $attachment) {
                 $attachment->fields([
-                    'source' => $this->sourceName(),
+                    'source' => $this->event->backup->source->name,
                 ]);
             });
     }
 
-    public function sourceName(): string
+    protected function translationParameters(): array
     {
-        return $this->event->backup->source->name;
+        return [
+            'source_name' => $this->event->backup->source->name,
+            'destination_name' => $this->event->backup->destination->name,
+        ];
     }
 }

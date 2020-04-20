@@ -25,19 +25,21 @@ class CleanupForSourceFailedNotification extends Notification implements ShouldQ
     {
         return (new MailMessage)
             ->from($this->fromEmail(), $this->fromName())
-            ->subject(trans('backup-server::notifications.cleanup_source_failed_subject', ['source_name' => $this->sourceName()]))
-            ->line(trans('backup-server::notifications.cleanup_failed_body', ['source_name' => $this->sourceName()]));
+            ->subject(trans('backup-server::notifications.cleanup_source_failed_subject', $this->translationParameters()))
+            ->line(trans('backup-server::notifications.cleanup_failed_body', $this->translationParameters()));
     }
 
     public function toSlack(): SlackMessage
     {
         return $this->slackMessage()
-            ->success()
-            ->content(trans('backup-server::notifications.cleanup_source_failed_subject_title'));
+            ->error()
+            ->content(trans('backup-server::notifications.cleanup_source_failed_subject', $this->translationParameters()));
     }
 
-    public function sourceName(): string
+    protected function translationParameters(): array
     {
-        return $this->event->source->name;
+        return [
+            'source_name' => $this->event->source->name,
+        ];
     }
 }
