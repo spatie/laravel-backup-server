@@ -24,18 +24,18 @@ class UnhealthySourceFoundNotification extends Notification implements ShouldQue
 
     public function toMail(): MailMessage
     {
-        return (new MailMessage)
+        return (new MailMessage())
             ->from($this->fromEmail(), $this->fromName())
-            ->subject(trans('backup-server::notifications.unhealthy_source_found_subject', ['source_name' => $this->sourceName()]))
-            ->line(trans('backup-server::notifications.unhealthy_source_found_body', ['source_name' => $this->sourceName()]))
+            ->subject(trans('backup-server::notifications.unhealthy_source_found_subject', $this->translationParameters()))
+            ->line(trans('backup-server::notifications.unhealthy_source_found_body', $this->translationParameters()))
             ->line("Found problems: " . collect($this->event->failureMessages)->join(', '));
     }
 
     public function toSlack(): SlackMessage
     {
-        $message = (new SlackMessage)
+        $message = (new SlackMessage())
             ->success()
-            ->content(trans('backup-server::notifications.unhealthy_source_found_subject', ['destination_name' => $this->sourceName()]));
+            ->content(trans('backup-server::notifications.unhealthy_source_found_subject', $this->translationParameters()));
 
         foreach ($this->event->failureMessages as $failureMessage) {
             $message->attachment(function (SlackAttachment $attachment) use ($failureMessage) {
@@ -46,8 +46,10 @@ class UnhealthySourceFoundNotification extends Notification implements ShouldQue
         return $message;
     }
 
-    public function sourceName(): string
+    protected function translationParameters(): array
     {
-        return $this->event->source->name;
+        return [
+            'source_name' => $this->event->source->name,
+        ];
     }
 }

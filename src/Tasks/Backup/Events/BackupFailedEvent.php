@@ -5,6 +5,7 @@ namespace Spatie\BackupServer\Tasks\Backup\Events;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 use Spatie\BackupServer\Models\Backup;
+use Throwable;
 
 class BackupFailedEvent
 {
@@ -14,10 +15,23 @@ class BackupFailedEvent
 
     public string $exceptionMessage;
 
-    public function __construct(Backup $backup, string $exceptionMessage)
+    public string $trace;
+
+    public function __construct(Backup $backup, Throwable $throwable)
     {
         $this->backup = $backup;
 
-        $this->exceptionMessage = $exceptionMessage;
+        $this->exceptionMessage = $throwable->getMessage();
+        $this->trace = $throwable->getTraceAsString();
+    }
+
+    public function getExceptionMessage(): string
+    {
+        return $this->exceptionMessage;
+    }
+
+    public function getTrace(): string
+    {
+        return $this->trace;
     }
 }

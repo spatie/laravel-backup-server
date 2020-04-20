@@ -23,21 +23,23 @@ class CleanupForDestinationFailedNotification extends Notification implements Sh
 
     public function toMail(): MailMessage
     {
-        return (new MailMessage)
+        return (new MailMessage())
             ->from($this->fromEmail(), $this->fromName())
-            ->subject(trans('backup-server::notifications.cleanup_destination_failed_subject', ['destination_name' => $this->destinationName()]))
-            ->line(trans('backup-server::notifications.cleanup_failed_body', ['destination_name' => $this->destinationName()]));
+            ->subject(trans('backup-server::notifications.cleanup_destination_failed_subject', $this->translationParameters()))
+            ->line(trans('backup-server::notifications.cleanup_destination_failed_body', $this->translationParameters()));
     }
 
     public function toSlack(): SlackMessage
     {
         return $this->slackMessage()
-            ->success()
-            ->content(trans('backup-server::notifications.cleanup_destination_failed_subject_title'));
+            ->error()
+            ->content(trans('backup-server::notifications.cleanup_destination_failed_subject', $this->translationParameters()));
     }
 
-    public function destinationName(): string
+    public function translationParameters(): array
     {
-        return $this->event->destination->name;
+        return [
+            'destination_name' => $this->event->destination->name,
+        ];
     }
 }

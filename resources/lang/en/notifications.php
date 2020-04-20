@@ -11,10 +11,7 @@ return [
 
     'backup_completed_subject' => 'Successful new backup of :source_name',
     'backup_completed_subject_title' => 'Successful new backup!',
-    'backup_completed_body' => 'Great news, a new backup of :source_name was successfully created on the disk named :disk_name.',
-
-    'cleanup_failed_subject' => 'Cleaning up the backups of :source_name failed.',
-    'cleanup_failed_body' => 'An error occurred while cleaning up the backups of :source_name',
+    'backup_completed_body' => 'Great news, a new backup of :source_name was successfully created on :destination_name.',
 
     'cleanup_source_successful_subject' => 'Clean up of :source_name backups successful',
     'cleanup_source_successful_subject_title' => 'Clean up of backups successful!',
@@ -23,6 +20,10 @@ return [
     'cleanup_destination_successful_subject' => 'Clean up of backups on :destination_name successful',
     'cleanup_destination_successful_subject_title' => 'Clean up of backups successful!',
     'cleanup_destination_successful_body' => 'The clean up of the backups on :destination_name was successful.',
+
+    'cleanup_destination_failed_subject' => 'Cleaning up the backups of :destination_name failed.',
+    'cleanup_destination_failed_subject_title' => 'Clean up of backups failed!',
+    'cleanup_destination_failed_body' => 'An error occurred while cleaning up the backups of :destination_name',
 
     'healthy_source_found_subject' => 'The backups for :source_name are healthy',
     'healthy_source_found_subject_title' => 'The backups for :source_name are healthy',

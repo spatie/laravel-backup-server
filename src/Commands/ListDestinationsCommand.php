@@ -4,6 +4,7 @@ namespace Spatie\BackupServer\Commands;
 
 use Illuminate\Console\Command;
 use Spatie\BackupServer\Models\Destination;
+use Spatie\BackupServer\Support\AlignRightTableStyle;
 use Spatie\BackupServer\Support\Helpers\Format;
 
 class ListDestinationsCommand extends Command
@@ -14,12 +15,31 @@ class ListDestinationsCommand extends Command
 
     public function handle()
     {
-        $headers = ['Destination', 'Healthy', 'Total Backup Size', 'Used Storage', 'Free Space', 'Capacity Used', 'Inode Usage'];
+        $headers = [
+            'Destination',
+            'Healthy',
+            'Total Backup Size',
+            'Used Storage',
+            'Free Space',
+            'Capacity Used',
+            'Inode Usage',
+        ];
 
         $rows = Destination::get()
             ->map(fn (Destination $destination) => $this->convertToRow($destination));
 
-        $this->table($headers, $rows);
+        $columnStyles = collect($headers)
+            ->filter(fn (string $header) => in_array($header, [
+                'Total Backup Size',
+                'Used Storage',
+                'Free Space',
+                'Capacity Used',
+                'Inode Usage',
+            ]))
+            ->map(fn () => new AlignRightTableStyle())
+            ->all();
+
+        $this->table($headers, $rows, 'default', $columnStyles);
     }
 
     protected function convertToRow(Destination $destination)
