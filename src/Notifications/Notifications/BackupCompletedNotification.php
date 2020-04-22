@@ -25,8 +25,10 @@ class BackupCompletedNotification extends Notification implements ShouldQueue
     public function toMail(): MailMessage
     {
         return (new MailMessage)
+            ->success()
             ->from($this->fromEmail(), $this->fromName())
             ->subject(trans('backup-server::notifications.backup_completed_subject', $this->translationParameters()))
+            ->greeting(trans('backup-server::notifications.backup_completed_subject_title', $this->translationParameters()))
             ->line(trans('backup-server::notifications.backup_completed_body', $this->translationParameters()));
     }
 
@@ -34,7 +36,7 @@ class BackupCompletedNotification extends Notification implements ShouldQueue
     {
         return $this->slackMessage()
             ->success()
-            ->content(trans('backup-server::notifications.backup_successful_subject_title'))
+            ->content(trans('backup-server::notifications.backup_completed_subject', $this->translationParameters()))
             ->attachment(function (SlackAttachment $attachment) {
                 $attachment->fields([
                     'source' => $this->event->backup->source->name,

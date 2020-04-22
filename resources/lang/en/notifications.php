@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'exception_message' => 'Exception message: :message',
+    'exception_message' => 'Exception message: <pre>:message</pre>',
     'exception_trace' => 'Exception trace: :trace',
     'exception_message_title' => 'Exception message',
     'exception_trace_title' => 'Exception trace',
@@ -16,6 +16,10 @@ return [
     'cleanup_source_successful_subject' => 'Clean up of :source_name backups successful',
     'cleanup_source_successful_subject_title' => 'Clean up of backups successful!',
     'cleanup_source_successful_body' => 'The clean up of the :source_name backups.',
+
+    'cleanup_source_failed_subject' => 'Cleaning up of :source_name failed',
+    'cleanup_source_failed_subject_title' => 'Clean up of backups failed!',
+    'cleanup_source_failed_body' => 'An error occurred while cleaning up the backups of :destination_name',
 
     'cleanup_destination_successful_subject' => 'Clean up of backups on :destination_name successful',
     'cleanup_destination_successful_subject_title' => 'Clean up of backups successful!',

@@ -24,8 +24,10 @@ class CleanupForSourceCompletedNotification extends Notification implements Shou
     public function toMail(): MailMessage
     {
         return (new MailMessage)
+            ->success()
             ->from($this->fromEmail(), $this->fromName())
             ->subject(trans('backup-server::notifications.cleanup_source_successful_subject', $this->translationParameters()))
+            ->greeting(trans('backup-server::notifications.cleanup_source_successful_subject_title', $this->translationParameters()))
             ->line(trans('backup-server::notifications.cleanup_successful_body', $this->translationParameters()));
     }
 

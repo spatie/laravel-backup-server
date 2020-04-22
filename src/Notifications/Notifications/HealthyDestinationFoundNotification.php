@@ -26,13 +26,13 @@ class HealthyDestinationFoundNotification extends Notification implements Should
         return (new MailMessage)
             ->from($this->fromEmail(), $this->fromName())
             ->subject(trans('backup-server::notifications.healthy_destination_found_subject', $this->translationParameters()))
+            ->greeting(trans('backup-server::notifications.healthy_destination_found_subject_title', $this->translationParameters()))
             ->line(trans('backup-server::notifications.healthy_destination_found_body', $this->translationParameters()));
     }
 
     public function toSlack(): SlackMessage
     {
         return (new SlackMessage)
-            ->success()
             ->content(trans('backup-server::notifications.healthy_destination_found_subject', $this->translationParameters()));
     }
 

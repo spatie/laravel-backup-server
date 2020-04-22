@@ -24,8 +24,10 @@ class CleanupForDestinationCompletedNotification extends Notification implements
     public function toMail(): MailMessage
     {
         return (new MailMessage)
+            ->success()
             ->from($this->fromEmail(), $this->fromName())
             ->subject(trans('backup-server::notifications.cleanup_destination_successful_subject', $this->translationParameters()))
+            ->greeting(trans('backup-server::notifications.cleanup_destination_successful_subject_title', $this->translationParameters()))
             ->line(trans('backup-server::notifications.cleanup_successful_body', $this->translationParameters()));
     }
 

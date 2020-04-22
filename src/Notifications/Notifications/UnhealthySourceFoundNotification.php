@@ -25,8 +25,10 @@ class UnhealthySourceFoundNotification extends Notification implements ShouldQue
     public function toMail(): MailMessage
     {
         return (new MailMessage())
+            ->error()
             ->from($this->fromEmail(), $this->fromName())
             ->subject(trans('backup-server::notifications.unhealthy_source_found_subject', $this->translationParameters()))
+            ->greeting(trans('backup-server::notifications.unhealthy_source_found_subject_title', $this->translationParameters()))
             ->line(trans('backup-server::notifications.unhealthy_source_found_body', $this->translationParameters()))
             ->line("Found problems: " . collect($this->event->failureMessages)->join(', '));
     }
@@ -34,7 +36,7 @@ class UnhealthySourceFoundNotification extends Notification implements ShouldQue
     public function toSlack(): SlackMessage
     {
         $message = (new SlackMessage())
-            ->success()
+            ->error()
             ->content(trans('backup-server::notifications.unhealthy_source_found_subject', $this->translationParameters()));
 
         foreach ($this->event->failureMessages as $failureMessage) {

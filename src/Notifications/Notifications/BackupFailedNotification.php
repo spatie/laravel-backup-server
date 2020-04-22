@@ -28,6 +28,7 @@ class BackupFailedNotification extends Notification implements ShouldQueue
             ->error()
             ->from($this->fromEmail(), $this->fromName())
             ->subject(trans('backup-server::notifications.backup_failed_subject', $this->translationParameters()))
+            ->greeting(trans('backup-server::notifications.backup_failed_subject_title', $this->translationParameters()))
             ->line(trans('backup-server::notifications.backup_failed_body', $this->translationParameters()))
             ->line(trans('backup-server::notifications.exception_message', $this->translationParameters()))
             ->line(trans('backup-server::notifications.exception_trace', $this->translationParameters()));

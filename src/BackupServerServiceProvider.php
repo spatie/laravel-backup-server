@@ -77,7 +77,6 @@ class BackupServerServiceProvider extends EventServiceProvider
         return $this;
     }
 
-
     protected function bootGate()
     {
         Gate::define('viewBackupServer', fn ($user = null) => app()->environment('local'));
