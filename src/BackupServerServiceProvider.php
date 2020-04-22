@@ -27,7 +27,8 @@ class BackupServerServiceProvider extends EventServiceProvider
             ->bootCarbon()
             ->bootCommands()
             ->bootGate()
-            ->bootPublishables();
+            ->bootPublishables()
+            ->bootTranslations();
     }
 
     public function register()
@@ -99,6 +100,13 @@ class BackupServerServiceProvider extends EventServiceProvider
                 __DIR__ . '/../database/migrations/create_backup_server_tables.php.stub' => database_path('migrations/' . date('Y_m_d_His', time()) . '_create_backup_server_tables.php'),
             ], 'backup-server-migrations');
         }
+
+        return $this;
+    }
+
+    protected function bootTranslations()
+    {
+        $this->loadTranslationsFrom(__DIR__.'/../resources/lang/', 'backup-server');
 
         return $this;
     }
