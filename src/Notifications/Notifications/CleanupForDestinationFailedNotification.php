@@ -5,6 +5,7 @@ namespace Spatie\BackupServer\Notifications\Notifications;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Notifications\Messages\SlackAttachment;
 use Illuminate\Notifications\Messages\SlackMessage;
 use Illuminate\Notifications\Notification;
 use Spatie\BackupServer\Notifications\Notifications\Concerns\HandlesNotifications;
@@ -28,14 +29,31 @@ class CleanupForDestinationFailedNotification extends Notification implements Sh
             ->from($this->fromEmail(), $this->fromName())
             ->subject(trans('backup-server::notifications.cleanup_destination_failed_subject', $this->translationParameters()))
             ->subject(trans('backup-server::notifications.cleanup_destination_failed_subject_title', $this->translationParameters()))
-            ->line(trans('backup-server::notifications.cleanup_destination_failed_body', $this->translationParameters()));
+            ->line(trans('backup-server::notifications.cleanup_destination_failed_body', $this->translationParameters()))
+            ->line([
+                trans('backup-server::notifications.exception_message_title'),
+                "`{$this->event->exceptionMessage}`",
+            ]);
     }
 
     public function toSlack(): SlackMessage
     {
         return $this->slackMessage()
             ->error()
-            ->content(trans('backup-server::notifications.cleanup_destination_failed_subject', $this->translationParameters()));
+            ->from(config('backup-server.notifications.slack.username'))
+            ->attachment(function (SlackAttachment $attachment) {
+                $attachment
+                    ->title(trans('backup-server::notifications.cleanup_destination_failed_subject_title', $this->translationParameters()))
+                    ->fallback(trans('backup-server::notifications.cleanup_destination_failed_body', $this->translationParameters()))
+                    ->fields([
+                        'Destination' => $this->event->destination->name,
+                    ]);
+            })
+            ->attachment(function (SlackAttachment $attachment) {
+                $attachment
+                    ->title(trans('backup-server::notifications.exception_message_title'))
+                    ->content("```{$this->event->exceptionMessage}```");
+            });
     }
 
     public function translationParameters(): array

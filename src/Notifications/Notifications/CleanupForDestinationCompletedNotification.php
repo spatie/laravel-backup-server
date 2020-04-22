@@ -5,9 +5,11 @@ namespace Spatie\BackupServer\Notifications\Notifications;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Notifications\Messages\SlackAttachment;
 use Illuminate\Notifications\Messages\SlackMessage;
 use Illuminate\Notifications\Notification;
 use Spatie\BackupServer\Notifications\Notifications\Concerns\HandlesNotifications;
+use Spatie\BackupServer\Support\Helpers\Format;
 use Spatie\BackupServer\Tasks\Cleanup\Events\CleanupForDestinationCompletedEvent;
 
 class CleanupForDestinationCompletedNotification extends Notification implements ShouldQueue
@@ -35,7 +37,18 @@ class CleanupForDestinationCompletedNotification extends Notification implements
     {
         return $this->slackMessage()
             ->success()
-            ->content(trans('backup-server::notifications.cleanup_destination_successful_subject', $this->translationParameters()));
+            ->from(config('backup-server.notifications.slack.username'))
+            ->attachment(function (SlackAttachment $attachment) {
+                $attachment
+                    ->title(trans('backup-server::notifications.cleanup_destination_successful_subject_title', $this->translationParameters()))
+                    ->fallback(trans('backup-server::notifications.cleanup_destination_successful_body', $this->translationParameters()))
+                    ->fields([
+                        'Destination' => $this->event->destination->name,
+                        'Space used' => Format::KbTohumanReadableSize($this->event->destination->getFreeSpaceInKb()),
+                        '% space used' => $this->event->destination->getUsedSpaceInPercentage(),
+                        '% inodes used' => $this->event->destination->getInodeUsagePercentage(),
+                    ]);
+            });
     }
 
     public function translationParameters(): array
