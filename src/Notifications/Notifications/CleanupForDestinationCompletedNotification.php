@@ -28,7 +28,7 @@ class CleanupForDestinationCompletedNotification extends Notification implements
             ->from($this->fromEmail(), $this->fromName())
             ->subject(trans('backup-server::notifications.cleanup_destination_successful_subject', $this->translationParameters()))
             ->greeting(trans('backup-server::notifications.cleanup_destination_successful_subject_title', $this->translationParameters()))
-            ->line(trans('backup-server::notifications.cleanup_successful_body', $this->translationParameters()));
+            ->line(trans('backup-server::notifications.cleanup_destination_successful_body', $this->translationParameters()));
     }
 
     public function toSlack(): SlackMessage
