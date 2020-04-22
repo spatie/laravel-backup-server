@@ -60,7 +60,7 @@ return [
              */
             'channel' => null,
 
-            'username' => null,
+            'username' => 'Backup Server',
 
             'icon' => null,
 

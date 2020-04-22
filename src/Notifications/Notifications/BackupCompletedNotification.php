@@ -36,15 +36,17 @@ class BackupCompletedNotification extends Notification implements ShouldQueue
     {
         return $this->slackMessage()
             ->success()
+            ->from(config('backup-server.notifications.slack.username'))
             ->attachment(function (SlackAttachment $attachment) {
                 $attachment
                     ->title(trans('backup-server::notifications.backup_completed_subject_title', $this->translationParameters()))
                     ->content(trans('backup-server::notifications.backup_completed_body', $this->translationParameters()))
                     ->fields([
-                        'source' => $this->event->backup->source->name,
-                    ])
-                    ->footer('Spatie Backup Server')
-                    ->footerIcon('https://platform.slack-edge.com/img/default_application_icon.png');
+                        'Source' => $this->event->backup->source->name,
+                        'Duration' => $this->event->backup->rsync_time_in_seconds.'s',
+                        'Speed' => $this->event->backup->rsync_average_transfer_speed_in_MB_per_second.'MB/s',
+                        'Size' => $this->event->backup->size_in_kb.'KB',
+                    ]);
             });
     }
 
