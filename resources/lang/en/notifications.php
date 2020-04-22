@@ -1,14 +1,14 @@
 <?php
 
 return [
-    'exception_message' => 'Exception message: <pre>:message</pre>',
-    'exception_trace' => 'Exception trace: <pre>:trace</pre>',
+    'exception_message' => 'Exception message: `:message`',
+    'exception_trace' => "Exception trace: \n`:trace`",
     'exception_message_title' => 'Exception message',
     'exception_trace_title' => 'Exception trace',
 
     'backup_failed_subject' => 'Failed backup of :source_name',
     'backup_failed_subject_title' => 'Backup failed!',
-    'backup_failed_body' => 'Important: An error occurred while backing up :source_name',
+    'backup_failed_body' => 'Important: An error occurred while backing up :source_name to :destination_name.',
 
     'backup_completed_subject' => 'Successful new backup of :source_name',
     'backup_completed_subject_title' => 'Successful new backup!',

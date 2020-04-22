@@ -9,6 +9,7 @@ use Illuminate\Notifications\Messages\SlackAttachment;
 use Illuminate\Notifications\Messages\SlackMessage;
 use Illuminate\Notifications\Notification;
 use Spatie\BackupServer\Notifications\Notifications\Concerns\HandlesNotifications;
+use Spatie\BackupServer\Support\Helpers\Format;
 use Spatie\BackupServer\Tasks\Backup\Events\BackupCompletedEvent;
 
 class BackupCompletedNotification extends Notification implements ShouldQueue
@@ -44,9 +45,9 @@ class BackupCompletedNotification extends Notification implements ShouldQueue
                     ->fields([
                         'Source' => $this->event->backup->source->name,
                         'Destination' => $this->event->backup->destination->name,
-                        'Duration' => $this->event->backup->rsync_time_in_seconds.'s',
-                        'Speed' => $this->event->backup->rsync_average_transfer_speed_in_MB_per_second.'MB/s',
-                        'Size' => $this->event->backup->size_in_kb.'KB',
+                        'Duration' => $this->event->backup->rsync_time_in_seconds.' seconds',
+                        'Average speed' => $this->event->backup->rsync_average_transfer_speed_in_MB_per_second,
+                        'Size' => Format::KbTohumanReadableSize($this->event->backup->size_in_kb),
                     ])
                     ->timestamp($this->event->backup->completed_at);
             });

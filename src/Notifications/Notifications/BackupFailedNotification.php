@@ -38,10 +38,11 @@ class BackupFailedNotification extends Notification implements ShouldQueue
     {
         return $this->slackMessage()
             ->error()
-            ->content(trans('backup-server::notifications.backup_failed_subject', $this->translationParameters()))
+            ->from(config('backup-server.notifications.slack.username'))
             ->attachment(function (SlackAttachment $attachment) {
                 $attachment
-                    ->title(trans('backup-server::notifications.exception_message_title'))
+                    ->title(trans('backup-server::notifications.backup_failed_subject_title', $this->translationParameters()))
+                    ->fallback(trans('backup-server::notifications.backup_failed_body', $this->translationParameters()))
                     ->fields([
                         'Source' => $this->event->backup->source->name,
                         'Destination' => $this->event->backup->destination->name,
@@ -55,7 +56,7 @@ class BackupFailedNotification extends Notification implements ShouldQueue
             ->attachment(function (SlackAttachment $attachment) {
                 $attachment
                     ->title(trans('backup-server::notifications.exception_trace_title'))
-                    ->content($this->event->getTrace());
+                    ->content("```{$this->event->getTrace()}```");
             });
     }
 
