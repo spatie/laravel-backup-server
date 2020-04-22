@@ -31,12 +31,10 @@ class BackupFailedNotification extends Notification implements ShouldQueue
             ->greeting(trans('backup-server::notifications.backup_failed_subject_title', $this->translationParameters()))
             ->line(trans('backup-server::notifications.backup_failed_body', $this->translationParameters()))
             ->line([
-                trans('backup-server::notifications.exception_message_title'),
-                "`{$this->event->getExceptionMessage()}`",
+                trans('backup-server::notifications.exception_message_title') . ": \n`{$this->event->getExceptionMessage()}`",
             ])
             ->line([
-                trans('backup-server::notifications.exception_trace_title'),
-                "\n```{$this->event->getTrace()}```",
+                trans('backup-server::notifications.exception_trace_title') . ": \n```{$this->event->getTrace()}```",
             ]);
     }
 

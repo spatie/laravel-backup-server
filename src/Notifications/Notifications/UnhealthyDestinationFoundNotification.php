@@ -24,15 +24,14 @@ class UnhealthyDestinationFoundNotification extends Notification implements Shou
 
     public function toMail(): MailMessage
     {
-        return (new MailMessage)
+        return (new MailMessage())
             ->error()
             ->from($this->fromEmail(), $this->fromName())
             ->subject(trans('backup-server::notifications.unhealthy_destination_found_subject', $this->translationParameters()))
             ->greeting(trans('backup-server::notifications.unhealthy_destination_found_subject_title', $this->translationParameters()))
             ->line(trans('backup-server::notifications.unhealthy_destination_found_body', $this->translationParameters()))
             ->line([
-                "Found problems:\n",
-                '* '.collect($this->event->failureMessages)->join('\n* '),
+                "Found problems:\n* " . collect($this->event->failureMessages)->join("\n* "),
             ]);
     }
 
