@@ -44,6 +44,7 @@ class CleanupForSourceFailedNotification extends Notification implements ShouldQ
             ->attachment(function (SlackAttachment $attachment) {
                 $attachment
                     ->title(trans('backup-server::notifications.cleanup_source_failed_subject_title', $this->translationParameters()))
+                    ->content(trans('backup-server::notifications.cleanup_source_failed_body', $this->translationParameters()))
                     ->fallback(trans('backup-server::notifications.cleanup_source_failed_body', $this->translationParameters()))
                     ->fields([
                         'Destination' => $this->event->source->name,

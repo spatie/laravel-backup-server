@@ -44,6 +44,7 @@ class UnhealthyDestinationFoundNotification extends Notification implements Shou
             ->attachment(function (SlackAttachment $attachment) {
                 $attachment
                     ->title(trans('backup-server::notifications.unhealthy_destination_found_subject_title', $this->translationParameters()))
+                    ->content(trans('backup-server::notifications.unhealthy_destination_found_body', $this->translationParameters()))
                     ->fallback(trans('backup-server::notifications.unhealthy_destination_found_body', $this->translationParameters()))
                     ->fields([
                         'Destination' => $this->event->destination->name,

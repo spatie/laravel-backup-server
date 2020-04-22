@@ -39,6 +39,7 @@ class HealthySourceFoundNotification extends Notification implements ShouldQueue
             ->attachment(function (SlackAttachment $attachment) {
                 $attachment
                     ->title(trans('backup-server::notifications.healthy_source_found_subject_title', $this->translationParameters()))
+                    ->content(trans('backup-server::notifications.healthy_source_found_body', $this->translationParameters()))
                     ->fallback(trans('backup-server::notifications.healthy_source_found_body', $this->translationParameters()))
                     ->fields([
                         'Source' => $this->event->source->name,

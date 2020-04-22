@@ -40,6 +40,7 @@ class CleanupForSourceCompletedNotification extends Notification implements Shou
             ->attachment(function (SlackAttachment $attachment) {
                 $attachment
                     ->title(trans('backup-server::notifications.cleanup_source_successful_subject_title', $this->translationParameters()))
+                    ->content(trans('backup-server::notifications.cleanup_source_successful_body', $this->translationParameters()))
                     ->fallback(trans('backup-server::notifications.cleanup_source_successful_body', $this->translationParameters()))
                     ->fields([
                         'Source' => $this->event->source->name,
