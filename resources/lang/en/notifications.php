@@ -1,8 +1,6 @@
 <?php
 
 return [
-    'exception_message' => 'Exception message: `:message`',
-    'exception_trace' => "Exception trace: \n`:trace`",
     'exception_message_title' => 'Exception message',
     'exception_trace_title' => 'Exception trace',
 
