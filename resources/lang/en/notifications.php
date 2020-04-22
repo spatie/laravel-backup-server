@@ -2,11 +2,12 @@
 
 return [
     'exception_message' => 'Exception message: <pre>:message</pre>',
-    'exception_trace' => 'Exception trace: :trace',
+    'exception_trace' => 'Exception trace: <pre>:trace</pre>',
     'exception_message_title' => 'Exception message',
     'exception_trace_title' => 'Exception trace',
 
     'backup_failed_subject' => 'Failed backup of :source_name',
+    'backup_failed_subject_title' => 'Backup failed!',
     'backup_failed_body' => 'Important: An error occurred while backing up :source_name',
 
     'backup_completed_subject' => 'Successful new backup of :source_name',
@@ -32,6 +33,7 @@ return [
     'healthy_source_found_subject' => 'The backups for :source_name are healthy',
     'healthy_source_found_subject_title' => 'The backups for :source_name are healthy',
     'healthy_source_found_body' => 'The backups for :source_name are considered healthy.',
+
     'unhealthy_source_found_subject' => 'Important: The backups for :source_name are unhealthy',
     'unhealthy_source_found_subject_title' => 'Important: The backups for :source_name are unhealthy. :problem',
     'unhealthy_source_found_body' => 'The backups for :source_name are unhealthy.',
@@ -39,6 +41,7 @@ return [
     'healthy_destination_found_subject' => 'The backup destination :destination_name is healthy',
     'healthy_destination_found_subject_title' => 'The backup destination :destination_name is healthy',
     'healthy_destination_found_body' => 'The backup destination :destination_name is considered healthy.',
+
     'unhealthy_destination_found_subject' => 'Important: The backup destination :destination_name is unhealthy',
     'unhealthy_destination_found_subject_title' => 'Important: The backup destination :destination_name is unhealthy.',
     'unhealthy_destination_found_body' => 'The backup destination :destination_name is unhealthy.',
