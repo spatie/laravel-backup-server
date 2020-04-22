@@ -28,7 +28,7 @@ class CleanupForDestinationFailedNotification extends Notification implements Sh
             ->error()
             ->from($this->fromEmail(), $this->fromName())
             ->subject(trans('backup-server::notifications.cleanup_destination_failed_subject', $this->translationParameters()))
-            ->subject(trans('backup-server::notifications.cleanup_destination_failed_subject_title', $this->translationParameters()))
+            ->greeting(trans('backup-server::notifications.cleanup_destination_failed_subject_title', $this->translationParameters()))
             ->line(trans('backup-server::notifications.cleanup_destination_failed_body', $this->translationParameters()))
             ->line([
                 trans('backup-server::notifications.exception_message_title'),

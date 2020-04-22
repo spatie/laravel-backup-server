@@ -13,18 +13,18 @@ return [
     'backup_completed_body' => 'Great news, a new backup of :source_name was successfully created on :destination_name.',
 
     'cleanup_source_successful_subject' => 'Clean up of :source_name backups successful',
-    'cleanup_source_successful_subject_title' => 'Clean up of backups successful!',
+    'cleanup_source_successful_subject_title' => 'Successful clean up!',
     'cleanup_source_successful_body' => 'The clean up of the :source_name backups.',
 
-    'cleanup_source_failed_subject' => 'Cleaning up of :source_name failed',
-    'cleanup_source_failed_subject_title' => 'Clean up of backups failed!',
-    'cleanup_source_failed_body' => 'An error occurred while cleaning up the backups of :destination_name',
+    'cleanup_source_failed_subject' => 'Clean up of :source_name backups failed',
+    'cleanup_source_failed_subject_title' => 'Clean up failed!',
+    'cleanup_source_failed_body' => 'An error occurred while cleaning up the backups of :destination_name.',
 
     'cleanup_destination_successful_subject' => 'Clean up of backups on :destination_name succesfull',
     'cleanup_destination_successful_subject_title' => 'Successful clean up!',
     'cleanup_destination_successful_body' => 'The backups on :destination_name were successfully cleaned up.',
 
-    'cleanup_destination_failed_subject' => 'Clean up of backups on :destination_name failed',
+    'cleanup_destination_failed_subject' => 'Clean up of :destination_name backups failed',
     'cleanup_destination_failed_subject_title' => 'Clean up failed!',
     'cleanup_destination_failed_body' => 'An error occurred while cleaning up the backups on :destination_name.',
 
