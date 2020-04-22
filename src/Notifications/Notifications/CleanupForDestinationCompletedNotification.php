@@ -45,8 +45,8 @@ class CleanupForDestinationCompletedNotification extends Notification implements
                     ->fields([
                         'Destination' => $this->event->destination->name,
                         'Space used' => Format::KbTohumanReadableSize($this->event->destination->getFreeSpaceInKb()),
-                        '% space used' => $this->event->destination->getUsedSpaceInPercentage(),
-                        '% inodes used' => $this->event->destination->getInodeUsagePercentage(),
+                        'Space used (%)' => $this->event->destination->getUsedSpaceInPercentage().'%',
+                        'Inodes used (%)' => $this->event->destination->getInodeUsagePercentage().'%',
                     ]);
             });
     }
