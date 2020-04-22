@@ -36,7 +36,7 @@ class BackupFailedNotification extends Notification implements ShouldQueue
             ])
             ->line([
                 trans('backup-server::notifications.exception_trace_title'),
-                "```{$this->event->getTrace()}```",
+                "\n```{$this->event->getTrace()}```",
             ]);
     }
 

@@ -5,6 +5,7 @@ namespace Spatie\BackupServer\Notifications\Notifications;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Notifications\Messages\SlackAttachment;
 use Illuminate\Notifications\Messages\SlackMessage;
 use Illuminate\Notifications\Notification;
 use Spatie\BackupServer\Notifications\Notifications\Concerns\HandlesNotifications;
@@ -32,8 +33,17 @@ class HealthySourceFoundNotification extends Notification implements ShouldQueue
 
     public function toSlack(): SlackMessage
     {
-        return (new SlackMessage())
-            ->content(trans('backup-server::notifications.healthy_source_found_subject', $this->translationParameters()));
+        return $this->slackMessage()
+            ->success()
+            ->from(config('backup-server.notifications.slack.username'))
+            ->attachment(function (SlackAttachment $attachment) {
+                $attachment
+                    ->title(trans('backup-server::notifications.healthy_source_found_subject_title', $this->translationParameters()))
+                    ->fallback(trans('backup-server::notifications.healthy_source_found_body', $this->translationParameters()))
+                    ->fields([
+                        'Source' => $this->event->source->name,
+                    ]);
+            });
     }
 
     public function translationParameters(): array

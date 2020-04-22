@@ -5,6 +5,7 @@ namespace Spatie\BackupServer\Notifications\Notifications;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Notifications\Messages\SlackAttachment;
 use Illuminate\Notifications\Messages\SlackMessage;
 use Illuminate\Notifications\Notification;
 use Spatie\BackupServer\Notifications\Notifications\Concerns\HandlesNotifications;
@@ -35,7 +36,15 @@ class CleanupForSourceCompletedNotification extends Notification implements Shou
     {
         return $this->slackMessage()
             ->success()
-            ->content(trans('backup-server::notifications.cleanup_source_successful_subject', $this->translationParameters()));
+            ->from(config('backup-server.notifications.slack.username'))
+            ->attachment(function (SlackAttachment $attachment) {
+                $attachment
+                    ->title(trans('backup-server::notifications.cleanup_source_successful_subject_title', $this->translationParameters()))
+                    ->fallback(trans('backup-server::notifications.cleanup_source_successful_body', $this->translationParameters()))
+                    ->fields([
+                        'Source' => $this->event->source->name,
+                    ]);
+            });
     }
 
     public function translationParameters(): array

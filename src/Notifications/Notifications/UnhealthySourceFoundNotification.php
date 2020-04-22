@@ -30,14 +30,25 @@ class UnhealthySourceFoundNotification extends Notification implements ShouldQue
             ->subject(trans('backup-server::notifications.unhealthy_source_found_subject', $this->translationParameters()))
             ->greeting(trans('backup-server::notifications.unhealthy_source_found_subject_title', $this->translationParameters()))
             ->line(trans('backup-server::notifications.unhealthy_source_found_body', $this->translationParameters()))
-            ->line("Found problems: " . collect($this->event->failureMessages)->join(', '));
+            ->line([
+                "Found problems:\n",
+                '* '.collect($this->event->failureMessages)->join('\n* '),
+            ]);
     }
 
     public function toSlack(): SlackMessage
     {
-        $message = (new SlackMessage())
+        $message = $this->slackMessage()
             ->error()
-            ->content(trans('backup-server::notifications.unhealthy_source_found_subject', $this->translationParameters()));
+            ->from(config('backup-server.notifications.slack.username'))
+            ->attachment(function (SlackAttachment $attachment) {
+                $attachment
+                    ->title(trans('backup-server::notifications.unhealthy_source_found_subject_title', $this->translationParameters()))
+                    ->fallback(trans('backup-server::notifications.unhealthy_source_found_body', $this->translationParameters()))
+                    ->fields([
+                        'Source' => $this->event->source->name,
+                    ]);
+            });
 
         foreach ($this->event->failureMessages as $failureMessage) {
             $message->attachment(function (SlackAttachment $attachment) use ($failureMessage) {
