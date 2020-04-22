@@ -32,7 +32,7 @@ class ListSourcesCommand extends Command
             ->map(fn (Source $source) => $this->convertToRow($source));
 
         $columnStyles = collect($headers)
-            ->filter(fn (string $header) => in_array($header, ['Youngest Backup Size', '# of Backups', 'Total Backup Size', 'Used storage']))
+            ->filter(fn (string $header) => in_array($header, ['Id', 'Healthy', 'Youngest Backup Size', '# of Backups', 'Total Backup Size', 'Used storage']))
             ->map(fn () => new AlignRightTableStyle())
             ->all();
 
