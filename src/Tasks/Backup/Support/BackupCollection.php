@@ -43,7 +43,10 @@ class BackupCollection extends Collection
 
         $command = 'du -kd 1 ..';
 
-        $process = Process::fromShellCommandline($command, $firstBackup->destinationLocation()->getFullPath());
+        // `du` on EBS volumes isn't too fast. 5 minutes should be enough for a 150GB backup
+        $timeout = 60 * 5;
+
+        $process = Process::fromShellCommandline($command, $firstBackup->destinationLocation()->getFullPath())->setTimeout($timeout);
         $process->run();
 
         $output = $process->getOutput();
