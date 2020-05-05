@@ -51,21 +51,23 @@ class BackupCollection extends Collection
 
         $output = $process->getOutput();
 
-        $this->each(function (Backup $backup) use ($output) {
-            $directoryLine = collect(explode(PHP_EOL, $output))->first(function (string $line) use ($backup) {
-                return Str::contains($line, $backup->destinationLocation()->getDirectory());
+        $this
+            ->whereNotNull('path')
+            ->each(function (Backup $backup) use ($output) {
+                $directoryLine = collect(explode(PHP_EOL, $output))->first(function (string $line) use ($backup) {
+                    return Str::contains($line, $backup->destinationLocation()->getDirectory());
+                });
+
+                if (! $directoryLine) {
+                    $backup->update(['real_size_in_kb' => 0]);
+
+                    return;
+                }
+
+                $sizeInKb = Str::before($directoryLine, "\t");
+
+                $backup->update(['real_size_in_kb' => (int)trim($sizeInKb)]);
             });
-
-            if (! $directoryLine) {
-                $backup->update(['real_size_in_kb' => 0]);
-
-                return;
-            }
-
-            $sizeInKb = Str::before($directoryLine, "\t");
-
-            $backup->update(['real_size_in_kb' => (int)trim($sizeInKb)]);
-        });
 
         return $this;
     }
