@@ -35,39 +35,40 @@ class BackupCollection extends Collection
 
     public function recalculateRealSizeInKb(): self
     {
-        if ($this->count() === 0) {
+        $backupsToRecalculate = $this->whereNotNull('path');
+
+        if ($backupsToRecalculate->count() === 0) {
             return $this;
         }
 
-        $firstBackup = $this->first();
+        $firstBackup = $backupsToRecalculate->first();
 
         $command = 'du -kd 1 ..';
 
         // `du` on EBS volumes isn't too fast. 5 minutes should be enough for a 150GB backup
         $timeout = 60 * 5;
 
-        $process = Process::fromShellCommandline($command, $firstBackup->destinationLocation()->getFullPath())->setTimeout($timeout);
+        $process = Process::fromShellCommandline($command, $firstBackup->destinationLocation()->getFullPath())
+            ->setTimeout($timeout);
         $process->run();
 
         $output = $process->getOutput();
 
-        $this
-            ->whereNotNull('path')
-            ->each(function (Backup $backup) use ($output) {
-                $directoryLine = collect(explode(PHP_EOL, $output))->first(function (string $line) use ($backup) {
-                    return Str::contains($line, $backup->destinationLocation()->getDirectory());
-                });
-
-                if (! $directoryLine) {
-                    $backup->update(['real_size_in_kb' => 0]);
-
-                    return;
-                }
-
-                $sizeInKb = Str::before($directoryLine, "\t");
-
-                $backup->update(['real_size_in_kb' => (int)trim($sizeInKb)]);
+        $backupsToRecalculate->each(function (Backup $backup) use ($output) {
+            $directoryLine = collect(explode(PHP_EOL, $output))->first(function (string $line) use ($backup) {
+                return Str::contains($line, $backup->destinationLocation()->getDirectory());
             });
+
+            if (! $directoryLine) {
+                $backup->update(['real_size_in_kb' => 0]);
+
+                return;
+            }
+
+            $sizeInKb = Str::before($directoryLine, "\t");
+
+            $backup->update(['real_size_in_kb' => (int) trim($sizeInKb)]);
+        });
 
         return $this;
     }
