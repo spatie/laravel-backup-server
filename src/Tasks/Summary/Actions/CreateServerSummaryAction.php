@@ -2,7 +2,8 @@
 
 namespace Spatie\BackupServer\Tasks\Summary\Actions;
 
-use DateTimeInterface;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Spatie\BackupServer\Models\Backup;
 use Spatie\BackupServer\Models\BackupLogItem;
 use Spatie\BackupServer\Models\Destination;
@@ -11,9 +12,13 @@ use Spatie\BackupServer\Tasks\Summary\ServerSummary;
 
 class CreateServerSummaryAction
 {
-    public function execute(DateTimeInterface $from, DateTimeInterface $to): ServerSummary
+    public function execute(Carbon $from, Carbon $to): ServerSummary
     {
-        $backupsQuery = Backup::query()->whereBetween('completed_at', [$from, $to]);
+        $backupsQuery = Backup::query()->where(function (Builder $query) use ($to, $from) {
+            $query
+                ->whereBetween('completed_at', [$from, $to])
+                ->orWhereBetween('created_at', [$from, $to]);
+        });
         $destinations = Destination::get();
         $healthyDestinations = $destinations->filter(fn (Destination $destination) => $destination->isHealthy());
         $totalUsedSpaceInKb = $destinations->sum(fn (Destination $destination) => $destination->backups->realSizeInKb());
