@@ -25,7 +25,7 @@ class CreateServerSummaryAction
             $backupsQuery->completed()->count(),
             $backupsQuery->failed()->count(),
             $healthyDestinations->count(),
-            $destinations->count() - $healthyDestinations->count,
+            $destinations->count() - $healthyDestinations->count(),
             Source::healthy()->count(),
             Source::unhealthy()->count(),
             $totalUsedSpaceInKb,
