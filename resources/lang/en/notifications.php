@@ -43,4 +43,8 @@ return [
     'unhealthy_destination_found_subject' => 'Important: The backup destination :destination_name is unhealthy',
     'unhealthy_destination_found_subject_title' => 'Unhealthy backup destination',
     'unhealthy_destination_found_body' => 'A health check ran and the backup destination :destination_name is unhealthy.',
+
+    'server_summary_subject' => 'Your backup summary for :period',
+    'server_summary_subject_title' => 'Your backup summary',
+    'server_summary_body' => "Below you'll find some stats for your backup server for :period.",
 ];
