@@ -41,6 +41,7 @@ class ListDestinationsCommand extends Command
 
                 return null;
             })
+            ->filter()
             ->all();
 
         $this->table($headers, $rows, 'default', $columnStyles);
