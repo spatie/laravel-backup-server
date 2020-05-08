@@ -2,13 +2,13 @@
 
 namespace Spatie\BackupServer\Tasks\Summary;
 
-use DateTimeInterface;
+use Carbon\Carbon;
 
 class ServerSummary
 {
-    public DateTimeInterface $from;
+    public Carbon $from;
 
-    public DateTimeInterface $to;
+    public Carbon $to;
 
     public int $successfulBackups;
 
@@ -31,8 +31,8 @@ class ServerSummary
     public int $errorsInLog;
 
     public function __construct(
-        DateTimeInterface $from,
-        DateTimeInterface $to,
+        Carbon $from,
+        Carbon $to,
         int $successfulBackups,
         int $failedBackups,
         int $healthyDestinations,

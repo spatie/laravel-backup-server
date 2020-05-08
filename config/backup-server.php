@@ -35,6 +35,8 @@ return [
             \Spatie\BackupServer\Notifications\Notifications\UnhealthySourceFoundNotification::class => ['mail'],
             \Spatie\BackupServer\Notifications\Notifications\HealthyDestinationFoundNotification::class => ['mail'],
             \Spatie\BackupServer\Notifications\Notifications\UnhealthyDestinationFoundNotification::class => ['mail'],
+
+            \Spatie\BackupServer\Notifications\Notifications\ServerSummaryNotification::class => ['mail'],
         ],
 
         /*

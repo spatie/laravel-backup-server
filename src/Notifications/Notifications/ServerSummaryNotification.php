@@ -16,7 +16,7 @@ class ServerSummaryNotification extends Notification implements ShouldQueue
 {
     use HandlesNotifications, Queueable;
 
-    protected ServerSummary $serverSummary;
+    public ServerSummary $serverSummary;
 
     public function __construct(ServerSummary $serverSummary)
     {
