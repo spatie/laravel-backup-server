@@ -31,9 +31,9 @@ class ServerSummaryNotification extends Notification implements ShouldQueue
 
         return (new MailMessage())
             ->from($this->fromEmail(), $this->fromName())
-            ->subject(trans('backup-server::notifications.backup_summary_subject', $this->translationParameters()))
-            ->greeting(trans('backup-server::notifications.backup_summary_subject_title', $this->translationParameters()))
-            ->line(trans('backup-server::notifications.backup_summary_body', $this->translationParameters()))
+            ->subject(trans('backup-server::notifications.server_summary_subject', $this->translationParameters()))
+            ->greeting(trans('backup-server::notifications.server_summary_subject_title', $this->translationParameters()))
+            ->line(trans('backup-server::notifications.server_summary_body', $this->translationParameters()))
             ->line("- successful backups: {$this->serverSummary->successfulBackups}")
             ->line("- {$this->serverSummary->failedBackups} failed backups")
             ->line("- {$this->serverSummary->healthyDestinations} healthy destinations")
@@ -55,9 +55,9 @@ class ServerSummaryNotification extends Notification implements ShouldQueue
             ->from(config('backup-server.notifications.slack.username'))
             ->attachment(function (SlackAttachment $attachment) use ($totalSpace, $usedSpace) {
                 $attachment
-                    ->title(trans('backup-server::notifications.backup_summary_subject_title', $this->translationParameters()))
-                    ->content(trans('backup-server::notifications.backup_summary_body', $this->translationParameters()))
-                    ->fallback(trans('backup-server::notifications.backup_summary_body', $this->translationParameters()))
+                    ->title(trans('backup-server::notifications.server_summary_subject_title', $this->translationParameters()))
+                    ->content(trans('backup-server::notifications.server_summary_body', $this->translationParameters()))
+                    ->fallback(trans('backup-server::notifications.server_summary_body', $this->translationParameters()))
                     ->field('# successful backups', $this->serverSummary->successfulBackups)
                     ->field('# failed backups', $this->serverSummary->failedBackups)
                     ->field('# healthy destinations', $this->serverSummary->healthyDestinations)
