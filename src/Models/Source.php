@@ -25,6 +25,7 @@ class Source extends Model
     const STATUS_DELETING = 'deleting';
 
     public $casts = [
+        'healthy' => 'boolean',
         'includes' => 'array',
         'excludes' => 'array',
         'pre_backup_commands' => 'array',
@@ -85,6 +86,16 @@ class Source extends Model
         }
 
         return $healthCheckCollection;
+    }
+
+    public function scopeHealthy(Builder $query)
+    {
+        $query->where('healthy', true);
+    }
+
+    public function scopeUnhealthy(Builder $query)
+    {
+        $query->where('healthy', false);
     }
 
     protected function addMessageToLog(string $task, string $level, string $message)
