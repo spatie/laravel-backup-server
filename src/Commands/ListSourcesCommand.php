@@ -5,6 +5,7 @@ namespace Spatie\BackupServer\Commands;
 use Illuminate\Console\Command;
 use Spatie\BackupServer\Models\Backup;
 use Spatie\BackupServer\Models\Source;
+use Spatie\BackupServer\Support\AlignCenterTableStyle;
 use Spatie\BackupServer\Support\AlignRightTableStyle;
 use Spatie\BackupServer\Support\Helpers\Format;
 
@@ -32,8 +33,18 @@ class ListSourcesCommand extends Command
             ->map(fn (Source $source) => $this->convertToRow($source));
 
         $columnStyles = collect($headers)
-            ->filter(fn (string $header) => in_array($header, ['Id', 'Healthy', 'Youngest Backup Size', '# of Backups', 'Total Backup Size', 'Used storage']))
-            ->map(fn () => new AlignRightTableStyle())
+            ->map(function (string $header) {
+                if (in_array($header, ['Id', 'Youngest Backup Size', '# of Backups', 'Total Backup Size', 'Used storage'])) {
+                    return new AlignRightTableStyle();
+                }
+
+                if (in_array($header, ['Healthy'])) {
+                    return new AlignCenterTableStyle();
+                }
+
+                return null;
+            })
+            ->filter()
             ->all();
 
         $this->table($headers, $rows, 'default', $columnStyles);

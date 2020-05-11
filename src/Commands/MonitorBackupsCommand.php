@@ -30,7 +30,7 @@ class MonitorBackupsCommand extends Command
 
     protected function checkSourcesHealth(): self
     {
-        [$healthySources, $unHealthySources] = collect(Source::all())
+        [$healthySources, $unhealthySources] = collect(Source::all())
             ->partition(function (Source $source) {
                 return $source->isHealthy();
             });
@@ -38,10 +38,12 @@ class MonitorBackupsCommand extends Command
         $healthySources->each(function (Source $source) {
             $this->comment("Source `{$source->name}` is healthy");
 
+            $source->update(['healthy' => true]);
+
             event(new HealthySourceFoundEvent($source));
         });
 
-        $unHealthySources->each(function (Source $source) {
+        $unhealthySources->each(function (Source $source) {
             $failureMessages = $source->getHealthChecks()->getFailureMessages();
 
             $this->error("Source `{$source->name}` is unhealthy");
@@ -49,6 +51,8 @@ class MonitorBackupsCommand extends Command
             foreach ($failureMessages as $failureMessage) {
                 $source->logError(Task::MONITOR, $failureMessage);
             }
+
+            $source->update(['healthy' => false]);
 
             event(new UnhealthySourceFoundEvent($source, $failureMessages));
         });
