@@ -3,11 +3,13 @@ title: Introduction
 weight: 1
 ---
 
-**THIS PACKAGE IS STILL IN DEVELOPMENT, WE DON'T RECOMMEND RUNNING IT IN PRODUCTION ENVIRONMENT YET**
-
 This package backs up one or more servers that use either the `ext3` or `ext4` filesystem, which is the default file system for many *nix distributions. When a backup contains files also present in a previous backup, deduplication using hard links will be performed. Even though you will see full backups in the filesystem, only changed files will take up disk space.
 
 The package can also search for file names and content in backups, clean up old backups, and notify you when there were problems running the backups.
+
+## We'd like to reach 125 sponsors
+
+Currently, the package is not publicly available, we'll release it as soon as we reach [125 sponsors on GitHub](https://github.com/sponsors/spatie). We are still polishing the package, so some things might change in the final release.
 
 ## We have badges!
 
