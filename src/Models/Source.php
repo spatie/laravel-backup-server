@@ -77,15 +77,9 @@ class Source extends Model
 
     public function getHealthChecks(): HealthCheckCollection
     {
-        static $healthCheckCollection = null;
+        $healthCheckClassNames = config('backup-server.monitor.source_health_checks');
 
-        if (is_null($healthCheckCollection)) {
-            $healthCheckClassNames = config('backup-server.monitor.source_health_checks');
-
-            $healthCheckCollection = new HealthCheckCollection($healthCheckClassNames, $this);
-        }
-
-        return $healthCheckCollection;
+        return new HealthCheckCollection($healthCheckClassNames, $this);
     }
 
     public function scopeHealthy(Builder $query)
