@@ -29,7 +29,7 @@ class PerformCleanupSourceJob implements ShouldQueue
     {
         $this->source = $source;
 
-        $this->timeout = config('backup-server.jobs.perform_cleanup_backups_for_source_job.timeout');
+        $this->timeout = config('backup-server.jobs.perform_cleanup_for_source_job.timeout');
 
         $this->queue = config('backup-server.jobs.perform_cleanup_for_source_job.queue');
     }
