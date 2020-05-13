@@ -9,6 +9,7 @@ use Illuminate\Notifications\Messages\SlackAttachment;
 use Illuminate\Notifications\Messages\SlackMessage;
 use Illuminate\Notifications\Notification;
 use Spatie\BackupServer\Notifications\Notifications\Concerns\HandlesNotifications;
+use Spatie\BackupServer\Support\ExceptionRenderer;
 use Spatie\BackupServer\Tasks\Cleanup\Events\CleanupForSourceFailedEvent;
 
 class CleanupForSourceFailedNotification extends Notification implements ShouldQueue
@@ -30,9 +31,8 @@ class CleanupForSourceFailedNotification extends Notification implements ShouldQ
             ->subject(trans('backup-server::notifications.cleanup_source_failed_subject', $this->translationParameters()))
             ->greeting(trans('backup-server::notifications.cleanup_source_failed_subject_title', $this->translationParameters()))
             ->line(trans('backup-server::notifications.cleanup_source_failed_body', $this->translationParameters()))
-            ->line([
-                trans('backup-server::notifications.exception_message_title').": \n```{$this->event->exceptionMessage}\n```",
-            ]);
+            ->line(trans('backup-server::notifications.exception_message_title', $this->translationParameters()).':')
+            ->line(new ExceptionRenderer($this->event->exceptionMessage));
     }
 
     public function toSlack(): SlackMessage
