@@ -19,8 +19,8 @@ class ExceptionRenderer implements Htmlable
     public function toHtml()
     {
         return <<<HTML
-            <strong>$this->exceptionMessage</strong>
-            <pre><code>$this->trace</code></pre>
-        HTML;
+<strong>$this->exceptionMessage</strong>
+<pre><code>$this->trace</code></pre>
+HTML;
     }
 }
