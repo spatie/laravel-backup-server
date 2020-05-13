@@ -31,7 +31,7 @@ class CleanupForSourceFailedNotification extends Notification implements ShouldQ
             ->subject(trans('backup-server::notifications.cleanup_source_failed_subject', $this->translationParameters()))
             ->greeting(trans('backup-server::notifications.cleanup_source_failed_subject_title', $this->translationParameters()))
             ->line(trans('backup-server::notifications.cleanup_source_failed_body', $this->translationParameters()))
-            ->line(trans('backup-server::notifications.exception_message_title', $this->translationParameters()).':')
+            ->line(trans('backup-server::notifications.exception_title'))
             ->line(new ExceptionRenderer($this->event->exceptionMessage));
     }
 
