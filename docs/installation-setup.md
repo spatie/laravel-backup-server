@@ -145,7 +145,7 @@ When you use horizon we recommend adding a separate queue connection so the `ret
         'driver' => 'redis',
         'connection' => 'default',
         'queue' => env('REDIS_QUEUE', 'default'),
-        'retry_after' => \Carbon\CarbonInterval::day(1)->seconds,
+        'retry_after' => \Carbon\CarbonInterval::day(1)->totalSeconds,
         'block_for' => null,
     ],
 ```
@@ -173,7 +173,7 @@ In the Horizon config you can add extra configuration for backup server.
             'balance' => 'auto',
             'processes' => 3,
             'tries' => 1,
-            'timeout' => \Carbon\CarbonInterval::day()->seconds,
+            'timeout' => \Carbon\CarbonInterval::day()->totalSeconds,
         ],
     ],
 
@@ -186,7 +186,7 @@ In the Horizon config you can add extra configuration for backup server.
             'balance' => 'auto',
             'processes' => 3,
             'tries' => 1,
-            'timeout' => \Carbon\CarbonInterval::day()->seconds,
+            'timeout' => \Carbon\CarbonInterval::day()->totalSeconds,
         ],
     ],
 ],

@@ -148,27 +148,27 @@ return [
     'jobs' => [
         'perform_backup_job' => [
             'queue' => 'backup-server-backup',
-            'timeout' => CarbonInterval::hour(1)->seconds,
+            'timeout' => CarbonInterval::hour(1)->totalSeconds,
         ],
         'delete_backup_job' => [
             'queue' => 'backup-server',
-            'timeout' => CarbonInterval::minutes(1)->seconds,
+            'timeout' => CarbonInterval::minutes(1)->totalSeconds,
         ],
         'delete_destination_job' => [
             'queue' => 'backup-server',
-            'timeout' => CarbonInterval::hour(1)->seconds,
+            'timeout' => CarbonInterval::hour(1)->totalSeconds,
         ],
         'delete_source_job' => [
             'queue' => 'backup-server',
-            'timeout' => CarbonInterval::hour(1)->seconds,
+            'timeout' => CarbonInterval::hour(1)->totalSeconds,
         ],
         'perform_cleanup_for_source_job' => [
             'queue' => 'backup-server-cleanup',
-            'timeout' => CarbonInterval::hour(1)->seconds,
+            'timeout' => CarbonInterval::hour(1)->totalSeconds,
         ],
         'perform_cleanup_for_destination_job' => [
             'queue' => 'backup-server-cleanup',
-            'timeout' => CarbonInterval::hour(1)->seconds,
+            'timeout' => CarbonInterval::hour(1)->totalSeconds,
         ],
     ],
 ];
