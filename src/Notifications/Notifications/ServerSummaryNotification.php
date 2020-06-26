@@ -74,7 +74,7 @@ class ServerSummaryNotification extends Notification implements ShouldQueue
                     ->elements([
                         [
                             'type' => 'mrkdwn',
-                            'text' => "Completed: *{$this->serverSummary->successfulBackups}* \nFailed: *{$this->serverSummary->failedBackups}*",
+                            'text' => "Completed: *{$this->serverSummary->successfulBackups}* \\nFailed: *{$this->serverSummary->failedBackups}*",
                         ],
                     ]);
             })
@@ -90,7 +90,7 @@ class ServerSummaryNotification extends Notification implements ShouldQueue
                     ->elements([
                         [
                             'type' => 'mrkdwn',
-                            'text' => "Healthy destinations: *{$this->serverSummary->healthyDestinations}* \nUnhealthy destinations: *{$this->serverSummary->unhealthyDestinations}* \nNew error log entries: *{$this->serverSummary->errorsInLog}*",
+                            'text' => "Healthy destinations: *{$this->serverSummary->healthyDestinations}* \\nUnhealthy destinations: *{$this->serverSummary->unhealthyDestinations}* \\nNew error log entries: *{$this->serverSummary->errorsInLog}*",
                         ],
                     ]);
             })
@@ -106,7 +106,7 @@ class ServerSummaryNotification extends Notification implements ShouldQueue
                     ->elements([
                         [
                             'type' => 'mrkdwn',
-                            'text' => "Disk space on all destinations combined: *{$usedSpace}/{$totalSpace}* \nTotal time spent: *{$timeSpent}*",
+                            'text' => "Disk space on all destinations combined: *{$usedSpace}/{$totalSpace}* \\nTotal time spent: *{$timeSpent}*",
                         ],
                     ]);
             })
