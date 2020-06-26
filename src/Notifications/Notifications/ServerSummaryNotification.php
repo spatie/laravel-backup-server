@@ -7,6 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use NathanHeffley\LaravelSlackBlocks\Messages\SlackAttachment;
+use NathanHeffley\LaravelSlackBlocks\Messages\SlackBlock;
 use NathanHeffley\LaravelSlackBlocks\Messages\SlackMessage;
 use Spatie\BackupServer\Notifications\Notifications\Concerns\HandlesNotifications;
 use Spatie\BackupServer\Support\Helpers\Format;
@@ -50,23 +51,79 @@ class ServerSummaryNotification extends Notification implements ShouldQueue
         $totalSpaceInKb = $this->serverSummary->destinationFreeSpaceInKb + $this->serverSummary->destinationUsedSpaceInKb;
         $totalSpace = Format::KbTohumanReadableSize($totalSpaceInKb);
         $usedSpace = Format::KbTohumanReadableSize($this->serverSummary->destinationUsedSpaceInKb);
+        $timeSpent = gmdate('H:i:s', $this->serverSummary->timeSpentRunningBackupsInSeconds);
 
         return $this->slackMessage()
             ->from(config('backup-server.notifications.slack.username'))
-            ->attachment(function (SlackAttachment $attachment) use ($totalSpace, $usedSpace) {
+            ->attachment(function (SlackAttachment $attachment) use ($timeSpent, $totalSpace, $usedSpace) {
                 $attachment
-                    ->title(trans('backup-server::notifications.server_summary_subject_title', $this->translationParameters()))
-                    ->content(trans('backup-server::notifications.server_summary_body', $this->translationParameters()))
-                    ->fallback(trans('backup-server::notifications.server_summary_body', $this->translationParameters()))
-                    ->field('# successful backups', $this->serverSummary->successfulBackups)
-                    ->field('# failed backups', $this->serverSummary->failedBackups)
-                    ->field('# healthy destinations', $this->serverSummary->healthyDestinations)
-                    ->field('# unhealthy destinations', $this->serverSummary->unhealthyDestinations)
-                    ->field('# healthy sources', $this->serverSummary->healthySources)
-                    ->field('# unhealthy sources', $this->serverSummary->unhealthySources)
-                    ->field('used disk space on destinations', "{$usedSpace}/{$totalSpace}")
-                    ->field('time spent running backups', "{$this->serverSummary->timeSpentRunningBackupsInSeconds} seconds")
-                    ->field('# new errors in backup log', $this->serverSummary->errorsInLog);
+                    ->block(function (SlackBlock $block) {
+                        $block
+                            ->type('section')
+                            ->text([
+                                'type' => 'mrkdwn',
+                                'text' => trans('backup-server::notifications.server_summary_subject_title', $this->translationParameters()),
+                            ]);
+                    })
+                    ->dividerBlock()
+                    ->block(function (SlackBlock $block) {
+                        $block
+                            ->type('section')
+                            ->text(['type' => 'mrkdwn', 'text' => ":package: *Backups*"]);
+                    })
+                    ->block(function (SlackBlock $block) {
+                        $block
+                            ->type('context')
+                            ->elements([
+                                [
+                                    'type' => 'mrkdwn',
+                                    'text' => "Completed: *{$this->serverSummary->successfulBackups}* \nFailed: *{$this->serverSummary->failedBackups}*",
+                                ],
+                            ]);
+                    })
+                    ->dividerBlock()
+                    ->block(function (SlackBlock $block) {
+                        $block
+                            ->type('section')
+                            ->text(['type' => 'mrkdwn', 'text' => ":staff_of_aesculapius: *Health*"]);
+                    })
+                    ->block(function (SlackBlock $block) {
+                        $block
+                            ->type('context')
+                            ->elements([
+                                [
+                                    'type' => 'mrkdwn',
+                                    'text' => "Healthy destinations: *{$this->serverSummary->healthyDestinations}* \nUnhealthy destinations: *{$this->serverSummary->unhealthyDestinations}* \nNew error log entries: *{$this->serverSummary->errorsInLog}*",
+                                ],
+                            ]);
+                    })
+                    ->dividerBlock()
+                    ->block(function (SlackBlock $block) {
+                        $block
+                            ->type('section')
+                            ->text(['type' => 'mrkdwn', 'text' => ":bar_chart: *Usage*"]);
+                    })
+                    ->block(function (SlackBlock $block) use ($timeSpent, $totalSpace, $usedSpace) {
+                        $block
+                            ->type('context')
+                            ->elements([
+                                [
+                                    'type' => 'mrkdwn',
+                                    'text' => "Disk space on all destinations combined: *{$usedSpace}/{$totalSpace}* \nTotal time spent: *{$timeSpent}*",
+                                ],
+                            ]);
+                    })
+                    ->block(function (SlackBlock $block) {
+                        $block
+                            ->type('action')
+                            ->elements([
+                                [
+                                    'type' => 'button',
+                                    'text' => ['type' => 'plain_text', 'text' => 'Backup Dashboard'],
+                                    'url' => 'https://backups.spatie.be/',
+                                ],
+                            ]);
+                    });
             });
     }
 
