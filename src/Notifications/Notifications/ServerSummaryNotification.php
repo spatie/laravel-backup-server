@@ -6,7 +6,6 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use NathanHeffley\LaravelSlackBlocks\Messages\SlackAttachment;
 use NathanHeffley\LaravelSlackBlocks\Messages\SlackBlock;
 use NathanHeffley\LaravelSlackBlocks\Messages\SlackMessage;
 use Spatie\BackupServer\Notifications\Notifications\Concerns\HandlesNotifications;
@@ -55,75 +54,72 @@ class ServerSummaryNotification extends Notification implements ShouldQueue
 
         return $this->slackMessage()
             ->from(config('backup-server.notifications.slack.username'))
-            ->attachment(function (SlackAttachment $attachment) use ($timeSpent, $totalSpace, $usedSpace) {
-                $attachment
-                    ->block(function (SlackBlock $block) {
-                        $block
-                            ->type('section')
-                            ->text([
-                                'type' => 'mrkdwn',
-                                'text' => trans('backup-server::notifications.server_summary_subject_title', $this->translationParameters()),
-                            ]);
-                    })
-                    ->dividerBlock()
-                    ->block(function (SlackBlock $block) {
-                        $block
-                            ->type('section')
-                            ->text(['type' => 'mrkdwn', 'text' => ":package: *Backups*"]);
-                    })
-                    ->block(function (SlackBlock $block) {
-                        $block
-                            ->type('context')
-                            ->elements([
-                                [
-                                    'type' => 'mrkdwn',
-                                    'text' => "Completed: *{$this->serverSummary->successfulBackups}* \nFailed: *{$this->serverSummary->failedBackups}*",
-                                ],
-                            ]);
-                    })
-                    ->dividerBlock()
-                    ->block(function (SlackBlock $block) {
-                        $block
-                            ->type('section')
-                            ->text(['type' => 'mrkdwn', 'text' => ":staff_of_aesculapius: *Health*"]);
-                    })
-                    ->block(function (SlackBlock $block) {
-                        $block
-                            ->type('context')
-                            ->elements([
-                                [
-                                    'type' => 'mrkdwn',
-                                    'text' => "Healthy destinations: *{$this->serverSummary->healthyDestinations}* \nUnhealthy destinations: *{$this->serverSummary->unhealthyDestinations}* \nNew error log entries: *{$this->serverSummary->errorsInLog}*",
-                                ],
-                            ]);
-                    })
-                    ->dividerBlock()
-                    ->block(function (SlackBlock $block) {
-                        $block
-                            ->type('section')
-                            ->text(['type' => 'mrkdwn', 'text' => ":bar_chart: *Usage*"]);
-                    })
-                    ->block(function (SlackBlock $block) use ($timeSpent, $totalSpace, $usedSpace) {
-                        $block
-                            ->type('context')
-                            ->elements([
-                                [
-                                    'type' => 'mrkdwn',
-                                    'text' => "Disk space on all destinations combined: *{$usedSpace}/{$totalSpace}* \nTotal time spent: *{$timeSpent}*",
-                                ],
-                            ]);
-                    })
-                    ->block(function (SlackBlock $block) {
-                        $block
-                            ->type('action')
-                            ->elements([
-                                [
-                                    'type' => 'button',
-                                    'text' => ['type' => 'plain_text', 'text' => 'Backup Dashboard'],
-                                    'url' => 'https://backups.spatie.be/',
-                                ],
-                            ]);
-                    });
+            ->block(function (SlackBlock $block) {
+                $block
+                    ->type('section')
+                    ->text([
+                        'type' => 'mrkdwn',
+                        'text' => trans('backup-server::notifications.server_summary_subject_title', $this->translationParameters()),
+                    ]);
+            })
+            ->block(fn (SlackBlock $block) => $block->type('divider'))
+            ->block(function (SlackBlock $block) {
+                $block
+                    ->type('section')
+                    ->text(['type' => 'mrkdwn', 'text' => ":package: *Backups*"]);
+            })
+            ->block(function (SlackBlock $block) {
+                $block
+                    ->type('context')
+                    ->elements([
+                        [
+                            'type' => 'mrkdwn',
+                            'text' => "Completed: *{$this->serverSummary->successfulBackups}* \nFailed: *{$this->serverSummary->failedBackups}*",
+                        ],
+                    ]);
+            })
+            ->block(fn (SlackBlock $block) => $block->type('divider'))
+            ->block(function (SlackBlock $block) {
+                $block
+                    ->type('section')
+                    ->text(['type' => 'mrkdwn', 'text' => ":staff_of_aesculapius: *Health*"]);
+            })
+            ->block(function (SlackBlock $block) {
+                $block
+                    ->type('context')
+                    ->elements([
+                        [
+                            'type' => 'mrkdwn',
+                            'text' => "Healthy destinations: *{$this->serverSummary->healthyDestinations}* \nUnhealthy destinations: *{$this->serverSummary->unhealthyDestinations}* \nNew error log entries: *{$this->serverSummary->errorsInLog}*",
+                        ],
+                    ]);
+            })
+            ->block(fn (SlackBlock $block) => $block->type('divider'))
+            ->block(function (SlackBlock $block) {
+                $block
+                    ->type('section')
+                    ->text(['type' => 'mrkdwn', 'text' => ":bar_chart: *Usage*"]);
+            })
+            ->block(function (SlackBlock $block) use ($timeSpent, $totalSpace, $usedSpace) {
+                $block
+                    ->type('context')
+                    ->elements([
+                        [
+                            'type' => 'mrkdwn',
+                            'text' => "Disk space on all destinations combined: *{$usedSpace}/{$totalSpace}* \nTotal time spent: *{$timeSpent}*",
+                        ],
+                    ]);
+            })
+            ->block(function (SlackBlock $block) {
+                $block
+                    ->type('action')
+                    ->elements([
+                        [
+                            'type' => 'button',
+                            'text' => ['type' => 'plain_text', 'text' => 'Backup Dashboard'],
+                            'url' => 'https://backups.spatie.be/',
+                        ],
+                    ]);
             });
     }
 
