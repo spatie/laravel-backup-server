@@ -112,7 +112,7 @@ class ServerSummaryNotification extends Notification implements ShouldQueue
             })
             ->block(function (SlackBlock $block) {
                 $block
-                    ->type('action')
+                    ->type('actions')
                     ->elements([
                         [
                             'type' => 'button',
