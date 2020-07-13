@@ -27,8 +27,8 @@ class CreateServerSummaryAction
         return new ServerSummary(
             $from,
             $to,
-            $backupsQuery->completed()->count(),
-            $backupsQuery->failed()->count(),
+            (clone $backupsQuery)->completed()->count(),
+            (clone $backupsQuery)->failed()->count(),
             $healthyDestinations->count(),
             $destinations->count() - $healthyDestinations->count(),
             Source::healthy()->count(),
