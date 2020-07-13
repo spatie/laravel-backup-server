@@ -91,7 +91,7 @@ class ServerSummaryNotification extends Notification implements ShouldQueue
                     ->elements([
                         [
                             'type' => 'mrkdwn',
-                            'text' => "Healthy destinations: *{$this->serverSummary->healthyDestinations}* \nUnhealthy destinations: *{$this->serverSummary->unhealthyDestinations}* \nNew error log entries: *{$this->serverSummary->errorsInLog}*",
+                            'text' => "Healthy sources: *{$this->serverSummary->healthySources}* \nUnhealthy sources: *{$this->serverSummary->unhealthySources}* \nHealthy destinations: *{$this->serverSummary->healthyDestinations}* \nUnhealthy destinations: *{$this->serverSummary->unhealthyDestinations}* \nNew error log entries: *{$this->serverSummary->errorsInLog}*",
                         ],
                     ]);
             })

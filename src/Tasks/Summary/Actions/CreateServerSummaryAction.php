@@ -19,8 +19,10 @@ class CreateServerSummaryAction
                 ->whereBetween('completed_at', [$from, $to])
                 ->orWhereBetween('created_at', [$from, $to]);
         });
+
         $destinations = Destination::get();
         $healthyDestinations = $destinations->filter(fn (Destination $destination) => $destination->isHealthy());
+
         $totalUsedSpaceInKb = $destinations->sum(fn (Destination $destination) => $destination->backups->realSizeInKb());
         $totalFreeSpaceInKb = $destinations->sum(fn (Destination $destination) => $destination->getFreeSpaceInKb());
 
