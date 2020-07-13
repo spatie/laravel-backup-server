@@ -53,6 +53,7 @@ class ServerSummaryNotification extends Notification implements ShouldQueue
         $timeSpent = gmdate('H:i:s', $this->serverSummary->timeSpentRunningBackupsInSeconds);
 
         return $this->slackMessage()
+            ->content(trans('backup-server::notifications.server_summary_subject_title', $this->translationParameters()))
             ->from(config('backup-server.notifications.slack.username'))
             ->block(function (SlackBlock $block) {
                 $block
