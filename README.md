@@ -2,6 +2,7 @@
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/spatie/laravel-backup-server.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-backup-server)
 [![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/spatie/laravel-backup-server/run-tests?label=tests)](https://github.com/spatie/laravel-backup-server/actions?query=workflow%3Arun-tests+branch%3Amaster)
+[![GitHub PHP CS Fixer Action Status](https://img.shields.io/github/workflow/status/spatie/laravel-backup-server/php-cs-fixer?label=code%20style)](https://github.com/spatie/laravel-backup-server/actions?query=workflow%3Aphp-cs-fixer+branch%3Amaster)
 [![Total Downloads](https://img.shields.io/packagist/dt/spatie/laravel-backup-server.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-backup-server)
 
 This package backs up one or more servers that use either the `ext3` or `ext4` filesystem, which is the default file system for many *nix distributions. When a backup contains files also present in a previous backup, deduplication using hard links will be performed. Even though you will see full backups in the filesystem, only changed files will take up disk space.
