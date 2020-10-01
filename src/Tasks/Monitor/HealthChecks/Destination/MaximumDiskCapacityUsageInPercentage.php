@@ -19,7 +19,7 @@ class MaximumDiskCapacityUsageInPercentage extends DestinationHealthCheck
         $actualDiskSpaceUsage = $destination->getUsedSpaceInPercentage();
 
         if ($actualDiskSpaceUsage > $this->maximumDiskCapacityUsageInPercentage) {
-            return HealthCheckResult::failed("The used disk space capacity ($actualDiskSpaceUsage) is greater that the maximum allowed ($this->maximumDiskCapacityUsageInPercentage)");
+            return HealthCheckResult::failed("The used disk space capacity ($actualDiskSpaceUsage) is greater than the maximum allowed ($this->maximumDiskCapacityUsageInPercentage)");
         }
 
         return HealthCheckResult::ok();

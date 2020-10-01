@@ -6,7 +6,7 @@ weight: 2
 Checking the health of a source is done by `SourceHealthCheck` classes configured in the `monitor.source_health_checks` key of the `backup-server` config file.
 
 The package ships with these two checks configured by default:
-- `MaximumStorageInMB`: this check will fail if the total size of your backups is greater that the specified amount of megabytes. You can override the the maximum amount of megabytes in the config file by filling the `healthy_maximum_storage_in_mb` attribute on a `Destination`. You can override that value defined on a `Destination` by settings the `healthy_maximum_storage_in_mb` on a source.
+- `MaximumStorageInMB`: this check will fail if the total size of your backups is greater than the specified amount of megabytes. You can override the the maximum amount of megabytes in the config file by filling the `healthy_maximum_storage_in_mb` attribute on a `Destination`. You can override that value defined on a `Destination` by settings the `healthy_maximum_storage_in_mb` on a source.
 - `MaximumAgeInDays`: this check will fail if the age of the youngest back is older than the given amount of days. You can override the the agi in the days in the config file by filling the `healthy_maximum_backup_age_in_days` attribute on a `Destination`. You can override that value defined on a `Destination` by settings the `healthy_maximum_backup_age_in_days` on a source.
 
 ## Creating health checks of your own
