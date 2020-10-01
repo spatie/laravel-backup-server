@@ -21,8 +21,8 @@ class Source extends Model
 
     public $guarded = [];
 
-    const STATUS_ACTIVE = 'active';
-    const STATUS_DELETING = 'deleting';
+    public const STATUS_ACTIVE = 'active';
+    public const STATUS_DELETING = 'deleting';
 
     public $casts = [
         'healthy' => 'boolean',
@@ -82,17 +82,17 @@ class Source extends Model
         return new HealthCheckCollection($healthCheckClassNames, $this);
     }
 
-    public function scopeHealthy(Builder $query)
+    public function scopeHealthy(Builder $query): void
     {
         $query->where('healthy', true);
     }
 
-    public function scopeUnhealthy(Builder $query)
+    public function scopeUnhealthy(Builder $query): void
     {
         $query->where('healthy', false);
     }
 
-    protected function addMessageToLog(string $task, string $level, string $message)
+    protected function addMessageToLog(string $task, string $level, string $message): Source
     {
         $this->logItems()->create([
             'destination_id' => $this->destination_id,

@@ -15,7 +15,7 @@ class Format
         return '❌';
     }
 
-    public static function KbTohumanReadableSize(?float $sizeInKilobytes): string
+    public static function KbToHumanReadableSize(?float $sizeInKilobytes): string
     {
         $sizeInBytes = $sizeInKilobytes * 1024;
 

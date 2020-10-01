@@ -48,7 +48,7 @@ class BackupCompletedNotification extends Notification implements ShouldQueue
                         'Destination' => $this->event->backup->destination->name,
                         'Duration' => $this->event->backup->rsync_time_in_seconds . ' seconds',
                         'Average speed' => $this->event->backup->rsync_average_transfer_speed_in_MB_per_second,
-                        'Size' => Format::KbTohumanReadableSize($this->event->backup->size_in_kb),
+                        'Size' => Format::KbToHumanReadableSize($this->event->backup->size_in_kb),
                     ])
                     ->timestamp($this->event->backup->completed_at);
             });

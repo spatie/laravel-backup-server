@@ -53,7 +53,7 @@ class Destination extends Model
         }
     }
 
-    protected function addMessageToLog(string $task, string $level, string $message)
+    protected function addMessageToLog(string $task, string $level, string $message): void
     {
         $this->logItems()->create([
             'task' => $task,

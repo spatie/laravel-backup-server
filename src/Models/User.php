@@ -7,9 +7,9 @@ use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    public $table = 'backup_server_users';
-
     use Notifiable;
+
+    public $table = 'backup_server_users';
 
     protected $fillable = [
         'name', 'email', 'password',

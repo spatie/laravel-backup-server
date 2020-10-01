@@ -45,7 +45,7 @@ class CleanupForDestinationCompletedNotification extends Notification implements
                     ->fallback(trans('backup-server::notifications.cleanup_destination_successful_body', $this->translationParameters()))
                     ->fields([
                         'Destination' => $this->event->destination->name,
-                        'Space used' => Format::KbTohumanReadableSize($this->event->destination->getFreeSpaceInKb()),
+                        'Space used' => Format::KbToHumanReadableSize($this->event->destination->getFreeSpaceInKb()),
                         'Space used (%)' => $this->event->destination->getUsedSpaceInPercentage().'%',
                         'Inodes used (%)' => $this->event->destination->getInodeUsagePercentage().'%',
                     ]);

@@ -26,8 +26,8 @@ class ServerSummaryNotification extends Notification implements ShouldQueue
     public function toMail(): MailMessage
     {
         $totalSpaceInKb = $this->serverSummary->destinationFreeSpaceInKb + $this->serverSummary->destinationUsedSpaceInKb;
-        $totalSpace = Format::KbTohumanReadableSize($totalSpaceInKb);
-        $usedSpace = Format::KbTohumanReadableSize($this->serverSummary->destinationUsedSpaceInKb);
+        $totalSpace = Format::KbToHumanReadableSize($totalSpaceInKb);
+        $usedSpace = Format::KbToHumanReadableSize($this->serverSummary->destinationUsedSpaceInKb);
 
         return (new MailMessage())
             ->from($this->fromEmail(), $this->fromName())
@@ -48,8 +48,8 @@ class ServerSummaryNotification extends Notification implements ShouldQueue
     public function toSlack(): SlackMessage
     {
         $totalSpaceInKb = $this->serverSummary->destinationFreeSpaceInKb + $this->serverSummary->destinationUsedSpaceInKb;
-        $totalSpace = Format::KbTohumanReadableSize($totalSpaceInKb);
-        $usedSpace = Format::KbTohumanReadableSize($this->serverSummary->destinationUsedSpaceInKb);
+        $totalSpace = Format::KbToHumanReadableSize($totalSpaceInKb);
+        $usedSpace = Format::KbToHumanReadableSize($this->serverSummary->destinationUsedSpaceInKb);
         $timeSpent = gmdate('H:i:s', $this->serverSummary->timeSpentRunningBackupsInSeconds);
 
         return $this->slackMessage()

@@ -54,13 +54,13 @@ class ListDestinationsCommand extends Command
         $rowValues = [
             'name' => $destination->name,
             'healthy' => Format::emoji($destination->isHealthy()),
-            'total_backup_size' => Format::KbTohumanReadableSize($backups->sizeInKb()),
-            'used_storage' => Format::KbTohumanReadableSize($destination->backups->realSizeInKb()),
+            'total_backup_size' => Format::KbToHumanReadableSize($backups->sizeInKb()),
+            'used_storage' => Format::KbToHumanReadableSize($destination->backups->realSizeInKb()),
         ];
 
         if ($destination->reachable()) {
             return array_merge($rowValues, [
-                'free_space' => Format::KbTohumanReadableSize($destination->getFreeSpaceInKb()),
+                'free_space' => Format::KbToHumanReadableSize($destination->getFreeSpaceInKb()),
                 'capacity_used' => $destination->getUsedSpaceInPercentage() . '%',
                 'inode_usage' => $destination->getInodeUsagePercentage() . '%',
             ]);
