@@ -31,5 +31,9 @@ These steps will be performed when cleaning up a source
 The package will delete any directory on the destination that does not belong to one of the backups on it.
 
 
+## Removing a source
+
+When you no longer need to support a source and want to remove all backups, the cleanup command will take care of it.
+You can remove the source record in the `backup_server_sources` table and execute the cleanup job.
 
 
