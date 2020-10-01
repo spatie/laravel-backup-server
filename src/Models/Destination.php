@@ -71,9 +71,7 @@ class Destination extends Model
     {
         $healthCheckClassNames = config('backup-server.monitor.destination_health_checks');
 
-        $healthCheckCollection = new HealthCheckCollection($healthCheckClassNames, $this);
-
-        return $healthCheckCollection;
+        return new HealthCheckCollection($healthCheckClassNames, $this);
     }
 
     public function getInodeUsagePercentage(): int

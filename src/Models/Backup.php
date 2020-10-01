@@ -23,9 +23,9 @@ use Symfony\Component\Process\Process;
 
 class Backup extends Model
 {
-    public $table = 'backup_server_backups';
-
     use LogsActivity, HasAsyncDelete;
+
+    public $table = 'backup_server_backups';
 
     public $guarded = [];
 
