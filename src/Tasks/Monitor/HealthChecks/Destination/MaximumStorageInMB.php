@@ -25,7 +25,7 @@ class MaximumStorageInMB extends DestinationHealthCheck
         $actualSizeInMB = round($destination->completedBackups()->sum('real_size_in_kb') / 1024, 5);
 
         if ($actualSizeInMB > $maximumSizeInMB) {
-            return HealthCheckResult::failed("The actual storage used ({$actualSizeInMB} MB) is greater than the allowed storage used ({$maximumSizeInMB}).");
+            return HealthCheckResult::failed("The actual destination storage used ({$actualSizeInMB} MB) is greater than the allowed storage used ({$maximumSizeInMB}).");
         }
 
         return HealthCheckResult::ok();
