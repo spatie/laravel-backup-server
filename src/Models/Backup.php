@@ -5,6 +5,7 @@ namespace Spatie\BackupServer\Models;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -29,11 +30,11 @@ class Backup extends Model
 
     public $guarded = [];
 
-    const STATUS_PENDING = 'pending';
-    const STATUS_IN_PROGRESS = 'in_progress';
-    const STATUS_COMPLETED = 'completed';
-    const STATUS_FAILED = 'failed';
-    const STATUS_DELETING = 'deleting';
+    public const STATUS_PENDING = 'pending';
+    public const STATUS_IN_PROGRESS = 'in_progress';
+    public const STATUS_COMPLETED = 'completed';
+    public const STATUS_FAILED = 'failed';
+    public const STATUS_DELETING = 'deleting';
 
     protected $casts = [
         'log' => 'array',
@@ -46,7 +47,7 @@ class Backup extends Model
         'excludes' => 'array',
     ];
 
-    public static function booted()
+    public static function booted(): void
     {
         static::deleting(function (Backup $backup) {
             if ($backup->disk()->exists($backup->path)) {
@@ -65,12 +66,12 @@ class Backup extends Model
         return new BackupCollection($models);
     }
 
-    public function source()
+    public function source(): BelongsTo
     {
         return $this->belongsTo(Source::class);
     }
 
-    public function destination()
+    public function destination(): BelongsTo
     {
         return $this->belongsTo(Destination::class);
     }
@@ -80,7 +81,7 @@ class Backup extends Model
         return $this->hasMany(BackupLogItem::class);
     }
 
-    public function sourceLocation()
+    public function sourceLocation(): SourceLocation
     {
         return new SourceLocation(
             $this->source->includes ?? [],
@@ -156,7 +157,7 @@ class Backup extends Model
         return $this;
     }
 
-    protected function addMessageToLog(string $task, string $level, string $message)
+    protected function addMessageToLog(string $task, string $level, string $message): Backup
     {
         $this->logItems()->create([
             'source_id' => $this->source_id,
@@ -169,7 +170,7 @@ class Backup extends Model
         return $this;
     }
 
-    public function recalculateBackupSize()
+    public function recalculateBackupSize(): Backup
     {
         $process = Process::fromShellCommandline("du -kd 0", $this->destinationLocation()->getFullPath());
 
@@ -184,7 +185,7 @@ class Backup extends Model
         return $this;
     }
 
-    public function recalculateRealBackupSize()
+    public function recalculateRealBackupSize(): Backup
     {
         if (! $this->disk()->exists($this->path)) {
             $this->update(['real_size_in_kb' => 0]);
