@@ -4,6 +4,7 @@ namespace Spatie\BackupServer\Models;
 
 use Exception;
 use Illuminate\Contracts\Filesystem\Filesystem;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -12,11 +13,12 @@ use Spatie\BackupServer\Models\Concerns\HasBackupRelation;
 use Spatie\BackupServer\Models\Concerns\LogsActivity;
 use Spatie\BackupServer\Tasks\Cleanup\Jobs\DeleteDestinationJob;
 use Spatie\BackupServer\Tasks\Monitor\HealthCheckCollection;
+use Spatie\BackupServer\Tests\Database\Factories\DestinationFactory;
 use Symfony\Component\Process\Process;
 
 class Destination extends Model
 {
-    use LogsActivity, HasBackupRelation, HasAsyncDelete;
+    use LogsActivity, HasBackupRelation, HasAsyncDelete, HasFactory;
 
     public $table = 'backup_server_destinations';
 
@@ -30,6 +32,11 @@ class Destination extends Model
         static::creating(function (Destination $source) {
             $source->status = static::STATUS_ACTIVE;
         });
+    }
+
+    protected static function newFactory(): DestinationFactory
+    {
+        return DestinationFactory::new();
     }
 
     public function getDeletionJobClassName(): string

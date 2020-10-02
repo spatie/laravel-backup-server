@@ -26,11 +26,11 @@ class DispatchPerformCleanupJobsCommandTest extends TestCase
 
         TestTime::freeze('Y-m-d H:i:s', '2020-01-01 00:00:00');
 
-        $this->destination = factory(Destination::class)->create([
+        $this->destination = Destination::factory()->create([
             'disk_name' => 'backups',
         ]);
 
-        $this->source = factory(Source::class)->create([
+        $this->source = Source::factory()->create([
             'destination_id' => $this->destination->id,
             'delete_oldest_backups_when_using_more_megabytes_than' => 5000,
         ]);
@@ -130,7 +130,7 @@ class DispatchPerformCleanupJobsCommandTest extends TestCase
     public function it_will_delete_all_backups_until_the_total_size_is_under_the_limit()
     {
         /** @var \Spatie\BackupServer\Models\Source $source */
-        $source = factory(Source::class)->create([
+        $source = Source::factory()->create([
             'delete_oldest_backups_when_using_more_megabytes_than' => 5,
         ]);
 
@@ -150,7 +150,7 @@ class DispatchPerformCleanupJobsCommandTest extends TestCase
     public function it_the_delete_oldest_backups_when_using_more_megabytes_than_field_is_lower_that_the_backup_size_it_will_not_delete_the_youngest_backup()
     {
         /** @var \Spatie\BackupServer\Models\Source $source */
-        $source = factory(Source::class)->create([
+        $source = Source::factory()->create([
             'delete_oldest_backups_when_using_more_megabytes_than' => 1,
         ]);
 

@@ -14,7 +14,7 @@ class LogsActivityTest extends TestCase
     /** @test */
     public function a_source_can_log_activity()
     {
-        $source = factory(Source::class)->create();
+        $source = Source::factory()->make();
 
         $source->logInfo(Task::BACKUP, 'info for backup task');
         $this->assertDatabaseHas('backup_server_backup_log', [
@@ -40,7 +40,7 @@ class LogsActivityTest extends TestCase
     /** @test */
     public function a_backup_can_log_activity()
     {
-        $backup = factory(Backup::class)->create();
+        $backup = Backup::factory()->make();
 
         $backup->logInfo(Task::BACKUP, 'info for backup task');
         $this->assertDatabaseHas('backup_server_backup_log', [
@@ -66,7 +66,7 @@ class LogsActivityTest extends TestCase
     /** @test */
     public function a_destination_can_log_activity()
     {
-        $destination = factory(Destination::class)->create();
+        $destination = Destination::factory()->create();
 
         $destination->logInfo(Task::BACKUP, 'info for backup task');
         $this->assertDatabaseHas('backup_server_backup_log', [

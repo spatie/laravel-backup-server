@@ -23,7 +23,7 @@ class MaximumAgeInDaysTest extends TestCase
 
         TestTime::freeze();
 
-        $this->source = factory(Source::class)->create();
+        $this->source = Source::factory()->create();
 
         $this->maximumAgeDaysHealthCheck = new MaximumAgeInDays(1);
     }

@@ -32,7 +32,7 @@ class CreateServerSummaryActionTest extends TestCase
 
         $container->addFiles(__DIR__ . '/stubs/serverContent/testServer', '/src');
 
-        $source = factory(Source::class)->create([
+        $source = Source::factory()->create([
             'host' => '0.0.0.0',
             'ssh_port' => '4848',
             'ssh_user' => 'root',

@@ -13,7 +13,7 @@ use Spatie\BackupServer\Tasks\Cleanup\Support\Period;
 
 class DefaultCleanupStrategy implements CleanupStrategy
 {
-    /** @var \Spatie\Backup\BackupDestination\Backup */
+    /** @var Backup|null */
     protected ?Backup $youngestBackup;
 
     private DefaultStrategyConfig $config;
@@ -86,7 +86,7 @@ class DefaultCleanupStrategy implements CleanupStrategy
         });
     }
 
-    protected function removeBackupsForAllPeriodsExceptOne(Collection $backupsPerPeriod)
+    protected function removeBackupsForAllPeriodsExceptOne(Collection $backupsPerPeriod): void
     {
         $backupsPerPeriod->each(function (Collection $groupedBackupsByDateProperty) {
             $groupedBackupsByDateProperty->each(function (Collection $group) {
@@ -97,14 +97,14 @@ class DefaultCleanupStrategy implements CleanupStrategy
         });
     }
 
-    protected function removeBackupsOlderThan(Carbon $endDate, Collection $backups)
+    protected function removeBackupsOlderThan(Carbon $endDate, Collection $backups): void
     {
         $backups->filter(function (Backup $backup) use ($endDate) {
             return $backup->created_at->lt($endDate);
         })->each->delete();
     }
 
-    protected function removeOldBackupsUntilUsingLessThanMaximumStorage(BackupCollection $backups, int $sizeLimitInMb)
+    protected function removeOldBackupsUntilUsingLessThanMaximumStorage(BackupCollection $backups, int $sizeLimitInMb): void
     {
         if (! $backups->count()) {
             return;

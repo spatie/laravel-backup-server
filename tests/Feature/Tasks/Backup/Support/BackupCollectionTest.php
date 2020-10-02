@@ -22,7 +22,7 @@ class BackupCollectionTest extends TestCase
 
         Storage::fake('backups');
 
-        $destination = factory(Destination::class)->create();
+        $destination = Destination::factory()->create();
 
         $this->backup1 = (new BackupFactory)
             ->addDirectoryContent(__DIR__ . '/stubs/serverContent')

@@ -16,7 +16,7 @@ class TestCase extends Orchestra
     {
         parent::setUp();
 
-        $this->withFactories(__DIR__.'/database/factories');
+        $this->withFactories(__DIR__ . '/Database/Factories');
 
         $this->withoutExceptionHandling();
 
@@ -49,13 +49,13 @@ class TestCase extends Orchestra
         include_once __DIR__.'/../database/migrations/create_backup_server_tables.php.stub';
         (new CreateBackupServerTables())->up();
 
-        include_once __DIR__.'/database/migrations/create_users_table.php.stub';
+        include_once __DIR__ . '/database/migrations/create_users_table.php.stub';
         (new CreateUsersTable())->up();
     }
 
     public function authenticate()
     {
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
 
         $this->actingAs($user);
     }

@@ -4,6 +4,7 @@ namespace Spatie\BackupServer\Models;
 
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -20,11 +21,12 @@ use Spatie\BackupServer\Tasks\Backup\Support\Rsync\RsyncProgressOutput;
 use Spatie\BackupServer\Tasks\Cleanup\Jobs\DeleteBackupJob;
 use Spatie\BackupServer\Tasks\Search\ContentSearchResultFactory;
 use Spatie\BackupServer\Tasks\Search\FileSearchResultFactory;
+use Spatie\BackupServer\Tests\Database\Factories\BackupFactory;
 use Symfony\Component\Process\Process;
 
 class Backup extends Model
 {
-    use LogsActivity, HasAsyncDelete;
+    use LogsActivity, HasAsyncDelete, HasFactory;
 
     public $table = 'backup_server_backups';
 
@@ -54,6 +56,11 @@ class Backup extends Model
                 $backup->disk()->deleteDirectory($backup->path);
             }
         });
+    }
+
+    protected static function newFactory(): BackupFactory
+    {
+        return BackupFactory::new();
     }
 
     public function getDeletionJobClassName(): string

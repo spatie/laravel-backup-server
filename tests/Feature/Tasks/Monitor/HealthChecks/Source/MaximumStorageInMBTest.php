@@ -16,7 +16,7 @@ class MaximumStorageInMBTest extends TestCase
     {
         $maximumSizeInMB = 1;
 
-        $backup = factory(Backup::class)->create([
+        $backup = Backup::factory()->create([
             'status' => Backup::STATUS_COMPLETED,
             'real_size_in_kb' => $maximumSizeInMB * 1024,
         ]);
@@ -26,7 +26,7 @@ class MaximumStorageInMBTest extends TestCase
 
         $this->assertHealthCheckSucceeds($healthCheck->getResult($source));
 
-        factory(Backup::class)->create([
+        Backup::factory()->create([
             'status' => Backup::STATUS_COMPLETED,
             'source_id' => $source->id,
         ]);

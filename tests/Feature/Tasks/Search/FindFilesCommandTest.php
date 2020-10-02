@@ -14,7 +14,7 @@ class FindFilesCommandTest extends TestCase
     {
         parent::setUp();
 
-        $this->backup = factory(Backup::class)->create();
+        $this->backup = Backup::factory()->create();
 
         $backupDirectory = $this->backup->destinationLocation()->getFullPath();
 

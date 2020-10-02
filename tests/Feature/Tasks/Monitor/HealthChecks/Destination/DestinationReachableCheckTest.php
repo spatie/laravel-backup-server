@@ -14,7 +14,7 @@ class DestinationReachableCheckTest extends TestCase
     /** @test */
     public function it_will_pass_when_the_destination_is_reachable()
     {
-        $destination = factory(Destination::class)->create();
+        $destination = Destination::factory()->create();
 
         $checkResult = (new DestinationReachable())->getResult($destination);
 
@@ -24,7 +24,7 @@ class DestinationReachableCheckTest extends TestCase
     /** @test */
     public function it_will_fail_when_the_destination_is_not_reachable()
     {
-        $destination = factory(Destination::class)->create(['disk_name' => 'non-existing-disk']);
+        $destination = Destination::factory()->create(['disk_name' => 'non-existing-disk']);
 
         $checkResult = (new DestinationReachable())->getResult($destination);
 
