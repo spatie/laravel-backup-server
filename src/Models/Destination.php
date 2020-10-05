@@ -13,6 +13,7 @@ use Spatie\BackupServer\Models\Concerns\HasBackupRelation;
 use Spatie\BackupServer\Models\Concerns\LogsActivity;
 use Spatie\BackupServer\Tasks\Cleanup\Jobs\DeleteDestinationJob;
 use Spatie\BackupServer\Tasks\Monitor\HealthCheckCollection;
+use Spatie\BackupServer\Tests\Database\Factories\DestinationFactory;
 use Symfony\Component\Process\Process;
 
 class Destination extends Model
@@ -31,6 +32,11 @@ class Destination extends Model
         static::creating(function (Destination $source) {
             $source->status = static::STATUS_ACTIVE;
         });
+    }
+
+    protected static function newFactory(): DestinationFactory
+    {
+        return DestinationFactory::new();
     }
 
     public function getDeletionJobClassName(): string

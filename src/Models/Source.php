@@ -11,6 +11,7 @@ use Spatie\BackupServer\Models\Concerns\HasBackupRelation;
 use Spatie\BackupServer\Models\Concerns\LogsActivity;
 use Spatie\BackupServer\Tasks\Cleanup\Jobs\DeleteSourceJob;
 use Spatie\BackupServer\Tasks\Monitor\HealthCheckCollection;
+use Spatie\BackupServer\Tests\Database\Factories\SourceFactory;
 use Spatie\Ssh\Ssh;
 use Symfony\Component\Process\Process;
 
@@ -39,6 +40,11 @@ class Source extends Model
         static::creating(function (Source $source) {
             $source->status = static::STATUS_ACTIVE;
         });
+    }
+
+    protected static function newFactory(): SourceFactory
+    {
+        return SourceFactory::new();
     }
 
     public function getDeletionJobClassName(): string

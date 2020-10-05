@@ -21,6 +21,7 @@ use Spatie\BackupServer\Tasks\Backup\Support\Rsync\RsyncProgressOutput;
 use Spatie\BackupServer\Tasks\Cleanup\Jobs\DeleteBackupJob;
 use Spatie\BackupServer\Tasks\Search\ContentSearchResultFactory;
 use Spatie\BackupServer\Tasks\Search\FileSearchResultFactory;
+use Spatie\BackupServer\Tests\Database\Factories\BackupFactory;
 use Symfony\Component\Process\Process;
 
 class Backup extends Model
@@ -55,6 +56,11 @@ class Backup extends Model
                 $backup->disk()->deleteDirectory($backup->path);
             }
         });
+    }
+
+    protected static function newFactory(): BackupFactory
+    {
+        return BackupFactory::new();
     }
 
     public function getDeletionJobClassName(): string

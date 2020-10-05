@@ -40,7 +40,7 @@ class LogsActivityTest extends TestCase
     /** @test */
     public function a_backup_can_log_activity()
     {
-        $backup = Backup::factory()->create();
+        $backup = Backup::factory()->make();
 
         $backup->logInfo(Task::BACKUP, 'info for backup task');
         $this->assertDatabaseHas('backup_server_backup_log', [
