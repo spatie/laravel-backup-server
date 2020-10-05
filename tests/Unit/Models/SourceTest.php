@@ -15,7 +15,7 @@ class SourceTest extends TestCase
     {
         parent::setUp();
 
-        $this->source = factory(Source::class)->create();
+        $this->source = Source::factory()->create();
     }
 
     /** @test */

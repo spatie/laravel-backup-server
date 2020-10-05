@@ -17,7 +17,7 @@ class BackupFailedNotificationTest extends TestCase
     {
         parent::setUp();
 
-        $this->backup = factory(Backup::class)->create();
+        $this->backup = Backup::factory()->create();
 
         Notification::fake();
     }

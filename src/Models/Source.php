@@ -3,6 +3,7 @@
 namespace Spatie\BackupServer\Models;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\BackupServer\Models\Concerns\HasAsyncDelete;
@@ -15,7 +16,7 @@ use Symfony\Component\Process\Process;
 
 class Source extends Model
 {
-    use LogsActivity, HasBackupRelation, HasAsyncDelete;
+    use LogsActivity, HasBackupRelation, HasAsyncDelete, HasFactory;
 
     public $table = 'backup_server_sources';
 

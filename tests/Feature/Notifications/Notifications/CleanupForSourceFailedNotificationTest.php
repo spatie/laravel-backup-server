@@ -16,7 +16,7 @@ class CleanupForSourceFailedNotificationTest extends TestCase
     {
         parent::setUp();
 
-        $this->source = factory(Source::class)->create();
+        $this->source = Source::factory()->create();
 
         Notification::fake();
     }

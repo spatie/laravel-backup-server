@@ -4,6 +4,7 @@ namespace Spatie\BackupServer\Tests;
 
 use CreateBackupServerTables;
 use CreateUsersTable;
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Facades\Gate;
 use Orchestra\Testbench\TestCase as Orchestra;
@@ -14,9 +15,13 @@ class TestCase extends Orchestra
 {
     public function setUp(): void
     {
-        parent::setUp();
+        Factory::guessFactoryNamesUsing(
+            function (string $modelName) {
+                return 'Spatie\\BackupServer\\Tests\\Database\\Factories\\' . class_basename($modelName) . 'Factory';
+            }
+        );
 
-        $this->withFactories(__DIR__.'/database/factories');
+        parent::setUp();
 
         $this->withoutExceptionHandling();
 
@@ -55,7 +60,7 @@ class TestCase extends Orchestra
 
     public function authenticate()
     {
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
 
         $this->actingAs($user);
     }

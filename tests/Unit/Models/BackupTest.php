@@ -45,7 +45,7 @@ class BackupTest extends TestCase
         TestTime::freeze();
 
         /** @var \Spatie\BackupServer\Models\Backup $backup */
-        $backup = factory(Backup::class)->create();
+        $backup = Backup::factory()->create();
 
         $backup->markAsCompleted();
 
@@ -57,7 +57,7 @@ class BackupTest extends TestCase
     public function it_can_delete_a_backup_in_an_async_way()
     {
         /** @var Backup $backup */
-        $backup = factory(Backup::class)->create();
+        $backup = Backup::factory()->create();
 
         $backup->asyncDelete();
 
@@ -70,7 +70,7 @@ class BackupTest extends TestCase
         Queue::fake();
 
         /** @var Backup $backup */
-        $backup = factory(Backup::class)->create();
+        $backup = Backup::factory()->create();
 
         $backup->asyncDelete();
 

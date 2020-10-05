@@ -23,7 +23,6 @@
         "illuminate/notifications": "^7.0|^8.0",
         "illuminate/queue": "^7.0|^8.0",
         "illuminate/support": "^7.0|^8.0",
-        "laravel/legacy-factories": "^1.0",
         "nathanheffley/laravel-slack-blocks": "^2.2",
         "spatie/laravel-flash": "^1.4",
         "spatie/regex": "^1.4",
@@ -44,7 +43,9 @@
     },
     "autoload-dev": {
         "psr-4": {
+            "Spatie\\BackupServer\\Tests\\Database\\Factories\\": "tests/database/Factories",
             "Spatie\\BackupServer\\Tests\\": "tests"
+
         }
     },
     "scripts": {

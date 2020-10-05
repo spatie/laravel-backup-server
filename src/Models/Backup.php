@@ -4,6 +4,7 @@ namespace Spatie\BackupServer\Models;
 
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -24,7 +25,7 @@ use Symfony\Component\Process\Process;
 
 class Backup extends Model
 {
-    use LogsActivity, HasAsyncDelete;
+    use LogsActivity, HasAsyncDelete, HasFactory;
 
     public $table = 'backup_server_backups';
 

@@ -30,7 +30,7 @@ class MonitorBackupsCommandTest extends TestCase
     /** @test */
     public function it_will_send_a_notification_if_a_destination_is_not_reachable()
     {
-        factory(Destination::class)->create([
+        Destination::factory()->create([
            'disk_name' => 'non-existing-disk',
         ]);
 
@@ -44,7 +44,7 @@ class MonitorBackupsCommandTest extends TestCase
     {
         config()->set('backup-server.monitor.destination_health_checks.' . MaximumStorageInMB::class, 1);
 
-        $backup = factory(Backup::class)->create([
+        $backup = Backup::factory()->create([
             'status' => Backup::STATUS_COMPLETED,
             'real_size_in_kb' => 1 * 1024,
         ]);
@@ -54,7 +54,7 @@ class MonitorBackupsCommandTest extends TestCase
         Notification::assertSentTo($this->configuredNotifiable(), HealthyDestinationFoundNotification::class);
         Notification::assertNotSentTo($this->configuredNotifiable(), UnhealthyDestinationFoundNotification::class);
 
-        factory(Backup::class)->create([
+        Backup::factory()->create([
             'status' => Backup::STATUS_COMPLETED,
             'real_size_in_kb' => 1 * 1024,
             'destination_id' => $backup->destination->id,

@@ -31,7 +31,7 @@ class PerformBackupJobTest extends TestCase
             ->start()
             ->addPublicKey($this->publicKeyPath());
 
-        $this->source = factory(Source::class)->create([
+        $this->source = Source::factory()->create([
             'host' => '0.0.0.0',
             'ssh_port' => '4848',
             'ssh_user' => 'root',

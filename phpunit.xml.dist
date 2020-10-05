@@ -11,6 +11,6 @@
     </testsuite>
   </testsuites>
   <php>
-    <env name="MAIL_DRIVER" value="log"/>
+    <env name="MAIL_MAILER" value="log"/>
   </php>
 </phpunit>
