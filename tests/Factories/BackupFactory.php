@@ -74,8 +74,8 @@ class BackupFactory
 
     public function create(array $attributes = []): Backup
     {
-        $this->source ??= factory(Source::class)->create();
-        $this->destination ??= factory(Destination::class)->create();
+        $this->source ??= Source::factory()->create();
+        $this->destination ??= Destination::factory()->create();
 
         $attributes = array_merge([
             'source_id' => $this->source->id,
@@ -87,7 +87,7 @@ class BackupFactory
         }
 
         /** @var \Spatie\BackupServer\Models\Backup $backup */
-        $backup = factory(Backup::class)->create($attributes);
+        $backup = Backup::factory()->create($attributes);
 
         if ($this->createBackupDirectory) {
             $backup->disk()->makeDirectory($backup->destinationLocation()->getPath());

@@ -17,7 +17,7 @@ class DispatchPerformBackupJobsCommandTest extends TestCase
 
         Queue::fake();
 
-        $this->source = factory(Source::class)->create([
+        $this->source = Source::factory()->create([
             'backup_hour' => 2,
         ]);
 

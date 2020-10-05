@@ -21,7 +21,7 @@ class MaximumStorageInMB extends SourceHealthCheck
         $maximumSizeInMB = $this->maximumSizeInMB($source);
 
         if ($actualSizeInMB > $maximumSizeInMB) {
-            return HealthCheckResult::failed("The actual storage used ({$actualSizeInMB} MB) is greater than the allowed storage used ({$maximumSizeInMB}).");
+            return HealthCheckResult::failed("The actual source storage used ({$actualSizeInMB} MB) is greater than the allowed storage used ({$maximumSizeInMB}).");
         }
 
         return HealthCheckResult::ok();

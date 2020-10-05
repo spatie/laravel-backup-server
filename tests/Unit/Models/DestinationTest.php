@@ -15,7 +15,7 @@ class DestinationTest extends TestCase
     {
         parent::setUp();
 
-        $this->destination = factory(Destination::class)->create();
+        $this->destination = Destination::factory()->create();
     }
 
     /** @test */

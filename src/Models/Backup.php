@@ -4,7 +4,9 @@ namespace Spatie\BackupServer\Models;
 
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -19,21 +21,22 @@ use Spatie\BackupServer\Tasks\Backup\Support\Rsync\RsyncProgressOutput;
 use Spatie\BackupServer\Tasks\Cleanup\Jobs\DeleteBackupJob;
 use Spatie\BackupServer\Tasks\Search\ContentSearchResultFactory;
 use Spatie\BackupServer\Tasks\Search\FileSearchResultFactory;
+use Spatie\BackupServer\Tests\Database\Factories\BackupFactory;
 use Symfony\Component\Process\Process;
 
 class Backup extends Model
 {
-    public $table = 'backup_server_backups';
+    use LogsActivity, HasAsyncDelete, HasFactory;
 
-    use LogsActivity, HasAsyncDelete;
+    public $table = 'backup_server_backups';
 
     public $guarded = [];
 
-    const STATUS_PENDING = 'pending';
-    const STATUS_IN_PROGRESS = 'in_progress';
-    const STATUS_COMPLETED = 'completed';
-    const STATUS_FAILED = 'failed';
-    const STATUS_DELETING = 'deleting';
+    public const STATUS_PENDING = 'pending';
+    public const STATUS_IN_PROGRESS = 'in_progress';
+    public const STATUS_COMPLETED = 'completed';
+    public const STATUS_FAILED = 'failed';
+    public const STATUS_DELETING = 'deleting';
 
     protected $casts = [
         'log' => 'array',
@@ -55,6 +58,11 @@ class Backup extends Model
         });
     }
 
+    protected static function newFactory(): BackupFactory
+    {
+        return BackupFactory::new();
+    }
+
     public function getDeletionJobClassName(): string
     {
         return DeleteBackupJob::class;
@@ -65,12 +73,12 @@ class Backup extends Model
         return new BackupCollection($models);
     }
 
-    public function source()
+    public function source(): BelongsTo
     {
         return $this->belongsTo(Source::class);
     }
 
-    public function destination()
+    public function destination(): BelongsTo
     {
         return $this->belongsTo(Destination::class);
     }
@@ -80,7 +88,7 @@ class Backup extends Model
         return $this->hasMany(BackupLogItem::class);
     }
 
-    public function sourceLocation()
+    public function sourceLocation(): SourceLocation
     {
         return new SourceLocation(
             $this->source->includes ?? [],
@@ -156,7 +164,7 @@ class Backup extends Model
         return $this;
     }
 
-    protected function addMessageToLog(string $task, string $level, string $message)
+    protected function addMessageToLog(string $task, string $level, string $message): Backup
     {
         $this->logItems()->create([
             'source_id' => $this->source_id,
@@ -169,7 +177,7 @@ class Backup extends Model
         return $this;
     }
 
-    public function recalculateBackupSize()
+    public function recalculateBackupSize(): Backup
     {
         $process = Process::fromShellCommandline("du -kd 0", $this->destinationLocation()->getFullPath());
 
@@ -184,7 +192,7 @@ class Backup extends Model
         return $this;
     }
 
-    public function recalculateRealBackupSize()
+    public function recalculateRealBackupSize(): Backup
     {
         if (! $this->disk()->exists($this->path)) {
             $this->update(['real_size_in_kb' => 0]);
@@ -272,7 +280,7 @@ class Backup extends Model
         return in_array($this->status, [
             Backup::STATUS_PENDING,
             Backup::STATUS_IN_PROGRESS,
-        ]);
+        ], true);
     }
 
     public function isCompleted(): bool

@@ -44,7 +44,7 @@ class HealthyDestinationFoundNotification extends Notification implements Should
                     ->fallback(trans('backup-server::notifications.healthy_destination_found_body', $this->translationParameters()))
                     ->fields([
                         'Destination' => $this->event->destination->name,
-                        'Space used' => Format::KbTohumanReadableSize($this->event->destination->getFreeSpaceInKb()),
+                        'Space used' => Format::KbToHumanReadableSize($this->event->destination->getFreeSpaceInKb()),
                         'Space used (%)' => $this->event->destination->getUsedSpaceInPercentage().'%',
                         'Inodes used (%)' => $this->event->destination->getInodeUsagePercentage().'%',
                     ]);

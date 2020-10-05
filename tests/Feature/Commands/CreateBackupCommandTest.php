@@ -13,7 +13,7 @@ class CreateBackupCommandTest extends TestCase
     {
         Queue::fake();
 
-        $source = factory(Source::class)->create();
+        $source = Source::factory()->create();
 
         $this->artisan("backup-server:backup", [
             'sourceName' => $source->name,

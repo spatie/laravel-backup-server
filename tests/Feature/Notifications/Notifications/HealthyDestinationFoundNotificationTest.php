@@ -16,7 +16,7 @@ class HealthyDestinationFoundNotificationTest extends TestCase
     {
         parent::setUp();
 
-        $this->destination = factory(Destination::class)->create();
+        $this->destination = Destination::factory()->create();
 
         Notification::fake();
     }

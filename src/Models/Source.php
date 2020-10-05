@@ -3,6 +3,7 @@
 namespace Spatie\BackupServer\Models;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\BackupServer\Models\Concerns\HasAsyncDelete;
@@ -10,19 +11,20 @@ use Spatie\BackupServer\Models\Concerns\HasBackupRelation;
 use Spatie\BackupServer\Models\Concerns\LogsActivity;
 use Spatie\BackupServer\Tasks\Cleanup\Jobs\DeleteSourceJob;
 use Spatie\BackupServer\Tasks\Monitor\HealthCheckCollection;
+use Spatie\BackupServer\Tests\Database\Factories\SourceFactory;
 use Spatie\Ssh\Ssh;
 use Symfony\Component\Process\Process;
 
 class Source extends Model
 {
-    use LogsActivity, HasBackupRelation, HasAsyncDelete;
+    use LogsActivity, HasBackupRelation, HasAsyncDelete, HasFactory;
 
     public $table = 'backup_server_sources';
 
     public $guarded = [];
 
-    const STATUS_ACTIVE = 'active';
-    const STATUS_DELETING = 'deleting';
+    public const STATUS_ACTIVE = 'active';
+    public const STATUS_DELETING = 'deleting';
 
     public $casts = [
         'healthy' => 'boolean',
@@ -38,6 +40,11 @@ class Source extends Model
         static::creating(function (Source $source) {
             $source->status = static::STATUS_ACTIVE;
         });
+    }
+
+    protected static function newFactory(): SourceFactory
+    {
+        return SourceFactory::new();
     }
 
     public function getDeletionJobClassName(): string
@@ -82,17 +89,17 @@ class Source extends Model
         return new HealthCheckCollection($healthCheckClassNames, $this);
     }
 
-    public function scopeHealthy(Builder $query)
+    public function scopeHealthy(Builder $query): void
     {
         $query->where('healthy', true);
     }
 
-    public function scopeUnhealthy(Builder $query)
+    public function scopeUnhealthy(Builder $query): void
     {
         $query->where('healthy', false);
     }
 
-    protected function addMessageToLog(string $task, string $level, string $message)
+    protected function addMessageToLog(string $task, string $level, string $message): Source
     {
         $this->logItems()->create([
             'destination_id' => $this->destination_id,

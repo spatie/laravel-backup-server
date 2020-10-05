@@ -10,7 +10,7 @@ class SourceLocation
 
     private ?string $host;
 
-    private int $port = 22;
+    private int $port;
 
     public function __construct(
         array $paths,

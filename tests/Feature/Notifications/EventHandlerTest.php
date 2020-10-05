@@ -46,7 +46,7 @@ class EventHandlerTest extends TestCase
 
     protected function fireBackupCompletedEvent()
     {
-        $backup = factory(Backup::class)->create();
+        $backup = Backup::factory()->create();
 
         event(new BackupCompletedEvent($backup));
     }
