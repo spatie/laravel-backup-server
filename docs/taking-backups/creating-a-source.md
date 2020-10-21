@@ -19,7 +19,7 @@ These attributes can be set
 - `ssh_user`: the user name to use to ssh into the source server
 - `ssh_port`: the port to use when connecting to the source server
 - `ssh_private_key_file`: the path to a ssh key file to use when connecting to the source server
-- `destination_id`: the id of the [destination](TODO: add link) you wish to backup to
+- `destination_id`: the id of the [destination](/docs/laravel-backup-server/v1/taking-backups/creating-a-destination) you wish to backup to
 
 - `backup_hour`: the hour on which the `backup-server:dispatch-backups` should create a backup for this source
 
@@ -29,5 +29,5 @@ These attributes can be set
 - `pre_backup_commands`: an array of commands that should be executed on the source server prior to backing up. You could use this to dump the database to the filesystem.
 - `post_backup_commands`: an array of commands that should be executed on the source server after the backup is complete. You could use this to clean databases that have been dumped to the filesystem.
 
-The other attributes on the destination are used for [monitoring health](TODO:add link) and [clean up](TODO:add link) of backups.
+The other attributes on the destination are used for [monitoring health](docs/laravel-backup-server/v1/monitoring-the-health-of-all-backups/the-monitoring-process) and [clean up](/docs/laravel-backup-server/v1/cleaning-up-backups/the-cleanup-process) of backups.
 

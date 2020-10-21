@@ -29,7 +29,7 @@ abstract class SourceHealthCheck extends HealthCheck
 ## Get notifications of (un)healthy sources
 
 You can receive notifications when the monitor finds an (un)healthy sources. 
-Read the section on [notifications](TODO: add link) to learn more.
+Read the section on [notifications](/docs/laravel-backup-server/v1/sending-notifications/sending-notifications) to learn more.
                             
 
                       

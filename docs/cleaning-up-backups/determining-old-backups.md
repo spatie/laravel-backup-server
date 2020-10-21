@@ -3,7 +3,7 @@ title: Determining old backups
 weight: 2
 ---
 
-As part of [the cleanup process](TODO: add link), old backups will be deleted. But how does the package determine whether a backup is "old".
+As part of [the cleanup process](/docs/laravel-backup-server/v1/cleaning-up-backups/the-cleanup-process), old backups will be deleted. But how does the package determine whether a backup is "old".
 
 This package provides an opinionated method to determine which old backups should be deleted. We call this the `DefaultStrategy`. This is how it works.
 

@@ -31,5 +31,5 @@ abstract class DestinationHealthCheck extends HealthCheck
 ## Get notifications of (un)healthy destinations
 
 You can receive notifications when the monitor finds an (un)healthy destinations. 
-Read the section on [notifications](TODO: add link) to learn more.
+Read the section on [notifications](/docs/laravel-backup-server/v1/sending-notifications/sending-notifications) to learn more.
                             
