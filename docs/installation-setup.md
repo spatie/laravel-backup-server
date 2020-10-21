@@ -1,17 +1,49 @@
 ---
 title: Installation & setup
-weight: 4
+weight: 3
 ---
 
-laravel-backup-server can be installed via composer:
+In order to install Backup Server, you'll need to [get a license](/docs/laravel-backup-server/v1/getting-a-license) first.
+
+First, add the `satis.spatie.be` repository in your `composer.json`.
+
+```php
+"repositories": [
+    {
+        "type": "composer",
+        "url": "https://satis.spatie.be"
+    }
+],
+```
+
+Next, you need to create a file called `auth.json` and place it either next to the `composer.json` file in your project, or in the composer home directory. You can determine the composer home directory on *nix machines by using this command.
 
 ```bash
-composer require spatie/laravel-backup-server
+composer config --list --global | grep home
+```
+
+This is the content you should put in `auth.json`:
+
+```php
+{
+    "http-basic": {
+        "satis.spatie.be": {
+            "username": "<YOUR-SPATIE.BE-ACCOUNT-EMAIL-ADDRESS-HERE>",
+            "password": "<YOUR-LICENSE-KEY-HERE>"
+        }
+    }
+}
+```
+
+With the configuration above in place, you'll be able to install the package into your project using this command:
+
+```bash
+composer require "spatie/laravel-backup-server"
 ```
 
 ### Migrate the database
 
-You need to publish and run the migrations to create the `stored_events` table:
+You need to publish and run the migrations to create the tables used by this package:
 
 ```bash
 php artisan vendor:publish --provider="Spatie\BackupServer\BackupServerServiceProvider" --tag="backup-server-migrations"
@@ -195,4 +227,4 @@ In the Horizon config you can add extra configuration for backup server.
 
 ## Setting up block storage
 
-Backup server can copy the contents of several several servers onto block storage. Make sure that the system where you run backup server on has plenty of block storage available.
+Backup Server can copy the contents of several servers onto block storage. Make sure that the system where you run Backup Server on has plenty of block storage available.
