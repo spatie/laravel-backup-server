@@ -6,7 +6,6 @@
         "laravel-backup-server"
     ],
     "homepage": "https://github.com/spatie/laravel-backup-server",
-    "license": "MIT",
     "authors": [
         {
             "name": "Freek Van der Herten",
