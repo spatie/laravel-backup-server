@@ -19,7 +19,7 @@ return [
     'notifications' => [
 
         /*
-         * Backup server sends out notifications on several events. Out of the box, mails and Slack messages
+         * Backup Server sends out notifications on several events. Out of the box, mails and Slack messages
          * can be sent.
          */
         'notifications' => [

@@ -70,7 +70,7 @@ return [
     'notifications' => [
 
         /*
-         * Backup server sends out notifications on several events. Out of the box, mails and Slack messages
+         * Backup Server sends out notifications on several events. Out of the box, mails and Slack messages
          * can be sent.
          */
         'notifications' => [
@@ -165,7 +165,7 @@ protected function schedule(Schedule $schedule)
 
 ### Configure the queues
 
-Backup server uses queued jobs to perform various tasks. We recommend setting up the queues. Any driver will do, just don't use the `sync` driver.
+Backup Server uses queued jobs to perform various tasks. We recommend setting up the queues. Any driver will do, just don't use the `sync` driver.
 
 When you use horizon we recommend adding a separate queue connection so the `retry_after` can be set to a high value.
 

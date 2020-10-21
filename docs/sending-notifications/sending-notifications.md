@@ -14,7 +14,7 @@ This is the portion of the configuration that will determine when and how notifi
 'notifications' => [
 
     /*
-     * Backup server sends out notifications on several events. Out of the box, mails and Slack messages
+     * Backup Server sends out notifications on several events. Out of the box, mails and Slack messages
      * can be sent.
      */
     'notifications' => [
