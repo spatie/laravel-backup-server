@@ -14,6 +14,6 @@ Destinations\BackupServer\Models\Destination::create($attributes)
 
 These two attributes are required:
 - `name`: the name of this destination
-- `disk_name`): the name of one of the disks configured in `config\filesystems.php`. The chosen disk must use the `local` driver
+- `disk_name`: the name of one of the disks configured in `config\filesystems.php`. The chosen disk must use the `local` driver
 
 The other attributes on the destination are used for [monitoring health](docs/laravel-backup-server/v1/monitoring-the-health-of-all-backups/the-monitoring-process) and [clean up](/docs/laravel-backup-server/v1/cleaning-up-backups/the-cleanup-process) of backups.
