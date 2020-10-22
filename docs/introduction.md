@@ -9,4 +9,4 @@ The package can also search for file names and content in backups, clean up old 
 
 In this video you'll see a quick demonstration of the package.
 
-<iframe src="https://player.vimeo.com/video/470787843" width="640" height="480" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+<div style="padding:56.25% 0 0 0;position:relative;"><iframe src="https://player.vimeo.com/video/470787843?title=0&byline=0&portrait=0" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe></div><script src="https://player.vimeo.com/api/player.js"></script>
