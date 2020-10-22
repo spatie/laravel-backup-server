@@ -23,17 +23,14 @@ These steps will be performed when cleaning up a source
 
 1. First, all `Backup` models that do not have a directory on the filesystem will be deleted.
 2. Next old backups will be deleted. You can read more on we determine that a backup is "old" [in this section](/docs/laravel-backup-server/v1/cleaning-up-backups/determining-old-backups).
-3. All backups that are mark as failed (their [backup process](/docs/laravel-backup-server/v1/taking-backups/the-backup-process) didn't complete fully) an are older than a day will be deleted.
+3. All backups that are mark as failed (their [backup process](/docs/laravel-backup-server/v1/taking-backups/the-backup-process) didn't complete fully) and are older than a day will be deleted.
 4. Real backup size will be calculated. Because of the use of hard links in [the backup process](/docs/laravel-backup-server/v1/taking-backups/the-backup-process), the size of a backup will not match the size it actually takes on disk. Here, we are going to calculate what the real disk space usage is for each backup and save it in the `real_size_in_kb` on each `Backup`.
 
 ## Cleaning up a destination
 
 The package will delete any directory on the destination that does not belong to one of the backups on it.
 
-
 ## Removing a source
 
 When you no longer need to support a source and want to remove all backups, the cleanup command will take care of it.
 You can remove the source record in the `backup_server_sources` table and execute the cleanup job.
-
-
