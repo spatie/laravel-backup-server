@@ -13,11 +13,22 @@ use Spatie\BackupServer\Tasks\Backup\Support\BackupCollection;
 
 class ListSourcesCommand extends Command
 {
-    protected $signature = 'backup-server:list {--sortBy=}';
+    protected $signature = 'backup-server:list
+                            {--sortBy= : choose between name, id, healthy, backup_count, newest_backup, youngest_backup_size, backup_size and used_storage}
+                            {--D|desc}';
 
     protected $description = 'Display a list of the last backup of all sources';
 
-    protected array $allowedArgumentValues = ['name', 'healthy', 'created_at'];
+    protected array $headers = [
+        'name' => 'Source',
+        'id' => 'Id',
+        'healthy' => 'Healthy',
+        'backup_count' => '# of Backups',
+        'newest_backup' => 'Youngest Backup Age',
+        'youngest_backup_size' => 'Youngest Backup Size',
+        'backup_size' => 'Total Backup Size',
+        'used_storage' => 'Used storage',
+    ];
 
     public function handle()
     {
@@ -25,20 +36,11 @@ class ListSourcesCommand extends Command
 
         $this->guardAgainstInvalidOptionValues($sortBy);
 
-        $headers = [
-            'Source',
-            'Id',
-            'Healthy',
-            '# of Backups',
-            'Youngest Backup Age',
-            'Youngest Backup Size',
-            'Total Backup Size',
-            'Used storage',
-        ];
-
         $rows = Source::get()
-            ->sortBy(fn (Source $source) => $source->getAttribute($sortBy))
-            ->map(fn (Source $source) => $this->convertToRow($source));
+            ->map(fn (Source $source) => $this->convertToRow($source))
+            ->sortBy('name', 0, $this->option('desc'));
+
+        $headers = array_values($this->headers);
 
         $columnStyles = collect($headers)
             ->map(function (string $header) {
@@ -46,7 +48,7 @@ class ListSourcesCommand extends Command
                     return new AlignRightTableStyle();
                 }
 
-                if (in_array($header, ['Healthy'])) {
+                if ($header === 'Healthy') {
                     return new AlignCenterTableStyle();
                 }
 
@@ -99,8 +101,8 @@ class ListSourcesCommand extends Command
 
     public function guardAgainstInvalidOptionValues(string $optionValue): void
     {
-        if (! in_array($optionValue, $this->allowedArgumentValues, true)) {
-            throw InvalidCommandInput::byOption($optionValue, $this->allowedArgumentValues);
+        if (! array_key_exists($optionValue, $this->headers)) {
+            throw InvalidCommandInput::byOption($optionValue, array_keys($this->headers));
         }
     }
 }
