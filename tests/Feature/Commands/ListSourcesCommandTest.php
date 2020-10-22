@@ -9,6 +9,17 @@ use Spatie\BackupServer\Tests\TestCase;
 
 class ListSourcesCommandTest extends TestCase
 {
+    protected array $options = [
+        'id',
+        'name',
+        'healthy',
+        'backup_count',
+        'newest_backup',
+        'youngest_backup_size',
+        'backup_size',
+        'used_storage',
+    ];
+
     /** @test */
     public function it_lists_sources()
     {
@@ -24,14 +35,9 @@ class ListSourcesCommandTest extends TestCase
 
         SourceFactory::new(['healthy' => false])->create();
 
-        $this->artisan('backup-server:list --sortBy=name')->assertExitCode(0);
-        $this->artisan('backup-server:list --sortBy=id')->assertExitCode(0);
-        $this->artisan('backup-server:list --sortBy=healthy')->assertExitCode(0);
-        $this->artisan('backup-server:list --sortBy=backup_count')->assertExitCode(0);
-        $this->artisan('backup-server:list --sortBy=newest_backup')->assertExitCode(0);
-        $this->artisan('backup-server:list --sortBy=youngest_backup_size')->assertExitCode(0);
-        $this->artisan('backup-server:list --sortBy=backup_size')->assertExitCode(0);
-        $this->artisan('backup-server:list --sortBy=used_storage')->assertExitCode(0);
+        foreach ($this->options as $option) {
+            $this->artisan("backup-server:list --sortBy={$option}")->assertExitCode(0);
+        }
 
         $this->artisan('backup-server:list --desc')->assertExitCode(0);
         $this->artisan('backup-server:list -D')->assertExitCode(0);

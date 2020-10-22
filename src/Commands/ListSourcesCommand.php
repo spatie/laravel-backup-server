@@ -38,7 +38,7 @@ class ListSourcesCommand extends Command
 
         $rows = Source::get()
             ->map(fn (Source $source) => $this->convertToRow($source))
-            ->sortBy('name', 0, $this->option('desc'));
+            ->sortBy($sortBy, SORT_REGULAR, $this->option('desc'));
 
         $headers = array_values($this->headers);
 
