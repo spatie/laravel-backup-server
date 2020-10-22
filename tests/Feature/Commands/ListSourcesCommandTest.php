@@ -28,7 +28,7 @@ class ListSourcesCommandTest extends TestCase
     public function it_fails_with_invalid_sort_value()
     {
         $this->expectException(InvalidCommandInput::class);
-        $this->expectExceptionMessage('unknown is not a valid option. Use one of these options: name, healthy, created_at');
+        $this->expectExceptionMessage('`unknown` is not a valid option. Use one of these options: name, healthy, created_at');
 
         $this->artisan('backup-server:list --sortBy=unknown')->assertExitCode(0);
     }

@@ -80,6 +80,6 @@ class FileListTest extends TestCase
             })
             ->toArray();
 
-        $this->assertEquals($expected, $fileListEntries);
+        $this->assertSame($expected, $fileListEntries);
     }
 }

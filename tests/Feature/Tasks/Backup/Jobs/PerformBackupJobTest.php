@@ -52,7 +52,7 @@ class PerformBackupJobTest extends TestCase
         $this->assertTrue($this->source->backups()->first()->has('src/1.txt'));
         $this->assertFalse($this->source->backups()->first()->has('src/exclude.txt'));
 
-        $this->assertEquals(Backup::STATUS_COMPLETED, $this->source->backups()->first()->status);
+        $this->assertSame(Backup::STATUS_COMPLETED, $this->source->backups()->first()->status);
     }
 
     /** @test */
@@ -66,7 +66,7 @@ class PerformBackupJobTest extends TestCase
 
         $this->assertTrue($this->source->backups()->first()->has('src/newfile.txt'));
 
-        $this->assertEquals(Backup::STATUS_COMPLETED, $this->source->backups()->first()->status);
+        $this->assertSame(Backup::STATUS_COMPLETED, $this->source->backups()->first()->status);
     }
 
     /** @test */
@@ -78,7 +78,7 @@ class PerformBackupJobTest extends TestCase
 
         $this->artisan('backup-server:dispatch-backups')->assertExitCode(0);
 
-        $this->assertEquals(Backup::STATUS_FAILED, $this->source->backups()->first()->status);
+        $this->assertSame(Backup::STATUS_FAILED, $this->source->backups()->first()->status);
     }
 
     /** @test */
@@ -92,9 +92,9 @@ class PerformBackupJobTest extends TestCase
 
         $process = $this->container->execute('cat /post_backup_command.txt');
 
-        $this->assertEquals("ok", trim($process->getOutput()));
+        $this->assertSame("ok", trim($process->getOutput()));
 
-        $this->assertEquals(Backup::STATUS_COMPLETED, $this->source->backups()->first()->status);
+        $this->assertSame(Backup::STATUS_COMPLETED, $this->source->backups()->first()->status);
     }
 
     /** @test */
@@ -104,7 +104,7 @@ class PerformBackupJobTest extends TestCase
 
         $this->artisan('backup-server:dispatch-backups')->assertExitCode(0);
 
-        $this->assertEquals(Backup::STATUS_FAILED, $this->source->backups()->first()->status);
+        $this->assertSame(Backup::STATUS_FAILED, $this->source->backups()->first()->status);
     }
 
     /** @test */
@@ -114,7 +114,7 @@ class PerformBackupJobTest extends TestCase
 
         $this->artisan('backup-server:dispatch-backups')->assertExitCode(0);
 
-        $this->assertEquals(Backup::STATUS_FAILED, $this->source->backups()->first()->status);
+        $this->assertSame(Backup::STATUS_FAILED, $this->source->backups()->first()->status);
     }
 
     /** @test */
@@ -124,7 +124,7 @@ class PerformBackupJobTest extends TestCase
 
         $this->artisan('backup-server:dispatch-backups')->assertExitCode(0);
 
-        $this->assertEquals(Backup::STATUS_FAILED, $this->source->backups()->first()->status);
+        $this->assertSame(Backup::STATUS_FAILED, $this->source->backups()->first()->status);
     }
 
     public function tearDown(): void

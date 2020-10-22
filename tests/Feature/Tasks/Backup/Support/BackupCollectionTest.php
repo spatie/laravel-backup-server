@@ -56,6 +56,6 @@ class BackupCollectionTest extends TestCase
         $backups = new BackupCollection([$this->backup1, $this->backup2]);
         $backups->recalculateRealSizeInKb();
 
-        $this->assertEquals(1234, $this->backup1->refresh()->real_size_in_kb);
+        $this->assertSame(1234, $this->backup1->refresh()->real_size_in_kb);
     }
 }
