@@ -10,6 +10,6 @@ class InvalidCommandInput extends RuntimeException
     {
         $allowed = implode(', ', $allowedValues);
 
-        return new self("{$option} is not a valid option. Use one of these options: {$allowed}");
+        return new self("`{$option}` is not a valid option. Use one of these options: {$allowed}");
     }
 }
