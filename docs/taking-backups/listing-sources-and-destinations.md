@@ -11,6 +11,14 @@ php artisan backup-server:list
 
 Per source you'll see if it is healthy, the number of backups, the age of the latest backup, the total storage used, and more.
 
+You can sort the sources like this:
+
+```bash
+php artisan backup-server:list --sortBy=healthy
+```
+
+By default the sources are sorted by name. Other options are `healthy` and `created_at`.
+
 You can list all destinations with this command:
 
 ```bash
