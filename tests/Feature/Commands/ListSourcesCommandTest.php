@@ -2,6 +2,7 @@
 
 namespace Spatie\BackupServer\Tests\Feature\Commands;
 
+use Spatie\BackupServer\Exceptions\InvalidCommandInput;
 use Spatie\BackupServer\Tests\Database\Factories\SourceFactory;
 use Spatie\BackupServer\Tests\TestCase;
 
@@ -26,8 +27,8 @@ class ListSourcesCommandTest extends TestCase
     /** @test */
     public function it_fails_with_invalid_sort_value()
     {
-        $this->expectException(\RuntimeException::class);
-        $this->expectExceptionMessage('Use one of these values: name, healthy, created_at');
+        $this->expectException(InvalidCommandInput::class);
+        $this->expectExceptionMessage('unknown is not a valid option. Use one of these options: name, healthy, created_at');
 
         $this->artisan('backup-server:list --sortBy=unknown')->assertExitCode(0);
     }

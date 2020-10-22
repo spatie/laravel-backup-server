@@ -3,6 +3,7 @@
 namespace Spatie\BackupServer\Commands;
 
 use Illuminate\Console\Command;
+use Spatie\BackupServer\Exceptions\InvalidCommandInput;
 use Spatie\BackupServer\Models\Backup;
 use Spatie\BackupServer\Models\Source;
 use Spatie\BackupServer\Support\AlignCenterTableStyle;
@@ -99,7 +100,7 @@ class ListSourcesCommand extends Command
     public function guardAgainstInvalidOptionValues(string $optionValue): void
     {
         if (! in_array($optionValue, $this->allowedArgumentValues, true)) {
-            throw new \RuntimeException("Use one of these values: " . implode(', ', $this->allowedArgumentValues));
+            throw InvalidCommandInput::byOption($optionValue, $this->allowedArgumentValues);
         }
     }
 }
