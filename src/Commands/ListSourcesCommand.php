@@ -89,7 +89,7 @@ class ListSourcesCommand extends Command
             'newest_backup' => $youngestBackup->created_at ?? null,
             'youngest_backup_size' => $youngestBackup->size_in_kb ?? null,
             'backup_size' => $completedBackups->sizeInKb(),
-            'real_used_storage' => $completedBackups->realSizeInKb(),
+            'used_storage' => $completedBackups->realSizeInKb(),
         ]);
     }
 
