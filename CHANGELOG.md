@@ -2,20 +2,17 @@
 
 All notable changes to `laravel-backup-server` will be documented in this file
 
-## Ureleased - 2020-10-23
+## 1.0.5 - 2020-10-24
 
-### Bug fixes
-- remove `viewMailcoach` authorization gate
+- remove dead code
 
 ## 1.0.4 - 2020-10-23
 
-### Bug fixes
 - remove `viewMailcoach` authorization gate
 - rename `used_storage` in the `backup-server:list` command
 
 ## 1.0.3 - 2020-10-22
 
-### Bug fixes
 - fix sorting on `youngest_backup_size `, `backup_size ` and `used_storage` in the `backup-server:list` command (#10)
 
 ## 1.0.2 - 2020-10-22
