@@ -14,7 +14,7 @@ The most common way to do this is by hourly scheduling the `backup-server:dispat
 You can manually create a backup by executing this command.
 
 ```bash
-php artisan backup-server:backups <name-of-source>
+php artisan backup-server:backup <name-of-source>
 ```
 
 
