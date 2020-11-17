@@ -9,7 +9,7 @@ The collection of files on a remote server that you wish to backup is represente
 A `Source` is an Eloquent model. It can be created like this.
 
 ```php
-Destinations\BackupServer\Models\Destination::create($attributes)
+Destinations\BackupServer\Models\Source::create($attributes)
 ```
 
 These attributes can be set
