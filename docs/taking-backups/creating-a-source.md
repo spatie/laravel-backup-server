@@ -22,6 +22,12 @@ These attributes can be set
 - `destination_id`: the id of the [destination](/docs/laravel-backup-server/v1/taking-backups/creating-a-destination) you wish to backup to
 
 - `backup_hour`: the hour on which the `backup-server:dispatch-backups` should create a backup for this source
+    - `number` for a single backup run per day, e.g. `0`
+    - `*` to run every hour
+    - `semicolon-separated list` for defining multiple runs, e.g. `0;3;6;10`
+    - `timespans` to define a timespan in which a hourly backup is created, e.g. `6-22` or even `20-6`
+    - a combination of the above (except `*`), e.g. `0;5;10-20`
+
 
 - `includes`: an array of paths you wish to backup. These can be relative to the home directory of the ssh user, or absolute
 - `excludes`: an array of paths you wish to exclude from the backup. These should be relative to the paths giving in `includes`
