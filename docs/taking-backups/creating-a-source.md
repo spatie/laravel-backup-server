@@ -21,7 +21,8 @@ These attributes can be set
 - `ssh_private_key_file`: the path to a ssh key file to use when connecting to the source server
 - `destination_id`: the id of the [destination](/docs/laravel-backup-server/v1/taking-backups/creating-a-destination) you wish to backup to
 
-- `backup_hour`: the hour on which the `backup-server:dispatch-backups` should create a backup for this source
+- `cron_expression` (required): the cron expression that determines the frequency of backups for this source
+- `next_backup_at`: the datetime at which the `backup-server:dispatch-backups` should create the next backup
 
 - `includes`: an array of paths you wish to backup. These can be relative to the home directory of the ssh user, or absolute
 - `excludes`: an array of paths you wish to exclude from the backup. These should be relative to the paths giving in `includes`
