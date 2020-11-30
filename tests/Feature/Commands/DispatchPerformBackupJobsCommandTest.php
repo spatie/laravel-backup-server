@@ -11,14 +11,14 @@ use Spatie\TestTime\TestTime;
 class DispatchPerformBackupJobsCommandTest extends TestCase
 {
     /** @test */
-    public function it_will_dispatch_a_backup_job_at_the_correct_hour()
+    public function it_will_dispatch_a_backup_job_at_the_correct_time()
     {
         TestTime::freeze('Y-m-d H:i', '2020-01-01 00:00');
 
         Queue::fake();
 
         $this->source = Source::factory()->create([
-            'backup_hour' => 2,
+            'next_backup_at' => '2020-01-01 02:00:00',
         ]);
 
         $this->artisan('backup-server:dispatch-backups');

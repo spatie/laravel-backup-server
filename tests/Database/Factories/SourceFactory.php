@@ -18,6 +18,7 @@ class SourceFactory extends Factory
             'name' => $this->faker->name,
             'host' => $this->faker->name,
             'ssh_user' => $this->faker->userName,
+            'cron_expression' => '0 1 * * *',
             'includes' => ['/home/forge/dummy'],
             'excludes' => [],
             'destination_id' => Destination::factory(),

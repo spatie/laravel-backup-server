@@ -38,7 +38,7 @@ class CreateServerSummaryActionTest extends TestCase
             'ssh_user' => 'root',
             'ssh_private_key_file' => $this->privateKeyPath(),
             'includes' => ['/src'],
-            'backup_hour' => now()->hour,
+            'next_backup_at' => '2020-01-01 00:00:00',
         ]);
 
         $this->artisan('backup-server:dispatch-backups');

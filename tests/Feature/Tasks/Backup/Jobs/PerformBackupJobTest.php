@@ -38,7 +38,7 @@ class PerformBackupJobTest extends TestCase
             'ssh_private_key_file' => $this->privateKeyPath(),
             'includes' => ['/src'],
             'excludes' => ['exclude.txt'],
-            'backup_hour' => now()->hour,
+            'next_backup_at' => '2020-01-01 00:00:00',
         ]);
     }
 

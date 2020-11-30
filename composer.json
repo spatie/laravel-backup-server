@@ -16,6 +16,7 @@
     ],
     "require": {
         "php": "^7.4",
+        "dragonmantank/cron-expression": "^3.0.2",
         "illuminate/console": "^8.0",
         "illuminate/contracts": "^8.0",
         "illuminate/events": "^8.0",

@@ -32,7 +32,7 @@ class Source extends Model
         'excludes' => 'array',
         'pre_backup_commands' => 'array',
         'post_backup_commands' => 'array',
-        'backup_hour' => 'integer',
+        'next_backup_at' => 'datetime',
     ];
 
     public static function booted()
