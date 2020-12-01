@@ -7,6 +7,4 @@ use Spatie\BackupServer\Models\Source;
 interface BackupScheduler
 {
     public function shouldBackupNow(Source $source): bool;
-
-    public function scheduleNextBackup(Source $source);
 }

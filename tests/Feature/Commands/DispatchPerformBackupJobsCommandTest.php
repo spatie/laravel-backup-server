@@ -18,7 +18,7 @@ class DispatchPerformBackupJobsCommandTest extends TestCase
         Queue::fake();
 
         $this->source = Source::factory()->create([
-            'next_backup_at' => '2020-01-01 02:00:00',
+            'cron_expression' => '0 2 * * *',
         ]);
 
         $this->artisan('backup-server:dispatch-backups');

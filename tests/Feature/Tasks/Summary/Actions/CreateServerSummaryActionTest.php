@@ -19,7 +19,7 @@ class CreateServerSummaryActionTest extends TestCase
 
         $this->action = app(CreateServerSummaryAction::class);
 
-        Carbon::setTestNow(now()->setMilliseconds(0));
+        Carbon::setTestNow(now()->setTime(2, 0));
 
         Storage::fake('backups');
 
@@ -38,7 +38,7 @@ class CreateServerSummaryActionTest extends TestCase
             'ssh_user' => 'root',
             'ssh_private_key_file' => $this->privateKeyPath(),
             'includes' => ['/src'],
-            'next_backup_at' => '2020-01-01 00:00:00',
+            'cron_expression' => '0 2 * * *',
         ]);
 
         $this->artisan('backup-server:dispatch-backups');

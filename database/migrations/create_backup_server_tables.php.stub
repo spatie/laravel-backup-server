@@ -44,7 +44,6 @@ class CreateBackupServerTables extends Migration
             $table->string('ssh_private_key_file', 512)->nullable();
 
             $table->string('cron_expression');
-            $table->timestamp('next_backup_at')->useCurrent();
 
             $table->json('pre_backup_commands')->nullable();
             $table->json('post_backup_commands')->nullable();
