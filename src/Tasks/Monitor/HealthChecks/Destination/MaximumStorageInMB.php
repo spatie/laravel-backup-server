@@ -7,12 +7,10 @@ use Spatie\BackupServer\Tasks\Monitor\HealthCheckResult;
 
 class MaximumStorageInMB extends DestinationHealthCheck
 {
-    private int $configuredMaximumStorageInMB;
 
-    public function __construct(int $configuredMaximumStorageInMB)
-    {
-        $this->configuredMaximumStorageInMB = $configuredMaximumStorageInMB;
-    }
+    public function __construct(
+        private int $configuredMaximumStorageInMB,
+    ) {}
 
     public function getResult(Destination $destination): HealthCheckResult
     {

@@ -10,14 +10,8 @@ class CleanupForDestinationFailedEvent
 {
     use Dispatchable, SerializesModels;
 
-    public Destination $destination;
-
-    public string $exceptionMessage;
-
-    public function __construct(Destination $destination, string $exceptionMessage)
-    {
-        $this->destination = $destination;
-
-        $this->exceptionMessage = $exceptionMessage;
-    }
+    public function __construct(
+        public Destination $destination,
+        public string $exceptionMessage
+    ) {}
 }

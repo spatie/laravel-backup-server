@@ -77,14 +77,14 @@ class BackupServerServiceProvider extends EventServiceProvider
         return $this;
     }
 
-    protected function bootGate()
+    protected function bootGate(): self
     {
         Gate::define('viewBackupServer', fn ($user = null) => app()->environment('local'));
 
         return $this;
     }
 
-    protected function bootPublishables()
+    protected function bootPublishables(): self
     {
         $this->publishes([
             __DIR__ . '/../config/backup-server.php' => config_path('backup-server.php'),
@@ -103,7 +103,7 @@ class BackupServerServiceProvider extends EventServiceProvider
         return $this;
     }
 
-    protected function bootTranslations()
+    protected function bootTranslations(): self
     {
         $this->loadTranslationsFrom(__DIR__.'/../resources/lang/', 'backup-server');
 

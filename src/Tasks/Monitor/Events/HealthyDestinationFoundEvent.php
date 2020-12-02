@@ -6,10 +6,8 @@ use Spatie\BackupServer\Models\Destination;
 
 class HealthyDestinationFoundEvent
 {
-    public Destination $destination;
 
-    public function __construct(Destination $destination)
-    {
-        $this->destination = $destination;
-    }
+    public function __construct(
+        public Destination $destination
+    ) {}
 }
