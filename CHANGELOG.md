@@ -2,6 +2,11 @@
 
 All notable changes to `laravel-backup-server` will be documented in this file
 
+## 2.0.0 - 2020-12-02
+
+- use a cron expression to determine backup time
+- drop support for PHP 8
+
 ## 1.0.5 - 2020-10-24
 
 - remove dead code
