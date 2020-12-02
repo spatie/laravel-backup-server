@@ -16,12 +16,9 @@ class CleanupForSourceFailedNotification extends Notification implements ShouldQ
 {
     use HandlesNotifications, Queueable;
 
-    public CleanupForSourceFailedEvent $event;
-
-    public function __construct(CleanupForSourceFailedEvent $event)
-    {
-        $this->event = $event;
-    }
+    public function __construct(
+        public CleanupForSourceFailedEvent $event
+    )  {}
 
     public function toMail(): MailMessage
     {

@@ -8,7 +8,7 @@ use Spatie\BackupServer\Support\Helpers\Enums\Task;
 
 class EnsureDestinationIsReachable implements BackupTask
 {
-    public function execute(Backup $backup)
+    public function execute(Backup $backup): void
     {
         $backup->logInfo(Task::BACKUP, 'Ensuring destination is reachable...');
 

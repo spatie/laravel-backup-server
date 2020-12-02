@@ -15,12 +15,9 @@ class CleanupForSourceCompletedNotification extends Notification implements Shou
 {
     use HandlesNotifications, Queueable;
 
-    public CleanupForSourceCompletedEvent $event;
-
-    public function __construct(CleanupForSourceCompletedEvent $event)
-    {
-        $this->event = $event;
-    }
+    public function __construct(
+        public CleanupForSourceCompletedEvent $event
+    ) {}
 
     public function toMail(): MailMessage
     {

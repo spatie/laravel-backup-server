@@ -7,19 +7,17 @@ use Spatie\Regex\Regex;
 
 class RsyncProgressOutput
 {
-    private string $output;
 
-    public function __construct(string $output)
-    {
-        $this->output = $output;
-    }
+    public function __construct(
+        private string $output
+    ) {}
 
     public function concernsProgress(): bool
     {
         return Str::contains($this->output, 'xfr#');
     }
 
-    public function isSummpary(): bool
+    public function isSummary(): bool
     {
         return Str::contains($this->output, 'Number of files');
     }

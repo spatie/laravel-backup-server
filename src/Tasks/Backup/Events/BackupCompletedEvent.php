@@ -10,10 +10,7 @@ class BackupCompletedEvent
 {
     use Dispatchable, SerializesModels;
 
-    public Backup $backup;
-
-    public function __construct(Backup $backup)
-    {
-        $this->backup = $backup;
-    }
+    public function __construct(
+        public Backup $backup
+    ) {}
 }

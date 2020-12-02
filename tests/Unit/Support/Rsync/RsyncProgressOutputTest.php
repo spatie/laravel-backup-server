@@ -25,7 +25,7 @@ class RsyncProgressOutputTest extends TestCase
         $rsyncOutput = new RsyncProgressOutput($output);
 
         $this->assertTrue($rsyncOutput->concernsProgress());
-        $this->assertFalse($rsyncOutput->isSummpary());
+        $this->assertFalse($rsyncOutput->isSummary());
     }
 
     /** @test */
@@ -35,7 +35,7 @@ class RsyncProgressOutputTest extends TestCase
 
         $rsyncOutput = new RsyncProgressOutput($output);
 
-        $this->assertTrue($rsyncOutput->isSummpary());
+        $this->assertTrue($rsyncOutput->isSummary());
         $this->assertFalse($rsyncOutput->concernsProgress());
     }
 }

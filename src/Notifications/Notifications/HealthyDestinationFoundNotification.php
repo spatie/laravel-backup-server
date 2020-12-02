@@ -16,12 +16,9 @@ class HealthyDestinationFoundNotification extends Notification implements Should
 {
     use HandlesNotifications, Queueable;
 
-    public HealthyDestinationFoundEvent $event;
-
-    public function __construct(HealthyDestinationFoundEvent $event)
-    {
-        $this->event = $event;
-    }
+    public function __construct(
+        public HealthyDestinationFoundEvent $event
+    )  {}
 
     public function toMail(): MailMessage
     {

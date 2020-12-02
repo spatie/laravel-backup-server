@@ -11,7 +11,7 @@ use Symfony\Component\Process\Process;
 
 class RunBackup implements BackupTask
 {
-    public function execute(Backup $backup)
+    public function execute(Backup $backup): void
     {
         $backup->logInfo(Task::BACKUP, 'Running backup...');
 

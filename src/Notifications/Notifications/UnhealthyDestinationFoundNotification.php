@@ -15,12 +15,9 @@ class UnhealthyDestinationFoundNotification extends Notification implements Shou
 {
     use HandlesNotifications, Queueable;
 
-    public UnhealthyDestinationFoundEvent $event;
-
-    public function __construct(UnhealthyDestinationFoundEvent $event)
-    {
-        $this->event = $event;
-    }
+    public function __construct(
+        public UnhealthyDestinationFoundEvent $event
+    ) {}
 
     public function toMail(): MailMessage
     {

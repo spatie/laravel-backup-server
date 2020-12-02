@@ -15,12 +15,9 @@ class UnhealthySourceFoundNotification extends Notification implements ShouldQue
 {
     use HandlesNotifications, Queueable;
 
-    public UnhealthySourceFoundEvent $event;
-
-    public function __construct(UnhealthySourceFoundEvent $event)
-    {
-        $this->event = $event;
-    }
+    public function __construct(
+        public UnhealthySourceFoundEvent $event
+    ) {}
 
     public function toMail(): MailMessage
     {

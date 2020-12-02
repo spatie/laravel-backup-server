@@ -10,6 +10,6 @@ class DefaultBackupScheduler implements BackupScheduler
 {
     public function shouldBackupNow(Source $source): bool
     {
-        return CronExpression::factory($source->cron_expression)->isDue(Carbon::now());
+        return (new CronExpression($source->cron_expression))->isDue(Carbon::now());
     }
 }

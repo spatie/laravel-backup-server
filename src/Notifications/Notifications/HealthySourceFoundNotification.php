@@ -15,12 +15,9 @@ class HealthySourceFoundNotification extends Notification implements ShouldQueue
 {
     use HandlesNotifications, Queueable;
 
-    public HealthySourceFoundEvent $event;
-
-    public function __construct(HealthySourceFoundEvent $event)
-    {
-        $this->event = $event;
-    }
+    public function __construct(
+        public HealthySourceFoundEvent $event
+    ) {}
 
     public function toMail(): MailMessage
     {

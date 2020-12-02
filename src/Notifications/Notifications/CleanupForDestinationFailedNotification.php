@@ -16,12 +16,9 @@ class CleanupForDestinationFailedNotification extends Notification implements Sh
 {
     use HandlesNotifications, Queueable;
 
-    public CleanupForDestinationFailedEvent $event;
-
-    public function __construct(CleanupForDestinationFailedEvent $event)
-    {
-        $this->event = $event;
-    }
+    public function __construct(
+        public CleanupForDestinationFailedEvent $event
+    ) {}
 
     public function toMail(): MailMessage
     {
