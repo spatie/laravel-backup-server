@@ -16,12 +16,9 @@ class BackupCompletedNotification extends Notification implements ShouldQueue
 {
     use HandlesNotifications, Queueable;
 
-    public BackupCompletedEvent $event;
-
-    public function __construct(BackupCompletedEvent $event)
-    {
-        $this->event = $event;
-    }
+    public function __construct(
+        public BackupCompletedEvent $event)
+    {}
 
     public function toMail(): MailMessage
     {
