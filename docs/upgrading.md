@@ -1,3 +1,8 @@
+---
+title: Upgrading
+weight: 5
+---
+
 ## From v1 to v2
 
 - remove the `backup_hour` column in the `backup_server_sources` table.
