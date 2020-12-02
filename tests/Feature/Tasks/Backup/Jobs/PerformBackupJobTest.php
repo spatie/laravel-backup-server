@@ -2,8 +2,8 @@
 
 namespace Spatie\BackupServer\Tests\Feature\Tasks\Backup\Jobs;
 
-use Illuminate\Support\Carbon;
 use \Spatie\Docker\DockerContainerInstance;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Spatie\BackupServer\Models\Backup;
 use Spatie\BackupServer\Models\Destination;
