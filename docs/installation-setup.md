@@ -157,7 +157,7 @@ You must schedule these commands in `app\Console\Kernel.php`:
 
 protected function schedule(Schedule $schedule)
 {
-    $schedule->command('backup-server:dispatch-backups')->hourly();
+    $schedule->command('backup-server:dispatch-backups')->everyMinute();
     $schedule->command('backup-server:cleanup')->daily();
     $schedule->command('backup-server:monitor')->daily();
 }

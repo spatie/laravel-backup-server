@@ -10,10 +10,7 @@ class CleanupForSourceCompletedEvent
 {
     use Dispatchable, SerializesModels;
 
-    public Source $source;
-
-    public function __construct(Source $source)
-    {
-        $this->source = $source;
-    }
+    public function __construct(
+        public Source $source
+    ) {}
 }

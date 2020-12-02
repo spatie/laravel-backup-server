@@ -9,7 +9,7 @@ class PerformPostBackupCommands implements BackupTask
 {
     use ExecutesBackupCommands;
 
-    public function execute(Backup $backup)
+    public function execute(Backup $backup): void
     {
         $this->executeBackupCommands($backup, 'post_backup_commands');
     }

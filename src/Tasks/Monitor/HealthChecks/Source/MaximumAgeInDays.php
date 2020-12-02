@@ -8,12 +8,10 @@ use Spatie\BackupServer\Tasks\Monitor\HealthCheckResult;
 
 class MaximumAgeInDays extends SourceHealthCheck
 {
-    private int $configuredMaximumAgeInDays;
 
-    public function __construct(int $configuredMaximumAgeInDays)
-    {
-        $this->configuredMaximumAgeInDays = $configuredMaximumAgeInDays;
-    }
+    public function __construct(
+        private int $configuredMaximumAgeInDays,
+    ) {}
 
     public function getResult(Source $source): HealthCheckResult
     {

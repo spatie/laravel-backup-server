@@ -8,7 +8,7 @@ use Spatie\BackupServer\Support\Helpers\Enums\Task;
 
 trait ExecutesBackupCommands
 {
-    public function executeBackupCommands(Backup $backup, string $commandAttributeName)
+    public function executeBackupCommands(Backup $backup, string $commandAttributeName): void
     {
         $commands = $backup->source->$commandAttributeName ?? [];
 

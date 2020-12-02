@@ -6,12 +6,12 @@ use Spatie\BackupServer\Exceptions\BackupFailed;
 use Spatie\BackupServer\Models\Backup;
 use Spatie\BackupServer\Support\Helpers\Enums\Task;
 use Spatie\BackupServer\Tasks\Backup\Support\PendingBackup;
-use Spatie\BackupServer\Tasks\Backup\Support\Rsync\RsyncSummaryOuput;
+use Spatie\BackupServer\Tasks\Backup\Support\Rsync\RsyncSummaryOutput;
 use Symfony\Component\Process\Process;
 
 class RunBackup implements BackupTask
 {
-    public function execute(Backup $backup)
+    public function execute(Backup $backup): void
     {
         $backup->logInfo(Task::BACKUP, 'Running backup...');
 
@@ -91,7 +91,7 @@ class RunBackup implements BackupTask
 
         $backup->update([
             'rsync_summary' => trim($summary),
-            'rsync_average_transfer_speed_in_MB_per_second' => (new RsyncSummaryOuput($output))->averageSpeedInMB(),
+            'rsync_average_transfer_speed_in_MB_per_second' => (new RsyncSummaryOutput($output))->averageSpeedInMB(),
         ]);
     }
 }

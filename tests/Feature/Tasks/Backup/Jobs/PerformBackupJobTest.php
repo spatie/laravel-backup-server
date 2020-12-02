@@ -3,6 +3,7 @@
 namespace Spatie\BackupServer\Tests\Feature\Tasks\Backup\Jobs;
 
 use \Spatie\Docker\DockerContainerInstance;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Spatie\BackupServer\Models\Backup;
 use Spatie\BackupServer\Models\Destination;
@@ -22,6 +23,8 @@ class PerformBackupJobTest extends TestCase
     {
         parent::setUp();
 
+        Carbon::setTestNow(now()->setTime(2, 0));
+
         Storage::fake('backups');
 
         $this->container = DockerContainer::create('spatie/laravel-backup-server-tests')
@@ -38,7 +41,7 @@ class PerformBackupJobTest extends TestCase
             'ssh_private_key_file' => $this->privateKeyPath(),
             'includes' => ['/src'],
             'excludes' => ['exclude.txt'],
-            'backup_hour' => now()->hour,
+            'cron_expression' => '0 2 * * *',
         ]);
     }
 

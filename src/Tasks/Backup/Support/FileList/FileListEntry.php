@@ -7,16 +7,11 @@ use Symfony\Component\Finder\SplFileInfo;
 
 class FileListEntry
 {
-    private SplFileInfo $file;
 
-    private string $relativeBashPath;
-
-    public function __construct(SplFileInfo $file, string $relativeBashPath)
-    {
-        $this->file = $file;
-
-        $this->relativeBashPath = $relativeBashPath;
-    }
+    public function __construct(
+        private SplFileInfo $file,
+        private string $relativeBashPath
+    ) {}
 
     public function name(): string
     {

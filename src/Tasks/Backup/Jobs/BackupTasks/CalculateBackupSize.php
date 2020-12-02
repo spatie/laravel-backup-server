@@ -7,7 +7,7 @@ use Spatie\BackupServer\Support\Helpers\Enums\Task;
 
 class CalculateBackupSize implements BackupTask
 {
-    public function execute(Backup $backup)
+    public function execute(Backup $backup): void
     {
         $backup->logInfo(Task::BACKUP, 'Calculating backup size...');
 

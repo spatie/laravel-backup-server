@@ -6,5 +6,5 @@ use Spatie\BackupServer\Models\Backup;
 
 interface BackupTask
 {
-    public function execute(Backup $backup);
+    public function execute(Backup $backup): void;
 }

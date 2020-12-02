@@ -10,14 +10,8 @@ class CleanupForSourceFailedEvent
 {
     use Dispatchable, SerializesModels;
 
-    public Source $source;
-
-    public string $exceptionMessage;
-
-    public function __construct(Source $source, string $exceptionMessage)
-    {
-        $this->source = $source;
-
-        $this->exceptionMessage = $exceptionMessage;
-    }
+    public function __construct(
+        public Source $source,
+        public string $exceptionMessage
+    ) {}
 }

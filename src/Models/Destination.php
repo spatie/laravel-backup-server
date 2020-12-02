@@ -55,7 +55,7 @@ class Destination extends Model
             $this->disk();
 
             return true;
-        } catch (Exception $exception) {
+        } catch (Exception) {
             return false;
         }
     }

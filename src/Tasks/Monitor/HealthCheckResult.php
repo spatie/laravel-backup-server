@@ -10,7 +10,7 @@ class HealthCheckResult
 
     protected bool $runRemainingChecks = true;
 
-    public static function ok()
+    public static function ok(): self
     {
         return new static();
     }
@@ -42,7 +42,7 @@ class HealthCheckResult
         return $this;
     }
 
-    public function doNotRunRemainingChecks()
+    public function doNotRunRemainingChecks(): self
     {
         $this->runRemainingChecks = false;
 

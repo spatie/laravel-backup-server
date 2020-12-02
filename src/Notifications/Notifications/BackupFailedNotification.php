@@ -16,12 +16,9 @@ class BackupFailedNotification extends Notification implements ShouldQueue
 {
     use HandlesNotifications, Queueable;
 
-    private BackupFailedEvent $event;
-
-    public function __construct(BackupFailedEvent $event)
-    {
-        $this->event = $event;
-    }
+    public function __construct(
+        private BackupFailedEvent $event)
+    {}
 
     public function toMail(): MailMessage
     {

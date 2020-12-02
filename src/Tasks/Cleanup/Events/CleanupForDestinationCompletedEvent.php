@@ -10,10 +10,7 @@ class CleanupForDestinationCompletedEvent
 {
     use Dispatchable, SerializesModels;
 
-    public Destination $destination;
-
-    public function __construct(Destination $destination)
-    {
-        $this->destination = $destination;
-    }
+    public function __construct(
+        public Destination $destination
+    ) {}
 }
