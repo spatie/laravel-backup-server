@@ -2,12 +2,12 @@
 
 namespace Spatie\BackupServer\Tests\Unit\Support\Rsync;
 
-use Spatie\BackupServer\Tasks\Backup\Support\Rsync\RsyncSummaryOuput;
+use Spatie\BackupServer\Tasks\Backup\Support\Rsync\RsyncSummaryOutput;
 use Spatie\BackupServer\Tests\TestCase;
 
 class RsyncSummaryOutputTest extends TestCase
 {
-    private ?RsyncSummaryOuput $rsyncSummary;
+    private ?RsyncSummaryOutput $rsyncSummary;
 
     public function setUp(): void
     {
@@ -15,7 +15,7 @@ class RsyncSummaryOutputTest extends TestCase
 
         $summary = file_get_contents(__DIR__ . '/stubs/rsyncSummary.txt');
 
-        $this->rsyncSummary = new RsyncSummaryOuput($summary);
+        $this->rsyncSummary = new RsyncSummaryOutput($summary);
     }
 
     /** @test */
@@ -27,7 +27,7 @@ class RsyncSummaryOutputTest extends TestCase
     /** @test */
     public function it_returns_0_when_the_average_speed_could_not_be_determined()
     {
-        $rsyncSummary = new RsyncSummaryOuput('invalid-summary');
+        $rsyncSummary = new RsyncSummaryOutput('invalid-summary');
 
         $this->assertEquals("0MB/s", $rsyncSummary->averageSpeedInMB());
     }

@@ -5,7 +5,7 @@ namespace Spatie\BackupServer\Tasks\Backup\Support\Rsync;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
-class RsyncSummaryOuput
+class RsyncSummaryOutput
 {
     private Collection $lines;
 
