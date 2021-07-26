@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-backup-server` will be documented in this file
 
+## 2.0.1 - 2021-07-26
+
+- increase disk usage command timeout (#21)
+
 ## 2.0.0 - 2020-12-02
 
 - use a cron expression to determine backup time
