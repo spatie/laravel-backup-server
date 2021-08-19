@@ -19,7 +19,8 @@ class ServerSummary
         public int $destinationFreeSpaceInKb,
         public int $timeSpentRunningBackupsInSeconds,
         public int $errorsInLog
-    ) {}
+    ) {
+    }
 
     public function toArray(): array
     {

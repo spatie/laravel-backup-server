@@ -11,7 +11,6 @@ class SourceFactory extends Factory
 {
     protected $model = Source::class;
 
-
     public function definition()
     {
         return [

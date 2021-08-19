@@ -20,10 +20,10 @@ use Spatie\BackupServer\Tasks\Monitor\Events\UnhealthySourceFoundEvent;
 
 class EventHandler
 {
-
     public function __construct(
         protected Repository $config
-    ) {}
+    ) {
+    }
 
     public function subscribe(Dispatcher $events): void
     {

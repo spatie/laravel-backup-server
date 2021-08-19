@@ -13,11 +13,13 @@ use Spatie\BackupServer\Tasks\Monitor\Events\UnhealthyDestinationFoundEvent;
 
 class UnhealthyDestinationFoundNotification extends Notification implements ShouldQueue
 {
-    use HandlesNotifications, Queueable;
+    use HandlesNotifications;
+    use Queueable;
 
     public function __construct(
         public UnhealthyDestinationFoundEvent $event
-    ) {}
+    ) {
+    }
 
     public function toMail(): MailMessage
     {

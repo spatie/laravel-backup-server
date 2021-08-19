@@ -18,12 +18,15 @@ use Symfony\Component\Process\Process;
 
 class Destination extends Model
 {
-    use LogsActivity, HasBackupRelation, HasAsyncDelete, HasFactory;
+    use LogsActivity;
+    use HasBackupRelation;
+    use HasAsyncDelete;
+    use HasFactory;
 
     public $table = 'backup_server_destinations';
 
-    const STATUS_ACTIVE = 'active';
-    const STATUS_DELETING = 'deleting';
+    public const STATUS_ACTIVE = 'active';
+    public const STATUS_DELETING = 'deleting';
 
     public $guarded = [];
 

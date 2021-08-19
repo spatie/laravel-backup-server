@@ -17,7 +17,10 @@ use Symfony\Component\Process\Process;
 
 class Source extends Model
 {
-    use LogsActivity, HasBackupRelation, HasAsyncDelete, HasFactory;
+    use LogsActivity;
+    use HasBackupRelation;
+    use HasAsyncDelete;
+    use HasFactory;
 
     public $table = 'backup_server_sources';
 

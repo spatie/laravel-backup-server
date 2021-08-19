@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Spatie\BackupServer\Tests\Feature\Tasks\Monitor\Concerns;
 
 use Spatie\BackupServer\Tasks\Monitor\HealthCheckResult;

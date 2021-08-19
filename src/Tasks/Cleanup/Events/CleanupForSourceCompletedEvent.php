@@ -8,9 +8,11 @@ use Spatie\BackupServer\Models\Source;
 
 class CleanupForSourceCompletedEvent
 {
-    use Dispatchable, SerializesModels;
+    use Dispatchable;
+    use SerializesModels;
 
     public function __construct(
         public Source $source
-    ) {}
+    ) {
+    }
 }

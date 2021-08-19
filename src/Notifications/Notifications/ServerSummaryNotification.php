@@ -14,11 +14,13 @@ use Spatie\BackupServer\Tasks\Summary\ServerSummary;
 
 class ServerSummaryNotification extends Notification implements ShouldQueue
 {
-    use HandlesNotifications, Queueable;
+    use HandlesNotifications;
+    use Queueable;
 
     public function __construct(
         public ServerSummary $serverSummary
-    ) {}
+    ) {
+    }
 
     public function toMail(): MailMessage
     {

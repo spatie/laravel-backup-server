@@ -14,15 +14,17 @@ use Spatie\BackupServer\Tasks\Monitor\Events\HealthyDestinationFoundEvent;
 
 class HealthyDestinationFoundNotification extends Notification implements ShouldQueue
 {
-    use HandlesNotifications, Queueable;
+    use HandlesNotifications;
+    use Queueable;
 
     public function __construct(
         public HealthyDestinationFoundEvent $event
-    )  {}
+    ) {
+    }
 
     public function toMail(): MailMessage
     {
-        return (new MailMessage)
+        return (new MailMessage())
             ->from($this->fromEmail(), $this->fromName())
             ->subject(trans('backup-server::notifications.healthy_destination_found_subject', $this->translationParameters()))
             ->greeting(trans('backup-server::notifications.healthy_destination_found_subject_title', $this->translationParameters()))

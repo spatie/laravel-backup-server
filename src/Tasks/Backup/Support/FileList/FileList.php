@@ -7,11 +7,11 @@ use Symfony\Component\Finder\Finder;
 
 class FileList
 {
-
     public function __construct(
         private Backup $backup,
         private string $relativePath,
-    ) {}
+    ) {
+    }
 
     public function entries(): array
     {

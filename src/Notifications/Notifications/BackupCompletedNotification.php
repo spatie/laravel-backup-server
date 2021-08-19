@@ -14,11 +14,14 @@ use Spatie\BackupServer\Tasks\Backup\Events\BackupCompletedEvent;
 
 class BackupCompletedNotification extends Notification implements ShouldQueue
 {
-    use HandlesNotifications, Queueable;
+    use HandlesNotifications;
+    use Queueable;
 
     public function __construct(
-        public BackupCompletedEvent $event)
-    {}
+        public BackupCompletedEvent $event
+    )
+    {
+    }
 
     public function toMail(): MailMessage
     {

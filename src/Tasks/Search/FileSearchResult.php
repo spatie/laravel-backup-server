@@ -7,11 +7,11 @@ use Spatie\BackupServer\Models\Backup;
 
 class FileSearchResult
 {
-
     public function __construct(
         protected string $relativePath,
         protected Backup $backup,
-    ) {}
+    ) {
+    }
 
     public function getAbsolutePath(): string
     {

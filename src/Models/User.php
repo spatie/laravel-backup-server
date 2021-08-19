@@ -9,7 +9,8 @@ use Spatie\BackupServer\Tests\Database\Factories\UserFactory;
 
 class User extends Authenticatable
 {
-    use Notifiable, HasFactory;
+    use Notifiable;
+    use HasFactory;
 
     public $table = 'backup_server_users';
 

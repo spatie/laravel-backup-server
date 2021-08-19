@@ -6,9 +6,10 @@ use Spatie\BackupServer\Models\Destination;
 
 class UnhealthyDestinationFoundEvent
 {
-
     public function __construct(
-        public Destination $destination, public
+        public Destination $destination,
+        public
         array $failureMessages
-    ) {}
+    ) {
+    }
 }

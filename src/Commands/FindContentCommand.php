@@ -39,7 +39,6 @@ class FindContentCommand extends Command
         $this->comment($this->resultCounter. ' ' .  Str::plural('search result', $this->resultCounter) . ' found.');
     }
 
-
     protected function handleFoundContent(Collection $contentSearchResults)
     {
         $contentSearchResults->each(function (ContentSearchResult $contentSearchResult) {

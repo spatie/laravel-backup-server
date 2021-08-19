@@ -2,7 +2,6 @@
 
 namespace Spatie\BackupServer\Tests\Feature\Tasks\Backup\Jobs;
 
-use \Spatie\Docker\DockerContainerInstance;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Spatie\BackupServer\Models\Backup;
@@ -10,6 +9,7 @@ use Spatie\BackupServer\Models\Destination;
 use Spatie\BackupServer\Models\Source;
 use Spatie\BackupServer\Tests\TestCase;
 use Spatie\Docker\DockerContainer;
+use Spatie\Docker\DockerContainerInstance;
 
 class PerformBackupJobTest extends TestCase
 {

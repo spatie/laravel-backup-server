@@ -20,7 +20,10 @@ use Throwable;
 
 class PerformCleanupSourceJob implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use Dispatchable;
+    use InteractsWithQueue;
+    use Queueable;
+    use SerializesModels;
 
     /** @var \Spatie\BackupServer\Models\Source */
     public Source $source;

@@ -8,9 +8,11 @@ use Spatie\BackupServer\Models\Backup;
 
 class BackupCompletedEvent
 {
-    use Dispatchable, SerializesModels;
+    use Dispatchable;
+    use SerializesModels;
 
     public function __construct(
         public Backup $backup
-    ) {}
+    ) {
+    }
 }

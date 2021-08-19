@@ -6,11 +6,11 @@ use Illuminate\Contracts\Filesystem\Filesystem;
 
 class DestinationLocation
 {
-
     public function __construct(
         private Filesystem $disk,
         private string $path
-    ) {}
+    ) {
+    }
 
     public function getPath(): string
     {

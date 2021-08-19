@@ -25,7 +25,7 @@ trait HandlesNotifications
 
     public function slackMessage(): SlackMessage
     {
-        return (new SlackMessage)
+        return (new SlackMessage())
             ->from(config('backup-server.notifications.slack.username'), config('backup-server.notifications.slack.icon'))
             ->to(config('backup-server.notifications.slack.channel'));
     }

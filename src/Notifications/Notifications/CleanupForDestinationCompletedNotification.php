@@ -14,7 +14,8 @@ use Spatie\BackupServer\Tasks\Cleanup\Events\CleanupForDestinationCompletedEvent
 
 class CleanupForDestinationCompletedNotification extends Notification implements ShouldQueue
 {
-    use HandlesNotifications, Queueable;
+    use HandlesNotifications;
+    use Queueable;
 
     public CleanupForDestinationCompletedEvent $event;
 
@@ -25,7 +26,7 @@ class CleanupForDestinationCompletedNotification extends Notification implements
 
     public function toMail(): MailMessage
     {
-        return (new MailMessage)
+        return (new MailMessage())
             ->success()
             ->from($this->fromEmail(), $this->fromName())
             ->subject(trans('backup-server::notifications.cleanup_destination_successful_subject', $this->translationParameters()))

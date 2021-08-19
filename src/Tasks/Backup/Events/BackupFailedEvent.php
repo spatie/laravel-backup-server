@@ -9,7 +9,8 @@ use Throwable;
 
 class BackupFailedEvent
 {
-    use Dispatchable, SerializesModels;
+    use Dispatchable;
+    use SerializesModels;
 
     public Backup $backup;
 

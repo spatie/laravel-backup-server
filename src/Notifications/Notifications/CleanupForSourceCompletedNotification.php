@@ -13,15 +13,17 @@ use Spatie\BackupServer\Tasks\Cleanup\Events\CleanupForSourceCompletedEvent;
 
 class CleanupForSourceCompletedNotification extends Notification implements ShouldQueue
 {
-    use HandlesNotifications, Queueable;
+    use HandlesNotifications;
+    use Queueable;
 
     public function __construct(
         public CleanupForSourceCompletedEvent $event
-    ) {}
+    ) {
+    }
 
     public function toMail(): MailMessage
     {
-        return (new MailMessage)
+        return (new MailMessage())
             ->success()
             ->from($this->fromEmail(), $this->fromName())
             ->subject(trans('backup-server::notifications.cleanup_source_successful_subject', $this->translationParameters()))

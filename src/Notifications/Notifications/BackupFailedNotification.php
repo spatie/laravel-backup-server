@@ -14,11 +14,14 @@ use Spatie\BackupServer\Tasks\Backup\Events\BackupFailedEvent;
 
 class BackupFailedNotification extends Notification implements ShouldQueue
 {
-    use HandlesNotifications, Queueable;
+    use HandlesNotifications;
+    use Queueable;
 
     public function __construct(
-        private BackupFailedEvent $event)
-    {}
+        private BackupFailedEvent $event
+    )
+    {
+    }
 
     public function toMail(): MailMessage
     {

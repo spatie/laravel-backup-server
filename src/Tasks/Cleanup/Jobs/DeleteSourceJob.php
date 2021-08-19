@@ -13,7 +13,10 @@ use Spatie\BackupServer\Support\Helpers\Config;
 
 class DeleteSourceJob implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use Dispatchable;
+    use InteractsWithQueue;
+    use Queueable;
+    use SerializesModels;
 
     private Source $source;
 
