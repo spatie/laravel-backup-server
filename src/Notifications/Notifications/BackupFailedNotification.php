@@ -19,8 +19,7 @@ class BackupFailedNotification extends Notification implements ShouldQueue
 
     public function __construct(
         private BackupFailedEvent $event
-    )
-    {
+    ) {
     }
 
     public function toMail(): MailMessage
