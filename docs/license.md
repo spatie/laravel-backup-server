@@ -12,7 +12,7 @@ By using our services and downloading our Software, You explicitly agree to thes
 
 We reserve however the right, in our sole discretion, to change, modify, add or remove these Terms of Use or parts of it at any time. When we make material changes to the Terms of Use, we shall send You a clear notice, as appropriate given the particular circumstances. Therefore, You should check these Terms of Use periodically for modifications. By using our Software after having modified these Terms of Use, we presume You have read and agreed to accept these modifications. If You do not agree to these Terms of Use, You should not use our Software any longer and remove our Software from your devices (computer, laptop, tablet, smartphone, etc.) instantly.
 
-We shall make sure that the latest version of these Terms of Use shall always be available on this page <https://spatie.be/docs/laravel-backup-server/v2/license>.
+We shall make sure that the latest version of these Terms of Use shall always be available on <https://spatie.be/docs/laravel-backup-server/v2/license>.
 
 If you have any questions or concerns, you may contact us by email at [@spatie.be](mailto:@spatie.be).
 
