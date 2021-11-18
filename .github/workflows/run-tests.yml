@@ -14,7 +14,7 @@ jobs:
         dependency-version: [prefer-lowest, prefer-stable]
         include:
           - laravel: 8.*
-            testbench: 6.*
+            testbench: ^6.23
 
     name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.dependency-version }}
 
@@ -32,12 +32,6 @@ jobs:
 
       - name: Patch SSH Daemon
         run: sudo sed -ri 's/^#?   StrictHostKeyChecking ask/StrictHostKeyChecking no/g' /etc/ssh/ssh_config
-
-      - name: Cache dependencies
-        uses: actions/cache@v1
-        with:
-          path: ~/.composer/cache/files
-          key: dependencies-laravel-${{ matrix.laravel }}-php-${{ matrix.php }}-composer-${{ hashFiles('composer.json') }}
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
