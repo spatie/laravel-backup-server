@@ -187,7 +187,7 @@ In the backup server configuration you must set the `queue_connection` to `backu
 ```php
 // in config/backup-server.php
 
-'connection' => 'backup-server-redis',
+'queue_connection' => 'backup-server-redis',
 ```
 
 In the Horizon config you can add extra configuration for backup server.
