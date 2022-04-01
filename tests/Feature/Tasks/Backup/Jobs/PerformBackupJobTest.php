@@ -25,7 +25,7 @@ class PerformBackupJobTest extends TestCase
 
         Carbon::setTestNow(now()->setTime(2, 0));
 
-        Storage::fake('backups');
+        //Storage::fake('backups');
 
         $this->container = DockerContainer::create('spatie/laravel-backup-server-tests')
             ->name('laravel-backup-server-tests')
@@ -53,7 +53,6 @@ class PerformBackupJobTest extends TestCase
         $this->artisan('backup-server:dispatch-backups')->assertExitCode(0);
 
         $this->assertSame(Backup::STATUS_COMPLETED, $this->source->backups()->first()->status);
-
         $this->assertTrue($this->source->backups()->first()->has('src/1.txt'));
         $this->assertFalse($this->source->backups()->first()->has('src/exclude.txt'));
     }

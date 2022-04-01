@@ -39,7 +39,6 @@ class RunBackup implements BackupTask
         $progressCallable = $pendingBackup->progressCallable;
 
         $process = Process::fromShellCommandline($command)->setTimeout(null);
-
         $rsyncStart = now();
         $process->run(fn (string $type, string $buffer) => $progressCallable($type, $buffer));
         $rsyncEnd = now();
@@ -78,7 +77,8 @@ class RunBackup implements BackupTask
             ->map(fn (string $excludedPath) => "--exclude={$excludedPath}")
             ->implode(' ');
 
-        return "rsync -progress -zaHLK  --stats --info=progress2 {$excludes} {$linkFromDestination} -e \"ssh {$privateKeyFile} -p {$port}\" {$source} {$destination}";
+        // --info=progress2
+        return "rsync -progress -zaHLK --stats  {$excludes} {$linkFromDestination} -e \"ssh {$privateKeyFile} -p {$port}\" {$source} {$destination}";
     }
 
     protected function saveRsyncSummary(Backup $backup, string $output)

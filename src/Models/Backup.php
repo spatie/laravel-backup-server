@@ -230,6 +230,11 @@ class Backup extends Model
         return Storage::disk($this->disk_name);
     }
 
+    public function pathPrefix(): string
+    {
+        return config("filesystems.disks.{$this->disk_name}.root", '');
+    }
+
     public function has(string $path): bool
     {
         return $this->disk()->exists("{$this->path}/{$path}");
