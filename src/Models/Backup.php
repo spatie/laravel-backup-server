@@ -102,7 +102,7 @@ class Backup extends Model
 
     public function destinationLocation(): DestinationLocation
     {
-        return new DestinationLocation($this->disk(), $this->path);
+        return new DestinationLocation($this->disk_name, $this->path);
     }
 
     public function markAsInProgress(): self

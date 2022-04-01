@@ -7,7 +7,7 @@ use Illuminate\Contracts\Filesystem\Filesystem;
 class DestinationLocation
 {
     public function __construct(
-        private Filesystem $disk,
+        private string $diskName,
         private string $path
     ) {
     }
@@ -24,9 +24,9 @@ class DestinationLocation
 
     public function getFullPath(): string
     {
-        $pathPrefix = $this->disk->getDriver()->getAdapter()->getPathPrefix();
+        $pathPrefix = config("filesystems.disks.{$this->diskName}.root");
 
-        return $pathPrefix  . $this->path;
+        return $pathPrefix . '/'. $this->path;
     }
 
     public function __toString()
