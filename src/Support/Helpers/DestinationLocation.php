@@ -2,8 +2,6 @@
 
 namespace Spatie\BackupServer\Support\Helpers;
 
-use Illuminate\Contracts\Filesystem\Filesystem;
-
 class DestinationLocation
 {
     public function __construct(
