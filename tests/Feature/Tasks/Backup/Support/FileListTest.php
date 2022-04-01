@@ -22,7 +22,7 @@ class FileListTest extends TestCase
     /** @test */
     public function it_can_create_a_file_listing_for_the_backup_root()
     {
-        $this->markTestSkipped("Investigate why this sometimes fails");
+        $this->markTestSkipped("TODO: investigate why this sometimes fails on CI");
 
         $actualEntries = $this->backup->fileList()->entries();
 
