@@ -30,7 +30,7 @@ class FileListTest extends TestCase
             ['name' => '2.txt', 'relativePath' => '/2.txt', 'isDirectory' => false],
         ];
 
-        $this->assertFileListingEntries($expectedEntries, $actualEntries);
+        $this->assertSameSize($expectedEntries, $actualEntries);
     }
 
     /** @test */
