@@ -2,7 +2,6 @@
 
 namespace Spatie\BackupServer\Tasks\Backup\Jobs\BackupTasks;
 
-use Exception;
 use Illuminate\Support\Facades\File;
 use Spatie\BackupServer\Models\Backup;
 use Spatie\BackupServer\Support\Helpers\Enums\Task;
