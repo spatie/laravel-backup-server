@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-backup-server` will be documented in this file
 
+## 3.0.0 - 2022-04-01
+
+- add support for Laravel 9
+
 ## 2.0.1 - 2021-07-26
 
 - increase disk usage command timeout (#21)
