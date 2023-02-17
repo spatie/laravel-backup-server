@@ -181,7 +181,13 @@ class Backup extends Model
 
     public function recalculateBackupSize(): Backup
     {
-        $process = Process::fromShellCommandline("du -kd 0", $this->destinationLocation()->getFullPath());
+        $process = Process::fromShellCommandline(
+            "du -kd 0",
+            $this->destinationLocation()->getFullPath(),
+            null,
+            null,
+            config('backup-server.backup_size_calculation_timeout_in_seconds'),
+        );
 
         $process->run();
 
@@ -204,7 +210,13 @@ class Backup extends Model
 
         $command = 'du -kd 1 ..';
 
-        $process = Process::fromShellCommandline($command, $this->destinationLocation()->getFullPath());
+        $process = Process::fromShellCommandline(
+            $command,
+            $this->destinationLocation()->getFullPath(),
+            null,
+            null,
+            config('backup-server.backup_size_calculation_timeout_in_seconds'),
+        );
         $process->run();
 
         $output = $process->getOutput();

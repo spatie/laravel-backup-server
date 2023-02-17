@@ -16,6 +16,8 @@ return [
         'scheduler' => \Spatie\BackupServer\Tasks\Backup\Support\BackupScheduler\DefaultBackupScheduler::class,
     ],
 
+    'backup_size_calculation_timeout_in_seconds' => env('BACKUP_SERVER_SIZE_CALCULATION_TIMOUT', 60),
+
     'notifications' => [
 
         /*
