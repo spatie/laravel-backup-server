@@ -47,3 +47,5 @@ If one of these commands fail, the backup process will stop.
 ## 7. Calculate backup size
 
 The total size of the backup will now be calculated and save in the `size_in_kb` attribute on the `Source`. This size in the total if you were to copy all these files to another disk. On your backup disk it could be, due to the use of hard link, that the actually used space on disk is much lower.
+
+You can increase the default timeout for this calculation with the `backup_size_calculation_timeout_in_seconds` value in the config file. This may be necessary for very large backups that take a long time to calculate the size of.
