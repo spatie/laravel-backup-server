@@ -171,4 +171,10 @@ return [
             'timeout' => CarbonInterval::hour(1)->totalSeconds,
         ],
     ],
+
+    /**
+     * It can take a long time to calculate the size of very large backups. If your
+     * backups sometimes timeout when calculating their size you can increase this value.
+     */
+    'backup_size_calculation_timeout_in_seconds' => 60,
 ];
