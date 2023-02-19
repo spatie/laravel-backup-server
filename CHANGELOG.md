@@ -2,6 +2,18 @@
 
 All notable changes to `laravel-backup-server` will be documented in this file
 
+## 3.1.0 - 2023-02-19
+
+### What's Changed
+
+- Allow timeout for backup size calculation to be configurable by @Harrisonbro in https://github.com/spatie/laravel-backup-server/pull/45
+
+### New Contributors
+
+- @Harrisonbro made their first contribution in https://github.com/spatie/laravel-backup-server/pull/45
+
+**Full Changelog**: https://github.com/spatie/laravel-backup-server/compare/3.0.0...3.1.0
+
 ## 3.0.0 - 2022-04-01
 
 - add support for Laravel 9
