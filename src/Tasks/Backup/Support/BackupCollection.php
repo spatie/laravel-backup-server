@@ -45,8 +45,7 @@ class BackupCollection extends Collection
 
         $command = 'du -kd 1 ..';
 
-        // `du` on EBS volumes isn't too fast, so we'll give it some extra time
-        $timeout = 60 * 15;
+        $timeout = config('backup_collection_size_calculation_timeout_in_seconds');
 
         $process = Process::fromShellCommandline($command, $firstBackup->destinationLocation()->getFullPath())
             ->setTimeout($timeout);
