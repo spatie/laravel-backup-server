@@ -26,6 +26,8 @@ These steps will be performed when cleaning up a source
 3. All backups that are mark as failed (their [backup process](/docs/laravel-backup-server/v1/taking-backups/the-backup-process) didn't complete fully) and are older than a day will be deleted.
 4. Real backup size will be calculated. Because of the use of hard links in [the backup process](/docs/laravel-backup-server/v1/taking-backups/the-backup-process), the size of a backup will not match the size it actually takes on disk. Here, we are going to calculate what the real disk space usage is for each backup and save it in the `real_size_in_kb` on each `Backup`.
 
+You can increase the default timeout for this calculation with the `backup_collection_size_calculation_timeout_in_seconds` value in the config file. This may be necessary for large backups, especially if you're backing up to a cloud volume.
+
 ## Cleaning up a destination
 
 The package will delete any directory on the destination that does not belong to one of the backups on it.
