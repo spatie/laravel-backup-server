@@ -2,6 +2,20 @@
 
 All notable changes to `laravel-backup-server` will be documented in this file
 
+## 3.1.1 - 2023-02-24
+
+### What's Changed
+
+- Bump json5 from 1.0.1 to 1.0.2 by @dependabot in https://github.com/spatie/laravel-backup-server/pull/44
+- Bump express from 4.17.1 to 4.18.2 by @dependabot in https://github.com/spatie/laravel-backup-server/pull/43
+- Bump decode-uri-component from 0.2.0 to 0.2.2 by @dependabot in https://github.com/spatie/laravel-backup-server/pull/42
+- Bump minimatch from 3.0.4 to 3.1.2 by @dependabot in https://github.com/spatie/laravel-backup-server/pull/47
+- Bump async from 2.6.3 to 2.6.4 by @dependabot in https://github.com/spatie/laravel-backup-server/pull/40
+- Bump eventsource from 1.0.7 to 1.1.1 by @dependabot in https://github.com/spatie/laravel-backup-server/pull/39
+- Allow timeout for backup collection size calculation to be configurable by @Harrisonbro in https://github.com/spatie/laravel-backup-server/pull/48
+
+**Full Changelog**: https://github.com/spatie/laravel-backup-server/compare/3.1.0...3.1.1
+
 ## 3.1.0 - 2023-02-19
 
 ### What's Changed
