@@ -177,9 +177,10 @@ return [
      * backups sometimes timeout when calculating their size you can increase this value.
      */
     'backup_size_calculation_timeout_in_seconds' => 60,
+
     /**
-     * Calculating the size of multiple backups at once can be a very slow process, particularly on cloud volumes, so
-     * we allow plenty of time.
+     * Calculating the size of multiple backups at once can be a very slow
+     * process particularly on cloud volumes, so we allow plenty of time.
      */
     'backup_collection_size_calculation_timeout_in_seconds' => 60 * 15,
 ];
