@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-backup-server` will be documented in this file
 
+## 3.1.2 - 2023-04-07
+
+- support Laravel 10
+
 ## 3.1.1 - 2023-02-24
 
 ### What's Changed
