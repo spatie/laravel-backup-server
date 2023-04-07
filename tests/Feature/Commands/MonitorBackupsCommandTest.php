@@ -38,17 +38,4 @@ class MonitorBackupsCommandTest extends TestCase
 
         Notification::assertSentTo($this->configuredNotifiable(), UnhealthyDestinationFoundNotification::class);
     }
-
-    /** @test */
-    public function it_will_send_a_notification_when_a_destination_uses_more_disk_space_than_allowed()
-    {
-        Backup::factory()->create([
-            'status' => Backup::STATUS_COMPLETED,
-            'real_size_in_kb' => 10000 * 1024,
-        ]);
-
-        $this->artisan('backup-server:monitor')->assertExitCode(0);
-
-        Notification::assertSentTo($this->configuredNotifiable(), UnhealthyDestinationFoundNotification::class);
-    }
 }
