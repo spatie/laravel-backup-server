@@ -2,7 +2,6 @@
 
 namespace Spatie\BackupServer\Tests\Feature\Commands;
 
-use Illuminate\Support\Facades\Queue;
 use Spatie\BackupServer\Models\Source;
 use Spatie\BackupServer\Tests\TestCase;
 
