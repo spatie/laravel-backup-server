@@ -5,9 +5,7 @@ namespace Spatie\BackupServer\Tests\Feature\Commands;
 use Illuminate\Support\Facades\Notification;
 use Spatie\BackupServer\Models\Backup;
 use Spatie\BackupServer\Models\Destination;
-use Spatie\BackupServer\Notifications\Notifications\HealthyDestinationFoundNotification;
 use Spatie\BackupServer\Notifications\Notifications\UnhealthyDestinationFoundNotification;
-use Spatie\BackupServer\Tasks\Monitor\HealthChecks\Destination\MaximumStorageInMB;
 use Spatie\BackupServer\Tests\TestCase;
 
 class MonitorBackupsCommandTest extends TestCase
