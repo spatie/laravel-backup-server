@@ -3,7 +3,6 @@
 namespace Spatie\BackupServer\Tests\Feature\Commands;
 
 use Illuminate\Support\Facades\Notification;
-use Spatie\BackupServer\Models\Backup;
 use Spatie\BackupServer\Models\Destination;
 use Spatie\BackupServer\Notifications\Notifications\UnhealthyDestinationFoundNotification;
 use Spatie\BackupServer\Tests\TestCase;
