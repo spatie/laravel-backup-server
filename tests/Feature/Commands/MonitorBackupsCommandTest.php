@@ -46,7 +46,7 @@ class MonitorBackupsCommandTest extends TestCase
 
         $backup = Backup::factory()->create([
             'status' => Backup::STATUS_COMPLETED,
-            'real_size_in_kb' => 1 * 1024,
+            'real_size_in_kb' => 1000 * 1024,
         ]);
 
         $this->artisan('backup-server:monitor')->assertExitCode(0);

@@ -11,8 +11,6 @@ class CreateBackupCommandTest extends TestCase
     /** @test */
     public function it_can_immediately_perform_a_backup()
     {
-        Queue::fake();
-
         $source = Source::factory()->create();
 
         $this->artisan("backup-server:backup", [
