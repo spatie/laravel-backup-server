@@ -50,8 +50,8 @@ class CreateServerSummaryActionTest extends TestCase
         $summary = $this->action->execute(now()->subWeek(), now());
 
         $expectedSummary = [
-            'from' => now()->subWeek(),
-            'to' => now(),
+            'from' => now()->subWeek()->timestamp,
+            'to' => now()->timestamp,
             'successfulBackups' => 1,
             'failedBackups' => 0,
             'healthyDestinations' => 1,
@@ -67,10 +67,12 @@ class CreateServerSummaryActionTest extends TestCase
         ];
 
         $actualSummary = $summary->toArray();
+        $actualSummary['to'] = $actualSummary['to']->timestamp;
+        $actualSummary['from'] = $actualSummary['from']->timestamp;
 
         $expectedKeys = array_keys($expectedSummary);
         $actualSummary = array_intersect_key($actualSummary, array_flip($expectedKeys));
 
-        $this->assertEquals($expectedSummary, $actualSummary);
+        $this->assertEqualsCanonicalizing($expectedSummary, $actualSummary);
     }
 }

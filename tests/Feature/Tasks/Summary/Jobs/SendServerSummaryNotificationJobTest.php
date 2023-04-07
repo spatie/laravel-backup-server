@@ -23,7 +23,7 @@ class SendServerSummaryNotificationJobTest extends TestCase
     /** @test */
     public function it_can_create_and_send_a_backup_server_summary_for_last_week()
     {
-        dispatch_now(new SendServerSummaryNotificationJob());
+        dispatch_sync(new SendServerSummaryNotificationJob());
 
         Notification::assertSentTo(
             app(Notifiable::class),
@@ -38,7 +38,7 @@ class SendServerSummaryNotificationJobTest extends TestCase
     /** @test */
     public function it_can_create_and_send_a_backup_server_summary_for_a_custom_period()
     {
-        dispatch_now(new SendServerSummaryNotificationJob(now()->subMonths(2), now()->subMonth()));
+        dispatch_sync(new SendServerSummaryNotificationJob(now()->subMonths(2), now()->subMonth()));
 
         Notification::assertSentTo(
             app(Notifiable::class),

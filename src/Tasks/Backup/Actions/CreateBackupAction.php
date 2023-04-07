@@ -48,7 +48,7 @@ class CreateBackupAction
 
         $this->dispatchOnQueue
             ? dispatch($job)
-            : dispatch_now($job);
+            : dispatch_sync($job);
 
         return $backup;
     }
