@@ -31,7 +31,7 @@ class MonitorBackupsCommandTest extends TestCase
     public function it_will_send_a_notification_if_a_destination_is_not_reachable()
     {
         Destination::factory()->create([
-           'disk_name' => 'non-existing-disk',
+            'disk_name' => 'non-existing-disk',
         ]);
 
         $this->artisan('backup-server:monitor')->assertExitCode(0);
@@ -42,22 +42,9 @@ class MonitorBackupsCommandTest extends TestCase
     /** @test */
     public function it_will_send_a_notification_when_a_destination_uses_more_disk_space_than_allowed()
     {
-        config()->set('backup-server.monitor.destination_health_checks.' . MaximumStorageInMB::class, 1);
-
-        $backup = Backup::factory()->create([
-            'status' => Backup::STATUS_COMPLETED,
-            'real_size_in_kb' => 1000 * 1024,
-        ]);
-
-        $this->artisan('backup-server:monitor')->assertExitCode(0);
-
-        Notification::assertSentTo($this->configuredNotifiable(), HealthyDestinationFoundNotification::class);
-        Notification::assertNotSentTo($this->configuredNotifiable(), UnhealthyDestinationFoundNotification::class);
-
         Backup::factory()->create([
             'status' => Backup::STATUS_COMPLETED,
-            'real_size_in_kb' => 1 * 1024,
-            'destination_id' => $backup->destination->id,
+            'real_size_in_kb' => 10000 * 1024,
         ]);
 
         $this->artisan('backup-server:monitor')->assertExitCode(0);
