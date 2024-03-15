@@ -24,7 +24,6 @@
         "illuminate/queue": "^10.0|^11.0",
         "illuminate/support": "^10.0|^11.0",
         "nathanheffley/laravel-slack-blocks": "^2.3",
-        "spatie/laravel-flash": "^1.4",
         "spatie/regex": "^3.0",
         "spatie/ssh": "^1.3"
     },
