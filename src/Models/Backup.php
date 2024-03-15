@@ -54,7 +54,7 @@ class Backup extends Model
     public static function booted()
     {
         static::deleting(function (Backup $backup) {
-            if ($backup->disk()->exists($backup->path)) {
+            if (!empty($backup->path) && $backup->disk()->exists($backup->path)) {
                 $backup->disk()->deleteDirectory($backup->path);
             }
         });
