@@ -2,6 +2,19 @@
 
 All notable changes to `laravel-backup-server` will be documented in this file
 
+## 3.1.3 - 2024-03-15
+
+### What's Changed
+
+* Bump semver from 5.7.1 to 5.7.2 by @dependabot in https://github.com/spatie/laravel-backup-server/pull/52
+* Fix empty path error for Backup model by @kostamilorava in https://github.com/spatie/laravel-backup-server/pull/57
+
+### New Contributors
+
+* @kostamilorava made their first contribution in https://github.com/spatie/laravel-backup-server/pull/57
+
+**Full Changelog**: https://github.com/spatie/laravel-backup-server/compare/3.1.2...3.1.3
+
 ## 3.1.2 - 2023-04-07
 
 - support Laravel 10
