@@ -24,8 +24,7 @@
         "illuminate/queue": "^10.0|^11.0",
         "illuminate/support": "^10.0|^11.0",
         "laravel/slack-notification-channel": "^3.0",
-        "spatie/laravel-flash": "^1.4",
-        "spatie/regex": "^1.4",
+        "spatie/regex": "^3.0",
         "spatie/ssh": "^1.3"
     },
     "require-dev": {
