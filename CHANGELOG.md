@@ -2,6 +2,24 @@
 
 All notable changes to `laravel-backup-server` will be documented in this file
 
+## 3.2.0 - 2024-03-15
+
+### What's Changed
+
+* Support Laravel 11
+* Bump follow-redirects from 1.14.8 to 1.15.4 by @dependabot in https://github.com/spatie/laravel-backup-server/pull/55
+* Bump browserify-sign from 4.0.4 to 4.2.2 by @dependabot in https://github.com/spatie/laravel-backup-server/pull/54
+* Bump @babel/traverse from 7.8.3 to 7.23.2 by @dependabot in https://github.com/spatie/laravel-backup-server/pull/53
+* Fix some problems by @mozex in https://github.com/spatie/laravel-backup-server/pull/58
+* Bump follow-redirects from 1.15.4 to 1.15.6 by @dependabot in https://github.com/spatie/laravel-backup-server/pull/60
+* Bump ip from 1.1.5 to 1.1.9 by @dependabot in https://github.com/spatie/laravel-backup-server/pull/59
+
+### New Contributors
+
+* @mozex made their first contribution in https://github.com/spatie/laravel-backup-server/pull/58
+
+**Full Changelog**: https://github.com/spatie/laravel-backup-server/compare/3.1.3...3.2.0
+
 ## 3.1.3 - 2024-03-15
 
 ### What's Changed
