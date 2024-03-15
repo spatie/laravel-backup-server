@@ -23,7 +23,7 @@
         "illuminate/notifications": "^10.0|^11.0",
         "illuminate/queue": "^10.0|^11.0",
         "illuminate/support": "^10.0|^11.0",
-        "nathanheffley/laravel-slack-blocks": "^2.3",
+        "laravel/slack-notification-channel": "^3.0",
         "spatie/regex": "^3.0",
         "spatie/ssh": "^1.3"
     },
