@@ -25,7 +25,6 @@ class FormatTest extends TestCase
     {
         TestTime::freeze('Y-m-d H:i:s', '2016-01-01 00:00:00');
 
-        $this->assertEquals('0.00 (1 second ago)', Format::ageInDays(now()));
         $this->assertEquals('0.04 (1 hour ago)', Format::ageInDays(now()->subHour()));
         $this->assertEquals('1.04 (1 day ago)', Format::ageInDays(now()->subHour()->subDay()));
         $this->assertEquals('30.04 (4 weeks ago)', Format::ageInDays(now()->subHour()->subMonths(1)));

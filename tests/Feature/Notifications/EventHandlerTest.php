@@ -35,7 +35,7 @@ class EventHandlerTest extends TestCase
         });
     }
 
-    public function channelProvider()
+    public static function channelProvider()
     {
         return [
             [[]],
