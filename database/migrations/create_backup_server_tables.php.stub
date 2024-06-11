@@ -65,6 +65,9 @@ class CreateBackupServerTables extends Migration
             $table->integer('healthy_maximum_backup_age_in_days')->nullable();
             $table->integer('healthy_maximum_storage_in_mb')->nullable();
 
+            // @todo write upgrade docs for this
+            $table->boolean('pause_failed_notifications')->default(false);
+
             $table->timestamps();
 
             $table
