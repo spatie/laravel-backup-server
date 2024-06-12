@@ -12,16 +12,12 @@ class BackupFailedEvent
     use Dispatchable;
     use SerializesModels;
 
-    public Backup $backup;
-
     public string $exceptionMessage;
 
     public string $trace;
 
-    public function __construct(Backup $backup, Throwable $throwable)
+    public function __construct(public Backup $backup, Throwable $throwable)
     {
-        $this->backup = $backup;
-
         $this->exceptionMessage = $throwable->getMessage();
         $this->trace = $throwable->getTraceAsString();
     }

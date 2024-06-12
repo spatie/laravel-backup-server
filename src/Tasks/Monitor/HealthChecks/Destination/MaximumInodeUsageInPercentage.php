@@ -7,11 +7,8 @@ use Spatie\BackupServer\Tasks\Monitor\HealthCheckResult;
 
 class MaximumInodeUsageInPercentage extends DestinationHealthCheck
 {
-    private int $maximumPercentage;
-
-    public function __construct(int $maximumPercentage)
+    public function __construct(private int $maximumPercentage)
     {
-        $this->maximumPercentage = $maximumPercentage;
     }
 
     public function getResult(Destination $destination): HealthCheckResult

@@ -20,11 +20,14 @@ use Rector\TypeDeclaration\Rector\Closure\AddClosureVoidReturnTypeWhereNoReturnR
 
 return RectorConfig::configure()
     ->withPaths(['config', 'resources', 'src'])
-    ->withPhpSets(php82: true)
+    ->withRules([
+        \Rector\Php80\Rector\Class_\ClassPropertyAssignToConstructorPromotionRector::class,
+    ])
+    //->withPhpSets(php82: true)
     //->withPreparedSets(deadCode: true, codingStyle: true, typeDeclarations: true)
     ->withSkip([
-        ReadOnlyPropertyRector::class,
-        ClosureToArrowFunctionRector::class,
+        //ReadOnlyPropertyRector::class,
+        //ClosureToArrowFunctionRector::class,
 
         /**ReturnNeverTypeRector::class,
         OptionalParametersAfterRequiredRector::class,

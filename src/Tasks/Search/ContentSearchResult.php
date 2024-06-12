@@ -11,13 +11,9 @@ class ContentSearchResult
 
     private int $lineNumber;
 
-    private Backup $backup;
-
-    public function __construct(string $grepResultLine, Backup $backup)
+    public function __construct(string $grepResultLine, private Backup $backup)
     {
         [$this->relativePath, $this->lineNumber] = explode(':', $grepResultLine);
-
-        $this->backup = $backup;
     }
 
     public function lineNumber(): string

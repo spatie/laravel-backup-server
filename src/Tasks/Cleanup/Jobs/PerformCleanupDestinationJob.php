@@ -21,12 +21,8 @@ class PerformCleanupDestinationJob implements ShouldQueue
     use Queueable;
     use SerializesModels;
 
-    public Destination $destination;
-
-    public function __construct(Destination $destination)
+    public function __construct(public Destination $destination)
     {
-        $this->destination = $destination;
-
         $this->timeout = config('backup-server.jobs.perform_cleanup_for_destination_job.timeout');
 
         $this->queue = config('backup-server.jobs.perform_cleanup_for_destination_job.queue');
