@@ -35,7 +35,7 @@ class ListDestinationsCommand extends Command
                     return new AlignRightTableStyle();
                 }
 
-                if (in_array($header, ['Healthy'])) {
+                if ($header === 'Healthy') {
                     return new AlignCenterTableStyle();
                 }
 

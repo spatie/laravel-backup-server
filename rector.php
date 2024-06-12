@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Rector\CodeQuality\Rector\ClassMethod\OptionalParametersAfterRequiredRector;
 use Rector\CodeQuality\Rector\Identical\FlipTypeControlToUseExclusiveTypeRector;
+use Rector\CodeQuality\Rector\If_\CombineIfRector;
 use Rector\CodeQuality\Rector\If_\ExplicitBoolCompareRector;
 use Rector\CodingStyle\Rector\ArrowFunction\StaticArrowFunctionRector;
 use Rector\CodingStyle\Rector\Closure\StaticClosureRector;
@@ -21,12 +22,15 @@ use Rector\TypeDeclaration\Rector\Closure\AddClosureVoidReturnTypeWhereNoReturnR
 return RectorConfig::configure()
     ->withPaths(['config', 'resources', 'src'])
     ->withPhpSets(php82: true)
-    ->withPreparedSets(typeDeclarations: true)
+    ->withPreparedSets(codeQuality: true, typeDeclarations: true)
     ->withSkip([
         ReadOnlyPropertyRector::class,
         ClosureToArrowFunctionRector::class,
         AddArrowFunctionReturnTypeRector::class,
         AddClosureVoidReturnTypeWhereNoReturnRector::class,
+        CombineIfRector::class,
+        FlipTypeControlToUseExclusiveTypeRector::class,
+        ExplicitBoolCompareRector::class,
 
         /**ReturnNeverTypeRector::class,
         OptionalParametersAfterRequiredRector::class,

@@ -16,6 +16,10 @@ use Throwable;
 
 class PerformCleanupDestinationJob implements ShouldQueue
 {
+    /**
+     * @var mixed
+     */
+    public $timeout;
     use Dispatchable;
     use InteractsWithQueue;
     use Queueable;
