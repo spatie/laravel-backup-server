@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Spatie\BackupServer\Enums\SourceStatus;
 use Spatie\BackupServer\Models\Concerns\HasAsyncDelete;
 use Spatie\BackupServer\Models\Concerns\HasBackupRelation;
 use Spatie\BackupServer\Models\Concerns\LogsActivity;
@@ -28,11 +29,8 @@ class Source extends Model
 
     public $guarded = [];
 
-    public const STATUS_ACTIVE = 'active';
-
-    public const STATUS_DELETING = 'deleting';
-
     public $casts = [
+        'status' => SourceStatus::class,
         'healthy' => 'boolean',
         'includes' => 'array',
         'excludes' => 'array',
@@ -43,7 +41,7 @@ class Source extends Model
     public static function booted(): void
     {
         static::creating(function (Source $source) {
-            $source->status = static::STATUS_ACTIVE;
+            $source->status = SourceStatus::Active;
         });
     }
 
