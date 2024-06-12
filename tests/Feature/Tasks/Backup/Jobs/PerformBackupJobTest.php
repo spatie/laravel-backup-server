@@ -5,6 +5,7 @@ uses(\Spatie\BackupServer\Tests\TestCase::class);
 use Illuminate\Support\Carbon;
 use Spatie\BackupServer\Enums\BackupStatus;
 use Illuminate\Support\Facades\Event;
+use Spatie\BackupServer\Models\Backup;
 use Spatie\BackupServer\Models\Source;
 use Spatie\BackupServer\Tasks\Backup\Events\BackupFailedEvent;
 use Spatie\Docker\DockerContainer;
@@ -115,4 +116,16 @@ it('will not create an event when the source is paused', function () {
     $this->assertSame(BackupStatus::Failed, $this->source->backups()->first()->status);
 
     Event::assertNotDispatched(BackupFailedEvent::class);
+});
+
+it('will create an event when the source is not paused anymore', function () {
+    Event::fake();
+
+    $this->source->update(['paused_failed_notifications_until' => now()->subMinute()]);
+
+    $this->artisan('backup-server:dispatch-backups')->assertExitCode(0);
+
+    $this->assertSame(BackupStatus::Failed, $this->source->backups()->first()->status);
+
+    Event::assertDispatched(BackupFailedEvent::class);
 });

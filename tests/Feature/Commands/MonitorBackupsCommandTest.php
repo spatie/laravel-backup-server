@@ -40,3 +40,15 @@ it('will not send if the source is paused', function () {
 
     Event::assertNotDispatched(UnhealthySourceFoundEvent::class);
 });
+
+it('will send if the source is not paused anymore', function () {
+    Event::fake();
+
+    Source::factory()->create([
+        'paused_failed_notifications_until' => now()->subMinute(),
+    ]);
+
+    $this->artisan('backup-server:monitor')->assertExitCode(0);
+
+    Event::assertDispatched(UnhealthySourceFoundEvent::class);
+});
