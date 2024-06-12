@@ -15,7 +15,7 @@ test('a source can log activity', function () {
         'source_id' => $source->id,
         'backup_id' => null,
         'destination_id' => $source->destination->id,
-        'level' => LogLevel::INFO,
+        'level' => LogLevel::Info,
         'task' => Task::Backup,
         'message' => 'info for backup task',
     ]);
@@ -25,7 +25,7 @@ test('a source can log activity', function () {
         'source_id' => $source->id,
         'backup_id' => null,
         'destination_id' => $source->destination->id,
-        'level' => LogLevel::ERROR,
+        'level' => LogLevel::Error,
         'task' => Task::Cleanup,
         'message' => 'error for cleanup task',
     ]);
@@ -39,7 +39,7 @@ test('a backup can log activity', function () {
         'source_id' => $backup->source->id,
         'backup_id' => $backup->id,
         'destination_id' => $backup->destination->id,
-        'level' => LogLevel::INFO,
+        'level' => LogLevel::Info,
         'task' => Task::Backup,
         'message' => 'info for backup task',
     ]);
@@ -49,7 +49,7 @@ test('a backup can log activity', function () {
         'source_id' => $backup->source->id,
         'backup_id' => $backup->id,
         'destination_id' => $backup->destination->id,
-        'level' => LogLevel::ERROR,
+        'level' => LogLevel::Error,
         'task' => Task::Cleanup,
         'message' => 'error for cleanup task',
     ]);
@@ -63,7 +63,7 @@ test('a destination can log activity', function () {
         'source_id' => null,
         'backup_id' => null,
         'destination_id' => $destination->id,
-        'level' => LogLevel::INFO,
+        'level' => LogLevel::Info,
         'task' => Task::Backup,
         'message' => 'info for backup task',
     ]);
@@ -73,7 +73,7 @@ test('a destination can log activity', function () {
         'source_id' => null,
         'backup_id' => null,
         'destination_id' => $destination->id,
-        'level' => LogLevel::ERROR,
+        'level' => LogLevel::Error,
         'task' => Task::Cleanup,
         'message' => 'error for cleanup task',
     ]);

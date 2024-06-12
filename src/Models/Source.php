@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\BackupServer\Models\Concerns\HasAsyncDelete;
 use Spatie\BackupServer\Models\Concerns\HasBackupRelation;
 use Spatie\BackupServer\Models\Concerns\LogsActivity;
+use Spatie\BackupServer\Support\Helpers\Enums\LogLevel;
 use Spatie\BackupServer\Support\Helpers\Enums\Task;
 use Spatie\BackupServer\Tasks\Cleanup\Jobs\DeleteSourceJob;
 use Spatie\BackupServer\Tasks\Monitor\HealthCheckCollection;
@@ -103,7 +104,7 @@ class Source extends Model
         $query->where('healthy', false);
     }
 
-    protected function addMessageToLog(Task $task, string $level, string $message): Source
+    protected function addMessageToLog(Task $task, LogLevel $level, string $message): Source
     {
         $this->logItems()->create([
             'destination_id' => $this->destination_id,

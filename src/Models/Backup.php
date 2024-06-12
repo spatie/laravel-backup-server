@@ -14,6 +14,7 @@ use Spatie\BackupServer\Enums\BackupStatus;
 use Spatie\BackupServer\Models\Concerns\HasAsyncDelete;
 use Spatie\BackupServer\Models\Concerns\LogsActivity;
 use Spatie\BackupServer\Support\Helpers\DestinationLocation;
+use Spatie\BackupServer\Support\Helpers\Enums\LogLevel;
 use Spatie\BackupServer\Support\Helpers\Enums\Task;
 use Spatie\BackupServer\Support\Helpers\SourceLocation;
 use Spatie\BackupServer\Tasks\Backup\Support\BackupCollection;
@@ -162,7 +163,7 @@ class Backup extends Model
         return $this;
     }
 
-    protected function addMessageToLog(Task $task, string $level, string $message): Backup
+    protected function addMessageToLog(Task $task, LogLevel $level, string $message): Backup
     {
         $this->logItems()->create([
             'source_id' => $this->source_id,

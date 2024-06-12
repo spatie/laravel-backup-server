@@ -11,6 +11,7 @@ use Illuminate\Support\Str;
 use Spatie\BackupServer\Models\Concerns\HasAsyncDelete;
 use Spatie\BackupServer\Models\Concerns\HasBackupRelation;
 use Spatie\BackupServer\Models\Concerns\LogsActivity;
+use Spatie\BackupServer\Support\Helpers\Enums\LogLevel;
 use Spatie\BackupServer\Support\Helpers\Enums\Task;
 use Spatie\BackupServer\Tasks\Cleanup\Jobs\DeleteDestinationJob;
 use Spatie\BackupServer\Tasks\Monitor\HealthCheckCollection;
@@ -65,7 +66,7 @@ class Destination extends Model
         }
     }
 
-    protected function addMessageToLog(Task $task, string $level, string $message): void
+    protected function addMessageToLog(Task $task, LogLevel $level, string $message): void
     {
         $this->logItems()->create([
             'task' => $task,

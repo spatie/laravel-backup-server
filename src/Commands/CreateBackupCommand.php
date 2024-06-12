@@ -36,7 +36,7 @@ class CreateBackupCommand extends Command
                     return;
                 }
 
-                $outputMethod = $backupLogItem->level === LogLevel::ERROR
+                $outputMethod = $backupLogItem->level === LogLevel::Error
                     ? 'error'
                     : 'comment';
 
