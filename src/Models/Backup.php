@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Spatie\BackupServer\Enums\BackupStatus;
 use Spatie\BackupServer\Models\Concerns\HasAsyncDelete;
 use Spatie\BackupServer\Models\Concerns\LogsActivity;
 use Spatie\BackupServer\Support\Helpers\DestinationLocation;
@@ -34,17 +35,8 @@ class Backup extends Model
 
     public $guarded = [];
 
-    public const STATUS_PENDING = 'pending';
-
-    public const STATUS_IN_PROGRESS = 'in_progress';
-
-    public const STATUS_COMPLETED = 'completed';
-
-    public const STATUS_FAILED = 'failed';
-
-    public const STATUS_DELETING = 'deleting';
-
     protected $casts = [
+        'status' => BackupStatus::class,
         'log' => 'array',
         'size_in_kb' => 'int',
         'real_size_in_kb' => 'int',
@@ -112,7 +104,7 @@ class Backup extends Model
     public function markAsInProgress(): self
     {
         $this->update([
-            'status' => self::STATUS_IN_PROGRESS,
+            'status' => BackupStatus::InProgress,
         ]);
 
         return $this;
@@ -123,7 +115,7 @@ class Backup extends Model
         $this->logInfo(Task::BACKUP, 'Backup completed.');
 
         $this->update([
-            'status' => self::STATUS_COMPLETED,
+            'status' => BackupStatus::Completed,
             'completed_at' => now(),
         ]);
 
@@ -135,7 +127,7 @@ class Backup extends Model
         $this->logError(Task::BACKUP, "Backup failed: {$errorMessage}");
 
         $this->update([
-            'status' => self::STATUS_FAILED,
+            'status' => BackupStatus::Failed,
         ]);
 
         return $this;
@@ -143,12 +135,12 @@ class Backup extends Model
 
     public function scopeCompleted(Builder $query): void
     {
-        $query->where('status', static::STATUS_COMPLETED);
+        $query->where('status', BackupStatus::Completed);
     }
 
     public function scopeFailed(Builder $query): void
     {
-        $query->where('status', static::STATUS_FAILED);
+        $query->where('status', BackupStatus::Failed);
     }
 
     public function handleProgress(string $type, string $progressOutput): self
@@ -301,14 +293,14 @@ class Backup extends Model
     public function isPendingOrInProgress(): bool
     {
         return in_array($this->status, [
-            Backup::STATUS_PENDING,
-            Backup::STATUS_IN_PROGRESS,
+            BackupStatus::Pending,
+            BackupStatus::InProgress,
         ], true);
     }
 
     public function isCompleted(): bool
     {
-        return $this->status === static::STATUS_COMPLETED;
+        return $this->status === BackupStatus::Completed;
     }
 
     public function fileList(string $relativeDirectory = '/'): FileList
