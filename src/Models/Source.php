@@ -36,7 +36,7 @@ class Source extends Model
         'excludes' => 'array',
         'pre_backup_commands' => 'array',
         'post_backup_commands' => 'array',
-        'pause_failed_notifications' => 'boolean',
+        'paused_failed_notifications_until' => 'immutable_datetime',
     ];
 
     public static function booted(): void
@@ -44,6 +44,15 @@ class Source extends Model
         static::creating(function (Source $source) {
             $source->status = SourceStatus::Active;
         });
+    }
+
+    public function areFailedNotificationsPaused(): bool
+    {
+        if ($this->paused_failed_notifications_until === null) {
+            return false;
+        }
+
+        return $this->paused_failed_notifications_until->isAfter(now());
     }
 
     protected static function newFactory(): SourceFactory

@@ -3,6 +3,7 @@
 uses(\Spatie\BackupServer\Tests\TestCase::class);
 use Illuminate\Support\Facades\Notification;
 use Spatie\BackupServer\Models\Destination;
+use Spatie\BackupServer\Models\Source;
 use Spatie\BackupServer\Notifications\Notifications\UnhealthyDestinationFoundNotification;
 
 beforeEach(function () {
@@ -26,9 +27,8 @@ it('will send a notification if a destination is not reachable', function () {
 });
 
 it('will not send if the source is paused', function () {
-    Destination::factory()->create([
-        'disk_name' => 'non-existing-disk',
-        'pause_failed_notifications' => true,
+    Source::factory()->create([
+        'paused_failed_notifications_until' => now()->addHour(),
     ]);
 
     $this->artisan('backup-server:monitor')->assertExitCode(0);
