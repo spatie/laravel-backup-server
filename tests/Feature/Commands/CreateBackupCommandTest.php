@@ -12,7 +12,7 @@ class CreateBackupCommandTest extends TestCase
     {
         $source = Source::factory()->create();
 
-        $this->artisan("backup-server:backup", [
+        $this->artisan('backup-server:backup', [
             'sourceName' => $source->name,
         ])->assertExitCode(0)->expectsOutput('Ensuring source is reachable...');
     }

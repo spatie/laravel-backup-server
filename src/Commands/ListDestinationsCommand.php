@@ -31,7 +31,7 @@ class ListDestinationsCommand extends Command
 
         $columnStyles = collect($headers)
             ->map(function (string $header) {
-                if (in_array($header, ['Total Backup Size', 'Used Storage', 'Free Space', 'Capacity Used', 'Inode Usage',])) {
+                if (in_array($header, ['Total Backup Size', 'Used Storage', 'Free Space', 'Capacity Used', 'Inode Usage'])) {
                     return new AlignRightTableStyle();
                 }
 
@@ -61,8 +61,8 @@ class ListDestinationsCommand extends Command
         if ($destination->reachable()) {
             return array_merge($rowValues, [
                 'free_space' => Format::KbToHumanReadableSize($destination->getFreeSpaceInKb()),
-                'capacity_used' => $destination->getUsedSpaceInPercentage() . '%',
-                'inode_usage' => $destination->getInodeUsagePercentage() . '%',
+                'capacity_used' => $destination->getUsedSpaceInPercentage().'%',
+                'inode_usage' => $destination->getInodeUsagePercentage().'%',
             ]);
         }
 

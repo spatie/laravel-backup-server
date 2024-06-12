@@ -18,14 +18,15 @@ use Symfony\Component\Process\Process;
 
 class Destination extends Model
 {
-    use LogsActivity;
-    use HasBackupRelation;
     use HasAsyncDelete;
+    use HasBackupRelation;
     use HasFactory;
+    use LogsActivity;
 
     public $table = 'backup_server_destinations';
 
     public const STATUS_ACTIVE = 'active';
+
     public const STATUS_DELETING = 'deleting';
 
     public $guarded = [];
@@ -88,28 +89,28 @@ class Destination extends Model
     {
         $rawOutput = $this->getDfOutput(8, 'ipcent');
 
-        return (int)Str::before($rawOutput, '%');
+        return (int) Str::before($rawOutput, '%');
     }
 
     public function getFreeSpaceInKb(): int
     {
         $rawOutput = $this->getDfOutput(4, 'avail');
 
-        return (int)$rawOutput;
+        return (int) $rawOutput;
     }
 
     public function getUsedSpaceInPercentage(): int
     {
         $rawOutput = $this->getDfOutput(5, 'pcent');
 
-        return (int)Str::before($rawOutput, '%');
+        return (int) Str::before($rawOutput, '%');
     }
 
     protected function getDfOutput(int $macOsColumnNumber, $linuxOutputFormat)
     {
         $command = PHP_OS === 'Darwin'
-            ? 'df -k "$PWD" | awk \'{print $' . $macOsColumnNumber . '}\''
-            : 'df -k --output=' . $linuxOutputFormat . ' "$PWD"';
+            ? 'df -k "$PWD" | awk \'{print $'.$macOsColumnNumber.'}\''
+            : 'df -k --output='.$linuxOutputFormat.' "$PWD"';
 
         $diskRootPath = $this->disk()->path('');
 
@@ -117,7 +118,7 @@ class Destination extends Model
         $process->run();
 
         if (! $process->isSuccessful()) {
-            throw new Exception("Could not determine inode count");
+            throw new Exception('Could not determine inode count');
         }
 
         $lines = explode(PHP_EOL, $process->getOutput());

@@ -36,6 +36,6 @@ class UnhealthyDestinationFoundNotificationTest extends TestCase
 
         $notification = new UnhealthyDestinationFoundNotification($event);
 
-        $this->assertIsString((string)$notification->toMail()->render());
+        $this->assertIsString((string) $notification->toMail()->render());
     }
 }

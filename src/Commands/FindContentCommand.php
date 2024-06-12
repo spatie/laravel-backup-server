@@ -36,7 +36,7 @@ class FindContentCommand extends Command
             });
 
         $this->comment('');
-        $this->comment($this->resultCounter. ' ' .  Str::plural('search result', $this->resultCounter) . ' found.');
+        $this->comment($this->resultCounter.' '.Str::plural('search result', $this->resultCounter).' found.');
     }
 
     protected function handleFoundContent(Collection $contentSearchResults)
@@ -44,7 +44,7 @@ class FindContentCommand extends Command
         $contentSearchResults->each(function (ContentSearchResult $contentSearchResult) {
             $this->resultCounter++;
 
-            $this->info($contentSearchResult->getAbsolutePath() . ':' . $contentSearchResult->lineNumber());
+            $this->info($contentSearchResult->getAbsolutePath().':'.$contentSearchResult->lineNumber());
         });
     }
 }

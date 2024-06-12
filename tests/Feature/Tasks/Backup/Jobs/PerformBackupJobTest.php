@@ -48,7 +48,7 @@ class PerformBackupJobTest extends TestCase
     /** @test */
     public function it_can_perform_a_backup()
     {
-        $this->container->addFiles(__DIR__ . '/stubs/serverContent/testServer', '/src');
+        $this->container->addFiles(__DIR__.'/stubs/serverContent/testServer', '/src');
 
         $this->artisan('backup-server:dispatch-backups')->assertExitCode(0);
 
@@ -60,7 +60,7 @@ class PerformBackupJobTest extends TestCase
     /** @test */
     public function it_can_perform_a_pre_backup_command()
     {
-        $this->container->addFiles(__DIR__ . '/stubs/serverContent/testServer', '/src');
+        $this->container->addFiles(__DIR__.'/stubs/serverContent/testServer', '/src');
 
         $this->source->update(['pre_backup_commands' => ['cd /src', 'touch newfile.txt']]);
 
@@ -74,7 +74,7 @@ class PerformBackupJobTest extends TestCase
     /** @test */
     public function it_will_mark_the_backup_as_failed_if_the_pre_backup_commands_cannot_execute()
     {
-        $this->container->addFiles(__DIR__ . '/stubs/serverContent/testServer', '/src');
+        $this->container->addFiles(__DIR__.'/stubs/serverContent/testServer', '/src');
 
         $this->source->update(['pre_backup_commands' => ['this-is-a-non-valid-command']]);
 
@@ -86,7 +86,7 @@ class PerformBackupJobTest extends TestCase
     /** @test */
     public function it_can_perform_post_backup_commands()
     {
-        $this->container->addFiles(__DIR__ . '/stubs/serverContent/testServer', '/src');
+        $this->container->addFiles(__DIR__.'/stubs/serverContent/testServer', '/src');
 
         $this->source->update(['post_backup_commands' => ['echo "ok" >> /post_backup_command.txt']]);
 
@@ -94,7 +94,7 @@ class PerformBackupJobTest extends TestCase
 
         $process = $this->container->execute('cat /post_backup_command.txt');
 
-        $this->assertSame("ok", trim($process->getOutput()));
+        $this->assertSame('ok', trim($process->getOutput()));
 
         $this->assertSame(Backup::STATUS_COMPLETED, $this->source->backups()->first()->status);
     }

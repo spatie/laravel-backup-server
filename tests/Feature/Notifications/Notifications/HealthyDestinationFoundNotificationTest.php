@@ -36,6 +36,6 @@ class HealthyDestinationFoundNotificationTest extends TestCase
 
         $notification = new HealthyDestinationFoundNotification($event);
 
-        $this->assertIsString((string)$notification->toMail()->render());
+        $this->assertIsString((string) $notification->toMail()->render());
     }
 }

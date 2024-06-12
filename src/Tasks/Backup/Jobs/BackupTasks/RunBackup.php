@@ -83,7 +83,7 @@ class RunBackup implements BackupTask
 
     protected function saveRsyncSummary(Backup $backup, string $output)
     {
-        $startingPosition = strpos($output, "Number of files");
+        $startingPosition = strpos($output, 'Number of files');
 
         $summary = substr($output, $startingPosition);
 

@@ -93,7 +93,7 @@ class ListSourcesCommand extends Command
         ]);
     }
 
-    protected function getFormattedBackupDate(Backup $backup = null)
+    protected function getFormattedBackupDate(?Backup $backup = null)
     {
         return is_null($backup)
             ? 'No backups present'

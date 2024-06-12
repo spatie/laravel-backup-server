@@ -16,13 +16,13 @@ class FileListTest extends TestCase
     {
         parent::setUp();
 
-        $this->backup = (new BackupFactory())->addDirectoryContent(__DIR__ . '/stubs/serverContent')->create();
+        $this->backup = (new BackupFactory())->addDirectoryContent(__DIR__.'/stubs/serverContent')->create();
     }
 
     /** @test */
     public function it_can_create_a_file_listing_for_the_backup_root()
     {
-        $this->markTestSkipped("TODO: investigate why this sometimes fails on CI");
+        $this->markTestSkipped('TODO: investigate why this sometimes fails on CI');
 
         $actualEntries = $this->backup->fileList()->entries();
 

@@ -36,6 +36,6 @@ class UnhealthySourceFoundNotificationTest extends TestCase
 
         $notification = new UnhealthySourceFoundNotification($event);
 
-        $this->assertIsString((string)$notification->toMail()->render());
+        $this->assertIsString((string) $notification->toMail()->render());
     }
 }

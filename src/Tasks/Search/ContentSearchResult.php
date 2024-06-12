@@ -29,7 +29,7 @@ class ContentSearchResult
     {
         $root = $this->backup->destinationLocation()->getFullPath();
 
-        return $root . Str::after($this->relativePath, './');
+        return $root.Str::after($this->relativePath, './');
     }
 
     public function age(): string

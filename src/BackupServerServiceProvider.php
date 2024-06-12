@@ -33,7 +33,7 @@ class BackupServerServiceProvider extends EventServiceProvider
 
     public function register()
     {
-        $this->mergeConfigFrom(__DIR__ . '/../config/backup-server.php', 'backup-server');
+        $this->mergeConfigFrom(__DIR__.'/../config/backup-server.php', 'backup-server');
 
         $this->app['events']->subscribe(EventHandler::class);
 
@@ -87,16 +87,16 @@ class BackupServerServiceProvider extends EventServiceProvider
     protected function bootPublishables(): self
     {
         $this->publishes([
-            __DIR__ . '/../config/backup-server.php' => config_path('backup-server.php'),
+            __DIR__.'/../config/backup-server.php' => config_path('backup-server.php'),
         ], 'backup-server-config');
 
         $this->publishes([
-            __DIR__ . '/../resources/views' => resource_path('views/vendor/backup-server'),
+            __DIR__.'/../resources/views' => resource_path('views/vendor/backup-server'),
         ], 'backup-server-views');
 
         if (! class_exists('CreateBackupServerTables')) {
             $this->publishes([
-                __DIR__ . '/../database/migrations/create_backup_server_tables.php.stub' => database_path('migrations/' . date('Y_m_d_His', time()) . '_create_backup_server_tables.php'),
+                __DIR__.'/../database/migrations/create_backup_server_tables.php.stub' => database_path('migrations/'.date('Y_m_d_His', time()).'_create_backup_server_tables.php'),
             ], 'backup-server-migrations');
         }
 

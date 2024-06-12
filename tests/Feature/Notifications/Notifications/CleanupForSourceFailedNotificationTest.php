@@ -36,6 +36,6 @@ class CleanupForSourceFailedNotificationTest extends TestCase
 
         $notification = new CleanupForSourceFailedNotification($event);
 
-        $this->assertIsString((string)$notification->toMail()->render());
+        $this->assertIsString((string) $notification->toMail()->render());
     }
 }

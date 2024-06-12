@@ -26,13 +26,13 @@ class RsyncSummaryOutput
             return '0MB/s';
         }
 
-        $bytesPerSecondString = str_replace(' bytes/sec', '', $bytesPerSecondString, );
+        $bytesPerSecondString = str_replace(' bytes/sec', '', $bytesPerSecondString);
 
         $bytesPerSecondString = str_replace(',', '', $bytesPerSecondString);
 
-        $megaBytesPerSecond = ((float)$bytesPerSecondString / 1024 / 1024);
+        $megaBytesPerSecond = ((float) $bytesPerSecondString / 1024 / 1024);
 
-        return round($megaBytesPerSecond, 2) . 'MB/s';
+        return round($megaBytesPerSecond, 2).'MB/s';
     }
 
     protected function getValueOfLineLineStartingWith(string $startsWith): ?string
@@ -42,6 +42,6 @@ class RsyncSummaryOutput
 
     protected function removeAllNonNumbericalCharacters(string $string): string
     {
-        return preg_replace("/[^0-9]/", "", $string);
+        return preg_replace('/[^0-9]/', '', $string);
     }
 }

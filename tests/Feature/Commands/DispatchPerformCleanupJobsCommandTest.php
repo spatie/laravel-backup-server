@@ -16,6 +16,7 @@ use Spatie\TestTime\TestTime;
 class DispatchPerformCleanupJobsCommandTest extends TestCase
 {
     private ?Destination $destination;
+
     private ?Source $source;
 
     public function setUp(): void
@@ -135,7 +136,7 @@ class DispatchPerformCleanupJobsCommandTest extends TestCase
         ]);
 
         foreach (range(1, 10) as $i) {
-            (new BackupFactory())->addFiles([__DIR__ . '/stubs/1MB.file'])->source($source)->create();
+            (new BackupFactory())->addFiles([__DIR__.'/stubs/1MB.file'])->source($source)->create();
         }
 
         $this->artisan('backup-server:cleanup')->assertExitCode(0);
@@ -155,7 +156,7 @@ class DispatchPerformCleanupJobsCommandTest extends TestCase
         ]);
 
         foreach (range(1, 10) as $i) {
-            (new BackupFactory())->addFiles([__DIR__ . '/stubs/2MB.file'])->source($source)->create();
+            (new BackupFactory())->addFiles([__DIR__.'/stubs/2MB.file'])->source($source)->create();
         }
 
         $this->artisan('backup-server:cleanup')->assertExitCode(0);

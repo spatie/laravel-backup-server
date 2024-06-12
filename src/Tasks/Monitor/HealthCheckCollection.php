@@ -14,7 +14,7 @@ class HealthCheckCollection
     private ?array $healthCheckResults = null;
 
     /**
-     * @param \Spatie\BackupServer\Models\Source|\Spatie\BackupServer\Models\Destination $model
+     * @param  \Spatie\BackupServer\Models\Source|\Spatie\BackupServer\Models\Destination  $model
      */
     public function __construct(array $healthCheckClassNames, Model $model)
     {

@@ -31,7 +31,7 @@ class RsyncProgressOutputTest extends TestCase
     /** @test */
     public function it_can_determine_that_the_output_is_the_summary()
     {
-        $output = file_get_contents(__DIR__ . '/stubs/rsyncSummary.txt');
+        $output = file_get_contents(__DIR__.'/stubs/rsyncSummary.txt');
 
         $rsyncOutput = new RsyncProgressOutput($output);
 

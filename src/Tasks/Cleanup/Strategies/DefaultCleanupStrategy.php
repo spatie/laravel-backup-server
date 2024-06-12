@@ -13,7 +13,6 @@ use Spatie\BackupServer\Tasks\Cleanup\Support\Period;
 
 class DefaultCleanupStrategy implements CleanupStrategy
 {
-    /** @var Backup|null */
     protected ?Backup $youngestBackup;
 
     private DefaultStrategyConfig $config;

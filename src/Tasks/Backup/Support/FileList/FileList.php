@@ -17,7 +17,7 @@ class FileList
     {
         $backupBasePath = $this->backup->destinationLocation()->getFullPath();
 
-        $fileListingPath = $backupBasePath . $this->relativePath;
+        $fileListingPath = $backupBasePath.$this->relativePath;
 
         $entries = [];
 

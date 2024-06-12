@@ -9,10 +9,15 @@ class DefaultStrategyConfig
     private Source $source;
 
     public int $keepAllBackupsForDays;
+
     public int $keepDailyBackupsForDays;
+
     public int $keepWeeklyBackupsForWeeks;
+
     public int $keepMonthlyBackupsForMonths;
+
     public int $keepYearlyBackupsForYears;
+
     public int $deleteOldestBackupsWhenUsingMoreMegabytesThan;
 
     public function __construct(Source $source)

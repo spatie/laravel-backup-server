@@ -24,7 +24,7 @@ class DestinationLocation
     {
         $pathPrefix = config("filesystems.disks.{$this->diskName}.root");
 
-        return $pathPrefix . '/'. $this->path;
+        return $pathPrefix.'/'.$this->path;
     }
 
     public function __toString()

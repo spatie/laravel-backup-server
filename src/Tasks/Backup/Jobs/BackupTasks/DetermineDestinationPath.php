@@ -12,11 +12,11 @@ class DetermineDestinationPath implements BackupTask
     {
         $backup->logInfo(Task::BACKUP, 'Determining destination directory...');
 
-        $directory = $backup->destination->directory . $backup->source->id . '/backup-' . $backup->created_at->format('Y-m-d-His') . '/';
+        $directory = $backup->destination->directory.$backup->source->id.'/backup-'.$backup->created_at->format('Y-m-d-His').'/';
 
         $pathPrefix = $backup->pathPrefix();
 
-        $fullDirectory = $pathPrefix . '/' . $directory;
+        $fullDirectory = $pathPrefix.'/'.$directory;
 
         if (! file_exists($fullDirectory)) {
             File::makeDirectory($fullDirectory, 0755, true);

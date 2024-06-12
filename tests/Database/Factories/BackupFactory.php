@@ -25,9 +25,9 @@ class BackupFactory extends Factory
 
     public function configure()
     {
-        return $this->afterCreating(function (Backup  $backup) {
+        return $this->afterCreating(function (Backup $backup) {
             if ($backup->path === null) {
-                $backup->update(['path' => $backup->id . '/test-backup']);
+                $backup->update(['path' => $backup->id.'/test-backup']);
             }
         });
     }
