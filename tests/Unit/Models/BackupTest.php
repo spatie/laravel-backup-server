@@ -3,6 +3,7 @@
 uses(\Spatie\BackupServer\Tests\TestCase::class);
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Support\Facades\Storage;
+use Spatie\BackupServer\Enums\BackupStatus;
 use Spatie\BackupServer\Models\Backup;
 use Spatie\BackupServer\Tasks\Cleanup\Jobs\DeleteBackupJob;
 use Spatie\BackupServer\Tests\Factories\BackupFactory;
@@ -36,7 +37,7 @@ it('will fill the completed at field when marking a backup as completed', functi
 
     $backup->markAsCompleted();
 
-    expect($backup->status)->toEqual(Backup::STATUS_COMPLETED);
+    expect($backup->status)->toEqual(BackupStatus::Completed);
     expect($backup->completed_at->format('YmdHis'))->toEqual(now()->format('YmdHis'));
 });
 

@@ -2,8 +2,7 @@
 
 uses(\Spatie\BackupServer\Tests\TestCase::class);
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Storage;
-use Spatie\BackupServer\Models\Backup;
+use Spatie\BackupServer\Enums\BackupStatus;
 use Spatie\BackupServer\Models\Source;
 use Spatie\Docker\DockerContainer;
 
@@ -34,7 +33,7 @@ it('can perform a backup', function () {
 
     $this->artisan('backup-server:dispatch-backups')->assertExitCode(0);
 
-    expect($this->source->backups()->first()->status)->toBe(Backup::STATUS_COMPLETED);
+    expect($this->source->backups()->first()->status)->toBe(BackupStatus::Completed);
     expect($this->source->backups()->first()->has('src/1.txt'))->toBeTrue();
     expect($this->source->backups()->first()->has('src/exclude.txt'))->toBeFalse();
 });
@@ -48,7 +47,7 @@ it('can perform a pre backup command', function () {
 
     expect($this->source->backups()->first()->has('src/newfile.txt'))->toBeTrue();
 
-    expect($this->source->backups()->first()->status)->toBe(Backup::STATUS_COMPLETED);
+    expect($this->source->backups()->first()->status)->toBe(BackupStatus::Completed);
 });
 
 it('will mark the backup as failed if the pre backup commands cannot execute', function () {
@@ -58,7 +57,7 @@ it('will mark the backup as failed if the pre backup commands cannot execute', f
 
     $this->artisan('backup-server:dispatch-backups')->assertExitCode(0);
 
-    expect($this->source->backups()->first()->status)->toBe(Backup::STATUS_FAILED);
+    expect($this->source->backups()->first()->status)->toBe(BackupStatus::Failed);
 });
 
 it('can perform post backup commands', function () {
@@ -72,7 +71,7 @@ it('can perform post backup commands', function () {
 
     expect(trim($process->getOutput()))->toBe('ok');
 
-    expect($this->source->backups()->first()->status)->toBe(Backup::STATUS_COMPLETED);
+    expect($this->source->backups()->first()->status)->toBe(BackupStatus::Completed);
 });
 
 it('will mark the backup as failed if the post backup commands cannot execute', function () {
@@ -80,7 +79,7 @@ it('will mark the backup as failed if the post backup commands cannot execute', 
 
     $this->artisan('backup-server:dispatch-backups')->assertExitCode(0);
 
-    expect($this->source->backups()->first()->status)->toBe(Backup::STATUS_FAILED);
+    expect($this->source->backups()->first()->status)->toBe(BackupStatus::Failed);
 });
 
 it('will fail if the source is not reachable', function () {
@@ -88,7 +87,7 @@ it('will fail if the source is not reachable', function () {
 
     $this->artisan('backup-server:dispatch-backups')->assertExitCode(0);
 
-    expect($this->source->backups()->first()->status)->toBe(Backup::STATUS_FAILED);
+    expect($this->source->backups()->first()->status)->toBe(BackupStatus::Failed);
 });
 
 it('will fail if it cannot login', function () {
@@ -96,7 +95,7 @@ it('will fail if it cannot login', function () {
 
     $this->artisan('backup-server:dispatch-backups')->assertExitCode(0);
 
-    expect($this->source->backups()->first()->status)->toBe(Backup::STATUS_FAILED);
+    expect($this->source->backups()->first()->status)->toBe(BackupStatus::Failed);
 });
 
 afterEach(function () {

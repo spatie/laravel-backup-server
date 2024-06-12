@@ -1,6 +1,8 @@
 <?php
 
 uses(\Spatie\BackupServer\Tests\TestCase::class);
+
+use Spatie\BackupServer\Enums\BackupStatus;
 use Spatie\BackupServer\Models\Backup;
 use Spatie\BackupServer\Tasks\Monitor\HealthChecks\Source\MaximumStorageInMB;
 
@@ -10,7 +12,7 @@ it('will fail when it is higher then the given number of megabytes', function ()
     $maximumSizeInMB = 1;
 
     $backup = Backup::factory()->create([
-        'status' => Backup::STATUS_COMPLETED,
+        'status' => BackupStatus::Completed,
         'real_size_in_kb' => $maximumSizeInMB * 1024,
     ]);
 
@@ -20,7 +22,7 @@ it('will fail when it is higher then the given number of megabytes', function ()
     $this->assertHealthCheckSucceeds($healthCheck->getResult($source));
 
     Backup::factory()->create([
-        'status' => Backup::STATUS_COMPLETED,
+        'status' => BackupStatus::Completed,
         'source_id' => $source->id,
     ]);
 

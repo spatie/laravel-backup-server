@@ -5,6 +5,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
+use Spatie\BackupServer\Enums\BackupStatus;
 use Spatie\BackupServer\Models\Backup;
 use Spatie\BackupServer\Models\Destination;
 use Spatie\BackupServer\Models\Source;
@@ -99,7 +100,7 @@ it('will clean up failed backup that are older than a day', function () {
     TestTime::freeze();
 
     $failedBackup = (new BackupFactory)->makeSureBackupDirectoryExists()->create([
-        'status' => Backup::STATUS_FAILED,
+        'status' => BackupStatus::Failed,
         'created_at' => now(),
     ]);
 
