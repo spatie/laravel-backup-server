@@ -16,7 +16,7 @@ class CreateBackupCommand extends Command
 
     protected $description = 'Create a backup';
 
-    public function handle()
+    public function handle(): int
     {
         $sourceName = $this->argument('sourceName');
 

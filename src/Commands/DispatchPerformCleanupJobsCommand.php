@@ -14,7 +14,7 @@ class DispatchPerformCleanupJobsCommand extends Command
 
     protected $description = 'Dispatch cleanup jobs';
 
-    public function handle()
+    public function handle(): void
     {
         $this->info('Dispatching cleanup jobs...');
 

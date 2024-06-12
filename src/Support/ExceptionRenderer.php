@@ -6,14 +6,8 @@ use Illuminate\Contracts\Support\Htmlable;
 
 class ExceptionRenderer implements Htmlable
 {
-    protected string $exceptionMessage;
-
-    protected string $trace;
-
-    public function __construct(string $exceptionMessage, string $trace = '')
+    public function __construct(protected string $exceptionMessage, protected string $trace = '')
     {
-        $this->exceptionMessage = $exceptionMessage;
-        $this->trace = $trace;
     }
 
     public function toHtml()

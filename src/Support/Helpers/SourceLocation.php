@@ -2,7 +2,7 @@
 
 namespace Spatie\BackupServer\Support\Helpers;
 
-class SourceLocation
+class SourceLocation implements \Stringable
 {
     public function __construct(
         private array $paths,
@@ -27,7 +27,7 @@ class SourceLocation
         return "{$this->sshUser}@{$this->host}";
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         $remotePart = "{$this->connectionString()}:";
 

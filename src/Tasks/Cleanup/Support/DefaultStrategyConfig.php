@@ -6,8 +6,6 @@ use Spatie\BackupServer\Models\Source;
 
 class DefaultStrategyConfig
 {
-    private Source $source;
-
     public int $keepAllBackupsForDays;
 
     public int $keepDailyBackupsForDays;
@@ -20,10 +18,8 @@ class DefaultStrategyConfig
 
     public int $deleteOldestBackupsWhenUsingMoreMegabytesThan;
 
-    public function __construct(Source $source)
+    public function __construct(private Source $source)
     {
-        $this->source = $source;
-
         $this->keepAllBackupsForDays = $this->getConfigValue('keep_all_backups_for_days');
         $this->keepDailyBackupsForDays = $this->getConfigValue('keep_daily_backups_for_days');
         $this->keepWeeklyBackupsForWeeks = $this->getConfigValue('keep_weekly_backups_for_weeks');

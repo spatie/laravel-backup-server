@@ -6,8 +6,6 @@ class HealthCheckResult
 {
     protected bool $ok = true;
 
-    protected string $message = '';
-
     protected bool $runRemainingChecks = true;
 
     public static function ok(): self
@@ -15,14 +13,13 @@ class HealthCheckResult
         return new static();
     }
 
-    public static function failed(string $message)
+    public static function failed(string $message): \Spatie\BackupServer\Tasks\Monitor\HealthCheckResult
     {
         return (new static($message))->markAsFailed();
     }
 
-    protected function __construct($message = '')
+    protected function __construct(protected string $message = '')
     {
-        $this->message = $message;
     }
 
     public function isOk(): bool

@@ -20,23 +20,24 @@ use Throwable;
 
 class PerformCleanupSourceJob implements ShouldQueue
 {
+    /**
+     * @var mixed
+     */
+    public $timeout;
+
     use Dispatchable;
     use InteractsWithQueue;
     use Queueable;
     use SerializesModels;
 
-    public Source $source;
-
-    public function __construct(Source $source)
+    public function __construct(public Source $source)
     {
-        $this->source = $source;
-
         $this->timeout = config('backup-server.jobs.perform_cleanup_for_source_job.timeout');
 
         $this->queue = config('backup-server.jobs.perform_cleanup_for_source_job.queue');
     }
 
-    public function handle()
+    public function handle(): void
     {
         $this->source->logInfo(Task::CLEANUP, 'Starting cleanup...');
 
@@ -56,7 +57,7 @@ class PerformCleanupSourceJob implements ShouldQueue
         $this->source->logInfo(Task::CLEANUP, 'Cleanup done!');
     }
 
-    public function failed(Throwable $exception)
+    public function failed(Throwable $exception): void
     {
         $this->source->logError(Task::CLEANUP, "Error while cleaning up source `{$this->source->name}`: `{$exception->getMessage()}`");
 
