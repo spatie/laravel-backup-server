@@ -16,12 +16,7 @@ class ContentSearchResultFactory
                 if (! Str::startsWith($outputLine, '.')) {
                     return false;
                 }
-
-                if (! Str::contains($outputLine, ':')) {
-                    return false;
-                }
-
-                return true;
+                return Str::contains($outputLine, ':');
             })
             ->values()
             ->map(fn (string $relativePath): \Spatie\BackupServer\Tasks\Search\ContentSearchResult => new ContentSearchResult($relativePath, $backup));

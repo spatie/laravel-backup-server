@@ -13,6 +13,10 @@ use Spatie\BackupServer\Support\Helpers\Config;
 
 class DeleteDestinationJob implements ShouldQueue
 {
+    /**
+     * @var mixed
+     */
+    public $timeout;
     use Dispatchable;
     use InteractsWithQueue;
     use Queueable;

@@ -75,7 +75,7 @@ class DefaultCleanupStrategy implements CleanupStrategy
             $monthly->endDate()->subYears($this->config->keepYearlyBackupsForYears)
         );
 
-        return collect(compact('daily', 'weekly', 'monthly', 'yearly'));
+        return collect(['daily' => $daily, 'weekly' => $weekly, 'monthly' => $monthly, 'yearly' => $yearly]);
     }
 
     protected function groupByDateFormat(Collection $backups, string $dateFormat): Collection
