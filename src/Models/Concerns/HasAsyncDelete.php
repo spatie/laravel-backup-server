@@ -3,6 +3,7 @@
 namespace Spatie\BackupServer\Models\Concerns;
 
 use Spatie\BackupServer\Enums\BackupStatus;
+use Spatie\BackupServer\Enums\DestinationStatus;
 use Spatie\BackupServer\Enums\SourceStatus;
 use Spatie\BackupServer\Models\Backup;
 use Spatie\BackupServer\Models\Destination;
@@ -26,11 +27,11 @@ trait HasAsyncDelete
 
     abstract public function getDeletionJobClassName(): string;
 
-    protected function status(self $class)
+    protected function status(self $class): DestinationStatus|BackupStatus|SourceStatus
     {
         return match ($class::class) {
             Source::class => SourceStatus::Deleting,
-            Destination::class => Destination::STATUS_DELETING,
+            Destination::class => DestinationStatus::Deleting,
             Backup::class => BackupStatus::Deleting,
             default => throw new \Exception('Unknown class type'),
         };

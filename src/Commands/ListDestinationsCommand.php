@@ -7,6 +7,7 @@ use Spatie\BackupServer\Models\Destination;
 use Spatie\BackupServer\Support\AlignCenterTableStyle;
 use Spatie\BackupServer\Support\AlignRightTableStyle;
 use Spatie\BackupServer\Support\Helpers\Format;
+use Symfony\Component\Console\Helper\TableStyle;
 
 class ListDestinationsCommand extends Command
 {
@@ -30,7 +31,7 @@ class ListDestinationsCommand extends Command
             ->map(fn (Destination $destination) => $this->convertToRow($destination));
 
         $columnStyles = collect($headers)
-            ->map(function (string $header): \Spatie\BackupServer\Support\AlignRightTableStyle|\Spatie\BackupServer\Support\AlignCenterTableStyle|null {
+            ->map(function (string $header): ?TableStyle {
                 if (in_array($header, ['Total Backup Size', 'Used Storage', 'Free Space', 'Capacity Used', 'Inode Usage'])) {
                     return new AlignRightTableStyle;
                 }
