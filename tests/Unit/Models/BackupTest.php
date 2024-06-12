@@ -8,7 +8,6 @@ use Spatie\BackupServer\Tasks\Cleanup\Jobs\DeleteBackupJob;
 use Spatie\BackupServer\Tests\Factories\BackupFactory;
 use Spatie\TestTime\TestTime;
 
-
 beforeEach(function () {
     Storage::fake();
 });

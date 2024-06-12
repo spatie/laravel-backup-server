@@ -3,7 +3,6 @@
 uses(\Spatie\BackupServer\Tests\TestCase::class);
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
-use Spatie\BackupServer\Models\Backup;
 use Spatie\BackupServer\Models\Destination;
 use Spatie\BackupServer\Tasks\Backup\Support\BackupCollection;
 use Spatie\BackupServer\Tests\Factories\BackupFactory;

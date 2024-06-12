@@ -1,11 +1,9 @@
 <?php
 
 uses(\Spatie\BackupServer\Tests\TestCase::class);
-use Spatie\BackupServer\Models\Backup;
 use Spatie\BackupServer\Tasks\Backup\Support\FileList\FileListEntry;
 use Spatie\BackupServer\Tests\Factories\BackupFactory;
 use Symfony\Component\Finder\Exception\DirectoryNotFoundException;
-
 
 beforeEach(function () {
     $this->backup = (new BackupFactory())->addDirectoryContent(__DIR__.'/stubs/serverContent')->create();

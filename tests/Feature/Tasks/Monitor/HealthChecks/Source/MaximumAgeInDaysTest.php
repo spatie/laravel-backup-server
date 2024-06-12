@@ -6,7 +6,6 @@ use Spatie\BackupServer\Tasks\Monitor\HealthChecks\Source\MaximumAgeInDays;
 use Spatie\BackupServer\Tests\Factories\BackupFactory;
 use Spatie\TestTime\TestTime;
 
-
 uses(\Spatie\BackupServer\Tests\Feature\Tasks\Monitor\Concerns\HealthCheckAssertions::class);
 
 beforeEach(function () {

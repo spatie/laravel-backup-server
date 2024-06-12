@@ -24,8 +24,8 @@
 |
 */
 
-use Spatie\BackupServer\Models\Backup;
 use Illuminate\Support\Facades\File;
+use Spatie\BackupServer\Models\Backup;
 
 expect()->extend('toBeOne', function () {
     return $this->toBe(1);

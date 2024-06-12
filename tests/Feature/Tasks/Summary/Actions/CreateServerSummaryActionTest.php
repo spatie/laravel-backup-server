@@ -7,7 +7,6 @@ use Spatie\BackupServer\Models\Source;
 use Spatie\BackupServer\Tasks\Summary\Actions\CreateServerSummaryAction;
 use Spatie\Docker\DockerContainer;
 
-
 beforeEach(function () {
     $this->action = app(CreateServerSummaryAction::class);
 

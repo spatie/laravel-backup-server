@@ -6,7 +6,6 @@ use Spatie\BackupServer\Models\Backup;
 use Spatie\BackupServer\Models\Source;
 use Spatie\TestTime\TestTime;
 
-
 it('will dispatch a backup job at the correct time', function () {
     TestTime::freeze('Y-m-d H:i', '2020-01-01 00:00');
 

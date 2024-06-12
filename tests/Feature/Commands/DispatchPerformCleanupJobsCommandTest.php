@@ -11,7 +11,6 @@ use Spatie\BackupServer\Models\Source;
 use Spatie\BackupServer\Tests\Factories\BackupFactory;
 use Spatie\TestTime\TestTime;
 
-
 beforeEach(function () {
     //Storage::fake('backups');
     TestTime::freeze('Y-m-d H:i:s', '2020-01-01 00:00:00');

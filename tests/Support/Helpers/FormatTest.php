@@ -4,7 +4,6 @@ uses(\Spatie\BackupServer\Tests\TestCase::class);
 use Spatie\BackupServer\Support\Helpers\Format;
 use Spatie\TestTime\TestTime;
 
-
 it('can format a number as a human readable filesize', function () {
     expect(Format::KbToHumanReadableSize(10))->toEqual('10 KB');
     expect(Format::KbToHumanReadableSize(100))->toEqual('100 KB');
