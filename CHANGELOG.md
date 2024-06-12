@@ -2,6 +2,17 @@
 
 All notable changes to `laravel-backup-server` will be documented in this file
 
+## 3.3.0 - 2024-06-12
+
+### What's Changed
+
+* introduce Dependabot by @Nielsvanpach in https://github.com/spatie/laravel-backup-server/pull/63
+* Update github actions + run Pint by @Nielsvanpach in https://github.com/spatie/laravel-backup-server/pull/67
+* Skeleton changes by @Nielsvanpach in https://github.com/spatie/laravel-backup-server/pull/68
+* Migrate to PestPHP by @Nielsvanpach in https://github.com/spatie/laravel-backup-server/pull/69
+
+**Full Changelog**: https://github.com/spatie/laravel-backup-server/compare/3.2.0...3.3.0
+
 ## 3.2.0 - 2024-03-15
 
 ### What's Changed
