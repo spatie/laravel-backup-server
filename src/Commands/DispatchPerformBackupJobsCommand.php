@@ -13,7 +13,7 @@ class DispatchPerformBackupJobsCommand extends Command
 
     protected $description = 'Dispatch backup jobs';
 
-    public function handle()
+    public function handle(): void
     {
         $this->info('Dispatching backup jobs...');
 

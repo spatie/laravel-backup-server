@@ -17,7 +17,7 @@ class DefaultCleanupStrategy implements CleanupStrategy
 
     private DefaultStrategyConfig $config;
 
-    public function deleteOldBackups(Source $source)
+    public function deleteOldBackups(Source $source): void
     {
         $this->config = new DefaultStrategyConfig($source);
 

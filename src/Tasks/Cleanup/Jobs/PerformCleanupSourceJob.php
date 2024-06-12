@@ -32,7 +32,7 @@ class PerformCleanupSourceJob implements ShouldQueue
         $this->queue = config('backup-server.jobs.perform_cleanup_for_source_job.queue');
     }
 
-    public function handle()
+    public function handle(): void
     {
         $this->source->logInfo(Task::CLEANUP, 'Starting cleanup...');
 
@@ -52,7 +52,7 @@ class PerformCleanupSourceJob implements ShouldQueue
         $this->source->logInfo(Task::CLEANUP, 'Cleanup done!');
     }
 
-    public function failed(Throwable $exception)
+    public function failed(Throwable $exception): void
     {
         $this->source->logError(Task::CLEANUP, "Error while cleaning up source `{$this->source->name}`: `{$exception->getMessage()}`");
 

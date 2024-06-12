@@ -36,7 +36,7 @@ class PerformBackupJob implements ShouldQueue
         $this->connection ??= Config::getQueueConnection();
     }
 
-    public function handle()
+    public function handle(): void
     {
         $this->backup->markAsInProgress();
 

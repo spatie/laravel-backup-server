@@ -30,7 +30,7 @@ class ListSourcesCommand extends Command
         'used_storage' => 'Used storage',
     ];
 
-    public function handle()
+    public function handle(): void
     {
         $sortBy = (string) ($this->option('sortBy') ?? 'name');
 
@@ -44,7 +44,7 @@ class ListSourcesCommand extends Command
         $headers = array_values($this->headers);
 
         $columnStyles = collect($headers)
-            ->map(function (string $header) {
+            ->map(function (string $header): \Spatie\BackupServer\Support\AlignRightTableStyle|\Spatie\BackupServer\Support\AlignCenterTableStyle|null {
                 if (in_array($header, ['Id', 'Youngest Backup Size', '# of Backups', 'Total Backup Size', 'Used storage'])) {
                     return new AlignRightTableStyle();
                 }
@@ -93,7 +93,7 @@ class ListSourcesCommand extends Command
         ]);
     }
 
-    protected function getFormattedBackupDate(?Backup $backup = null)
+    protected function getFormattedBackupDate(?Backup $backup = null): string
     {
         return is_null($backup)
             ? 'No backups present'

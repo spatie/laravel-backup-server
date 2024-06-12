@@ -30,7 +30,7 @@ class PerformCleanupDestinationJob implements ShouldQueue
         $this->connection ??= Config::getQueueConnection();
     }
 
-    public function handle()
+    public function handle(): void
     {
         $this->destination->logInfo(Task::CLEANUP, 'Starting cleanup of destination');
 
@@ -41,7 +41,7 @@ class PerformCleanupDestinationJob implements ShouldQueue
         event(new CleanupForDestinationCompletedEvent($this->destination));
     }
 
-    public function failed(Throwable $exception)
+    public function failed(Throwable $exception): void
     {
         $this->destination->logError(Task::CLEANUP, "Error while cleaning up destination `{$this->destination->name}`: `{$exception->getMessage()}`");
 

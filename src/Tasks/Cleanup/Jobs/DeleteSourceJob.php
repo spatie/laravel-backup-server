@@ -27,7 +27,7 @@ class DeleteSourceJob implements ShouldQueue
         $this->connection ??= Config::getQueueConnection();
     }
 
-    public function handle()
+    public function handle(): void
     {
         $this->source->backups->each(
             fn (Backup $backup) => $backup->delete()

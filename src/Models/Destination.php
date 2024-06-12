@@ -31,7 +31,7 @@ class Destination extends Model
 
     public $guarded = [];
 
-    public static function booted()
+    public static function booted(): void
     {
         static::creating(function (Destination $source) {
             $source->status = static::STATUS_ACTIVE;
@@ -106,7 +106,7 @@ class Destination extends Model
         return (int) Str::before($rawOutput, '%');
     }
 
-    protected function getDfOutput(int $macOsColumnNumber, $linuxOutputFormat)
+    protected function getDfOutput(int $macOsColumnNumber, string $linuxOutputFormat): string
     {
         $command = PHP_OS === 'Darwin'
             ? 'df -k "$PWD" | awk \'{print $'.$macOsColumnNumber.'}\''

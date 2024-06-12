@@ -55,7 +55,7 @@ class Backup extends Model
         'excludes' => 'array',
     ];
 
-    public static function booted()
+    public static function booted(): void
     {
         static::deleting(function (Backup $backup) {
             if (! empty($backup->path) && $backup->disk()->exists($backup->path)) {

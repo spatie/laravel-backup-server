@@ -12,7 +12,7 @@ class ContentSearchResultFactory
     {
         return collect(explode(PHP_EOL, $processOutput))
             ->filter()
-            ->filter(function (string $outputLine) {
+            ->filter(function (string $outputLine): bool {
                 if (! Str::startsWith($outputLine, '.')) {
                     return false;
                 }
@@ -24,6 +24,6 @@ class ContentSearchResultFactory
                 return true;
             })
             ->values()
-            ->map(fn (string $relativePath) => new ContentSearchResult($relativePath, $backup));
+            ->map(fn (string $relativePath): \Spatie\BackupServer\Tasks\Search\ContentSearchResult => new ContentSearchResult($relativePath, $backup));
     }
 }
