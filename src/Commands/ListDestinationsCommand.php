@@ -14,7 +14,7 @@ class ListDestinationsCommand extends Command
 
     protected $description = 'Display a list of all destinations';
 
-    public function handle()
+    public function handle(): void
     {
         $headers = [
             'Destination',
@@ -30,7 +30,7 @@ class ListDestinationsCommand extends Command
             ->map(fn (Destination $destination) => $this->convertToRow($destination));
 
         $columnStyles = collect($headers)
-            ->map(function (string $header) {
+            ->map(function (string $header): \Spatie\BackupServer\Support\AlignRightTableStyle|\Spatie\BackupServer\Support\AlignCenterTableStyle|null {
                 if (in_array($header, ['Total Backup Size', 'Used Storage', 'Free Space', 'Capacity Used', 'Inode Usage'])) {
                     return new AlignRightTableStyle;
                 }
@@ -47,7 +47,7 @@ class ListDestinationsCommand extends Command
         $this->table($headers, $rows, 'default', $columnStyles);
     }
 
-    protected function convertToRow(Destination $destination)
+    protected function convertToRow(Destination $destination): array
     {
         $backups = $destination->backups;
 

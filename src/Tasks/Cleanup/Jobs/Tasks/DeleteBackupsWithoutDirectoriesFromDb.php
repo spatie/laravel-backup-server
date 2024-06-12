@@ -8,7 +8,7 @@ use Spatie\BackupServer\Support\Helpers\Enums\Task;
 
 class DeleteBackupsWithoutDirectoriesFromDb implements CleanupTask
 {
-    public function execute(Source $source)
+    public function execute(Source $source): void
     {
         $source
             ->completedBackups()

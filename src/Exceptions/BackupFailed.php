@@ -17,12 +17,12 @@ class BackupFailed extends Exception
         return new static("The destination disk `{$backup->destination->disk_name}` could not be reached.");
     }
 
-    public static function rsyncDidFail(Backup $backup, string $commandOutput)
+    public static function rsyncDidFail(Backup $backup, string $commandOutput): static
     {
         return new static("rsync failed. Output: {$commandOutput}");
     }
 
-    public static function BackupCommandsFailed(Backup $backup, string $attribute, string $commandOutput)
+    public static function BackupCommandsFailed(Backup $backup, string $attribute, string $commandOutput): static
     {
         return new static("Backup commands in attribute `{$attribute}` failed. Output: {$commandOutput}");
     }

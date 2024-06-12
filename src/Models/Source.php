@@ -38,7 +38,7 @@ class Source extends Model
         'post_backup_commands' => 'array',
     ];
 
-    public static function booted()
+    public static function booted(): void
     {
         static::creating(function (Source $source) {
             $source->status = static::STATUS_ACTIVE;

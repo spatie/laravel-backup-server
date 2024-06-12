@@ -18,7 +18,7 @@ class FindFilesCommand extends Command
 
     protected int $resultCounter = 0;
 
-    public function handle()
+    public function handle(): true|int
     {
         $sourceName = $this->argument('sourceName');
 

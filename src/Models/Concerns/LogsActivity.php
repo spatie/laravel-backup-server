@@ -13,12 +13,12 @@ trait LogsActivity
         return $this->hasMany(BackupLogItem::class);
     }
 
-    public function logInfo(string $task, string $text)
+    public function logInfo(string $task, string $text): void
     {
         $this->addMessageToLog($task, LogLevel::INFO, $text);
     }
 
-    public function logError(string $task, string $text)
+    public function logError(string $task, string $text): void
     {
         $this->addMessageToLog($task, LogLevel::ERROR, $text);
     }

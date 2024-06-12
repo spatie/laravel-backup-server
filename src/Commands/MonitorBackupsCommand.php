@@ -17,7 +17,7 @@ class MonitorBackupsCommand extends Command
 
     protected $description = 'Check the health of the sources and destinations';
 
-    public function handle()
+    public function handle(): void
     {
         $this->info('Checking health...');
 
@@ -31,7 +31,7 @@ class MonitorBackupsCommand extends Command
     protected function checkSourcesHealth(): self
     {
         [$healthySources, $unhealthySources] = collect(Source::all())
-            ->partition(function (Source $source) {
+            ->partition(function (Source $source): bool {
                 return $source->isHealthy();
             });
 
@@ -63,7 +63,7 @@ class MonitorBackupsCommand extends Command
     protected function checkDestinationsHealth(): self
     {
         [$healthyDestinations, $unHealthyDestinations] = collect(Destination::all())
-            ->partition(function (Destination $destination) {
+            ->partition(function (Destination $destination): bool {
                 return $destination->isHealthy();
             });
 

@@ -28,7 +28,7 @@ class SendServerSummaryNotificationJob implements ShouldQueue
         $this->to = $to ?? now();
     }
 
-    public function handle(CreateServerSummaryAction $createServerSummaryAction)
+    public function handle(CreateServerSummaryAction $createServerSummaryAction): void
     {
         $summary = $createServerSummaryAction->execute($this->from, $this->to);
 

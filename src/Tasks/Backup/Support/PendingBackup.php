@@ -55,7 +55,7 @@ class PendingBackup
         return $this;
     }
 
-    public function reportProgress(callable $progressCallable)
+    public function reportProgress(callable $progressCallable): static
     {
         $this->progressCallable = $progressCallable;
 

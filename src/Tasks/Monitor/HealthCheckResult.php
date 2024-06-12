@@ -13,7 +13,7 @@ class HealthCheckResult
         return new static;
     }
 
-    public static function failed(string $message)
+    public static function failed(string $message): \Spatie\BackupServer\Tasks\Monitor\HealthCheckResult
     {
         return (new static($message))->markAsFailed();
     }
