@@ -10,13 +10,24 @@ it('lists sources', function () {
 });
 
 it('lists sources when sorted', function () {
+    $options = [
+        'id',
+        'name',
+        'healthy',
+        'backup_count',
+        'newest_backup',
+        'youngest_backup_size',
+        'backup_size',
+        'used_storage',
+    ];
+
     $healthySource = SourceFactory::new(['healthy' => true])->create();
     $backup = Backup::factory()->create(['size_in_kb' => 10]);
     $backup->source()->associate($healthySource);
 
     SourceFactory::new(['healthy' => false])->create();
 
-    foreach ($this->options as $option) {
+    foreach ($options as $option) {
         $this->artisan("backup-server:list --sortBy={$option}")->assertExitCode(0);
     }
 

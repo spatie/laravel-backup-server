@@ -166,8 +166,8 @@ it('will delete a backup that does not have a directory anymore', function () {
 function createBackupOnDate(Carbon $carbon): Backup
 {
     return (new BackupFactory())
-        ->source($this->source)
-        ->destination($this->destination)
+        ->source(test()->source)
+        ->destination(test()->destination)
         /*
          * Create the directory because the cleanup procedure will first delete all backups
          * that don't have a directory.
