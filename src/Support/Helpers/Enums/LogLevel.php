@@ -2,9 +2,8 @@
 
 namespace Spatie\BackupServer\Support\Helpers\Enums;
 
-class LogLevel
+enum LogLevel: string
 {
-    public const INFO = 'info';
-
-    public const ERROR = 'error';
+    case Info = 'info';
+    case Error = 'error';
 }
