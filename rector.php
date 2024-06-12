@@ -22,7 +22,7 @@ use Rector\TypeDeclaration\Rector\Closure\AddClosureVoidReturnTypeWhereNoReturnR
 return RectorConfig::configure()
     ->withPaths(['config', 'resources', 'src'])
     ->withPhpSets(php82: true)
-    ->withPreparedSets(codeQuality: true, typeDeclarations: true)
+    ->withPreparedSets(deadCode: true, codeQuality: true, typeDeclarations: true)
     ->withSkip([
         ReadOnlyPropertyRector::class,
         ClosureToArrowFunctionRector::class,
@@ -31,18 +31,4 @@ return RectorConfig::configure()
         CombineIfRector::class,
         FlipTypeControlToUseExclusiveTypeRector::class,
         ExplicitBoolCompareRector::class,
-
-        /**ReturnNeverTypeRector::class,
-        OptionalParametersAfterRequiredRector::class,
-        ClosureToArrowFunctionRector::class,
-        FlipTypeControlToUseExclusiveTypeRector::class,
-        ExplicitBoolCompareRector::class,
-        EncapsedStringsToSprintfRector::class,
-        StaticClosureRector::class,
-        StaticArrowFunctionRector::class,
-        UseIncrementAssignRector::class,
-        PostIncDecToPreIncDecRector::class,
-        NullableCompareToNullRector::class,
-        AddArrowFunctionReturnTypeRector::class,
-        AddClosureVoidReturnTypeWhereNoReturnRector::class,*/
     ]);

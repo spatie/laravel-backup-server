@@ -12,7 +12,7 @@ class CreateBackupAction
     protected $dispatchOnQueue = true;
 
     /** @var callable|null */
-    protected $afterBackupModelCreated = null;
+    protected $afterBackupModelCreated;
 
     public function afterBackupModelCreated(callable $afterBackupModelCreated): self
     {
