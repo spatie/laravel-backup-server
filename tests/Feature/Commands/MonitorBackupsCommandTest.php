@@ -8,7 +8,6 @@ use Spatie\BackupServer\Models\Destination;
 use Spatie\BackupServer\Models\Source;
 use Spatie\BackupServer\Notifications\Notifications\UnhealthyDestinationFoundNotification;
 use Spatie\BackupServer\Tasks\Monitor\Events\UnhealthySourceFoundEvent;
-use Spatie\BackupServer\Tests\TestCase;
 
 beforeEach(function () {
     Notification::fake();
