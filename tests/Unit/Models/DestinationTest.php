@@ -1,65 +1,45 @@
 <?php
 
-namespace Spatie\BackupServer\Tests\Unit\Models;
-
+uses(\Spatie\BackupServer\Tests\TestCase::class);
 use Illuminate\Support\Facades\Queue;
 use Spatie\BackupServer\Models\Destination;
 use Spatie\BackupServer\Tasks\Cleanup\Jobs\DeleteDestinationJob;
-use Spatie\BackupServer\Tests\TestCase;
 
-class DestinationTest extends TestCase
-{
-    private Destination $destination;
+beforeEach(function () {
+    $this->destination = Destination::factory()->create();
+});
 
-    public function setUp(): void
-    {
-        parent::setUp();
+it('can get the inode usage percentage', function () {
+    $inodeUsagePercentage = $this->destination->getInodeUsagePercentage();
 
-        $this->destination = Destination::factory()->create();
-    }
+    expect($inodeUsagePercentage)->toBeGreaterThanOrEqual(0);
+    expect($inodeUsagePercentage)->toBeLessThanOrEqual(100);
+});
 
-    /** @test */
-    public function it_can_get_the_inode_usage_percentage()
-    {
-        $inodeUsagePercentage = $this->destination->getInodeUsagePercentage();
+it('can get the free space in kb', function () {
+    $freeSpaceInMb = $this->destination->getFreeSpaceInKb();
 
-        $this->assertGreaterThanOrEqual(0, $inodeUsagePercentage);
-        $this->assertLessThanOrEqual(100, $inodeUsagePercentage);
-    }
+    expect($freeSpaceInMb)->toBeGreaterThan(0);
+});
 
-    /** @test */
-    public function it_can_get_the_free_space_in_kb()
-    {
-        $freeSpaceInMb = $this->destination->getFreeSpaceInKb();
+it('can get used space in percentage', function () {
+    $usedSpaceInPercentage = $this->destination->getUsedSpaceInPercentage();
 
-        $this->assertGreaterThan(0, $freeSpaceInMb);
-    }
+    expect($usedSpaceInPercentage)->toBeGreaterThanOrEqual(0);
+    expect($usedSpaceInPercentage)->toBeLessThanOrEqual(100);
+});
 
-    /** @test */
-    public function it_can_get_used_space_in_percentage()
-    {
-        $usedSpaceInPercentage = $this->destination->getUsedSpaceInPercentage();
+it('can delete a destination in an async way', function () {
+    $this->destination->asyncDelete();
 
-        $this->assertGreaterThanOrEqual(0, $usedSpaceInPercentage);
-        $this->assertLessThanOrEqual(100, $usedSpaceInPercentage);
-    }
+    expect(Destination::get())->toHaveCount(0);
+});
 
-    /** @test */
-    public function it_can_delete_a_destination_in_an_async_way()
-    {
-        $this->destination->asyncDelete();
+test('an async delete of a destination will get queued', function () {
+    Queue::fake();
 
-        $this->assertCount(0, Destination::get());
-    }
+    $this->destination->asyncDelete();
 
-    /** @test */
-    public function an_async_delete_of_a_destination_will_get_queued()
-    {
-        Queue::fake();
-
-        $this->destination->asyncDelete();
-
-        $this->assertCount(1, Destination::get());
-        Queue::assertPushed(DeleteDestinationJob::class);
-    }
-}
+    expect(Destination::get())->toHaveCount(1);
+    Queue::assertPushed(DeleteDestinationJob::class);
+});

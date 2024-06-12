@@ -1,41 +1,27 @@
 <?php
 
-namespace Spatie\BackupServer\Tests\Feature\Notifications\Notifications;
-
+uses(\Spatie\BackupServer\Tests\TestCase::class);
 use Illuminate\Support\Facades\Notification;
 use Spatie\BackupServer\Models\Destination;
 use Spatie\BackupServer\Notifications\Notifications\CleanupForDestinationFailedNotification;
 use Spatie\BackupServer\Tasks\Cleanup\Events\CleanupForDestinationFailedEvent;
-use Spatie\BackupServer\Tests\TestCase;
 
-class CleanupForDestinationFailedNotificationTest extends TestCase
-{
-    private Destination $destination;
+beforeEach(function () {
+    $this->destination = Destination::factory()->create();
 
-    public function setUp(): void
-    {
-        parent::setUp();
+    Notification::fake();
+});
 
-        $this->destination = Destination::factory()->create();
+it('will send a notification when a cleanup of a destination fails', function () {
+    event(new CleanupForDestinationFailedEvent($this->destination, 'exception message'));
 
-        Notification::fake();
-    }
+    Notification::assertSentTo($this->configuredNotifiable(), CleanupForDestinationFailedNotification::class);
+});
 
-    /** @test */
-    public function it_will_send_a_notification_when_a_cleanup_of_a_destination_fails()
-    {
-        event(new CleanupForDestinationFailedEvent($this->destination, 'exception message'));
+test('the cleanup for destination failed notification renders correctly to a mail', function () {
+    $event = new CleanupForDestinationFailedEvent($this->destination, 'exception message');
 
-        Notification::assertSentTo($this->configuredNotifiable(), CleanupForDestinationFailedNotification::class);
-    }
+    $notification = new CleanupForDestinationFailedNotification($event);
 
-    /** @test */
-    public function the_CleanupForDestinationFailedNotification_renders_correctly_to_a_mail()
-    {
-        $event = new CleanupForDestinationFailedEvent($this->destination, 'exception message');
-
-        $notification = new CleanupForDestinationFailedNotification($event);
-
-        $this->assertIsString((string) $notification->toMail()->render());
-    }
-}
+    expect((string) $notification->toMail()->render())->toBeString();
+});

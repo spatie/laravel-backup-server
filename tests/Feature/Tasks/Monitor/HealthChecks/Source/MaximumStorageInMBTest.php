@@ -1,36 +1,28 @@
 <?php
 
-namespace Spatie\BackupServer\Tests\Feature\Tasks\Monitor\HealthChecks\Source;
-
+uses(\Spatie\BackupServer\Tests\TestCase::class);
 use Spatie\BackupServer\Models\Backup;
 use Spatie\BackupServer\Tasks\Monitor\HealthChecks\Source\MaximumStorageInMB;
-use Spatie\BackupServer\Tests\Feature\Tasks\Monitor\Concerns\HealthCheckAssertions;
-use Spatie\BackupServer\Tests\TestCase;
 
-class MaximumStorageInMBTest extends TestCase
-{
-    use HealthCheckAssertions;
+uses(\Spatie\BackupServer\Tests\Feature\Tasks\Monitor\Concerns\HealthCheckAssertions::class);
 
-    /** @test */
-    public function it_will_fail_when_it_is_higher_then_the_given_number_of_megabytes()
-    {
-        $maximumSizeInMB = 1;
+it('will fail when it is higher then the given number of megabytes', function () {
+    $maximumSizeInMB = 1;
 
-        $backup = Backup::factory()->create([
-            'status' => Backup::STATUS_COMPLETED,
-            'real_size_in_kb' => $maximumSizeInMB * 1024,
-        ]);
+    $backup = Backup::factory()->create([
+        'status' => Backup::STATUS_COMPLETED,
+        'real_size_in_kb' => $maximumSizeInMB * 1024,
+    ]);
 
-        $source = $backup->source;
-        $healthCheck = new MaximumStorageInMB($maximumSizeInMB);
+    $source = $backup->source;
+    $healthCheck = new MaximumStorageInMB($maximumSizeInMB);
 
-        $this->assertHealthCheckSucceeds($healthCheck->getResult($source));
+    $this->assertHealthCheckSucceeds($healthCheck->getResult($source));
 
-        Backup::factory()->create([
-            'status' => Backup::STATUS_COMPLETED,
-            'source_id' => $source->id,
-        ]);
+    Backup::factory()->create([
+        'status' => Backup::STATUS_COMPLETED,
+        'source_id' => $source->id,
+    ]);
 
-        $this->assertHealthCheckFails($healthCheck->getResult($source->refresh()));
-    }
-}
+    $this->assertHealthCheckFails($healthCheck->getResult($source->refresh()));
+});

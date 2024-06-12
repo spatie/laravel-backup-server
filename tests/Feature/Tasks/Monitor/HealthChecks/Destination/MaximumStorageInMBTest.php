@@ -1,57 +1,47 @@
 <?php
 
-namespace Spatie\BackupServer\Tests\Feature\Tasks\Monitor\HealthChecks\Destination;
-
+uses(\Spatie\BackupServer\Tests\TestCase::class);
 use Spatie\BackupServer\Models\Backup;
 use Spatie\BackupServer\Tasks\Monitor\HealthChecks\Destination\MaximumStorageInMB;
-use Spatie\BackupServer\Tests\Feature\Tasks\Monitor\Concerns\HealthCheckAssertions;
-use Spatie\BackupServer\Tests\TestCase;
 
-class MaximumStorageInMBTest extends TestCase
-{
-    use HealthCheckAssertions;
+uses(\Spatie\BackupServer\Tests\Feature\Tasks\Monitor\Concerns\HealthCheckAssertions::class);
 
-    /** @test */
-    public function it_can_check_if_the_storage_exceeds_the_maximum_storage()
-    {
-        $maximumSizeInMB = 1;
+it('can check if the storage exceeds the maximum storage', function () {
+    $maximumSizeInMB = 1;
 
-        $backup = Backup::factory()->create([
-            'status' => Backup::STATUS_COMPLETED,
-            'real_size_in_kb' => $maximumSizeInMB * 1024,
-        ]);
+    $backup = Backup::factory()->create([
+        'status' => Backup::STATUS_COMPLETED,
+        'real_size_in_kb' => $maximumSizeInMB * 1024,
+    ]);
 
-        $destination = $backup->destination;
-        $healthCheck = new MaximumStorageInMB($maximumSizeInMB);
+    $destination = $backup->destination;
+    $healthCheck = new MaximumStorageInMB($maximumSizeInMB);
 
-        $this->assertHealthCheckSucceeds($healthCheck->getResult($destination));
+    $this->assertHealthCheckSucceeds($healthCheck->getResult($destination));
 
-        Backup::factory()->create([
-            'status' => Backup::STATUS_COMPLETED,
-            'destination_id' => $destination->id,
-        ]);
+    Backup::factory()->create([
+        'status' => Backup::STATUS_COMPLETED,
+        'destination_id' => $destination->id,
+    ]);
 
-        $this->assertHealthCheckFails($healthCheck->getResult($destination->refresh()));
-    }
+    $this->assertHealthCheckFails($healthCheck->getResult($destination->refresh()));
+});
 
-    /** @test */
-    public function it_the_maximum_is_set_to_zero_than_the_check_is_disabled()
-    {
-        $maximumSizeInMB = 0;
+it('the maximum is set to zero than the check is disabled', function () {
+    $maximumSizeInMB = 0;
 
-        $backup = Backup::factory()->create([
-            'status' => Backup::STATUS_COMPLETED,
-            'real_size_in_kb' => 2 * 1024,
-        ]);
+    $backup = Backup::factory()->create([
+        'status' => Backup::STATUS_COMPLETED,
+        'real_size_in_kb' => 2 * 1024,
+    ]);
 
-        $destination = $backup->destination;
+    $destination = $backup->destination;
 
-        $destination->update([
-            'healthy_maximum_storage_in_mb' => $maximumSizeInMB,
-        ]);
+    $destination->update([
+        'healthy_maximum_storage_in_mb' => $maximumSizeInMB,
+    ]);
 
-        $healthCheck = new MaximumStorageInMB($maximumSizeInMB);
+    $healthCheck = new MaximumStorageInMB($maximumSizeInMB);
 
-        $this->assertHealthCheckSucceeds($healthCheck->getResult($destination));
-    }
-}
+    $this->assertHealthCheckSucceeds($healthCheck->getResult($destination));
+});

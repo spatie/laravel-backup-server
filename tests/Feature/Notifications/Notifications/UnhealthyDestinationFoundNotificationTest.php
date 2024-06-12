@@ -1,41 +1,27 @@
 <?php
 
-namespace Spatie\BackupServer\Tests\Feature\Notifications\Notifications;
-
+uses(\Spatie\BackupServer\Tests\TestCase::class);
 use Illuminate\Support\Facades\Notification;
 use Spatie\BackupServer\Models\Destination;
 use Spatie\BackupServer\Notifications\Notifications\UnhealthyDestinationFoundNotification;
 use Spatie\BackupServer\Tasks\Monitor\Events\UnhealthyDestinationFoundEvent;
-use Spatie\BackupServer\Tests\TestCase;
 
-class UnhealthyDestinationFoundNotificationTest extends TestCase
-{
-    private Destination $destination;
+beforeEach(function () {
+    $this->destination = Destination::factory()->create();
 
-    public function setUp(): void
-    {
-        parent::setUp();
+    Notification::fake();
+});
 
-        $this->destination = Destination::factory()->create();
+it('will send a notification when a destination is healthy', function () {
+    event(new UnhealthyDestinationFoundEvent($this->destination, ['failure message']));
 
-        Notification::fake();
-    }
+    Notification::assertSentTo($this->configuredNotifiable(), UnhealthyDestinationFoundNotification::class);
+});
 
-    /** @test */
-    public function it_will_send_a_notification_when_a_destination_is_healthy()
-    {
-        event(new UnhealthyDestinationFoundEvent($this->destination, ['failure message']));
+test('the unhealthy destination found notification renders correctly to a mail', function () {
+    $event = new UnhealthyDestinationFoundEvent($this->destination, ['failure message']);
 
-        Notification::assertSentTo($this->configuredNotifiable(), UnhealthyDestinationFoundNotification::class);
-    }
+    $notification = new UnhealthyDestinationFoundNotification($event);
 
-    /** @test */
-    public function the_UnhealthyDestinationFoundNotification_renders_correctly_to_a_mail()
-    {
-        $event = new UnhealthyDestinationFoundEvent($this->destination, ['failure message']);
-
-        $notification = new UnhealthyDestinationFoundNotification($event);
-
-        $this->assertIsString((string) $notification->toMail()->render());
-    }
-}
+    expect((string) $notification->toMail()->render())->toBeString();
+});

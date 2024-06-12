@@ -1,138 +1,107 @@
 <?php
 
-namespace Spatie\BackupServer\Tests\Feature\Tasks\Backup\Jobs;
-
+uses(\Spatie\BackupServer\Tests\TestCase::class);
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Spatie\BackupServer\Models\Backup;
 use Spatie\BackupServer\Models\Destination;
 use Spatie\BackupServer\Models\Source;
-use Spatie\BackupServer\Tests\TestCase;
 use Spatie\Docker\DockerContainer;
 use Spatie\Docker\DockerContainerInstance;
 
-class PerformBackupJobTest extends TestCase
-{
-    private ?DockerContainerInstance $container;
 
-    private ?Source $source;
+beforeEach(function () {
+    Carbon::setTestNow(now()->setTime(2, 0));
 
-    private ?Destination $destination;
+    //Storage::fake('backups');
+    $this->container = DockerContainer::create('spatie/laravel-backup-server-tests')
+        ->name('laravel-backup-server-tests')
+        ->mapPort(4848, 22)
+        ->stopOnDestruct()
+        ->start()
+        ->addPublicKey($this->publicKeyPath());
 
-    public function setUp(): void
-    {
-        parent::setUp();
+    $this->source = Source::factory()->create([
+        'host' => '0.0.0.0',
+        'ssh_port' => '4848',
+        'ssh_user' => 'root',
+        'ssh_private_key_file' => $this->privateKeyPath(),
+        'includes' => ['/src'],
+        'excludes' => ['exclude.txt'],
+        'cron_expression' => '0 2 * * *',
+    ]);
+});
 
-        Carbon::setTestNow(now()->setTime(2, 0));
+it('can perform a backup', function () {
+    $this->container->addFiles(__DIR__.'/stubs/serverContent/testServer', '/src');
 
-        //Storage::fake('backups');
+    $this->artisan('backup-server:dispatch-backups')->assertExitCode(0);
 
-        $this->container = DockerContainer::create('spatie/laravel-backup-server-tests')
-            ->name('laravel-backup-server-tests')
-            ->mapPort(4848, 22)
-            ->stopOnDestruct()
-            ->start()
-            ->addPublicKey($this->publicKeyPath());
+    expect($this->source->backups()->first()->status)->toBe(Backup::STATUS_COMPLETED);
+    expect($this->source->backups()->first()->has('src/1.txt'))->toBeTrue();
+    expect($this->source->backups()->first()->has('src/exclude.txt'))->toBeFalse();
+});
 
-        $this->source = Source::factory()->create([
-            'host' => '0.0.0.0',
-            'ssh_port' => '4848',
-            'ssh_user' => 'root',
-            'ssh_private_key_file' => $this->privateKeyPath(),
-            'includes' => ['/src'],
-            'excludes' => ['exclude.txt'],
-            'cron_expression' => '0 2 * * *',
-        ]);
-    }
+it('can perform a pre backup command', function () {
+    $this->container->addFiles(__DIR__.'/stubs/serverContent/testServer', '/src');
 
-    /** @test */
-    public function it_can_perform_a_backup()
-    {
-        $this->container->addFiles(__DIR__.'/stubs/serverContent/testServer', '/src');
+    $this->source->update(['pre_backup_commands' => ['cd /src', 'touch newfile.txt']]);
 
-        $this->artisan('backup-server:dispatch-backups')->assertExitCode(0);
+    $this->artisan('backup-server:dispatch-backups')->assertExitCode(0);
 
-        $this->assertSame(Backup::STATUS_COMPLETED, $this->source->backups()->first()->status);
-        $this->assertTrue($this->source->backups()->first()->has('src/1.txt'));
-        $this->assertFalse($this->source->backups()->first()->has('src/exclude.txt'));
-    }
+    expect($this->source->backups()->first()->has('src/newfile.txt'))->toBeTrue();
 
-    /** @test */
-    public function it_can_perform_a_pre_backup_command()
-    {
-        $this->container->addFiles(__DIR__.'/stubs/serverContent/testServer', '/src');
+    expect($this->source->backups()->first()->status)->toBe(Backup::STATUS_COMPLETED);
+});
 
-        $this->source->update(['pre_backup_commands' => ['cd /src', 'touch newfile.txt']]);
+it('will mark the backup as failed if the pre backup commands cannot execute', function () {
+    $this->container->addFiles(__DIR__.'/stubs/serverContent/testServer', '/src');
 
-        $this->artisan('backup-server:dispatch-backups')->assertExitCode(0);
+    $this->source->update(['pre_backup_commands' => ['this-is-a-non-valid-command']]);
 
-        $this->assertTrue($this->source->backups()->first()->has('src/newfile.txt'));
+    $this->artisan('backup-server:dispatch-backups')->assertExitCode(0);
 
-        $this->assertSame(Backup::STATUS_COMPLETED, $this->source->backups()->first()->status);
-    }
+    expect($this->source->backups()->first()->status)->toBe(Backup::STATUS_FAILED);
+});
 
-    /** @test */
-    public function it_will_mark_the_backup_as_failed_if_the_pre_backup_commands_cannot_execute()
-    {
-        $this->container->addFiles(__DIR__.'/stubs/serverContent/testServer', '/src');
+it('can perform post backup commands', function () {
+    $this->container->addFiles(__DIR__.'/stubs/serverContent/testServer', '/src');
 
-        $this->source->update(['pre_backup_commands' => ['this-is-a-non-valid-command']]);
+    $this->source->update(['post_backup_commands' => ['echo "ok" >> /post_backup_command.txt']]);
 
-        $this->artisan('backup-server:dispatch-backups')->assertExitCode(0);
+    $this->artisan('backup-server:dispatch-backups')->assertExitCode(0);
 
-        $this->assertSame(Backup::STATUS_FAILED, $this->source->backups()->first()->status);
-    }
+    $process = $this->container->execute('cat /post_backup_command.txt');
 
-    /** @test */
-    public function it_can_perform_post_backup_commands()
-    {
-        $this->container->addFiles(__DIR__.'/stubs/serverContent/testServer', '/src');
+    expect(trim($process->getOutput()))->toBe('ok');
 
-        $this->source->update(['post_backup_commands' => ['echo "ok" >> /post_backup_command.txt']]);
+    expect($this->source->backups()->first()->status)->toBe(Backup::STATUS_COMPLETED);
+});
 
-        $this->artisan('backup-server:dispatch-backups')->assertExitCode(0);
+it('will mark the backup as failed if the post backup commands cannot execute', function () {
+    $this->source->update(['post_backup_commands' => ['invalid-command']]);
 
-        $process = $this->container->execute('cat /post_backup_command.txt');
+    $this->artisan('backup-server:dispatch-backups')->assertExitCode(0);
 
-        $this->assertSame('ok', trim($process->getOutput()));
+    expect($this->source->backups()->first()->status)->toBe(Backup::STATUS_FAILED);
+});
 
-        $this->assertSame(Backup::STATUS_COMPLETED, $this->source->backups()->first()->status);
-    }
+it('will fail if the source is not reachable', function () {
+    $this->source->update(['host' => 'non-existing-host']);
 
-    /** @test */
-    public function it_will_mark_the_backup_as_failed_if_the_post_backup_commands_cannot_execute()
-    {
-        $this->source->update(['post_backup_commands' => ['invalid-command']]);
+    $this->artisan('backup-server:dispatch-backups')->assertExitCode(0);
 
-        $this->artisan('backup-server:dispatch-backups')->assertExitCode(0);
+    expect($this->source->backups()->first()->status)->toBe(Backup::STATUS_FAILED);
+});
 
-        $this->assertSame(Backup::STATUS_FAILED, $this->source->backups()->first()->status);
-    }
+it('will fail if it cannot login', function () {
+    $this->source->update(['ssh_private_key_file' => null]);
 
-    /** @test */
-    public function it_will_fail_if_the_source_is_not_reachable()
-    {
-        $this->source->update(['host' => 'non-existing-host']);
+    $this->artisan('backup-server:dispatch-backups')->assertExitCode(0);
 
-        $this->artisan('backup-server:dispatch-backups')->assertExitCode(0);
+    expect($this->source->backups()->first()->status)->toBe(Backup::STATUS_FAILED);
+});
 
-        $this->assertSame(Backup::STATUS_FAILED, $this->source->backups()->first()->status);
-    }
-
-    /** @test */
-    public function it_will_fail_if_it_cannot_login()
-    {
-        $this->source->update(['ssh_private_key_file' => null]);
-
-        $this->artisan('backup-server:dispatch-backups')->assertExitCode(0);
-
-        $this->assertSame(Backup::STATUS_FAILED, $this->source->backups()->first()->status);
-    }
-
-    public function tearDown(): void
-    {
-        parent::tearDown();
-
-        $this->container->stop();
-    }
-}
+afterEach(function () {
+    $this->container->stop();
+});

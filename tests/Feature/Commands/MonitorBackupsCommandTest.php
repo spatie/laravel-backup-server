@@ -1,38 +1,26 @@
 <?php
 
-namespace Spatie\BackupServer\Tests\Feature\Commands;
-
+uses(\Spatie\BackupServer\Tests\TestCase::class);
 use Illuminate\Support\Facades\Notification;
 use Spatie\BackupServer\Models\Destination;
 use Spatie\BackupServer\Notifications\Notifications\UnhealthyDestinationFoundNotification;
-use Spatie\BackupServer\Tests\TestCase;
 
-class MonitorBackupsCommandTest extends TestCase
-{
-    public function setUp(): void
-    {
-        parent::setUp();
+beforeEach(function () {
+    Notification::fake();
+});
 
-        Notification::fake();
-    }
+it('will send no notifications when there are no sources or destinations', function () {
+    $this->artisan('backup-server:monitor')->assertExitCode(0);
 
-    /** @test */
-    public function it_will_send_no_notifications_when_there_are_no_sources_or_destinations()
-    {
-        $this->artisan('backup-server:monitor')->assertExitCode(0);
+    Notification::assertNothingSent();
+});
 
-        Notification::assertNothingSent();
-    }
+it('will send a notification if a destination is not reachable', function () {
+    Destination::factory()->create([
+        'disk_name' => 'non-existing-disk',
+    ]);
 
-    /** @test */
-    public function it_will_send_a_notification_if_a_destination_is_not_reachable()
-    {
-        Destination::factory()->create([
-            'disk_name' => 'non-existing-disk',
-        ]);
+    $this->artisan('backup-server:monitor')->assertExitCode(0);
 
-        $this->artisan('backup-server:monitor')->assertExitCode(0);
-
-        Notification::assertSentTo($this->configuredNotifiable(), UnhealthyDestinationFoundNotification::class);
-    }
-}
+    Notification::assertSentTo($this->configuredNotifiable(), UnhealthyDestinationFoundNotification::class);
+});

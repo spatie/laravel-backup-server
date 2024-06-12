@@ -1,80 +1,63 @@
 <?php
 
-namespace Spatie\BackupServer\Tests\Unit\Models;
-
+uses(\Spatie\BackupServer\Tests\TestCase::class);
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Support\Facades\Storage;
 use Spatie\BackupServer\Models\Backup;
 use Spatie\BackupServer\Tasks\Cleanup\Jobs\DeleteBackupJob;
 use Spatie\BackupServer\Tests\Factories\BackupFactory;
-use Spatie\BackupServer\Tests\TestCase;
 use Spatie\TestTime\TestTime;
 
-class BackupTest extends TestCase
-{
-    public function setUp(): void
-    {
-        parent::setUp();
 
-        Storage::fake();
-    }
+beforeEach(function () {
+    Storage::fake();
+});
 
-    /** @test */
-    public function it_will_also_delete_the_directory_when_it_gets_deleted()
-    {
-        $backup = (new BackupFactory())->makeSureBackupDirectoryExists()->create();
-        Storage::disk('backups')->assertExists($backup->path);
+it('will also delete the directory when it gets deleted', function () {
+    $backup = (new BackupFactory())->makeSureBackupDirectoryExists()->create();
+    Storage::disk('backups')->assertExists($backup->path);
 
-        $backup->delete();
-        Storage::disk('backups')->assertMissing($backup->path);
-    }
+    $backup->delete();
+    Storage::disk('backups')->assertMissing($backup->path);
+});
 
-    /** @test */
-    public function it_has_a_method_to_determine_if_the_backup_directory_exists()
-    {
-        $backup = (new BackupFactory())->makeSureBackupDirectoryExists()->create();
-        $this->assertTrue($backup->existsOnDisk());
+it('has a method to determine if the backup directory exists', function () {
+    $backup = (new BackupFactory())->makeSureBackupDirectoryExists()->create();
+    expect($backup->existsOnDisk())->toBeTrue();
 
-        $backup->delete();
-        $this->assertFalse($backup->existsOnDisk());
-    }
+    $backup->delete();
+    expect($backup->existsOnDisk())->toBeFalse();
+});
 
-    /** @test */
-    public function it_will_fill_the_completed_at_field_when_marking_a_backup_as_completed()
-    {
-        TestTime::freeze();
+it('will fill the completed at field when marking a backup as completed', function () {
+    TestTime::freeze();
 
-        /** @var \Spatie\BackupServer\Models\Backup $backup */
-        $backup = Backup::factory()->create();
+    /** @var \Spatie\BackupServer\Models\Backup $backup */
+    $backup = Backup::factory()->create();
 
-        $backup->markAsCompleted();
+    $backup->markAsCompleted();
 
-        $this->assertEquals(Backup::STATUS_COMPLETED, $backup->status);
-        $this->assertEquals(now()->format('YmdHis'), $backup->completed_at->format('YmdHis'));
-    }
+    expect($backup->status)->toEqual(Backup::STATUS_COMPLETED);
+    expect($backup->completed_at->format('YmdHis'))->toEqual(now()->format('YmdHis'));
+});
 
-    /** @test */
-    public function it_can_delete_a_backup_in_an_async_way()
-    {
-        /** @var Backup $backup */
-        $backup = Backup::factory()->create();
+it('can delete a backup in an async way', function () {
+    /** @var Backup $backup */
+    $backup = Backup::factory()->create();
 
-        $backup->asyncDelete();
+    $backup->asyncDelete();
 
-        $this->assertCount(0, Backup::get());
-    }
+    expect(Backup::get())->toHaveCount(0);
+});
 
-    /** @test */
-    public function an_async_delete_of_a_backup_will_get_queued()
-    {
-        Queue::fake();
+test('an async delete of a backup will get queued', function () {
+    Queue::fake();
 
-        /** @var Backup $backup */
-        $backup = Backup::factory()->create();
+    /** @var Backup $backup */
+    $backup = Backup::factory()->create();
 
-        $backup->asyncDelete();
+    $backup->asyncDelete();
 
-        $this->assertCount(1, Backup::get());
-        Queue::assertPushed(DeleteBackupJob::class);
-    }
-}
+    expect(Backup::get())->toHaveCount(1);
+    Queue::assertPushed(DeleteBackupJob::class);
+});
