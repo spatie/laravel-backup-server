@@ -112,7 +112,7 @@ class Backup extends Model
 
     public function markAsCompleted(): self
     {
-        $this->logInfo(Task::BACKUP, 'Backup completed.');
+        $this->logInfo(Task::Backup, 'Backup completed.');
 
         $this->update([
             'status' => BackupStatus::Completed,
@@ -124,7 +124,7 @@ class Backup extends Model
 
     public function markAsFailed(string $errorMessage): self
     {
-        $this->logError(Task::BACKUP, "Backup failed: {$errorMessage}");
+        $this->logError(Task::Backup, "Backup failed: {$errorMessage}");
 
         $this->update([
             'status' => BackupStatus::Failed,
@@ -146,7 +146,7 @@ class Backup extends Model
     public function handleProgress(string $type, string $progressOutput): self
     {
         if ($type === Process::ERR) {
-            $this->logError(Task::BACKUP, $progressOutput);
+            $this->logError(Task::Backup, $progressOutput);
 
             return $this;
         }
@@ -162,7 +162,7 @@ class Backup extends Model
         return $this;
     }
 
-    protected function addMessageToLog(string $task, string $level, string $message): Backup
+    protected function addMessageToLog(Task $task, string $level, string $message): Backup
     {
         $this->logItems()->create([
             'source_id' => $this->source_id,

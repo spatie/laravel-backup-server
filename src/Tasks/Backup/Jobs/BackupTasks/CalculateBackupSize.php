@@ -9,7 +9,7 @@ class CalculateBackupSize implements BackupTask
 {
     public function execute(Backup $backup): void
     {
-        $backup->logInfo(Task::BACKUP, 'Calculating backup size...');
+        $backup->logInfo(Task::Backup, 'Calculating backup size...');
 
         $backup->recalculateBackupSize();
 
