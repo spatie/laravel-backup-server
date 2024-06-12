@@ -34,7 +34,7 @@ class FindFilesCommand extends Command
 
         $source->completedBackups
             ->each(function (Backup $backup) use ($searchFor) {
-                $backup->findFile($searchFor, Closure::fromCallable([$this, 'handleFoundFile']));
+                $backup->findFile($searchFor, Closure::fromCallable($this->handleFoundFile(...)));
             });
 
         $this->info('');
