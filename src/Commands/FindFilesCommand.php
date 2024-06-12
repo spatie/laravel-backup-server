@@ -51,7 +51,5 @@ class FindFilesCommand extends Command
 
             $this->comment($fileSearchResult->getAbsolutePath());
         });
-
-        $this->output;
     }
 }
