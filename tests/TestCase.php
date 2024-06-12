@@ -17,7 +17,7 @@ class TestCase extends Orchestra
     {
         Factory::guessFactoryNamesUsing(
             function (string $modelName) {
-                return 'Spatie\\BackupServer\\Tests\\Database\\Factories\\' . class_basename($modelName) . 'Factory';
+                return 'Spatie\\BackupServer\\Tests\\Database\\Factories\\'.class_basename($modelName).'Factory';
             }
         );
 
@@ -54,7 +54,7 @@ class TestCase extends Orchestra
         include_once __DIR__.'/../database/migrations/create_backup_server_tables.php.stub';
         (new CreateBackupServerTables())->up();
 
-        include_once __DIR__ . '/Database/migrations/create_users_table.php.stub';
+        include_once __DIR__.'/Database/migrations/create_users_table.php.stub';
         (new CreateUsersTable())->up();
     }
 
@@ -74,12 +74,12 @@ class TestCase extends Orchestra
 
     public function publicKeyPath(): string
     {
-        return __DIR__ . '/docker/keys/laravel_backup_server_id_rsa.pub';
+        return __DIR__.'/docker/keys/laravel_backup_server_id_rsa.pub';
     }
 
     public function privateKeyPath(): string
     {
-        $keyPath = __DIR__ . '/docker/keys/laravel_backup_server_id_rsa';
+        $keyPath = __DIR__.'/docker/keys/laravel_backup_server_id_rsa';
 
         chmod($keyPath, 0700);
 

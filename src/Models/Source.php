@@ -17,16 +17,17 @@ use Symfony\Component\Process\Process;
 
 class Source extends Model
 {
-    use LogsActivity;
-    use HasBackupRelation;
     use HasAsyncDelete;
+    use HasBackupRelation;
     use HasFactory;
+    use LogsActivity;
 
     public $table = 'backup_server_sources';
 
     public $guarded = [];
 
     public const STATUS_ACTIVE = 'active';
+
     public const STATUS_DELETING = 'deleting';
 
     public $casts = [

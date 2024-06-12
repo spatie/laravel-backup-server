@@ -24,11 +24,11 @@ trait ExecutesBackupCommands
         $process = $backup->source->executeSshCommands($commands);
 
         if (! $process->isSuccessful()) {
-            $backup->logError(Task::BACKUP, $label . ' error output:' . PHP_EOL .$process->getErrorOutput());
+            $backup->logError(Task::BACKUP, $label.' error output:'.PHP_EOL.$process->getErrorOutput());
 
             throw BackupFailed::BackupCommandsFailed($backup, $commandAttributeName, $process->getErrorOutput());
         }
 
-        $backup->logInfo(Task::BACKUP, $label . ' output:' . PHP_EOL .$process->getOutput());
+        $backup->logInfo(Task::BACKUP, $label.' output:'.PHP_EOL.$process->getOutput());
     }
 }

@@ -39,7 +39,7 @@ class FindFilesCommand extends Command
 
         $this->info('');
 
-        $this->info($this->resultCounter. ' ' .  Str::plural('search result', $this->resultCounter) . ' found.');
+        $this->info($this->resultCounter.' '.Str::plural('search result', $this->resultCounter).' found.');
 
         return 0;
     }

@@ -36,6 +36,6 @@ class BackupCompletedNotificationTest extends TestCase
 
         $notification = new BackupCompletedNotification($event);
 
-        $this->assertIsString((string)$notification->toMail()->render());
+        $this->assertIsString((string) $notification->toMail()->render());
     }
 }

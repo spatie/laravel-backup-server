@@ -30,7 +30,7 @@ class CreateServerSummaryActionTest extends TestCase
             ->start()
             ->addPublicKey($this->publicKeyPath());
 
-        $container->addFiles(__DIR__ . '/stubs/serverContent/testServer', '/src');
+        $container->addFiles(__DIR__.'/stubs/serverContent/testServer', '/src');
 
         $source = Source::factory()->create([
             'host' => '0.0.0.0',

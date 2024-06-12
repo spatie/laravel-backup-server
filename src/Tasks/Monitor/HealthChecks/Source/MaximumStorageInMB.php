@@ -14,7 +14,7 @@ class MaximumStorageInMB extends SourceHealthCheck
 
     public function getResult(Source $source): HealthCheckResult
     {
-        $actualSizeInMB = round((int)$source->completedBackups()->sum('real_size_in_kb') / 1024, 5);
+        $actualSizeInMB = round((int) $source->completedBackups()->sum('real_size_in_kb') / 1024, 5);
 
         $maximumSizeInMB = $this->maximumSizeInMB($source);
 

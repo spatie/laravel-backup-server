@@ -36,6 +36,6 @@ class CleanupForDestinationCompletedNotificationTest extends TestCase
 
         $notification = new CleanupForDestinationCompletedNotification($event);
 
-        $this->assertIsString((string)$notification->toMail()->render());
+        $this->assertIsString((string) $notification->toMail()->render());
     }
 }

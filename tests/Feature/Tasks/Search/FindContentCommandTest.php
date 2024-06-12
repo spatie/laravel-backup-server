@@ -26,7 +26,7 @@ class FindContentCommandTest extends TestCase
     /** @test */
     public function it_can_find_files_with_content()
     {
-        $this->addFileToBackup($this->backup, __DIR__ . '/stubs/test.txt');
+        $this->addFileToBackup($this->backup, __DIR__.'/stubs/test.txt');
 
         $this->artisan('backup-server:find-content', [
             'sourceName' => $this->backup->source->name,
@@ -49,6 +49,6 @@ class FindContentCommandTest extends TestCase
 
         $fileName = pathinfo($filePath, PATHINFO_BASENAME);
 
-        File::copy($filePath, $backupDirectory . '/' . $fileName);
+        File::copy($filePath, $backupDirectory.'/'.$fileName);
     }
 }

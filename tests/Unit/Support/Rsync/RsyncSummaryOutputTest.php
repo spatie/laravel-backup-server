@@ -13,7 +13,7 @@ class RsyncSummaryOutputTest extends TestCase
     {
         parent::setUp();
 
-        $summary = file_get_contents(__DIR__ . '/stubs/rsyncSummary.txt');
+        $summary = file_get_contents(__DIR__.'/stubs/rsyncSummary.txt');
 
         $this->rsyncSummary = new RsyncSummaryOutput($summary);
     }
@@ -29,6 +29,6 @@ class RsyncSummaryOutputTest extends TestCase
     {
         $rsyncSummary = new RsyncSummaryOutput('invalid-summary');
 
-        $this->assertEquals("0MB/s", $rsyncSummary->averageSpeedInMB());
+        $this->assertEquals('0MB/s', $rsyncSummary->averageSpeedInMB());
     }
 }

@@ -30,7 +30,7 @@ class UnhealthyDestinationFoundNotification extends Notification implements Shou
             ->greeting(trans('backup-server::notifications.unhealthy_destination_found_subject_title', $this->translationParameters()))
             ->line(trans('backup-server::notifications.unhealthy_destination_found_body', $this->translationParameters()))
             ->line([
-                "Found problems:\n* " . collect($this->event->failureMessages)->join("\n* "),
+                "Found problems:\n* ".collect($this->event->failureMessages)->join("\n* "),
             ]);
     }
 

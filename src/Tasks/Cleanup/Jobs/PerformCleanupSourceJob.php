@@ -25,7 +25,6 @@ class PerformCleanupSourceJob implements ShouldQueue
     use Queueable;
     use SerializesModels;
 
-    /** @var \Spatie\BackupServer\Models\Source */
     public Source $source;
 
     public function __construct(Source $source)
@@ -39,7 +38,7 @@ class PerformCleanupSourceJob implements ShouldQueue
 
     public function handle()
     {
-        $this->source->logInfo(Task::CLEANUP, "Starting cleanup...");
+        $this->source->logInfo(Task::CLEANUP, 'Starting cleanup...');
 
         $tasks = [
             DeleteBackupsWithoutDirectoriesFromDb::class,
@@ -54,7 +53,7 @@ class PerformCleanupSourceJob implements ShouldQueue
 
         event(new CleanupForSourceCompletedEvent($this->source));
 
-        $this->source->logInfo(Task::CLEANUP, "Cleanup done!");
+        $this->source->logInfo(Task::CLEANUP, 'Cleanup done!');
     }
 
     public function failed(Throwable $exception)

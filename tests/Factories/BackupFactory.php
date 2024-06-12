@@ -93,13 +93,13 @@ class BackupFactory
             $backup->disk()->makeDirectory($backup->destinationLocation()->getPath());
 
             collect($this->files)->each(function (string $filePath) use ($backup) {
-                $destination = $backup->destinationLocation()->getFullPath() . '/' . pathinfo($filePath, PATHINFO_BASENAME);
+                $destination = $backup->destinationLocation()->getFullPath().'/'.pathinfo($filePath, PATHINFO_BASENAME);
 
                 File::copy($filePath, $destination);
             });
 
             collect($this->filesWithRelativeDestinations)->each(function (string $relativeDestination, string $source) use ($backup) {
-                $destination = $backup->destinationLocation()->getFullPath() . '/' . $relativeDestination;
+                $destination = $backup->destinationLocation()->getFullPath().'/'.$relativeDestination;
 
                 File::makeDirectory(pathinfo($destination, PATHINFO_DIRNAME), 0777, true, true);
                 File::copy($source, $destination);

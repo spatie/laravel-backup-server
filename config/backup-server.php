@@ -138,7 +138,6 @@ return [
         ],
     ],
 
-
     /*
      * Here you can specify on which connection the backup server jobs will be dispatched.
      * Leave empty to use the app default's env('QUEUE_CONNECTION')

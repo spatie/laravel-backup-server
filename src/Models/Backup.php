@@ -26,18 +26,22 @@ use Symfony\Component\Process\Process;
 
 class Backup extends Model
 {
-    use LogsActivity;
     use HasAsyncDelete;
     use HasFactory;
+    use LogsActivity;
 
     public $table = 'backup_server_backups';
 
     public $guarded = [];
 
     public const STATUS_PENDING = 'pending';
+
     public const STATUS_IN_PROGRESS = 'in_progress';
+
     public const STATUS_COMPLETED = 'completed';
+
     public const STATUS_FAILED = 'failed';
+
     public const STATUS_DELETING = 'deleting';
 
     protected $casts = [
@@ -182,7 +186,7 @@ class Backup extends Model
     public function recalculateBackupSize(): Backup
     {
         $process = Process::fromShellCommandline(
-            "du -kd 0",
+            'du -kd 0',
             $this->destinationLocation()->getFullPath(),
             null,
             null,
@@ -195,7 +199,7 @@ class Backup extends Model
 
         $sizeInKb = Str::before($output, ' ');
 
-        $this->update(['size_in_kb' => (int)trim($sizeInKb)]);
+        $this->update(['size_in_kb' => (int) trim($sizeInKb)]);
 
         return $this;
     }
@@ -227,7 +231,7 @@ class Backup extends Model
 
         $sizeInKb = Str::before($directoryLine, "\t");
 
-        $this->update(['real_size_in_kb' => (int)trim($sizeInKb)]);
+        $this->update(['real_size_in_kb' => (int) trim($sizeInKb)]);
 
         return $this;
     }
@@ -314,6 +318,6 @@ class Backup extends Model
 
     public function name(): string
     {
-        return $this->source->name . '-' . optional($this->completed_at)->format('Y-m-d-His');
+        return $this->source->name.'-'.optional($this->completed_at)->format('Y-m-d-His');
     }
 }

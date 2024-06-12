@@ -37,6 +37,6 @@ class BackupFailedNotificationTest extends TestCase
 
         $notification = new BackupFailedNotification($event);
 
-        $this->assertIsString((string)$notification->toMail()->render());
+        $this->assertIsString((string) $notification->toMail()->render());
     }
 }

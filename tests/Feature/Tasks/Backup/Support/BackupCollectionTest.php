@@ -25,12 +25,12 @@ class BackupCollectionTest extends TestCase
         $destination = Destination::factory()->create();
 
         $this->backup1 = (new BackupFactory())
-            ->addDirectoryContent(__DIR__ . '/stubs/serverContent')
+            ->addDirectoryContent(__DIR__.'/stubs/serverContent')
             ->destination($destination)
             ->create();
 
         $this->backup2 = (new BackupFactory())
-            ->addDirectoryContent(__DIR__ . '/stubs/serverContent')
+            ->addDirectoryContent(__DIR__.'/stubs/serverContent')
             ->destination($destination)
             ->create();
     }

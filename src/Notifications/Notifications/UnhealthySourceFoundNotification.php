@@ -30,7 +30,7 @@ class UnhealthySourceFoundNotification extends Notification implements ShouldQue
             ->greeting(trans('backup-server::notifications.unhealthy_source_found_subject_title', $this->translationParameters()))
             ->line(trans('backup-server::notifications.unhealthy_source_found_body', $this->translationParameters()))
             ->line([
-                "Found problems:\n* " . collect($this->event->failureMessages)->join("\n* "),
+                "Found problems:\n* ".collect($this->event->failureMessages)->join("\n* "),
             ]);
     }
 

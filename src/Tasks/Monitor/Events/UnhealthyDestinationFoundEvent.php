@@ -8,8 +8,7 @@ class UnhealthyDestinationFoundEvent
 {
     public function __construct(
         public Destination $destination,
-        public
-        array $failureMessages
+        public array $failureMessages
     ) {
     }
 }

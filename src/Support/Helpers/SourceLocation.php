@@ -33,7 +33,7 @@ class SourceLocation
 
         return collect($this->paths)
             ->map(fn (string $path) => rtrim($path, '/'))
-            ->map(fn (string $path) => $remotePart .$path)
+            ->map(fn (string $path) => $remotePart.$path)
             ->implode(' ');
     }
 }

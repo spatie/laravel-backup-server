@@ -31,7 +31,7 @@ class FindFilesCommandTest extends TestCase
             'searchFor' => '*.txt',
         ])->assertExitCode(0)->expectsOutput('0 search results found.');
 
-        $this->addFileToBackup($this->backup, __DIR__ . '/stubs/test.txt');
+        $this->addFileToBackup($this->backup, __DIR__.'/stubs/test.txt');
 
         $this->artisan('backup-server:find-files', [
             'sourceName' => $this->backup->source->name,
@@ -54,6 +54,6 @@ class FindFilesCommandTest extends TestCase
 
         $fileName = pathinfo($filePath, PATHINFO_BASENAME);
 
-        File::copy($filePath, $backupDirectory . '/' . $fileName);
+        File::copy($filePath, $backupDirectory.'/'.$fileName);
     }
 }

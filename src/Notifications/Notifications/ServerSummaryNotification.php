@@ -65,7 +65,7 @@ class ServerSummaryNotification extends Notification implements ShouldQueue
             ->block(function (SlackBlock $block) {
                 $block
                     ->type('section')
-                    ->text(['type' => 'mrkdwn', 'text' => ":package: *Backups*"]);
+                    ->text(['type' => 'mrkdwn', 'text' => ':package: *Backups*']);
             })
             ->block(function (SlackBlock $block) {
                 $block
@@ -81,7 +81,7 @@ class ServerSummaryNotification extends Notification implements ShouldQueue
             ->block(function (SlackBlock $block) {
                 $block
                     ->type('section')
-                    ->text(['type' => 'mrkdwn', 'text' => ":staff_of_aesculapius: *Health*"]);
+                    ->text(['type' => 'mrkdwn', 'text' => ':staff_of_aesculapius: *Health*']);
             })
             ->block(function (SlackBlock $block) {
                 $block
@@ -97,7 +97,7 @@ class ServerSummaryNotification extends Notification implements ShouldQueue
             ->block(function (SlackBlock $block) {
                 $block
                     ->type('section')
-                    ->text(['type' => 'mrkdwn', 'text' => ":bar_chart: *Usage*"]);
+                    ->text(['type' => 'mrkdwn', 'text' => ':bar_chart: *Usage*']);
             })
             ->block(function (SlackBlock $block) use ($timeSpent, $totalSpace, $usedSpace) {
                 $block
