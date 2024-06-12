@@ -34,6 +34,7 @@ it('will not send if the source is paused', function () {
 
     Source::factory()->create([
         'paused_failed_notifications_until' => now()->addHour(),
+        'created_at' => now()->subMonth(),
     ]);
 
     $this->artisan('backup-server:monitor')->assertExitCode(0);
@@ -46,6 +47,7 @@ it('will send if the source is not paused anymore', function () {
 
     Source::factory()->create([
         'paused_failed_notifications_until' => now()->subMinute(),
+        'created_at' => now()->subMonth(),
     ]);
 
     $this->artisan('backup-server:monitor')->assertExitCode(0);
