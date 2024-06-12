@@ -2,11 +2,9 @@
 
 namespace Spatie\BackupServer\Support\Helpers\Enums;
 
-class Task
+enum Task: string
 {
-    public const BACKUP = 'backup';
-
-    public const CLEANUP = 'cleanup';
-
-    public const MONITOR = 'monitor';
+    case Backup = 'backup';
+    case Cleanup = 'cleanup';
+    case Monitor = 'monitor';
 }

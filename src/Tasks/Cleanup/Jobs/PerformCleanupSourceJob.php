@@ -39,7 +39,7 @@ class PerformCleanupSourceJob implements ShouldQueue
 
     public function handle(): void
     {
-        $this->source->logInfo(Task::CLEANUP, 'Starting cleanup...');
+        $this->source->logInfo(Task::Cleanup, 'Starting cleanup...');
 
         $tasks = [
             DeleteBackupsWithoutDirectoriesFromDb::class,
@@ -54,12 +54,12 @@ class PerformCleanupSourceJob implements ShouldQueue
 
         event(new CleanupForSourceCompletedEvent($this->source));
 
-        $this->source->logInfo(Task::CLEANUP, 'Cleanup done!');
+        $this->source->logInfo(Task::Cleanup, 'Cleanup done!');
     }
 
     public function failed(Throwable $exception): void
     {
-        $this->source->logError(Task::CLEANUP, "Error while cleaning up source `{$this->source->name}`: `{$exception->getMessage()}`");
+        $this->source->logError(Task::Cleanup, "Error while cleaning up source `{$this->source->name}`: `{$exception->getMessage()}`");
 
         report($exception);
 

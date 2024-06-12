@@ -13,7 +13,7 @@ class RunBackup implements BackupTask
 {
     public function execute(Backup $backup): void
     {
-        $backup->logInfo(Task::BACKUP, 'Running backup...');
+        $backup->logInfo(Task::Backup, 'Running backup...');
 
         $pendingBackup = (new PendingBackup())
             ->from($backup->sourceLocation())
@@ -87,7 +87,7 @@ class RunBackup implements BackupTask
 
         $summary = substr($output, $startingPosition);
 
-        $backup->logInfo(Task::BACKUP, trim($summary));
+        $backup->logInfo(Task::Backup, trim($summary));
 
         $backup->update([
             'rsync_summary' => trim($summary),

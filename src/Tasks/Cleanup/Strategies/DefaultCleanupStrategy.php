@@ -120,7 +120,7 @@ class DefaultCleanupStrategy implements CleanupStrategy
         /** @var \Spatie\BackupServer\Models\Backup $oldestBackup */
         $oldestBackup = $backups->oldest();
 
-        $oldestBackup->logInfo(Task::CLEANUP, 'Deleting backup because destination uses more space than the limit allows');
+        $oldestBackup->logInfo(Task::Cleanup, 'Deleting backup because destination uses more space than the limit allows');
 
         $oldestBackup->delete();
 

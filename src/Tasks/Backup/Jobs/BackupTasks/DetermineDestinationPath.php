@@ -10,7 +10,7 @@ class DetermineDestinationPath implements BackupTask
 {
     public function execute(Backup $backup): void
     {
-        $backup->logInfo(Task::BACKUP, 'Determining destination directory...');
+        $backup->logInfo(Task::Backup, 'Determining destination directory...');
 
         $directory = $backup->destination->directory.$backup->source->id.'/backup-'.$backup->created_at->format('Y-m-d-His').'/';
 

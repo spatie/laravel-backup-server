@@ -49,7 +49,7 @@ class MonitorBackupsCommand extends Command
             $this->error("Source `{$source->name}` is unhealthy");
 
             foreach ($failureMessages as $failureMessage) {
-                $source->logError(Task::MONITOR, $failureMessage);
+                $source->logError(Task::Monitor, $failureMessage);
             }
 
             $source->update(['healthy' => false]);
@@ -79,7 +79,7 @@ class MonitorBackupsCommand extends Command
             $this->error("Destination `{$destination->name}` is unhealthy");
 
             foreach ($failureMessages as $failureMessage) {
-                $destination->logError(Task::MONITOR, $failureMessage);
+                $destination->logError(Task::Monitor, $failureMessage);
             }
 
             event(new UnhealthyDestinationFoundEvent($destination, $failureMessages));

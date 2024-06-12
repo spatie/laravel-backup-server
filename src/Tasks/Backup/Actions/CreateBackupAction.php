@@ -42,7 +42,7 @@ class CreateBackupAction
             ($this->afterBackupModelCreated)($backup);
         }
 
-        $backup->logInfo(Task::BACKUP, 'Dispatching backup job...');
+        $backup->logInfo(Task::Backup, 'Dispatching backup job...');
 
         $job = (new PerformBackupJob($backup));
 
