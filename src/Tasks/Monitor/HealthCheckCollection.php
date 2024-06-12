@@ -7,21 +7,13 @@ use Spatie\BackupServer\Tasks\Monitor\HealthChecks\HealthCheck;
 
 class HealthCheckCollection
 {
-    private array $healthCheckClassNames;
-
-    private Model $model;
-
     private ?array $healthCheckResults = null;
 
     /**
      * @param  \Spatie\BackupServer\Models\Source|\Spatie\BackupServer\Models\Destination  $model
      */
-    public function __construct(array $healthCheckClassNames, Model $model)
+    public function __construct(private array $healthCheckClassNames, private Model $model)
     {
-        $this->healthCheckClassNames = $healthCheckClassNames;
-
-        $this->model = $model;
-
         $this->healthCheckResults = $this->performHealthChecks();
     }
 

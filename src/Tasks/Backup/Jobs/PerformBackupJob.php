@@ -27,12 +27,8 @@ class PerformBackupJob implements ShouldQueue
     use Queueable;
     use SerializesModels;
 
-    public Backup $backup;
-
-    public function __construct(Backup $backup)
+    public function __construct(public Backup $backup)
     {
-        $this->backup = $backup;
-
         $this->timeout = config('backup-server.jobs.perform_backup_job.timeout');
 
         $this->queue = config('backup-server.jobs.perform_backup_job.queue');

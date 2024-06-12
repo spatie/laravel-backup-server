@@ -18,12 +18,8 @@ class DeleteDestinationJob implements ShouldQueue
     use Queueable;
     use SerializesModels;
 
-    private Destination $destination;
-
-    public function __construct(Destination $destination)
+    public function __construct(private Destination $destination)
     {
-        $this->destination = $destination;
-
         $this->timeout = config('backup-server.jobs.delete_destination_job.timeout');
 
         $this->queue = config('backup-server.jobs.delete_destination_job.queue');

@@ -17,12 +17,8 @@ class DeleteBackupJob implements ShouldQueue
     use Queueable;
     use SerializesModels;
 
-    private Backup $backup;
-
-    public function __construct(Backup $backup)
+    public function __construct(private Backup $backup)
     {
-        $this->backup = $backup;
-
         $this->timeout = config('backup-server.jobs.delete_backup_job.timeout');
 
         $this->queue = config('backup-server.jobs.delete_backup_job.queue');

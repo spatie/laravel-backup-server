@@ -18,12 +18,8 @@ class DeleteSourceJob implements ShouldQueue
     use Queueable;
     use SerializesModels;
 
-    private Source $source;
-
-    public function __construct(Source $source)
+    public function __construct(private Source $source)
     {
-        $this->source = $source;
-
         $this->timeout = config('backup-server.jobs.delete_source_job.timeout');
 
         $this->queue = config('backup-server.jobs.delete_source_job.queue');

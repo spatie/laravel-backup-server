@@ -7,11 +7,8 @@ use Spatie\BackupServer\Tasks\Monitor\HealthCheckResult;
 
 class MaximumDiskCapacityUsageInPercentage extends DestinationHealthCheck
 {
-    private int $maximumDiskCapacityUsageInPercentage;
-
-    public function __construct(int $maximumDiskCapacityUsageInPercentage)
+    public function __construct(private int $maximumDiskCapacityUsageInPercentage)
     {
-        $this->maximumDiskCapacityUsageInPercentage = $maximumDiskCapacityUsageInPercentage;
     }
 
     public function getResult(Destination $destination): HealthCheckResult
