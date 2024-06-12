@@ -11,12 +11,11 @@ on:
 
 jobs:
   test:
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     timeout-minutes: 5
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest]
         php: [8.2]
         laravel: [11.*, 10.*]
         stability: [prefer-lowest, prefer-stable]

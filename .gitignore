@@ -1,8 +1,13 @@
+.idea
+.phpunit.cache
 build
 composer.lock
-vendor
 coverage
+docs
+phpunit.xml
+phpstan.neon
+testbench.yaml
+vendor
+node_modules
 .phpunit.result.cache
-.idea
 .php-cs-fixer.cache
-.phpunit.cache
