@@ -1,8 +1,10 @@
 <?php
 
 uses(\Spatie\BackupServer\Tests\TestCase::class);
+
 use Illuminate\Support\Carbon;
 use Spatie\BackupServer\Enums\BackupStatus;
+use Illuminate\Support\Facades\Notification;
 use Spatie\BackupServer\Models\Source;
 use Spatie\Docker\DockerContainer;
 
@@ -100,4 +102,14 @@ it('will fail if it cannot login', function () {
 
 afterEach(function () {
     $this->container->stop();
+});
+
+it('will not create an event when the source is paused', function () {
+    Notification::fake();
+
+    $this->source->update(['pause_failed_notifications' => true]);
+
+    $this->artisan('backup-server:dispatch-backups')->assertExitCode(0);
+
+    Notification::assertNothingSent();
 });

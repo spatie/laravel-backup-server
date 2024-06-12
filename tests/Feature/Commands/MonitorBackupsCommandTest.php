@@ -24,3 +24,15 @@ it('will send a notification if a destination is not reachable', function () {
 
     Notification::assertSentTo($this->configuredNotifiable(), UnhealthyDestinationFoundNotification::class);
 });
+
+it('will not send if the source is paused', function () {
+    Destination::factory()->create([
+        'disk_name' => 'non-existing-disk',
+        'pause_failed_notifications' => true,
+    ]);
+
+    $this->artisan('backup-server:monitor')->assertExitCode(0);
+
+    Notification::assertNothingSent();
+});
+

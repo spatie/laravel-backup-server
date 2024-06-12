@@ -54,7 +54,9 @@ class MonitorBackupsCommand extends Command
 
             $source->update(['healthy' => false]);
 
-            event(new UnhealthySourceFoundEvent($source, $failureMessages));
+            if (! $source->pause_failed_notifications) {
+                event(new UnhealthySourceFoundEvent($source, $failureMessages));
+            }
         });
 
         return $this;

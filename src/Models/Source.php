@@ -36,6 +36,7 @@ class Source extends Model
         'excludes' => 'array',
         'pre_backup_commands' => 'array',
         'post_backup_commands' => 'array',
+        'pause_failed_notifications' => 'boolean',
     ];
 
     public static function booted(): void
