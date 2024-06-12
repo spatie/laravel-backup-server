@@ -32,7 +32,7 @@ class FindContentCommand extends Command
 
         $source->completedBackups
             ->each(function (Backup $backup) use ($searchFor) {
-                $backup->findContent($searchFor, Closure::fromCallable([$this, 'handleFoundContent']));
+                $backup->findContent($searchFor, Closure::fromCallable($this->handleFoundContent(...)));
             });
 
         $this->comment('');

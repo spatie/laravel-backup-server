@@ -33,7 +33,7 @@ class PerformBackupJob implements ShouldQueue
 
         $this->queue = config('backup-server.jobs.perform_backup_job.queue');
 
-        $this->connection = $this->connection ?? Config::getQueueConnection();
+        $this->connection ??= Config::getQueueConnection();
     }
 
     public function handle()
