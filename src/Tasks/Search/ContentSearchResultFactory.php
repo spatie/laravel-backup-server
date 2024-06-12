@@ -16,6 +16,7 @@ class ContentSearchResultFactory
                 if (! Str::startsWith($outputLine, '.')) {
                     return false;
                 }
+
                 return Str::contains($outputLine, ':');
             })
             ->values()

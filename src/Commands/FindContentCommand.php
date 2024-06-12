@@ -37,6 +37,7 @@ class FindContentCommand extends Command
 
         $this->comment('');
         $this->comment($this->resultCounter.' '.Str::plural('search result', $this->resultCounter).' found.');
+
         return null;
     }
 
