@@ -1,42 +1,27 @@
 <?php
 
-namespace Spatie\BackupServer\Tests\Feature\Notifications\Notifications;
-
-use Exception;
+uses(\Spatie\BackupServer\Tests\TestCase::class);
 use Illuminate\Support\Facades\Notification;
 use Spatie\BackupServer\Models\Backup;
 use Spatie\BackupServer\Notifications\Notifications\BackupFailedNotification;
 use Spatie\BackupServer\Tasks\Backup\Events\BackupFailedEvent;
-use Spatie\BackupServer\Tests\TestCase;
 
-class BackupFailedNotificationTest extends TestCase
-{
-    private Backup $backup;
+beforeEach(function () {
+    $this->backup = Backup::factory()->create();
 
-    public function setUp(): void
-    {
-        parent::setUp();
+    Notification::fake();
+});
 
-        $this->backup = Backup::factory()->create();
+it('will send a notification when a backup failed', function () {
+    event(new BackupFailedEvent($this->backup, new Exception('exception message')));
 
-        Notification::fake();
-    }
+    Notification::assertSentTo($this->configuredNotifiable(), BackupFailedNotification::class);
+});
 
-    /** @test */
-    public function it_will_send_a_notification_when_a_backup_failed()
-    {
-        event(new BackupFailedEvent($this->backup, new Exception('exception message')));
+test('the backup completed notification renders correctly to a mail', function () {
+    $event = new BackupFailedEvent($this->backup, new Exception('exception message'));
 
-        Notification::assertSentTo($this->configuredNotifiable(), BackupFailedNotification::class);
-    }
+    $notification = new BackupFailedNotification($event);
 
-    /** @test */
-    public function the_BackupCompletedNotification_renders_correctly_to_a_mail()
-    {
-        $event = new BackupFailedEvent($this->backup, new Exception('exception message'));
-
-        $notification = new BackupFailedNotification($event);
-
-        $this->assertIsString((string) $notification->toMail()->render());
-    }
-}
+    expect((string) $notification->toMail()->render())->toBeString();
+});

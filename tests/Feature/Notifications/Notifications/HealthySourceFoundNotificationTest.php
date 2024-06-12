@@ -1,41 +1,27 @@
 <?php
 
-namespace Spatie\BackupServer\Tests\Feature\Notifications\Notifications;
-
+uses(\Spatie\BackupServer\Tests\TestCase::class);
 use Illuminate\Support\Facades\Notification;
 use Spatie\BackupServer\Models\Source;
 use Spatie\BackupServer\Notifications\Notifications\HealthySourceFoundNotification;
 use Spatie\BackupServer\Tasks\Monitor\Events\HealthySourceFoundEvent;
-use Spatie\BackupServer\Tests\TestCase;
 
-class HealthySourceFoundNotificationTest extends TestCase
-{
-    private Source $source;
+beforeEach(function () {
+    $this->source = Source::factory()->create();
 
-    public function setUp(): void
-    {
-        parent::setUp();
+    Notification::fake();
+});
 
-        $this->source = Source::factory()->create();
+it('will send a notification when a source is healthy', function () {
+    event(new HealthySourceFoundEvent($this->source));
 
-        Notification::fake();
-    }
+    Notification::assertSentTo($this->configuredNotifiable(), HealthySourceFoundNotification::class);
+});
 
-    /** @test */
-    public function it_will_send_a_notification_when_a_source_is_healthy()
-    {
-        event(new HealthySourceFoundEvent($this->source));
+test('the healthy destination found notification renders correctly to a mail', function () {
+    $event = new HealthySourceFoundEvent($this->source);
 
-        Notification::assertSentTo($this->configuredNotifiable(), HealthySourceFoundNotification::class);
-    }
+    $notification = new HealthySourceFoundNotification($event);
 
-    /** @test */
-    public function the_HealthyDestinationFoundNotification_renders_correctly_to_a_mail()
-    {
-        $event = new HealthySourceFoundEvent($this->source);
-
-        $notification = new HealthySourceFoundNotification($event);
-
-        $this->assertIsString((string) $notification->toMail()->render());
-    }
-}
+    expect((string) $notification->toMail()->render())->toBeString();
+});

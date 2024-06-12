@@ -1,41 +1,27 @@
 <?php
 
-namespace Spatie\BackupServer\Tests\Feature\Notifications\Notifications;
-
+uses(\Spatie\BackupServer\Tests\TestCase::class);
 use Illuminate\Support\Facades\Notification;
 use Spatie\BackupServer\Models\Source;
 use Spatie\BackupServer\Notifications\Notifications\UnhealthySourceFoundNotification;
 use Spatie\BackupServer\Tasks\Monitor\Events\UnhealthySourceFoundEvent;
-use Spatie\BackupServer\Tests\TestCase;
 
-class UnhealthySourceFoundNotificationTest extends TestCase
-{
-    private Source $source;
+beforeEach(function () {
+    $this->source = Source::factory()->create();
 
-    public function setUp(): void
-    {
-        parent::setUp();
+    Notification::fake();
+});
 
-        $this->source = Source::factory()->create();
+it('will send a notification when a source is unhealthy', function () {
+    event(new UnhealthySourceFoundEvent($this->source, ['failure message']));
 
-        Notification::fake();
-    }
+    Notification::assertSentTo($this->configuredNotifiable(), UnhealthySourceFoundNotification::class);
+});
 
-    /** @test */
-    public function it_will_send_a_notification_when_a_source_is_unhealthy()
-    {
-        event(new UnhealthySourceFoundEvent($this->source, ['failure message']));
+test('the unhealthy destination found notification renders correctly to a mail', function () {
+    $event = new UnhealthySourceFoundEvent($this->source, ['failure message']);
 
-        Notification::assertSentTo($this->configuredNotifiable(), UnhealthySourceFoundNotification::class);
-    }
+    $notification = new UnhealthySourceFoundNotification($event);
 
-    /** @test */
-    public function the_UnhealthyDestinationFoundNotification_renders_correctly_to_a_mail()
-    {
-        $event = new UnhealthySourceFoundEvent($this->source, ['failure message']);
-
-        $notification = new UnhealthySourceFoundNotification($event);
-
-        $this->assertIsString((string) $notification->toMail()->render());
-    }
-}
+    expect((string) $notification->toMail()->render())->toBeString();
+});

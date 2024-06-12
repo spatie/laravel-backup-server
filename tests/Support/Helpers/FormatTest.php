@@ -1,32 +1,23 @@
 <?php
 
-namespace Spatie\BackupServer\Tests\Support\Helpers;
-
+uses(\Spatie\BackupServer\Tests\TestCase::class);
 use Spatie\BackupServer\Support\Helpers\Format;
-use Spatie\BackupServer\Tests\TestCase;
 use Spatie\TestTime\TestTime;
 
-class FormatTest extends TestCase
-{
-    /** @test */
-    public function it_can_format_a_number_as_a_human_readable_filesize()
-    {
-        $this->assertEquals('10 KB', Format::KbToHumanReadableSize(10));
-        $this->assertEquals('100 KB', Format::KbToHumanReadableSize(100));
-        $this->assertEquals('1000 KB', Format::KbToHumanReadableSize(1000));
-        $this->assertEquals('9.77 MB', Format::KbToHumanReadableSize(10000));
-        $this->assertEquals('976.56 MB', Format::KbToHumanReadableSize(1000000));
-        $this->assertEquals('9.54 GB', Format::KbToHumanReadableSize(10000000));
-        $this->assertEquals('9.31 TB', Format::KbToHumanReadableSize(10000000000));
-    }
+it('can format a number as a human readable filesize', function () {
+    expect(Format::KbToHumanReadableSize(10))->toEqual('10 KB');
+    expect(Format::KbToHumanReadableSize(100))->toEqual('100 KB');
+    expect(Format::KbToHumanReadableSize(1000))->toEqual('1000 KB');
+    expect(Format::KbToHumanReadableSize(10000))->toEqual('9.77 MB');
+    expect(Format::KbToHumanReadableSize(1000000))->toEqual('976.56 MB');
+    expect(Format::KbToHumanReadableSize(10000000))->toEqual('9.54 GB');
+    expect(Format::KbToHumanReadableSize(10000000000))->toEqual('9.31 TB');
+});
 
-    /** @test */
-    public function it_can_determine_the_age_in_days()
-    {
-        TestTime::freeze('Y-m-d H:i:s', '2016-01-01 00:00:00');
+it('can determine the age in days', function () {
+    TestTime::freeze('Y-m-d H:i:s', '2016-01-01 00:00:00');
 
-        $this->assertEquals('0.04 (1 hour ago)', Format::ageInDays(now()->subHour()));
-        $this->assertEquals('1.04 (1 day ago)', Format::ageInDays(now()->subHour()->subDay()));
-        $this->assertEquals('30.04 (4 weeks ago)', Format::ageInDays(now()->subHour()->subMonths(1)));
-    }
-}
+    expect(Format::ageInDays(now()->subHour()))->toEqual('0.04 (1 hour ago)');
+    expect(Format::ageInDays(now()->subHour()->subDay()))->toEqual('1.04 (1 day ago)');
+    expect(Format::ageInDays(now()->subHour()->subMonths(1)))->toEqual('30.04 (4 weeks ago)');
+});

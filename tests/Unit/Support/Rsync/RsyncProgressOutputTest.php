@@ -1,41 +1,30 @@
 <?php
 
-namespace Spatie\BackupServer\Tests\Unit\Support\Rsync;
-
+uses(\Spatie\BackupServer\Tests\TestCase::class);
 use Spatie\BackupServer\Tasks\Backup\Support\Rsync\RsyncProgressOutput;
-use Spatie\BackupServer\Tests\TestCase;
 
-class RsyncProgressOutputTest extends TestCase
-{
-    /** @test */
-    public function it_can_return_the_transfer_speed()
-    {
-        $output = '     9,846,214  77%   11.96MB/s    0:00:00 (xfr#1317, ir-chk=1014/2680)';
+it('can return the transfer speed', function () {
+    $output = '     9,846,214  77%   11.96MB/s    0:00:00 (xfr#1317, ir-chk=1014/2680)';
 
-        $rsyncOutput = new RsyncProgressOutput($output);
+    $rsyncOutput = new RsyncProgressOutput($output);
 
-        $this->assertEquals('11.96MB/s', $rsyncOutput->getTransferSpeed());
-    }
+    expect($rsyncOutput->getTransferSpeed())->toEqual('11.96MB/s');
+});
 
-    /** @test */
-    public function it_can_determine_that_the_output_concerns_progress()
-    {
-        $output = '     9,846,214  77%   11.96MB/s    0:00:00 (xfr#1317, ir-chk=1014/2680)';
+it('can determine that the output concerns progress', function () {
+    $output = '     9,846,214  77%   11.96MB/s    0:00:00 (xfr#1317, ir-chk=1014/2680)';
 
-        $rsyncOutput = new RsyncProgressOutput($output);
+    $rsyncOutput = new RsyncProgressOutput($output);
 
-        $this->assertTrue($rsyncOutput->concernsProgress());
-        $this->assertFalse($rsyncOutput->isSummary());
-    }
+    expect($rsyncOutput->concernsProgress())->toBeTrue();
+    expect($rsyncOutput->isSummary())->toBeFalse();
+});
 
-    /** @test */
-    public function it_can_determine_that_the_output_is_the_summary()
-    {
-        $output = file_get_contents(__DIR__.'/stubs/rsyncSummary.txt');
+it('can determine that the output is the summary', function () {
+    $output = file_get_contents(__DIR__.'/stubs/rsyncSummary.txt');
 
-        $rsyncOutput = new RsyncProgressOutput($output);
+    $rsyncOutput = new RsyncProgressOutput($output);
 
-        $this->assertTrue($rsyncOutput->isSummary());
-        $this->assertFalse($rsyncOutput->concernsProgress());
-    }
-}
+    expect($rsyncOutput->isSummary())->toBeTrue();
+    expect($rsyncOutput->concernsProgress())->toBeFalse();
+});

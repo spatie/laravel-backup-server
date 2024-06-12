@@ -1,61 +1,44 @@
 <?php
 
-namespace Spatie\BackupServer\Tests\Feature\Tasks\Backup\Support;
-
+uses(\Spatie\BackupServer\Tests\TestCase::class);
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
-use Spatie\BackupServer\Models\Backup;
 use Spatie\BackupServer\Models\Destination;
 use Spatie\BackupServer\Tasks\Backup\Support\BackupCollection;
 use Spatie\BackupServer\Tests\Factories\BackupFactory;
-use Spatie\BackupServer\Tests\TestCase;
 
-class BackupCollectionTest extends TestCase
-{
-    private Backup $backup1;
+beforeEach(function () {
+    Storage::fake('backups');
 
-    private Backup $backup2;
+    $destination = Destination::factory()->create();
 
-    public function setUp(): void
-    {
-        parent::setUp();
+    $this->backup1 = (new BackupFactory())
+        ->addDirectoryContent(__DIR__.'/stubs/serverContent')
+        ->destination($destination)
+        ->create();
 
-        Storage::fake('backups');
+    $this->backup2 = (new BackupFactory())
+        ->addDirectoryContent(__DIR__.'/stubs/serverContent')
+        ->destination($destination)
+        ->create();
+});
 
-        $destination = Destination::factory()->create();
+it('can recalculate the size of a backup in a backup collection', function () {
+    $backups = new BackupCollection([$this->backup1, $this->backup2]);
+    $originalSize = $backups->recalculateRealSizeInKb()->pluck('real_size_in_kb')->sum();
 
-        $this->backup1 = (new BackupFactory())
-            ->addDirectoryContent(__DIR__.'/stubs/serverContent')
-            ->destination($destination)
-            ->create();
+    File::put($this->backup1->destinationLocation()->getFullPath().'/test.txt', 'some data');
 
-        $this->backup2 = (new BackupFactory())
-            ->addDirectoryContent(__DIR__.'/stubs/serverContent')
-            ->destination($destination)
-            ->create();
-    }
+    $newSize = $backups->recalculateRealSizeInKb()->pluck('real_size_in_kb')->sum();
 
-    /** @test */
-    public function it_can_recalculate_the_size_of_a_backup_in_a_backup_collection()
-    {
-        $backups = new BackupCollection([$this->backup1, $this->backup2]);
-        $originalSize = $backups->recalculateRealSizeInKb()->pluck('real_size_in_kb')->sum();
+    $this->assertNotEquals($originalSize, $newSize);
+});
 
-        File::put($this->backup1->destinationLocation()->getFullPath().'/test.txt', 'some data');
+it('will only recalculate the size of a backups with a path in a backup collection', function () {
+    $this->backup1->update(['path' => null, 'real_size_in_kb' => 1234]);
 
-        $newSize = $backups->recalculateRealSizeInKb()->pluck('real_size_in_kb')->sum();
+    $backups = new BackupCollection([$this->backup1, $this->backup2]);
+    $backups->recalculateRealSizeInKb();
 
-        $this->assertNotEquals($originalSize, $newSize);
-    }
-
-    /** @test */
-    public function it_will_only_recalculate_the_size_of_a_backups_with_a_path_in_a_backup_collection()
-    {
-        $this->backup1->update(['path' => null, 'real_size_in_kb' => 1234]);
-
-        $backups = new BackupCollection([$this->backup1, $this->backup2]);
-        $backups->recalculateRealSizeInKb();
-
-        $this->assertSame(1234, $this->backup1->refresh()->real_size_in_kb);
-    }
-}
+    expect($this->backup1->refresh()->real_size_in_kb)->toBe(1234);
+});

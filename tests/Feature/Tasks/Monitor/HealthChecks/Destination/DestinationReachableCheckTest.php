@@ -1,33 +1,23 @@
 <?php
 
-namespace Spatie\BackupServer\Tests\Feature\Tasks\Monitor\HealthChecks\Destination;
-
+uses(\Spatie\BackupServer\Tests\TestCase::class);
 use Spatie\BackupServer\Models\Destination;
 use Spatie\BackupServer\Tasks\Monitor\HealthChecks\Destination\DestinationReachable;
-use Spatie\BackupServer\Tests\Feature\Tasks\Monitor\Concerns\HealthCheckAssertions;
-use Spatie\BackupServer\Tests\TestCase;
 
-class DestinationReachableCheckTest extends TestCase
-{
-    use HealthCheckAssertions;
+uses(\Spatie\BackupServer\Tests\Feature\Tasks\Monitor\Concerns\HealthCheckAssertions::class);
 
-    /** @test */
-    public function it_will_pass_when_the_destination_is_reachable()
-    {
-        $destination = Destination::factory()->create();
+it('will pass when the destination is reachable', function () {
+    $destination = Destination::factory()->create();
 
-        $checkResult = (new DestinationReachable())->getResult($destination);
+    $checkResult = (new DestinationReachable())->getResult($destination);
 
-        $this->assertHealthCheckSucceeds($checkResult);
-    }
+    $this->assertHealthCheckSucceeds($checkResult);
+});
 
-    /** @test */
-    public function it_will_fail_when_the_destination_is_not_reachable()
-    {
-        $destination = Destination::factory()->create(['disk_name' => 'non-existing-disk']);
+it('will fail when the destination is not reachable', function () {
+    $destination = Destination::factory()->create(['disk_name' => 'non-existing-disk']);
 
-        $checkResult = (new DestinationReachable())->getResult($destination);
+    $checkResult = (new DestinationReachable())->getResult($destination);
 
-        $this->assertHealthCheckFails($checkResult);
-    }
-}
+    $this->assertHealthCheckFails($checkResult);
+});

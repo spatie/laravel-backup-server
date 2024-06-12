@@ -1,41 +1,27 @@
 <?php
 
-namespace Spatie\BackupServer\Tests\Feature\Notifications\Notifications;
-
+uses(\Spatie\BackupServer\Tests\TestCase::class);
 use Illuminate\Support\Facades\Notification;
 use Spatie\BackupServer\Models\Destination;
 use Spatie\BackupServer\Notifications\Notifications\CleanupForDestinationCompletedNotification;
 use Spatie\BackupServer\Tasks\Cleanup\Events\CleanupForDestinationCompletedEvent;
-use Spatie\BackupServer\Tests\TestCase;
 
-class CleanupForDestinationCompletedNotificationTest extends TestCase
-{
-    private Destination $destination;
+beforeEach(function () {
+    $this->destination = Destination::factory()->create();
 
-    public function setUp(): void
-    {
-        parent::setUp();
+    Notification::fake();
+});
 
-        $this->destination = Destination::factory()->create();
+it('will send a notification when a clean up for a destination completes', function () {
+    event(new CleanupForDestinationCompletedEvent($this->destination));
 
-        Notification::fake();
-    }
+    Notification::assertSentTo($this->configuredNotifiable(), CleanupForDestinationCompletedNotification::class);
+});
 
-    /** @test */
-    public function it_will_send_a_notification_when_a_clean_up_for_a_destination_completes()
-    {
-        event(new CleanupForDestinationCompletedEvent($this->destination));
+test('the cleanup for destination completed notification renders correctly to a mail', function () {
+    $event = new CleanupForDestinationCompletedEvent($this->destination);
 
-        Notification::assertSentTo($this->configuredNotifiable(), CleanupForDestinationCompletedNotification::class);
-    }
+    $notification = new CleanupForDestinationCompletedNotification($event);
 
-    /** @test */
-    public function the_CleanupForDestinationCompletedNotification_renders_correctly_to_a_mail()
-    {
-        $event = new CleanupForDestinationCompletedEvent($this->destination);
-
-        $notification = new CleanupForDestinationCompletedNotification($event);
-
-        $this->assertIsString((string) $notification->toMail()->render());
-    }
-}
+    expect((string) $notification->toMail()->render())->toBeString();
+});
