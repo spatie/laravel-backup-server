@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Spatie\BackupServer\Enums\DestinationStatus;
 use Spatie\BackupServer\Models\Concerns\HasAsyncDelete;
 use Spatie\BackupServer\Models\Concerns\HasBackupRelation;
 use Spatie\BackupServer\Models\Concerns\LogsActivity;
@@ -27,16 +28,12 @@ class Destination extends Model
 
     public $table = 'backup_server_destinations';
 
-    public const STATUS_ACTIVE = 'active';
-
-    public const STATUS_DELETING = 'deleting';
-
     public $guarded = [];
 
     public static function booted(): void
     {
         static::creating(function (Destination $source) {
-            $source->status = static::STATUS_ACTIVE;
+            $source->status = DestinationStatus::Active;
         });
     }
 
