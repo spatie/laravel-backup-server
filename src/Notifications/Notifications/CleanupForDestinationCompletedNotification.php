@@ -17,9 +17,7 @@ class CleanupForDestinationCompletedNotification extends Notification implements
     use HandlesNotifications;
     use Queueable;
 
-    public function __construct(public CleanupForDestinationCompletedEvent $event)
-    {
-    }
+    public function __construct(public CleanupForDestinationCompletedEvent $event) {}
 
     public function toMail(): MailMessage
     {

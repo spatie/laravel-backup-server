@@ -18,9 +18,7 @@ class HealthCheckResult
         return (new static($message))->markAsFailed();
     }
 
-    protected function __construct(protected string $message = '')
-    {
-    }
+    protected function __construct(protected string $message = '') {}
 
     public function isOk(): bool
     {
