@@ -13,6 +13,5 @@ class BackupCompletedEvent
 
     public function __construct(
         public Backup $backup
-    ) {
-    }
+    ) {}
 }

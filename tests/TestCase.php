@@ -52,10 +52,10 @@ class TestCase extends Orchestra
         ]);
 
         include_once __DIR__.'/../database/migrations/create_backup_server_tables.php.stub';
-        (new CreateBackupServerTables())->up();
+        (new CreateBackupServerTables)->up();
 
         include_once __DIR__.'/Database/migrations/create_users_table.php.stub';
-        (new CreateUsersTable())->up();
+        (new CreateUsersTable)->up();
     }
 
     public function authenticate(): void

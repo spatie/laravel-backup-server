@@ -7,8 +7,7 @@ class DestinationLocation
     public function __construct(
         private string $diskName,
         private string $path
-    ) {
-    }
+    ) {}
 
     public function getPath(): string
     {

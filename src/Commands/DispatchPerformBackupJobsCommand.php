@@ -24,7 +24,7 @@ class DispatchPerformBackupJobsCommand extends Command
             ->each(function (Source $source) {
                 $this->comment("Dispatching backup job for source `{$source->name}` (id: {$source->id})");
 
-                (new CreateBackupAction())->execute($source);
+                (new CreateBackupAction)->execute($source);
             });
 
         $this->info('All done!');

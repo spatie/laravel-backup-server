@@ -18,7 +18,7 @@ it('will send a notification via the configured notification channels', function
 
     fireBackupCompletedEvent();
 
-    Notification::assertSentTo(new Notifiable(), BackupCompletedNotification::class, function ($notification, $usedChannels) use ($expectedChannels) {
+    Notification::assertSentTo(new Notifiable, BackupCompletedNotification::class, function ($notification, $usedChannels) use ($expectedChannels) {
         return $expectedChannels == $usedChannels;
     });
 })->with('channelProvider');

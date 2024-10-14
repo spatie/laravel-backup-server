@@ -19,12 +19,11 @@ class CleanupForSourceFailedNotification extends Notification implements ShouldQ
 
     public function __construct(
         public CleanupForSourceFailedEvent $event
-    ) {
-    }
+    ) {}
 
     public function toMail(): MailMessage
     {
-        return (new MailMessage())
+        return (new MailMessage)
             ->error()
             ->from($this->fromEmail(), $this->fromName())
             ->subject(trans('backup-server::notifications.cleanup_source_failed_subject', $this->translationParameters()))

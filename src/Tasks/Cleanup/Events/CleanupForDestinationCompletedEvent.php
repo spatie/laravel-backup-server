@@ -13,6 +13,5 @@ class CleanupForDestinationCompletedEvent
 
     public function __construct(
         public Destination $destination
-    ) {
-    }
+    ) {}
 }

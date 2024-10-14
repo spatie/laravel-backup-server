@@ -14,7 +14,7 @@ beforeEach(function () {
 });
 
 it('can create and send a backup server summary for last week', function () {
-    dispatch_sync(new SendServerSummaryNotificationJob());
+    dispatch_sync(new SendServerSummaryNotificationJob);
 
     Notification::assertSentTo(
         app(Notifiable::class),

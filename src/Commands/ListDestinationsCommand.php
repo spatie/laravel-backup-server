@@ -32,11 +32,11 @@ class ListDestinationsCommand extends Command
         $columnStyles = collect($headers)
             ->map(function (string $header) {
                 if (in_array($header, ['Total Backup Size', 'Used Storage', 'Free Space', 'Capacity Used', 'Inode Usage'])) {
-                    return new AlignRightTableStyle();
+                    return new AlignRightTableStyle;
                 }
 
                 if (in_array($header, ['Healthy'])) {
-                    return new AlignCenterTableStyle();
+                    return new AlignCenterTableStyle;
                 }
 
                 return null;

@@ -8,6 +8,5 @@ class HealthySourceFoundEvent
 {
     public function __construct(
         public Source $source
-    ) {
-    }
+    ) {}
 }

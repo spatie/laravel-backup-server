@@ -18,12 +18,11 @@ class UnhealthyDestinationFoundNotification extends Notification implements Shou
 
     public function __construct(
         public UnhealthyDestinationFoundEvent $event
-    ) {
-    }
+    ) {}
 
     public function toMail(): MailMessage
     {
-        return (new MailMessage())
+        return (new MailMessage)
             ->error()
             ->from($this->fromEmail(), $this->fromName())
             ->subject(trans('backup-server::notifications.unhealthy_destination_found_subject', $this->translationParameters()))

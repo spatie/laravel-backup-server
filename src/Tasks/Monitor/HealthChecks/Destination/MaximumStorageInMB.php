@@ -9,8 +9,7 @@ class MaximumStorageInMB extends DestinationHealthCheck
 {
     public function __construct(
         private int $configuredMaximumStorageInMB,
-    ) {
-    }
+    ) {}
 
     public function getResult(Destination $destination): HealthCheckResult
     {

@@ -19,12 +19,11 @@ class BackupCompletedNotification extends Notification implements ShouldQueue
 
     public function __construct(
         public BackupCompletedEvent $event
-    ) {
-    }
+    ) {}
 
     public function toMail(): MailMessage
     {
-        return (new MailMessage())
+        return (new MailMessage)
             ->success()
             ->from($this->fromEmail(), $this->fromName())
             ->subject(trans('backup-server::notifications.backup_completed_subject', $this->translationParameters()))

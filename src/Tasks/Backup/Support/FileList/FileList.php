@@ -10,8 +10,7 @@ class FileList
     public function __construct(
         private Backup $backup,
         private string $relativePath,
-    ) {
-    }
+    ) {}
 
     public function entries(): array
     {
@@ -21,7 +20,7 @@ class FileList
 
         $entries = [];
 
-        $finder = (new Finder())
+        $finder = (new Finder)
             ->directories()
             ->in($fileListingPath)
             ->depth(0)
@@ -31,7 +30,7 @@ class FileList
             $entries[] = new FileListEntry($file, $backupBasePath);
         }
 
-        $finder = (new Finder())
+        $finder = (new Finder)
             ->files()
             ->in($fileListingPath)
             ->depth(0)

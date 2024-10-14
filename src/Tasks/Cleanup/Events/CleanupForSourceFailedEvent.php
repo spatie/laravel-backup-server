@@ -14,6 +14,5 @@ class CleanupForSourceFailedEvent
     public function __construct(
         public Source $source,
         public string $exceptionMessage
-    ) {
-    }
+    ) {}
 }

@@ -9,8 +9,7 @@ class RsyncProgressOutput
 {
     public function __construct(
         private string $output
-    ) {
-    }
+    ) {}
 
     public function concernsProgress(): bool
     {

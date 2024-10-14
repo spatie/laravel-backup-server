@@ -40,13 +40,13 @@ class BackupServerServiceProvider extends EventServiceProvider
         $this->app->bind(BackupScheduler::class, function () {
             $schedulerClass = config('backup-server.backup.scheduler');
 
-            return new $schedulerClass();
+            return new $schedulerClass;
         });
 
         $this->app->bind(CleanupStrategy::class, function () {
             $strategyClass = config('backup-server.cleanup.strategy');
 
-            return new $strategyClass();
+            return new $strategyClass;
         });
     }
 

@@ -19,12 +19,11 @@ class BackupFailedNotification extends Notification implements ShouldQueue
 
     public function __construct(
         public BackupFailedEvent $event
-    ) {
-    }
+    ) {}
 
     public function toMail(): MailMessage
     {
-        return (new MailMessage())
+        return (new MailMessage)
             ->error()
             ->from($this->fromEmail(), $this->fromName())
             ->subject(trans('backup-server::notifications.backup_failed_subject', $this->translationParameters()))

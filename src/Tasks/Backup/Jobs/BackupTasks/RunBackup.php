@@ -15,7 +15,7 @@ class RunBackup implements BackupTask
     {
         $backup->logInfo(Task::BACKUP, 'Running backup...');
 
-        $pendingBackup = (new PendingBackup())
+        $pendingBackup = (new PendingBackup)
             ->from($backup->sourceLocation())
             ->exclude($backup->source->excludes ?? [])
             ->to($backup->destinationLocation())

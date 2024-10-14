@@ -18,8 +18,7 @@ class ServerSummaryNotification extends Notification implements ShouldQueue
 
     public function __construct(
         public ServerSummary $serverSummary
-    ) {
-    }
+    ) {}
 
     public function toMail(): MailMessage
     {
@@ -27,7 +26,7 @@ class ServerSummaryNotification extends Notification implements ShouldQueue
         $totalSpace = Format::KbToHumanReadableSize($totalSpaceInKb);
         $usedSpace = Format::KbToHumanReadableSize($this->serverSummary->destinationUsedSpaceInKb);
 
-        return (new MailMessage())
+        return (new MailMessage)
             ->from($this->fromEmail(), $this->fromName())
             ->subject(trans('backup-server::notifications.server_summary_subject', $this->translationParameters()))
             ->greeting(trans('backup-server::notifications.server_summary_subject_title', $this->translationParameters()))

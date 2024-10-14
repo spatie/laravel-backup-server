@@ -8,6 +8,5 @@ class HealthyDestinationFoundEvent
 {
     public function __construct(
         public Destination $destination
-    ) {
-    }
+    ) {}
 }

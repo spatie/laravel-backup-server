@@ -98,7 +98,7 @@ it('can remove old backups', function () {
 it('will clean up failed backup that are older than a day', function () {
     TestTime::freeze();
 
-    $failedBackup = (new BackupFactory())->makeSureBackupDirectoryExists()->create([
+    $failedBackup = (new BackupFactory)->makeSureBackupDirectoryExists()->create([
         'status' => Backup::STATUS_FAILED,
         'created_at' => now(),
     ]);
@@ -118,7 +118,7 @@ it('will delete all backups until the total size is under the limit', function (
     ]);
 
     foreach (range(1, 10) as $i) {
-        (new BackupFactory())->addFiles([__DIR__.'/stubs/1MB.file'])->source($source)->create();
+        (new BackupFactory)->addFiles([__DIR__.'/stubs/1MB.file'])->source($source)->create();
     }
 
     $this->artisan('backup-server:cleanup')->assertExitCode(0);
@@ -136,7 +136,7 @@ it('the delete oldest backups when using more megabytes than field is lower that
     ]);
 
     foreach (range(1, 10) as $i) {
-        (new BackupFactory())->addFiles([__DIR__.'/stubs/2MB.file'])->source($source)->create();
+        (new BackupFactory)->addFiles([__DIR__.'/stubs/2MB.file'])->source($source)->create();
     }
 
     $this->artisan('backup-server:cleanup')->assertExitCode(0);
@@ -145,14 +145,14 @@ it('the delete oldest backups when using more megabytes than field is lower that
 });
 
 it('will delete a backup that does not have a directory anymore', function () {
-    $backup = (new BackupFactory())
+    $backup = (new BackupFactory)
         ->source($this->source)
         ->destination($this->destination)
         ->makeSureBackupDirectoryExists()
         ->create(['path' => 'test1']);
     $backup->disk()->makeDirectory($backup->destinationLocation()->getPath());
 
-    $backupWithoutDirectory = (new BackupFactory())
+    $backupWithoutDirectory = (new BackupFactory)
         ->source($this->source)
         ->destination($this->destination)
         ->create(['path' => 'test']);
@@ -165,7 +165,7 @@ it('will delete a backup that does not have a directory anymore', function () {
 
 function createBackupOnDate(Carbon $carbon): Backup
 {
-    return (new BackupFactory())
+    return (new BackupFactory)
         ->source(test()->source)
         ->destination(test()->destination)
         /*

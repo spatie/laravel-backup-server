@@ -18,12 +18,11 @@ class CleanupForSourceCompletedNotification extends Notification implements Shou
 
     public function __construct(
         public CleanupForSourceCompletedEvent $event
-    ) {
-    }
+    ) {}
 
     public function toMail(): MailMessage
     {
-        return (new MailMessage())
+        return (new MailMessage)
             ->success()
             ->from($this->fromEmail(), $this->fromName())
             ->subject(trans('backup-server::notifications.cleanup_source_successful_subject', $this->translationParameters()))

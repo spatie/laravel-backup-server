@@ -10,8 +10,7 @@ class MaximumAgeInDays extends SourceHealthCheck
 {
     public function __construct(
         private int $configuredMaximumAgeInDays,
-    ) {
-    }
+    ) {}
 
     public function getResult(Source $source): HealthCheckResult
     {

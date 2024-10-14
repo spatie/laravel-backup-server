@@ -18,12 +18,11 @@ class UnhealthySourceFoundNotification extends Notification implements ShouldQue
 
     public function __construct(
         public UnhealthySourceFoundEvent $event
-    ) {
-    }
+    ) {}
 
     public function toMail(): MailMessage
     {
-        return (new MailMessage())
+        return (new MailMessage)
             ->error()
             ->from($this->fromEmail(), $this->fromName())
             ->subject(trans('backup-server::notifications.unhealthy_source_found_subject', $this->translationParameters()))

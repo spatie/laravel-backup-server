@@ -9,8 +9,7 @@ class SourceLocation
         private ?string $sshUser = null,
         private ?string $host = null,
         private int $port = 22
-    ) {
-    }
+    ) {}
 
     public function getPaths(): array
     {

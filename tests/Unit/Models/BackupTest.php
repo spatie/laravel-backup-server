@@ -13,7 +13,7 @@ beforeEach(function () {
 });
 
 it('will also delete the directory when it gets deleted', function () {
-    $backup = (new BackupFactory())->makeSureBackupDirectoryExists()->create();
+    $backup = (new BackupFactory)->makeSureBackupDirectoryExists()->create();
     Storage::disk('backups')->assertExists($backup->path);
 
     $backup->delete();
@@ -21,7 +21,7 @@ it('will also delete the directory when it gets deleted', function () {
 });
 
 it('has a method to determine if the backup directory exists', function () {
-    $backup = (new BackupFactory())->makeSureBackupDirectoryExists()->create();
+    $backup = (new BackupFactory)->makeSureBackupDirectoryExists()->create();
     expect($backup->existsOnDisk())->toBeTrue();
 
     $backup->delete();

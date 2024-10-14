@@ -19,12 +19,11 @@ class CleanupForDestinationFailedNotification extends Notification implements Sh
 
     public function __construct(
         public CleanupForDestinationFailedEvent $event
-    ) {
-    }
+    ) {}
 
     public function toMail(): MailMessage
     {
-        return (new MailMessage())
+        return (new MailMessage)
             ->error()
             ->from($this->fromEmail(), $this->fromName())
             ->subject(trans('backup-server::notifications.cleanup_destination_failed_subject', $this->translationParameters()))

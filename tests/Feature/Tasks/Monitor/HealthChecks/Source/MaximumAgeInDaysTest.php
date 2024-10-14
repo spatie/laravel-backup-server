@@ -29,7 +29,7 @@ it('will start failing if there is no backup taken in the configured amount of d
 it('will start failing if the youngest backup is older then the configured amount of days', function () {
     TestTime::addHours(12);
 
-    (new BackupFactory())->completed()->source($this->source)->create();
+    (new BackupFactory)->completed()->source($this->source)->create();
 
     TestTime::addDay()->subSecond();
     $this->assertHealthCheckSucceeds($this->maximumAgeDaysHealthCheck->getResult($this->source->refresh()));
@@ -37,12 +37,12 @@ it('will start failing if the youngest backup is older then the configured amoun
     TestTime::addDay();
     $this->assertHealthCheckFails($this->maximumAgeDaysHealthCheck->getResult($this->source->refresh()));
 
-    (new BackupFactory())->completed()->source($this->source)->create();
+    (new BackupFactory)->completed()->source($this->source)->create();
     $this->assertHealthCheckSucceeds($this->maximumAgeDaysHealthCheck->getResult($this->source->refresh()));
 });
 
 test('the value on the destination overrides the configured amount of days', function () {
-    (new BackupFactory())->completed()->source($this->source)->create();
+    (new BackupFactory)->completed()->source($this->source)->create();
 
     TestTime::addDay();
     $this->assertHealthCheckFails($this->maximumAgeDaysHealthCheck->getResult($this->source->refresh()));

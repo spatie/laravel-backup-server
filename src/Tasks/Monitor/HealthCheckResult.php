@@ -12,7 +12,7 @@ class HealthCheckResult
 
     public static function ok(): self
     {
-        return new static();
+        return new static;
     }
 
     public static function failed(string $message)

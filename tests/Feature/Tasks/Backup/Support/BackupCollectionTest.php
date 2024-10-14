@@ -12,12 +12,12 @@ beforeEach(function () {
 
     $destination = Destination::factory()->create();
 
-    $this->backup1 = (new BackupFactory())
+    $this->backup1 = (new BackupFactory)
         ->addDirectoryContent(__DIR__.'/stubs/serverContent')
         ->destination($destination)
         ->create();
 
-    $this->backup2 = (new BackupFactory())
+    $this->backup2 = (new BackupFactory)
         ->addDirectoryContent(__DIR__.'/stubs/serverContent')
         ->destination($destination)
         ->create();

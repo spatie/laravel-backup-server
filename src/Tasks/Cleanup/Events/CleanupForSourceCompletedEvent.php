@@ -13,6 +13,5 @@ class CleanupForSourceCompletedEvent
 
     public function __construct(
         public Source $source
-    ) {
-    }
+    ) {}
 }

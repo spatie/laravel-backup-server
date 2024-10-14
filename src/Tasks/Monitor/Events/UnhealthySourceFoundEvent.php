@@ -9,6 +9,5 @@ class UnhealthySourceFoundEvent
     public function __construct(
         public Source $source,
         public array $failureMessages,
-    ) {
-    }
+    ) {}
 }

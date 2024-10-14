@@ -14,6 +14,5 @@ class CleanupForDestinationFailedEvent
     public function __construct(
         public Destination $destination,
         public string $exceptionMessage
-    ) {
-    }
+    ) {}
 }

@@ -46,11 +46,11 @@ class ListSourcesCommand extends Command
         $columnStyles = collect($headers)
             ->map(function (string $header) {
                 if (in_array($header, ['Id', 'Youngest Backup Size', '# of Backups', 'Total Backup Size', 'Used storage'])) {
-                    return new AlignRightTableStyle();
+                    return new AlignRightTableStyle;
                 }
 
                 if ($header === 'Healthy') {
-                    return new AlignCenterTableStyle();
+                    return new AlignCenterTableStyle;
                 }
 
                 return null;

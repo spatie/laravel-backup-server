@@ -6,7 +6,7 @@ use Spatie\BackupServer\Tests\Factories\BackupFactory;
 use Symfony\Component\Finder\Exception\DirectoryNotFoundException;
 
 beforeEach(function () {
-    $this->backup = (new BackupFactory())->addDirectoryContent(__DIR__.'/stubs/serverContent')->create();
+    $this->backup = (new BackupFactory)->addDirectoryContent(__DIR__.'/stubs/serverContent')->create();
 });
 
 it('can create a file listing for the backup root', function () {
