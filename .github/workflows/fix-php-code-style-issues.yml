@@ -1,6 +1,7 @@
 name: Fix PHP code style issues
 
 on:
+  workflow_dispatch:
   push:
     paths:
       - '**.php'
