@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateBackupServerTables extends Migration
 {
-    public function up()
+    public function up(): void
     {
         Schema::create('backup_server_destinations', function (Blueprint $table) {
             $table->bigIncrements('id');
@@ -65,7 +65,6 @@ class CreateBackupServerTables extends Migration
             $table->integer('healthy_maximum_backup_age_in_days')->nullable();
             $table->integer('healthy_maximum_storage_in_mb')->nullable();
 
-            // @todo write upgrade docs for this
             $table->timestamp('paused_failed_notifications_until')->nullable();
 
             $table->timestamps();

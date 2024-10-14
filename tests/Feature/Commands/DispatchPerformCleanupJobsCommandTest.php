@@ -1,6 +1,6 @@
 <?php
 
-uses(\Spatie\BackupServer\Tests\TestCase::class);
+uses(TestCase::class);
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Notification;
@@ -10,6 +10,7 @@ use Spatie\BackupServer\Models\Backup;
 use Spatie\BackupServer\Models\Destination;
 use Spatie\BackupServer\Models\Source;
 use Spatie\BackupServer\Tests\Factories\BackupFactory;
+use Spatie\BackupServer\Tests\TestCase;
 use Spatie\TestTime\TestTime;
 
 beforeEach(function () {
