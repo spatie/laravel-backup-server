@@ -1,6 +1,7 @@
 <?php
 
-uses(TestCase::class);
+uses(\Spatie\BackupServer\Tests\TestCase::class);
+
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Notification;

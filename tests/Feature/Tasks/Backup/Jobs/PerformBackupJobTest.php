@@ -1,13 +1,12 @@
 <?php
 
-uses(TestCase::class);
+uses(\Spatie\BackupServer\Tests\TestCase::class);
 
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Event;
 use Spatie\BackupServer\Enums\BackupStatus;
 use Spatie\BackupServer\Models\Source;
 use Spatie\BackupServer\Tasks\Backup\Events\BackupFailedEvent;
-use Spatie\BackupServer\Tests\TestCase;
 use Spatie\Docker\DockerContainer;
 
 beforeEach(function () {
