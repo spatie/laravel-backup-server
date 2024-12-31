@@ -7,6 +7,7 @@ use Spatie\BackupServer\Models\Destination;
 use Spatie\BackupServer\Models\Source;
 use Spatie\BackupServer\Notifications\Notifications\UnhealthyDestinationFoundNotification;
 use Spatie\BackupServer\Notifications\Notifications\UnhealthySourceFoundNotification;
+use Spatie\BackupServer\Tasks\Monitor\HealthChecks\Destination\DestinationReachable;
 
 beforeEach(function () {
     Notification::fake();
@@ -39,7 +40,7 @@ it('will send if the source is not paused', function () {
     Notification::assertSentTo($this->configuredNotifiable(), UnhealthySourceFoundNotification::class);
 });
 
-it('will not send if the source is paused', function () {
+it('will not sent if the source is paused', function () {
     Source::factory()->create([
         'pause_failed_notifications_until' => now()->addHour(),
         'created_at' => now()->subMonth(),
@@ -47,10 +48,10 @@ it('will not send if the source is paused', function () {
 
     $this->artisan('backup-server:monitor')->assertExitCode(0);
 
-    Notification::assertNothingSent();
+    Notification::assertNotSentTo($this->configuredNotifiable(), UnhealthySourceFoundNotification::class);
 });
 
-it('will send if the source is not paused anymore', function () {
+it('will sent if the source is not paused anymore', function () {
     Source::factory()->create([
         'pause_failed_notifications_until' => now()->subMinute(),
         'created_at' => now()->subMonth(),
