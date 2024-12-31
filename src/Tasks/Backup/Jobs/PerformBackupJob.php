@@ -66,9 +66,7 @@ class PerformBackupJob implements ShouldQueue
         } catch (Throwable $exception) {
             $this->backup->markAsFailed($exception->getMessage());
 
-            if (! $this->backup->source->areFailedNotificationsPaused()) {
-                event(new BackupFailedEvent($this->backup, $exception));
-            }
+            event(new BackupFailedEvent($this->backup, $exception));
         }
     }
 }
