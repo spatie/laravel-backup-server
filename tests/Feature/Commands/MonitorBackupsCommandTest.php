@@ -34,7 +34,7 @@ it('will send if the source is not paused', function () {
     Event::fake();
 
     Source::factory()->create([
-        'paused_failed_notifications_until' => null,
+        'pause_failed_notifications_until' => null,
         'created_at' => now()->subMonth(),
     ]);
 
@@ -49,7 +49,7 @@ it('will not send if the source is paused', function () {
     Event::fake();
 
     Source::factory()->create([
-        'paused_failed_notifications_until' => now()->addHour(),
+        'pause_failed_notifications_until' => now()->addHour(),
         'created_at' => now()->subMonth(),
     ]);
 
@@ -64,7 +64,7 @@ it('will send if the source is not paused anymore', function () {
     Event::fake();
 
     Source::factory()->create([
-        'paused_failed_notifications_until' => now()->subMinute(),
+        'pause_failed_notifications_until' => now()->subMinute(),
         'created_at' => now()->subMonth(),
     ]);
 

@@ -7,7 +7,7 @@ weight: 5
 
 #### Breaking changes
 
-- **New column**: Add a nullable `paused_failed_notifications_until` column (type: `timestamp`) to the `backup_server_sources` table. This column allows you to specify when to resume failed notifications. 
+- **New column**: Add a nullable `pause_failed_notifications_until` column (type: `timestamp`) to the `backup_server_sources` table. This column allows you to specify when to resume failed notifications. 
 
 **Migration**
 
@@ -20,7 +20,7 @@ return new class extends Migration
     {
         Schema::table('backup_server_sources', function (Blueprint $table) {
             $table
-                ->timestamp('paused_failed_notifications_until')
+                ->timestamp('pause_failed_notifications_until')
                 ->after('healthy_maximum_storage_in_mb')
                 ->nullable();
         });

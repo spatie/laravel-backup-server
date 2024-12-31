@@ -111,7 +111,7 @@ it('will send a notification when the source is not paused', function () {
     Event::fake();
     Notification::fake();
 
-    $this->source->update(['paused_failed_notifications_until' => null]);
+    $this->source->update(['pause_failed_notifications_until' => null]);
 
     $this->artisan('backup-server:dispatch-backups')->assertExitCode(0);
 
@@ -126,7 +126,7 @@ it('will not send a notification when the source is paused', function () {
     Event::fake();
     Notification::fake();
 
-    $this->source->update(['paused_failed_notifications_until' => now()->addHour()]);
+    $this->source->update(['pause_failed_notifications_until' => now()->addHour()]);
 
     $this->artisan('backup-server:dispatch-backups')->assertExitCode(0);
 
@@ -141,7 +141,7 @@ it('will send a notification when the source is not paused anymore', function ()
     Event::fake();
     Notification::fake();
 
-    $this->source->update(['paused_failed_notifications_until' => now()->subMinute()]);
+    $this->source->update(['pause_failed_notifications_until' => now()->subMinute()]);
 
     $this->artisan('backup-server:dispatch-backups')->assertExitCode(0);
 
