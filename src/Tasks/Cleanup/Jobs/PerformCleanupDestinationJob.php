@@ -39,7 +39,7 @@ class PerformCleanupDestinationJob implements ShouldQueue
     {
         $this->destination->logInfo(Task::Cleanup, 'Starting cleanup of destination');
 
-        //TODO: implement
+        // TODO: implement
 
         $this->destination->logInfo(Task::Cleanup, 'Destination cleaned up');
 

@@ -12,7 +12,7 @@ use Spatie\Docker\DockerContainer;
 beforeEach(function () {
     Carbon::setTestNow(now()->setTime(2, 0));
 
-    //Storage::fake('backups');
+    // Storage::fake('backups');
     $this->container = DockerContainer::create('spatie/laravel-backup-server-tests')
         ->name('laravel-backup-server-tests')
         ->mapPort(4848, 22)

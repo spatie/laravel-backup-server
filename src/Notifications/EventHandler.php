@@ -7,7 +7,6 @@ use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Str;
 use Spatie\BackupServer\Exceptions\NotificationCouldNotBeSent;
-use Spatie\BackupServer\Models\Source;
 use Spatie\BackupServer\Tasks\Backup\Events\BackupCompletedEvent;
 use Spatie\BackupServer\Tasks\Backup\Events\BackupFailedEvent;
 use Spatie\BackupServer\Tasks\Cleanup\Events\CleanupForDestinationCompletedEvent;
