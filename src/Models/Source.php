@@ -52,7 +52,7 @@ class Source extends Model
             return false;
         }
 
-        return $this->paused_failed_notifications_until->isAfter(now());
+        return $this->paused_failed_notifications_until->isFuture();
     }
 
     protected static function newFactory(): SourceFactory

@@ -7,6 +7,7 @@ use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Str;
 use Spatie\BackupServer\Exceptions\NotificationCouldNotBeSent;
+use Spatie\BackupServer\Models\Source;
 use Spatie\BackupServer\Tasks\Backup\Events\BackupCompletedEvent;
 use Spatie\BackupServer\Tasks\Backup\Events\BackupFailedEvent;
 use Spatie\BackupServer\Tasks\Cleanup\Events\CleanupForDestinationCompletedEvent;
@@ -27,6 +28,10 @@ class EventHandler
     public function subscribe(Dispatcher $events): void
     {
         $events->listen($this->allBackupEventClasses(), function ($event) {
+            if (! $this->shouldSendNotification($event)) {
+                return;
+            }
+
             $notifiable = $this->determineNotifiable();
 
             $notification = $this->determineNotification($event);
@@ -57,6 +62,15 @@ class EventHandler
         }
 
         return new $notificationClass($event);
+    }
+
+    protected function shouldSendNotification(object $event): bool
+    {
+        if ($event instanceof UnhealthySourceFoundEvent) {
+            return ! $event->source->hasFailedNotificationsPaused();
+        }
+
+        return true;
     }
 
     protected function allBackupEventClasses(): array
