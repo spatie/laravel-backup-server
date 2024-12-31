@@ -65,7 +65,7 @@ class EventHandler
 
     protected function shouldSendNotification(object $event): bool
     {
-        if ($event instanceof UnhealthySourceFoundEvent) {
+        if (in_array($event::class, $this->allFailedSourceEventClasses())) {
             return ! $event->source->hasFailedNotificationsPaused();
         }
 
@@ -85,6 +85,14 @@ class EventHandler
             UnhealthySourceFoundEvent::class,
             HealthyDestinationFoundEvent::class,
             UnhealthyDestinationFoundEvent::class,
+        ];
+    }
+
+    protected function allFailedSourceEventClasses(): array
+    {
+        return [
+            BackupFailedEvent::class,
+            UnhealthySourceFoundEvent::class,
         ];
     }
 }
