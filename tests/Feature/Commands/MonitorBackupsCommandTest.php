@@ -30,6 +30,21 @@ it('will send a notification if a destination is not reachable', function () {
     Notification::assertSentTo($this->configuredNotifiable(), UnhealthyDestinationFoundNotification::class);
 });
 
+it('will send if the source is not paused', function () {
+    Event::fake();
+
+    Source::factory()->create([
+        'paused_failed_notifications_until' => null,
+        'created_at' => now()->subMonth(),
+    ]);
+
+    $this->artisan('backup-server:monitor')->assertExitCode(0);
+
+    Event::assertDispatched(UnhealthySourceFoundEvent::class);
+
+    Notification::assertSentTo($this->configuredNotifiable(), UnhealthySourceFoundNotification::class);
+});
+
 it('will not send if the source is paused', function () {
     Event::fake();
 

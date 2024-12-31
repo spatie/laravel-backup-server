@@ -107,7 +107,22 @@ afterEach(function () {
     $this->container->stop();
 });
 
-it('will not create an event when the source is paused', function () {
+it('will send a notification when the source is not paused', function () {
+    Event::fake();
+    Notification::fake();
+
+    $this->source->update(['paused_failed_notifications_until' => null]);
+
+    $this->artisan('backup-server:dispatch-backups')->assertExitCode(0);
+
+    $this->assertSame(BackupStatus::Failed, $this->source->backups()->first()->status);
+
+    Event::assertDispatched(BackupFailedEvent::class);
+
+    Notification::assertSentTo($this->configuredNotifiable(), BackupFailedNotification::class);
+});
+
+it('will not send a notification when the source is paused', function () {
     Event::fake();
     Notification::fake();
 
@@ -122,7 +137,7 @@ it('will not create an event when the source is paused', function () {
     Notification::assertNothingSent();
 });
 
-it('will create an event when the source is not paused anymore', function () {
+it('will send a notification when the source is not paused anymore', function () {
     Event::fake();
     Notification::fake();
 
