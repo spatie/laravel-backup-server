@@ -2,13 +2,11 @@
 
 uses(\Spatie\BackupServer\Tests\TestCase::class);
 
-use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Notification;
 use Spatie\BackupServer\Models\Destination;
 use Spatie\BackupServer\Models\Source;
 use Spatie\BackupServer\Notifications\Notifications\UnhealthyDestinationFoundNotification;
 use Spatie\BackupServer\Notifications\Notifications\UnhealthySourceFoundNotification;
-use Spatie\BackupServer\Tasks\Monitor\Events\UnhealthySourceFoundEvent;
 
 beforeEach(function () {
     Notification::fake();
