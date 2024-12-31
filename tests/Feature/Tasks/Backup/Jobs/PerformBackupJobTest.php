@@ -4,6 +4,7 @@ uses(\Spatie\BackupServer\Tests\TestCase::class);
 
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Notification;
 use Spatie\BackupServer\Enums\BackupStatus;
 use Spatie\BackupServer\Models\Source;
 use Spatie\BackupServer\Tasks\Backup\Events\BackupFailedEvent;
@@ -114,7 +115,9 @@ it('will not create an event when the source is paused', function () {
 
     $this->assertSame(BackupStatus::Failed, $this->source->backups()->first()->status);
 
-    Event::assertNotDispatched(BackupFailedEvent::class);
+    Event::assertDispatched(BackupFailedEvent::class);
+
+    Notification::assertNothingSent();
 });
 
 it('will create an event when the source is not paused anymore', function () {
@@ -127,4 +130,6 @@ it('will create an event when the source is not paused anymore', function () {
     $this->assertSame(BackupStatus::Failed, $this->source->backups()->first()->status);
 
     Event::assertDispatched(BackupFailedEvent::class);
+
+    Notification::assertSentTo($this->configuredNotifiable(), BackupFailedEvent::class);
 });

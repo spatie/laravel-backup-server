@@ -39,7 +39,9 @@ it('will not send if the source is paused', function () {
 
     $this->artisan('backup-server:monitor')->assertExitCode(0);
 
-    Event::assertNotDispatched(UnhealthySourceFoundEvent::class);
+    Event::assertDispatched(UnhealthySourceFoundEvent::class);
+
+    Notification::assertNothingSent();
 });
 
 it('will send if the source is not paused anymore', function () {
@@ -53,4 +55,6 @@ it('will send if the source is not paused anymore', function () {
     $this->artisan('backup-server:monitor')->assertExitCode(0);
 
     Event::assertDispatched(UnhealthySourceFoundEvent::class);
+
+    Notification::assertSentTo($this->configuredNotifiable(), UnhealthyDestinationFoundNotification::class);
 });
