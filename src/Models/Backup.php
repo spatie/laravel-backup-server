@@ -26,6 +26,9 @@ use Spatie\BackupServer\Tasks\Search\FileSearchResultFactory;
 use Spatie\BackupServer\Tests\Database\Factories\BackupFactory;
 use Symfony\Component\Process\Process;
 
+/**
+ * @property-read Source $source
+ */
 class Backup extends Model
 {
     use HasAsyncDelete;
