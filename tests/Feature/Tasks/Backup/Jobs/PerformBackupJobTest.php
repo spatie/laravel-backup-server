@@ -3,12 +3,10 @@
 uses(\Spatie\BackupServer\Tests\TestCase::class);
 
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Notification;
 use Spatie\BackupServer\Enums\BackupStatus;
 use Spatie\BackupServer\Models\Source;
 use Spatie\BackupServer\Notifications\Notifications\BackupFailedNotification;
-use Spatie\BackupServer\Tasks\Backup\Events\BackupFailedEvent;
 use Spatie\Docker\DockerContainer;
 
 beforeEach(function () {
