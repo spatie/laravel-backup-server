@@ -109,6 +109,7 @@ afterEach(function () {
 
 it('will not create an event when the source is paused', function () {
     Event::fake();
+    Notification::fake();
 
     $this->source->update(['paused_failed_notifications_until' => now()->addHour()]);
 
@@ -123,6 +124,7 @@ it('will not create an event when the source is paused', function () {
 
 it('will create an event when the source is not paused anymore', function () {
     Event::fake();
+    Notification::fake();
 
     $this->source->update(['paused_failed_notifications_until' => now()->subMinute()]);
 
