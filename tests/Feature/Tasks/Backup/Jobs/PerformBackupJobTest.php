@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Notification;
 use Spatie\BackupServer\Enums\BackupStatus;
 use Spatie\BackupServer\Models\Source;
+use Spatie\BackupServer\Notifications\Notifications\BackupFailedNotification;
 use Spatie\BackupServer\Tasks\Backup\Events\BackupFailedEvent;
 use Spatie\Docker\DockerContainer;
 
@@ -131,5 +132,5 @@ it('will create an event when the source is not paused anymore', function () {
 
     Event::assertDispatched(BackupFailedEvent::class);
 
-    Notification::assertSentTo($this->configuredNotifiable(), BackupFailedEvent::class);
+    Notification::assertSentTo($this->configuredNotifiable(), BackupFailedNotification::class);
 });

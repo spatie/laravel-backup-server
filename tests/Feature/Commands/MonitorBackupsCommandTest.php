@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Notification;
 use Spatie\BackupServer\Models\Destination;
 use Spatie\BackupServer\Models\Source;
 use Spatie\BackupServer\Notifications\Notifications\UnhealthyDestinationFoundNotification;
+use Spatie\BackupServer\Notifications\Notifications\UnhealthySourceFoundNotification;
 use Spatie\BackupServer\Tasks\Monitor\Events\UnhealthySourceFoundEvent;
 
 beforeEach(function () {
@@ -56,5 +57,5 @@ it('will send if the source is not paused anymore', function () {
 
     Event::assertDispatched(UnhealthySourceFoundEvent::class);
 
-    Notification::assertSentTo($this->configuredNotifiable(), UnhealthyDestinationFoundNotification::class);
+    Notification::assertSentTo($this->configuredNotifiable(), UnhealthySourceFoundNotification::class);
 });
