@@ -46,7 +46,7 @@ class Source extends Model
         });
     }
 
-    public function areFailedNotificationsPaused(): bool
+    public function hasFailedNotificationsPaused(): bool
     {
         if ($this->paused_failed_notifications_until === null) {
             return false;
