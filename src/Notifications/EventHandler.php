@@ -66,8 +66,11 @@ class EventHandler
     protected function shouldSendNotification(object $event): bool
     {
         return match (true) {
-            // $event instanceof BackupCompletedEvent => ! $event->backup->source->hasFailedNotificationsPaused(),
+            $event instanceof BackupCompletedEvent => ! $event->backup->source->hasNotificationsPaused(),
             $event instanceof BackupFailedEvent => ! $event->backup->source->hasNotificationsPaused(),
+            $event instanceof CleanupForSourceCompletedEvent => ! $event->source->hasNotificationsPaused(),
+            $event instanceof CleanupForSourceFailedEvent => ! $event->source->hasNotificationsPaused(),
+            $event instanceof HealthySourceFoundEvent => ! $event->source->hasNotificationsPaused(),
             $event instanceof UnhealthySourceFoundEvent => ! $event->source->hasNotificationsPaused(),
             default => true,
         };
