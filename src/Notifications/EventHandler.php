@@ -27,6 +27,10 @@ class EventHandler
     public function subscribe(Dispatcher $events): void
     {
         $events->listen($this->allBackupEventClasses(), function ($event) {
+            if (! $this->shouldSendNotification($event)) {
+                return;
+            }
+
             $notifiable = $this->determineNotifiable();
 
             $notification = $this->determineNotification($event);
@@ -57,6 +61,19 @@ class EventHandler
         }
 
         return new $notificationClass($event);
+    }
+
+    protected function shouldSendNotification(object $event): bool
+    {
+        return match (true) {
+            $event instanceof BackupCompletedEvent => ! $event->backup->source->hasNotificationsPaused(),
+            $event instanceof BackupFailedEvent => ! $event->backup->source->hasNotificationsPaused(),
+            $event instanceof CleanupForSourceCompletedEvent => ! $event->source->hasNotificationsPaused(),
+            $event instanceof CleanupForSourceFailedEvent => ! $event->source->hasNotificationsPaused(),
+            $event instanceof HealthySourceFoundEvent => ! $event->source->hasNotificationsPaused(),
+            $event instanceof UnhealthySourceFoundEvent => ! $event->source->hasNotificationsPaused(),
+            default => true,
+        };
     }
 
     protected function allBackupEventClasses(): array

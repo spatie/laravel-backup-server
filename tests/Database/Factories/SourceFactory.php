@@ -11,7 +11,7 @@ class SourceFactory extends Factory
 {
     protected $model = Source::class;
 
-    public function definition()
+    public function definition(): array
     {
         return [
             'name' => $this->faker->name,

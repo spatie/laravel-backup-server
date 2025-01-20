@@ -1,15 +1,18 @@
 <?php
 
 uses(\Spatie\BackupServer\Tests\TestCase::class);
+
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Notification;
 use Spatie\BackupServer\Enums\BackupStatus;
 use Spatie\BackupServer\Models\Source;
+use Spatie\BackupServer\Notifications\Notifications\BackupFailedNotification;
 use Spatie\Docker\DockerContainer;
 
 beforeEach(function () {
     Carbon::setTestNow(now()->setTime(2, 0));
 
-    //Storage::fake('backups');
+    // Storage::fake('backups');
     $this->container = DockerContainer::create('spatie/laravel-backup-server-tests')
         ->name('laravel-backup-server-tests')
         ->mapPort(4848, 22)
@@ -100,4 +103,40 @@ it('will fail if it cannot login', function () {
 
 afterEach(function () {
     $this->container->stop();
+});
+
+it('will send a notification when the source is not paused', function () {
+    Notification::fake();
+
+    $this->source->update(['pause_notifications_until' => null]);
+
+    $this->artisan('backup-server:dispatch-backups')->assertExitCode(0);
+
+    $this->assertSame(BackupStatus::Failed, $this->source->backups()->first()->status);
+
+    Notification::assertSentTo($this->configuredNotifiable(), BackupFailedNotification::class);
+});
+
+it('will not send a notification when the source is paused', function () {
+    Notification::fake();
+
+    $this->source->update(['pause_notifications_until' => now()->addHour()]);
+
+    $this->artisan('backup-server:dispatch-backups')->assertExitCode(0);
+
+    $this->assertSame(BackupStatus::Failed, $this->source->backups()->first()->status);
+
+    Notification::assertNotSentTo($this->configuredNotifiable(), BackupFailedNotification::class);
+});
+
+it('will send a notification when the source is not paused anymore', function () {
+    Notification::fake();
+
+    $this->source->update(['pause_notifications_until' => now()->subMinute()]);
+
+    $this->artisan('backup-server:dispatch-backups')->assertExitCode(0);
+
+    $this->assertSame(BackupStatus::Failed, $this->source->backups()->first()->status);
+
+    Notification::assertSentTo($this->configuredNotifiable(), BackupFailedNotification::class);
 });
