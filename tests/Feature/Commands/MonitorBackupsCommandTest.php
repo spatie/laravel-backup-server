@@ -30,7 +30,7 @@ it('will send a notification if a destination is not reachable', function () {
 
 it('will send if the source is not paused', function () {
     Source::factory()->create([
-        'pause_failed_notifications_until' => null,
+        'pause_notifications_until' => null,
         'created_at' => now()->subMonth(),
     ]);
 
@@ -41,7 +41,7 @@ it('will send if the source is not paused', function () {
 
 it('will not sent if the source is paused', function () {
     Source::factory()->create([
-        'pause_failed_notifications_until' => now()->addHour(),
+        'pause_notifications_until' => now()->addHour(),
         'created_at' => now()->subMonth(),
     ]);
 
@@ -52,7 +52,7 @@ it('will not sent if the source is paused', function () {
 
 it('will sent if the source is not paused anymore', function () {
     Source::factory()->create([
-        'pause_failed_notifications_until' => now()->subMinute(),
+        'pause_notifications_until' => now()->subMinute(),
         'created_at' => now()->subMonth(),
     ]);
 

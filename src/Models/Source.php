@@ -36,7 +36,7 @@ class Source extends Model
         'excludes' => 'array',
         'pre_backup_commands' => 'array',
         'post_backup_commands' => 'array',
-        'pause_failed_notifications_until' => 'immutable_datetime',
+        'pause_notifications_until' => 'immutable_datetime',
     ];
 
     public static function booted(): void
@@ -46,13 +46,13 @@ class Source extends Model
         });
     }
 
-    public function hasFailedNotificationsPaused(): bool
+    public function hasNotificationsPaused(): bool
     {
-        if ($this->pause_failed_notifications_until === null) {
+        if ($this->pause_notifications_until === null) {
             return false;
         }
 
-        return $this->pause_failed_notifications_until->isFuture();
+        return $this->pause_notifications_until->isFuture();
     }
 
     protected static function newFactory(): SourceFactory

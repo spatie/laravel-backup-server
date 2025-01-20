@@ -67,8 +67,8 @@ class EventHandler
     {
         return match (true) {
             // $event instanceof BackupCompletedEvent => ! $event->backup->source->hasFailedNotificationsPaused(),
-            $event instanceof BackupFailedEvent => ! $event->backup->source->hasFailedNotificationsPaused(),
-            $event instanceof UnhealthySourceFoundEvent => ! $event->source->hasFailedNotificationsPaused(),
+            $event instanceof BackupFailedEvent => ! $event->backup->source->hasNotificationsPaused(),
+            $event instanceof UnhealthySourceFoundEvent => ! $event->source->hasNotificationsPaused(),
             default => true,
         };
     }
