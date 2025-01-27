@@ -2,6 +2,20 @@
 
 All notable changes to `laravel-backup-server` will be documented in this file
 
+## 4.0.0 - 2025-01-27
+
+### What's Changed
+
+* v4: Pause notifications by @Nielsvanpach in https://github.com/spatie/laravel-backup-server/pull/78
+* V4 release by @Nielsvanpach in https://github.com/spatie/laravel-backup-server/pull/77
+* Change internal links from /v1/ to /v3/ by @juukie in https://github.com/spatie/laravel-backup-server/pull/73
+
+### New Contributors
+
+* @juukie made their first contribution in https://github.com/spatie/laravel-backup-server/pull/73
+
+**Full Changelog**: https://github.com/spatie/laravel-backup-server/compare/3.3.0...4.0.0
+
 ## 3.3.0 - 2024-06-12
 
 ### What's Changed
