@@ -10,7 +10,7 @@ class EnsureSourceIsReachable implements BackupTask
 {
     public function execute(Backup $backup): void
     {
-        $backup->logInfo(Task::BACKUP, 'Ensuring source is reachable...');
+        $backup->logInfo(Task::Backup, 'Ensuring source is reachable...');
 
         $process = $backup->source->executeSshCommands(['whoami']);
 

@@ -7,27 +7,19 @@ use Spatie\BackupServer\Tasks\Monitor\HealthChecks\HealthCheck;
 
 class HealthCheckCollection
 {
-    private array $healthCheckClassNames;
-
-    private Model $model;
-
     private ?array $healthCheckResults = null;
 
     /**
      * @param  \Spatie\BackupServer\Models\Source|\Spatie\BackupServer\Models\Destination  $model
      */
-    public function __construct(array $healthCheckClassNames, Model $model)
+    public function __construct(private array $healthCheckClassNames, private Model $model)
     {
-        $this->healthCheckClassNames = $healthCheckClassNames;
-
-        $this->model = $model;
-
         $this->healthCheckResults = $this->performHealthChecks();
     }
 
     public function allPass(): bool
     {
-        $containsFailingHealthCheck = collect($this->healthCheckResults)->contains(function (HealthCheckResult $healthCheckResult) {
+        $containsFailingHealthCheck = collect($this->healthCheckResults)->contains(function (HealthCheckResult $healthCheckResult): bool {
             return ! $healthCheckResult->isOk();
         });
 
@@ -37,10 +29,10 @@ class HealthCheckCollection
     public function getFailureMessages(): array
     {
         return collect($this->healthCheckResults)
-            ->reject(function (HealthCheckResult $healthCheckResult) {
+            ->reject(function (HealthCheckResult $healthCheckResult): bool {
                 return $healthCheckResult->isOk();
             })
-            ->map(function (HealthCheckResult $healthCheckResult) {
+            ->map(function (HealthCheckResult $healthCheckResult): string {
                 return $healthCheckResult->getMessage();
             })
             ->toArray();
@@ -53,7 +45,7 @@ class HealthCheckCollection
         }
 
         $healthChecks = collect($this->healthCheckClassNames)
-            ->map(function ($arguments, string $healthCheckClassName) {
+            ->map(function ($arguments, string $healthCheckClassName): \Spatie\BackupServer\Tasks\Monitor\HealthChecks\HealthCheck {
                 if (is_numeric($healthCheckClassName)) {
                     $healthCheckClassName = $arguments;
                     $arguments = [];

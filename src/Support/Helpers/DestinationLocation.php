@@ -2,7 +2,7 @@
 
 namespace Spatie\BackupServer\Support\Helpers;
 
-class DestinationLocation
+class DestinationLocation implements \Stringable
 {
     public function __construct(
         private string $diskName,
@@ -26,7 +26,7 @@ class DestinationLocation
         return $pathPrefix.'/'.$this->path;
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getFullPath();
     }

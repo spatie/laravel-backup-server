@@ -16,7 +16,7 @@ class CreateBackupCommand extends Command
 
     protected $description = 'Create a backup';
 
-    public function handle()
+    public function handle(): int
     {
         $sourceName = $this->argument('sourceName');
 
@@ -36,7 +36,7 @@ class CreateBackupCommand extends Command
                     return;
                 }
 
-                $outputMethod = $backupLogItem->level === LogLevel::ERROR
+                $outputMethod = $backupLogItem->level === LogLevel::Error
                     ? 'error'
                     : 'comment';
 

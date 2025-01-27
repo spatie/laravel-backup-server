@@ -3,6 +3,7 @@
 namespace Spatie\BackupServer\Tests\Factories;
 
 use Illuminate\Support\Facades\File;
+use Spatie\BackupServer\Enums\BackupStatus;
 use Spatie\BackupServer\Models\Backup;
 use Spatie\BackupServer\Models\Destination;
 use Spatie\BackupServer\Models\Source;
@@ -20,7 +21,7 @@ class BackupFactory
 
     private array $filesWithRelativeDestinations = [];
 
-    private ?string $status = null;
+    private ?BackupStatus $status = null;
 
     public function source(Source $source): self
     {
@@ -31,7 +32,7 @@ class BackupFactory
 
     public function completed(): self
     {
-        $this->status = Backup::STATUS_COMPLETED;
+        $this->status = BackupStatus::Completed;
 
         return $this;
     }

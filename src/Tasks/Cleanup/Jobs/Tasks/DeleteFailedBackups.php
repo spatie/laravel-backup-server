@@ -8,14 +8,14 @@ use Spatie\BackupServer\Support\Helpers\Enums\Task;
 
 class DeleteFailedBackups implements CleanupTask
 {
-    public function execute(Source $source)
+    public function execute(Source $source): void
     {
         $source->backups()
             ->failed()
             ->get()
             ->filter(fn (Backup $backup) => $backup->created_at->diffInDays() > 1)
             ->each(function (Backup $backup) use ($source) {
-                $source->logInfo(Task::CLEANUP, "Removing backup id {$backup->id} because it has failed");
+                $source->logInfo(Task::Cleanup, "Removing backup id {$backup->id} because it has failed");
 
                 $backup->delete();
             });

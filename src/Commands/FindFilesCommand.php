@@ -18,7 +18,7 @@ class FindFilesCommand extends Command
 
     protected int $resultCounter = 0;
 
-    public function handle()
+    public function handle(): true|int
     {
         $sourceName = $this->argument('sourceName');
 
@@ -34,7 +34,7 @@ class FindFilesCommand extends Command
 
         $source->completedBackups
             ->each(function (Backup $backup) use ($searchFor) {
-                $backup->findFile($searchFor, Closure::fromCallable([$this, 'handleFoundFile']));
+                $backup->findFile($searchFor, Closure::fromCallable($this->handleFoundFile(...)));
             });
 
         $this->info('');
@@ -51,7 +51,5 @@ class FindFilesCommand extends Command
 
             $this->comment($fileSearchResult->getAbsolutePath());
         });
-
-        $this->output;
     }
 }

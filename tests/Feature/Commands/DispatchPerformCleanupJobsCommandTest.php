@@ -1,10 +1,12 @@
 <?php
 
 uses(\Spatie\BackupServer\Tests\TestCase::class);
+
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
+use Spatie\BackupServer\Enums\BackupStatus;
 use Spatie\BackupServer\Models\Backup;
 use Spatie\BackupServer\Models\Destination;
 use Spatie\BackupServer\Models\Source;
@@ -12,7 +14,7 @@ use Spatie\BackupServer\Tests\Factories\BackupFactory;
 use Spatie\TestTime\TestTime;
 
 beforeEach(function () {
-    //Storage::fake('backups');
+    // Storage::fake('backups');
     TestTime::freeze('Y-m-d H:i:s', '2020-01-01 00:00:00');
 
     $this->destination = Destination::factory()->create([
@@ -99,7 +101,7 @@ it('will clean up failed backup that are older than a day', function () {
     TestTime::freeze();
 
     $failedBackup = (new BackupFactory)->makeSureBackupDirectoryExists()->create([
-        'status' => Backup::STATUS_FAILED,
+        'status' => BackupStatus::Failed,
         'created_at' => now(),
     ]);
 

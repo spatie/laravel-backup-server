@@ -18,7 +18,7 @@ class FindContentCommand extends Command
 
     protected int $resultCounter = 0;
 
-    public function handle()
+    public function handle(): ?int
     {
         $sourceName = $this->argument('sourceName');
 
@@ -32,11 +32,13 @@ class FindContentCommand extends Command
 
         $source->completedBackups
             ->each(function (Backup $backup) use ($searchFor) {
-                $backup->findContent($searchFor, Closure::fromCallable([$this, 'handleFoundContent']));
+                $backup->findContent($searchFor, Closure::fromCallable($this->handleFoundContent(...)));
             });
 
         $this->comment('');
         $this->comment($this->resultCounter.' '.Str::plural('search result', $this->resultCounter).' found.');
+
+        return null;
     }
 
     protected function handleFoundContent(Collection $contentSearchResults)

@@ -17,7 +17,7 @@ class MonitorBackupsCommand extends Command
 
     protected $description = 'Check the health of the sources and destinations';
 
-    public function handle()
+    public function handle(): void
     {
         $this->info('Checking health...');
 
@@ -31,7 +31,7 @@ class MonitorBackupsCommand extends Command
     protected function checkSourcesHealth(): self
     {
         [$healthySources, $unhealthySources] = collect(Source::all())
-            ->partition(function (Source $source) {
+            ->partition(function (Source $source): bool {
                 return $source->isHealthy();
             });
 
@@ -49,7 +49,7 @@ class MonitorBackupsCommand extends Command
             $this->error("Source `{$source->name}` is unhealthy");
 
             foreach ($failureMessages as $failureMessage) {
-                $source->logError(Task::MONITOR, $failureMessage);
+                $source->logError(Task::Monitor, $failureMessage);
             }
 
             $source->update(['healthy' => false]);
@@ -63,7 +63,7 @@ class MonitorBackupsCommand extends Command
     protected function checkDestinationsHealth(): self
     {
         [$healthyDestinations, $unHealthyDestinations] = collect(Destination::all())
-            ->partition(function (Destination $destination) {
+            ->partition(function (Destination $destination): bool {
                 return $destination->isHealthy();
             });
 
@@ -79,7 +79,7 @@ class MonitorBackupsCommand extends Command
             $this->error("Destination `{$destination->name}` is unhealthy");
 
             foreach ($failureMessages as $failureMessage) {
-                $destination->logError(Task::MONITOR, $failureMessage);
+                $destination->logError(Task::Monitor, $failureMessage);
             }
 
             event(new UnhealthyDestinationFoundEvent($destination, $failureMessages));

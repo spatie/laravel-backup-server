@@ -13,11 +13,11 @@ use Spatie\BackupServer\Tasks\Cleanup\Support\Period;
 
 class DefaultCleanupStrategy implements CleanupStrategy
 {
-    protected ?Backup $youngestBackup;
+    protected ?Backup $youngestBackup = null;
 
     private DefaultStrategyConfig $config;
 
-    public function deleteOldBackups(Source $source)
+    public function deleteOldBackups(Source $source): void
     {
         $this->config = new DefaultStrategyConfig($source);
 
@@ -75,7 +75,7 @@ class DefaultCleanupStrategy implements CleanupStrategy
             $monthly->endDate()->subYears($this->config->keepYearlyBackupsForYears)
         );
 
-        return collect(compact('daily', 'weekly', 'monthly', 'yearly'));
+        return collect(['daily' => $daily, 'weekly' => $weekly, 'monthly' => $monthly, 'yearly' => $yearly]);
     }
 
     protected function groupByDateFormat(Collection $backups, string $dateFormat): Collection
@@ -120,7 +120,7 @@ class DefaultCleanupStrategy implements CleanupStrategy
         /** @var \Spatie\BackupServer\Models\Backup $oldestBackup */
         $oldestBackup = $backups->oldest();
 
-        $oldestBackup->logInfo(Task::CLEANUP, 'Deleting backup because destination uses more space than the limit allows');
+        $oldestBackup->logInfo(Task::Cleanup, 'Deleting backup because destination uses more space than the limit allows');
 
         $oldestBackup->delete();
 

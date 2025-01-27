@@ -37,7 +37,7 @@ class TestCase extends Orchestra
         ];
     }
 
-    protected function getEnvironmentSetUp($app)
+    protected function getEnvironmentSetUp($app): void
     {
         $app['config']->set('filesystems.disks.backups', [
             'driver' => 'local',

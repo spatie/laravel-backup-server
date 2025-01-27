@@ -19,7 +19,7 @@ use Spatie\BackupServer\Tasks\Cleanup\Strategies\CleanupStrategy;
 
 class BackupServerServiceProvider extends EventServiceProvider
 {
-    public function boot()
+    public function boot(): void
     {
         parent::boot();
 
@@ -31,7 +31,7 @@ class BackupServerServiceProvider extends EventServiceProvider
             ->bootTranslations();
     }
 
-    public function register()
+    public function register(): void
     {
         $this->mergeConfigFrom(__DIR__.'/../config/backup-server.php', 'backup-server');
 
@@ -50,7 +50,7 @@ class BackupServerServiceProvider extends EventServiceProvider
         });
     }
 
-    protected function bootCarbon()
+    protected function bootCarbon(): static
     {
         $dataFormat = config('backup-server.date_format');
 
@@ -59,7 +59,7 @@ class BackupServerServiceProvider extends EventServiceProvider
         return $this;
     }
 
-    protected function bootCommands()
+    protected function bootCommands(): static
     {
         if ($this->app->runningInConsole()) {
             $this->commands([

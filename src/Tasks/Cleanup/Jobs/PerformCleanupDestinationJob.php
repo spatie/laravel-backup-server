@@ -16,38 +16,39 @@ use Throwable;
 
 class PerformCleanupDestinationJob implements ShouldQueue
 {
+    /**
+     * @var mixed
+     */
+    public $timeout;
+
     use Dispatchable;
     use InteractsWithQueue;
     use Queueable;
     use SerializesModels;
 
-    public Destination $destination;
-
-    public function __construct(Destination $destination)
+    public function __construct(public Destination $destination)
     {
-        $this->destination = $destination;
-
         $this->timeout = config('backup-server.jobs.perform_cleanup_for_destination_job.timeout');
 
         $this->queue = config('backup-server.jobs.perform_cleanup_for_destination_job.queue');
 
-        $this->connection = $this->connection ?? Config::getQueueConnection();
+        $this->connection ??= Config::getQueueConnection();
     }
 
-    public function handle()
+    public function handle(): void
     {
-        $this->destination->logInfo(Task::CLEANUP, 'Starting cleanup of destination');
+        $this->destination->logInfo(Task::Cleanup, 'Starting cleanup of destination');
 
-        //TODO: implement
+        // TODO: implement
 
-        $this->destination->logInfo(Task::CLEANUP, 'Destination cleaned up');
+        $this->destination->logInfo(Task::Cleanup, 'Destination cleaned up');
 
         event(new CleanupForDestinationCompletedEvent($this->destination));
     }
 
-    public function failed(Throwable $exception)
+    public function failed(Throwable $exception): void
     {
-        $this->destination->logError(Task::CLEANUP, "Error while cleaning up destination `{$this->destination->name}`: `{$exception->getMessage()}`");
+        $this->destination->logError(Task::Cleanup, "Error while cleaning up destination `{$this->destination->name}`: `{$exception->getMessage()}`");
 
         event(new CleanupForDestinationFailedEvent($this->destination, $exception->getMessage()));
     }

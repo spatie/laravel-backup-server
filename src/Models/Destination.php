@@ -8,9 +8,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Spatie\BackupServer\Enums\DestinationStatus;
 use Spatie\BackupServer\Models\Concerns\HasAsyncDelete;
 use Spatie\BackupServer\Models\Concerns\HasBackupRelation;
 use Spatie\BackupServer\Models\Concerns\LogsActivity;
+use Spatie\BackupServer\Support\Helpers\Enums\LogLevel;
+use Spatie\BackupServer\Support\Helpers\Enums\Task;
 use Spatie\BackupServer\Tasks\Cleanup\Jobs\DeleteDestinationJob;
 use Spatie\BackupServer\Tasks\Monitor\HealthCheckCollection;
 use Spatie\BackupServer\Tests\Database\Factories\DestinationFactory;
@@ -25,16 +28,12 @@ class Destination extends Model
 
     public $table = 'backup_server_destinations';
 
-    public const STATUS_ACTIVE = 'active';
-
-    public const STATUS_DELETING = 'deleting';
-
     public $guarded = [];
 
-    public static function booted()
+    public static function booted(): void
     {
         static::creating(function (Destination $source) {
-            $source->status = static::STATUS_ACTIVE;
+            $source->status = DestinationStatus::Active;
         });
     }
 
@@ -64,7 +63,7 @@ class Destination extends Model
         }
     }
 
-    protected function addMessageToLog(string $task, string $level, string $message): void
+    protected function addMessageToLog(Task $task, LogLevel $level, string $message): void
     {
         $this->logItems()->create([
             'task' => $task,
@@ -106,7 +105,7 @@ class Destination extends Model
         return (int) Str::before($rawOutput, '%');
     }
 
-    protected function getDfOutput(int $macOsColumnNumber, $linuxOutputFormat)
+    protected function getDfOutput(int $macOsColumnNumber, string $linuxOutputFormat): string
     {
         $command = PHP_OS === 'Darwin'
             ? 'df -k "$PWD" | awk \'{print $'.$macOsColumnNumber.'}\''

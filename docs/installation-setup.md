@@ -3,42 +3,10 @@ title: Installation & setup
 weight: 3
 ---
 
-In order to install Backup Server, you'll need to [get a license](/docs/laravel-backup-server/v1/getting-a-license) first.
+You can install this package via composer using:
 
-First, add the `satis.spatie.be` repository in your `composer.json`.
-
-```php
-"repositories": [
-    {
-        "type": "composer",
-        "url": "https://satis.spatie.be"
-    }
-],
-```
-
-Next, you need to create a file called `auth.json` and place it either next to the `composer.json` file in your project, or in the composer home directory. You can determine the composer home directory on *nix machines by using this command.
-
-```bash
-composer config --list --global | grep home
-```
-
-This is the content you should put in `auth.json`:
-
-```php
-{
-    "http-basic": {
-        "satis.spatie.be": {
-            "username": "<YOUR-SPATIE.BE-ACCOUNT-EMAIL-ADDRESS-HERE>",
-            "password": "<YOUR-LICENSE-KEY-HERE>"
-        }
-    }
-}
-```
-
-With the configuration above in place, you'll be able to install the package into your project using this command:
-
-```bash
-composer require "spatie/laravel-backup-server"
+``` bash
+composer require spatie/laravel-backup-server
 ```
 
 ### Migrate the database

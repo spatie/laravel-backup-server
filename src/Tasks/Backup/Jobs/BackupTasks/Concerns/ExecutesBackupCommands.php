@@ -18,17 +18,17 @@ trait ExecutesBackupCommands
 
         $label = str_replace('_', ' ', $commandAttributeName);
 
-        $backup->logInfo(Task::BACKUP, "Performing {$label}...");
+        $backup->logInfo(Task::Backup, "Performing {$label}...");
 
         /** @var \Symfony\Component\Process\Process $process */
         $process = $backup->source->executeSshCommands($commands);
 
         if (! $process->isSuccessful()) {
-            $backup->logError(Task::BACKUP, $label.' error output:'.PHP_EOL.$process->getErrorOutput());
+            $backup->logError(Task::Backup, $label.' error output:'.PHP_EOL.$process->getErrorOutput());
 
             throw BackupFailed::BackupCommandsFailed($backup, $commandAttributeName, $process->getErrorOutput());
         }
 
-        $backup->logInfo(Task::BACKUP, $label.' output:'.PHP_EOL.$process->getOutput());
+        $backup->logInfo(Task::Backup, $label.' output:'.PHP_EOL.$process->getOutput());
     }
 }

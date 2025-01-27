@@ -6,9 +6,12 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Spatie\BackupServer\Enums\SourceStatus;
 use Spatie\BackupServer\Models\Concerns\HasAsyncDelete;
 use Spatie\BackupServer\Models\Concerns\HasBackupRelation;
 use Spatie\BackupServer\Models\Concerns\LogsActivity;
+use Spatie\BackupServer\Support\Helpers\Enums\LogLevel;
+use Spatie\BackupServer\Support\Helpers\Enums\Task;
 use Spatie\BackupServer\Tasks\Cleanup\Jobs\DeleteSourceJob;
 use Spatie\BackupServer\Tasks\Monitor\HealthCheckCollection;
 use Spatie\BackupServer\Tests\Database\Factories\SourceFactory;
@@ -26,23 +29,30 @@ class Source extends Model
 
     public $guarded = [];
 
-    public const STATUS_ACTIVE = 'active';
-
-    public const STATUS_DELETING = 'deleting';
-
     public $casts = [
+        'status' => SourceStatus::class,
         'healthy' => 'boolean',
         'includes' => 'array',
         'excludes' => 'array',
         'pre_backup_commands' => 'array',
         'post_backup_commands' => 'array',
+        'pause_notifications_until' => 'immutable_datetime',
     ];
 
-    public static function booted()
+    public static function booted(): void
     {
         static::creating(function (Source $source) {
-            $source->status = static::STATUS_ACTIVE;
+            $source->status = SourceStatus::Active;
         });
+    }
+
+    public function hasNotificationsPaused(): bool
+    {
+        if ($this->pause_notifications_until === null) {
+            return false;
+        }
+
+        return $this->pause_notifications_until->isFuture();
     }
 
     protected static function newFactory(): SourceFactory
@@ -102,7 +112,7 @@ class Source extends Model
         $query->where('healthy', false);
     }
 
-    protected function addMessageToLog(string $task, string $level, string $message): Source
+    protected function addMessageToLog(Task $task, LogLevel $level, string $message): Source
     {
         $this->logItems()->create([
             'destination_id' => $this->destination_id,

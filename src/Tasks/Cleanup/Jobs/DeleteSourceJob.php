@@ -13,25 +13,26 @@ use Spatie\BackupServer\Support\Helpers\Config;
 
 class DeleteSourceJob implements ShouldQueue
 {
+    /**
+     * @var mixed
+     */
+    public $timeout;
+
     use Dispatchable;
     use InteractsWithQueue;
     use Queueable;
     use SerializesModels;
 
-    private Source $source;
-
-    public function __construct(Source $source)
+    public function __construct(private Source $source)
     {
-        $this->source = $source;
-
         $this->timeout = config('backup-server.jobs.delete_source_job.timeout');
 
         $this->queue = config('backup-server.jobs.delete_source_job.queue');
 
-        $this->connection = $this->connection ?? Config::getQueueConnection();
+        $this->connection ??= Config::getQueueConnection();
     }
 
-    public function handle()
+    public function handle(): void
     {
         $this->source->backups->each(
             fn (Backup $backup) => $backup->delete()

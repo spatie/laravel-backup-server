@@ -2,7 +2,7 @@
 
 namespace Spatie\BackupServer\Notifications\Notifications\Concerns;
 
-use NathanHeffley\LaravelSlackBlocks\Messages\SlackMessage;
+use Illuminate\Notifications\Messages\SlackMessage;
 
 trait HandlesNotifications
 {

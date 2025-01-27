@@ -2,6 +2,7 @@
 
 namespace Spatie\BackupServer\Tasks\Backup\Actions;
 
+use Spatie\BackupServer\Enums\BackupStatus;
 use Spatie\BackupServer\Models\Backup;
 use Spatie\BackupServer\Models\Source;
 use Spatie\BackupServer\Support\Helpers\Enums\Task;
@@ -12,7 +13,7 @@ class CreateBackupAction
     protected $dispatchOnQueue = true;
 
     /** @var callable|null */
-    protected $afterBackupModelCreated = null;
+    protected $afterBackupModelCreated;
 
     public function afterBackupModelCreated(callable $afterBackupModelCreated): self
     {
@@ -30,9 +31,8 @@ class CreateBackupAction
 
     public function execute(Source $source): Backup
     {
-        /** @var \Spatie\BackupServer\Models\Backup $backup */
         $backup = Backup::create([
-            'status' => Backup::STATUS_PENDING,
+            'status' => BackupStatus::Pending,
             'source_id' => $source->id,
             'destination_id' => $source->destination->id,
             'disk_name' => $source->destination->disk_name,
@@ -42,7 +42,7 @@ class CreateBackupAction
             ($this->afterBackupModelCreated)($backup);
         }
 
-        $backup->logInfo(Task::BACKUP, 'Dispatching backup job...');
+        $backup->logInfo(Task::Backup, 'Dispatching backup job...');
 
         $job = (new PerformBackupJob($backup));
 

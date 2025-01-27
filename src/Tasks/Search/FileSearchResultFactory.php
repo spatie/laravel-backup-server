@@ -12,6 +12,6 @@ class FileSearchResultFactory
         return collect(explode(PHP_EOL, $processOutput))
             ->filter()
             ->values()
-            ->map(fn (string $relativePath) => new FileSearchResult($relativePath, $backup));
+            ->map(fn (string $relativePath): \Spatie\BackupServer\Tasks\Search\FileSearchResult => new FileSearchResult($relativePath, $backup));
     }
 }

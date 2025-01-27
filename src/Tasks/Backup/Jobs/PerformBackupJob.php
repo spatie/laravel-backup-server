@@ -22,25 +22,26 @@ use Throwable;
 
 class PerformBackupJob implements ShouldQueue
 {
+    /**
+     * @var mixed
+     */
+    public $timeout;
+
     use Dispatchable;
     use InteractsWithQueue;
     use Queueable;
     use SerializesModels;
 
-    public Backup $backup;
-
-    public function __construct(Backup $backup)
+    public function __construct(public Backup $backup)
     {
-        $this->backup = $backup;
-
         $this->timeout = config('backup-server.jobs.perform_backup_job.timeout');
 
         $this->queue = config('backup-server.jobs.perform_backup_job.queue');
 
-        $this->connection = $this->connection ?? Config::getQueueConnection();
+        $this->connection ??= Config::getQueueConnection();
     }
 
-    public function handle()
+    public function handle(): void
     {
         $this->backup->markAsInProgress();
 
