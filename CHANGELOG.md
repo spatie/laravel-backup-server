@@ -2,6 +2,12 @@
 
 All notable changes to `laravel-backup-server` will be documented in this file
 
+## 4.0.1 - 2025-01-30
+
+- add license
+
+**Full Changelog**: https://github.com/spatie/laravel-backup-server/compare/4.0.0...4.0.1
+
 ## 4.0.0 - 2025-01-27
 
 ### What's Changed
