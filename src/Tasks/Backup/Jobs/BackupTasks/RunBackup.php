@@ -43,7 +43,7 @@ class RunBackup implements BackupTask
         $process->run(fn (string $type, string $buffer) => $progressCallable($type, $buffer));
         $rsyncEnd = now();
 
-        $backup->update(['rsync_time_in_seconds' => $rsyncStart->diffInSeconds($rsyncEnd)]);
+        $backup->update(['rsync_time_in_seconds' => (int)$rsyncStart->diffInSeconds($rsyncEnd)]);
 
         $didCompleteSuccessFully = $process->getExitCode() === 0;
 
