@@ -2,6 +2,19 @@
 
 All notable changes to `laravel-backup-server` will be documented in this file
 
+## 4.0.2 - 2025-02-05
+
+### What's Changed
+
+* Bump dependabot/fetch-metadata from 2.2.0 to 2.3.0 by @dependabot in https://github.com/spatie/laravel-backup-server/pull/83
+* #82 issue fixed - type error by @SignetPlanet in https://github.com/spatie/laravel-backup-server/pull/84
+
+### New Contributors
+
+* @SignetPlanet made their first contribution in https://github.com/spatie/laravel-backup-server/pull/84
+
+**Full Changelog**: https://github.com/spatie/laravel-backup-server/compare/4.0.1...4.0.2
+
 ## 4.0.1 - 2025-01-30
 
 - add license
