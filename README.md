@@ -2,7 +2,7 @@
     <a href="https://spatie.be/open-source?utm_source=github&utm_medium=banner&utm_campaign=laravel-backup-server">
       <picture>
         <source media="(prefers-color-scheme: dark)" srcset="https://spatie.be/packages/header/laravel-backup-server/html/dark.webp">
-        <img alt="Logo for laravel-backup-server" src=" https://spatie.be/packages/header/laravel-backup-server/html/light.webp" height="190">
+        <img alt="Logo for laravel-backup-server" src="https://spatie.be/packages/header/laravel-backup-server/html/light.webp" height="190">
       </picture>
     </a>
 
