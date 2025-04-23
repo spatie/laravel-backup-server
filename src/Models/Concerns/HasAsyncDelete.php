@@ -33,7 +33,9 @@ trait HasAsyncDelete
             Source::class => SourceStatus::Deleting,
             Destination::class => DestinationStatus::Deleting,
             Backup::class => BackupStatus::Deleting,
-            default => throw new \Exception('Unknown class type'),
+            default => throw new \InvalidArgumentException(
+                'Unknown class type for deletion status: '.static::class
+            ),
         };
     }
 }
