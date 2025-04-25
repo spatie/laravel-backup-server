@@ -2,6 +2,18 @@
 
 All notable changes to `laravel-backup-server` will be documented in this file
 
+## 4.1.1 - 2025-04-25
+
+### What's Changed
+
+* Refactor status() method for clarity and better inheritance support by @Ayoub-Mabrouk in https://github.com/spatie/laravel-backup-server/pull/88
+
+### New Contributors
+
+* @Ayoub-Mabrouk made their first contribution in https://github.com/spatie/laravel-backup-server/pull/88
+
+**Full Changelog**: https://github.com/spatie/laravel-backup-server/compare/4.1.0...4.1.1
+
 ## 4.1.0 - 2025-04-08
 
 ### What's Changed
