@@ -13,7 +13,7 @@ trait HasAsyncDelete
 {
     public function asyncDelete(): void
     {
-        $this->update(['status' => $this->status($this)]);
+        $this->update(['status' => $this->status()]);
 
         $deletionJobClassName = $this->getDeletionJobClassName();
 
@@ -22,18 +22,20 @@ trait HasAsyncDelete
 
     public function willBeDeleted(): bool
     {
-        return $this->status === $this->status($this);
+        return $this->status === $this->status();
     }
 
     abstract public function getDeletionJobClassName(): string;
 
-    protected function status(self $class): DestinationStatus|BackupStatus|SourceStatus
+    protected function status(): DestinationStatus|BackupStatus|SourceStatus
     {
-        return match ($class::class) {
+        return match (static::class) {
             Source::class => SourceStatus::Deleting,
             Destination::class => DestinationStatus::Deleting,
             Backup::class => BackupStatus::Deleting,
-            default => throw new \Exception('Unknown class type'),
+            default => throw new \InvalidArgumentException(
+                'Unknown class type for deletion status: '.static::class
+            ),
         };
     }
 }
