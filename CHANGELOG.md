@@ -2,6 +2,24 @@
 
 All notable changes to `laravel-backup-server` will be documented in this file
 
+## 4.1.2 - 2025-09-05
+
+### What's Changed
+
+* Bump dependabot/fetch-metadata from 2.3.0 to 2.4.0 by @dependabot[bot] in https://github.com/spatie/laravel-backup-server/pull/90
+* Bump pbkdf2 from 3.0.17 to 3.1.3 by @dependabot[bot] in https://github.com/spatie/laravel-backup-server/pull/91
+* Bump aglipanci/laravel-pint-action from 2.5 to 2.6 by @dependabot[bot] in https://github.com/spatie/laravel-backup-server/pull/94
+* Fix --progress flag in rsync command by @fabio-ivona in https://github.com/spatie/laravel-backup-server/pull/96
+* Bump actions/checkout from 4 to 5 by @dependabot[bot] in https://github.com/spatie/laravel-backup-server/pull/95
+* Bump stefanzweifel/git-auto-commit-action from 5 to 6 by @dependabot[bot] in https://github.com/spatie/laravel-backup-server/pull/93
+* Update rector/rector requirement from ^1.1 to ^2.1 by @dependabot[bot] in https://github.com/spatie/laravel-backup-server/pull/92
+
+### New Contributors
+
+* @fabio-ivona made their first contribution in https://github.com/spatie/laravel-backup-server/pull/96
+
+**Full Changelog**: https://github.com/spatie/laravel-backup-server/compare/4.1.1...4.1.2
+
 ## 4.1.1 - 2025-04-25
 
 ### What's Changed
