@@ -78,7 +78,7 @@ class RunBackup implements BackupTask
             ->implode(' ');
 
         // --info=progress2
-        return "rsync -progress -zaHLK --stats  {$excludes} {$linkFromDestination} -e \"ssh {$privateKeyFile} -p {$port}\" {$source} {$destination}";
+        return "rsync --progress -zaHLK --stats  {$excludes} {$linkFromDestination} -e \"ssh {$privateKeyFile} -p {$port}\" {$source} {$destination}";
     }
 
     protected function saveRsyncSummary(Backup $backup, string $output)
