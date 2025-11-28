@@ -2,6 +2,24 @@
 
 All notable changes to `laravel-backup-server` will be documented in this file
 
+## 4.1.3 - 2025-11-28
+
+### What's Changed
+
+* Bump sha.js from 2.4.11 to 2.4.12 by @dependabot[bot] in https://github.com/spatie/laravel-backup-server/pull/97
+* Bump cipher-base from 1.0.4 to 1.0.6 by @dependabot[bot] in https://github.com/spatie/laravel-backup-server/pull/98
+* Update issue template by @AlexVanderbist in https://github.com/spatie/laravel-backup-server/pull/99
+* Fix typo by @fabio-ivona in https://github.com/spatie/laravel-backup-server/pull/100
+* Bump js-yaml from 3.13.1 to 3.14.2 by @dependabot[bot] in https://github.com/spatie/laravel-backup-server/pull/103
+* Added Symfony 8 support to all symfony/* packages. by @thecaliskan in https://github.com/spatie/laravel-backup-server/pull/104
+* Bump stefanzweifel/git-auto-commit-action from 6 to 7 by @dependabot[bot] in https://github.com/spatie/laravel-backup-server/pull/102
+
+### New Contributors
+
+* @thecaliskan made their first contribution in https://github.com/spatie/laravel-backup-server/pull/104
+
+**Full Changelog**: https://github.com/spatie/laravel-backup-server/compare/4.1.2...4.1.3
+
 ## 4.1.2 - 2025-09-05
 
 ### What's Changed
