@@ -2,6 +2,14 @@
 
 All notable changes to `laravel-backup-server` will be documented in this file
 
+## 4.2.0 - 2026-03-25
+
+### What's Changed
+
+* Add Laravel 13 support by @eugenefvdm in https://github.com/spatie/laravel-backup-server/pull/109
+
+**Full Changelog**: https://github.com/spatie/laravel-backup-server/compare/4.1.3...4.2.0
+
 ## 4.1.3 - 2025-11-28
 
 ### What's Changed
