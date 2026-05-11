@@ -2,6 +2,19 @@
 
 All notable changes to `laravel-backup-server` will be documented in this file
 
+## 4.2.1 - 2026-05-11
+
+### What's Changed
+
+* Bump dependabot/fetch-metadata from 2.5.0 to 3.0.0 by @dependabot[bot] in https://github.com/spatie/laravel-backup-server/pull/110
+* Bump lodash from 4.17.23 to 4.18.1 by @dependabot[bot] in https://github.com/spatie/laravel-backup-server/pull/112
+* Bump picomatch from 2.2.1 to 2.3.2 by @dependabot[bot] in https://github.com/spatie/laravel-backup-server/pull/113
+* Bump follow-redirects from 1.15.6 to 1.16.0 by @dependabot[bot] in https://github.com/spatie/laravel-backup-server/pull/114
+* Bump dependabot/fetch-metadata from 3.0.0 to 3.1.0 by @dependabot[bot] in https://github.com/spatie/laravel-backup-server/pull/115
+* Update orchestra/testbench requirement from ^10.0 to ^11.1 by @dependabot[bot] in https://github.com/spatie/laravel-backup-server/pull/116
+
+**Full Changelog**: https://github.com/spatie/laravel-backup-server/compare/4.2.0...4.2.1
+
 ## 4.2.0 - 2026-03-25
 
 ### What's Changed
