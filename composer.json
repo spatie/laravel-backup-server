@@ -30,7 +30,7 @@
     },
     "require-dev": {
         "mockery/mockery": "^1.6.9",
-        "orchestra/testbench": "^10.0",
+        "orchestra/testbench": "^10.0|^11.1",
         "pestphp/pest": "^4.0",
         "pestphp/pest-plugin-type-coverage": "^4.0",
         "rector/rector": "^2.1",
