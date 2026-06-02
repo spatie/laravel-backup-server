@@ -9,7 +9,7 @@
 <h1>Store and manage backups securely on a dedicated server</h1>
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/spatie/laravel-backup-server.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-backup-server)
-[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/spatie/laravel-backup-server/run-tests.yml?branch=main&label=tests)](https://github.com/spatie/laravel-backup-server/actions?query=workflow%3Arun-tests+branch%3Amain)
+[![GitHub Tests Action Status](https://github.com/spatie/laravel-backup-server/actions/workflows/run-tests.yml/badge.svg)](https://github.com/spatie/laravel-backup-server/actions?query=workflow%3Arun-tests+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/spatie/laravel-backup-server.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-backup-server)
     
 </div>
