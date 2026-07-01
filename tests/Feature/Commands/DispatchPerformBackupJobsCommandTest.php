@@ -1,9 +1,10 @@
 <?php
 
-uses(\Spatie\BackupServer\Tests\TestCase::class);
+uses(TestCase::class);
 use Illuminate\Support\Facades\Queue;
 use Spatie\BackupServer\Models\Backup;
 use Spatie\BackupServer\Models\Source;
+use Spatie\BackupServer\Tests\TestCase;
 use Spatie\TestTime\TestTime;
 
 it('will dispatch a backup job at the correct time', function () {

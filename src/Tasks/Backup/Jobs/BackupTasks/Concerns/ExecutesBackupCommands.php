@@ -5,6 +5,7 @@ namespace Spatie\BackupServer\Tasks\Backup\Jobs\BackupTasks\Concerns;
 use Spatie\BackupServer\Exceptions\BackupFailed;
 use Spatie\BackupServer\Models\Backup;
 use Spatie\BackupServer\Support\Helpers\Enums\Task;
+use Symfony\Component\Process\Process;
 
 trait ExecutesBackupCommands
 {
@@ -20,7 +21,7 @@ trait ExecutesBackupCommands
 
         $backup->logInfo(Task::Backup, "Performing {$label}...");
 
-        /** @var \Symfony\Component\Process\Process $process */
+        /** @var Process $process */
         $process = $backup->source->executeSshCommands($commands);
 
         if (! $process->isSuccessful()) {

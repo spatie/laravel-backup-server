@@ -1,9 +1,10 @@
 <?php
 
-uses(\Spatie\BackupServer\Tests\TestCase::class);
+uses(TestCase::class);
 use Illuminate\Support\Facades\Queue;
 use Spatie\BackupServer\Models\Source;
 use Spatie\BackupServer\Tasks\Cleanup\Jobs\DeleteSourceJob;
+use Spatie\BackupServer\Tests\TestCase;
 
 beforeEach(function () {
     $this->source = Source::factory()->create();

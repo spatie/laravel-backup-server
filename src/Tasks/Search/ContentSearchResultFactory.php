@@ -20,6 +20,6 @@ class ContentSearchResultFactory
                 return Str::contains($outputLine, ':');
             })
             ->values()
-            ->map(fn (string $relativePath): \Spatie\BackupServer\Tasks\Search\ContentSearchResult => new ContentSearchResult($relativePath, $backup));
+            ->map(fn (string $relativePath): ContentSearchResult => new ContentSearchResult($relativePath, $backup));
     }
 }

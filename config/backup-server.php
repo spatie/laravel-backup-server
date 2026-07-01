@@ -1,6 +1,25 @@
 <?php
 
 use Carbon\CarbonInterval;
+use Spatie\BackupServer\Notifications\Notifiable;
+use Spatie\BackupServer\Notifications\Notifications\BackupCompletedNotification;
+use Spatie\BackupServer\Notifications\Notifications\BackupFailedNotification;
+use Spatie\BackupServer\Notifications\Notifications\CleanupForDestinationCompletedNotification;
+use Spatie\BackupServer\Notifications\Notifications\CleanupForDestinationFailedNotification;
+use Spatie\BackupServer\Notifications\Notifications\CleanupForSourceCompletedNotification;
+use Spatie\BackupServer\Notifications\Notifications\CleanupForSourceFailedNotification;
+use Spatie\BackupServer\Notifications\Notifications\HealthyDestinationFoundNotification;
+use Spatie\BackupServer\Notifications\Notifications\HealthySourceFoundNotification;
+use Spatie\BackupServer\Notifications\Notifications\ServerSummaryNotification;
+use Spatie\BackupServer\Notifications\Notifications\UnhealthyDestinationFoundNotification;
+use Spatie\BackupServer\Notifications\Notifications\UnhealthySourceFoundNotification;
+use Spatie\BackupServer\Tasks\Backup\Support\BackupScheduler\DefaultBackupScheduler;
+use Spatie\BackupServer\Tasks\Cleanup\Strategies\DefaultCleanupStrategy;
+use Spatie\BackupServer\Tasks\Monitor\HealthChecks\Destination\DestinationReachable;
+use Spatie\BackupServer\Tasks\Monitor\HealthChecks\Destination\MaximumDiskCapacityUsageInPercentage;
+use Spatie\BackupServer\Tasks\Monitor\HealthChecks\Destination\MaximumInodeUsageInPercentage;
+use Spatie\BackupServer\Tasks\Monitor\HealthChecks\Source\MaximumAgeInDays;
+use Spatie\BackupServer\Tasks\Monitor\HealthChecks\Source\MaximumStorageInMB;
 
 return [
     /*
@@ -13,7 +32,7 @@ return [
          * This class is responsible for deciding when sources should be backed up. An valid backup scheduler
          * is any class that implements `Spatie\BackupServer\Tasks\Backup\Support\BackupScheduler\BackupScheduler`.
          */
-        'scheduler' => \Spatie\BackupServer\Tasks\Backup\Support\BackupScheduler\DefaultBackupScheduler::class,
+        'scheduler' => DefaultBackupScheduler::class,
     ],
 
     'notifications' => [
@@ -23,27 +42,27 @@ return [
          * can be sent.
          */
         'notifications' => [
-            \Spatie\BackupServer\Notifications\Notifications\BackupCompletedNotification::class => ['mail'],
-            \Spatie\BackupServer\Notifications\Notifications\BackupFailedNotification::class => ['mail'],
+            BackupCompletedNotification::class => ['mail'],
+            BackupFailedNotification::class => ['mail'],
 
-            \Spatie\BackupServer\Notifications\Notifications\CleanupForSourceCompletedNotification::class => ['mail'],
-            \Spatie\BackupServer\Notifications\Notifications\CleanupForSourceFailedNotification::class => ['mail'],
-            \Spatie\BackupServer\Notifications\Notifications\CleanupForDestinationCompletedNotification::class => ['mail'],
-            \Spatie\BackupServer\Notifications\Notifications\CleanupForDestinationFailedNotification::class => ['mail'],
+            CleanupForSourceCompletedNotification::class => ['mail'],
+            CleanupForSourceFailedNotification::class => ['mail'],
+            CleanupForDestinationCompletedNotification::class => ['mail'],
+            CleanupForDestinationFailedNotification::class => ['mail'],
 
-            \Spatie\BackupServer\Notifications\Notifications\HealthySourceFoundNotification::class => ['mail'],
-            \Spatie\BackupServer\Notifications\Notifications\UnhealthySourceFoundNotification::class => ['mail'],
-            \Spatie\BackupServer\Notifications\Notifications\HealthyDestinationFoundNotification::class => ['mail'],
-            \Spatie\BackupServer\Notifications\Notifications\UnhealthyDestinationFoundNotification::class => ['mail'],
+            HealthySourceFoundNotification::class => ['mail'],
+            UnhealthySourceFoundNotification::class => ['mail'],
+            HealthyDestinationFoundNotification::class => ['mail'],
+            UnhealthyDestinationFoundNotification::class => ['mail'],
 
-            \Spatie\BackupServer\Notifications\Notifications\ServerSummaryNotification::class => ['mail'],
+            ServerSummaryNotification::class => ['mail'],
         ],
 
         /*
          * Here you can specify the notifiable to which the notifications should be sent. The default
          * notifiable will use the variables specified in this config file.
          */
-        'notifiable' => \Spatie\BackupServer\Notifications\Notifiable::class,
+        'notifiable' => Notifiable::class,
 
         'mail' => [
             'to' => 'your@example.com',
@@ -75,8 +94,8 @@ return [
          * when there is no value for the check specified on either the destination or the source.
          */
         'source_health_checks' => [
-            \Spatie\BackupServer\Tasks\Monitor\HealthChecks\Source\MaximumStorageInMB::class => 5000,
-            \Spatie\BackupServer\Tasks\Monitor\HealthChecks\Source\MaximumAgeInDays::class => 2,
+            MaximumStorageInMB::class => 5000,
+            MaximumAgeInDays::class => 2,
         ],
 
         /*
@@ -84,10 +103,10 @@ return [
          * when there is no value for the check specified on either the destination or the source.
          */
         'destination_health_checks' => [
-            \Spatie\BackupServer\Tasks\Monitor\HealthChecks\Destination\DestinationReachable::class,
-            \Spatie\BackupServer\Tasks\Monitor\HealthChecks\Destination\MaximumDiskCapacityUsageInPercentage::class => 90,
-            \Spatie\BackupServer\Tasks\Monitor\HealthChecks\Destination\MaximumStorageInMB::class => 0,
-            \Spatie\BackupServer\Tasks\Monitor\HealthChecks\Destination\MaximumInodeUsageInPercentage::class => 90,
+            DestinationReachable::class,
+            MaximumDiskCapacityUsageInPercentage::class => 90,
+            Spatie\BackupServer\Tasks\Monitor\HealthChecks\Destination\MaximumStorageInMB::class => 0,
+            MaximumInodeUsageInPercentage::class => 90,
         ],
     ],
 
@@ -101,7 +120,7 @@ return [
          * No matter how you configure it the default strategy will never
          * delete the newest backup.
          */
-        'strategy' => \Spatie\BackupServer\Tasks\Cleanup\Strategies\DefaultCleanupStrategy::class,
+        'strategy' => DefaultCleanupStrategy::class,
 
         'default_strategy' => [
 
