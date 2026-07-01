@@ -1,10 +1,11 @@
 <?php
 
-uses(\Spatie\BackupServer\Tests\TestCase::class);
+uses(TestCase::class);
 use Illuminate\Support\Facades\Notification;
 use Spatie\BackupServer\Models\Backup;
 use Spatie\BackupServer\Notifications\Notifications\BackupFailedNotification;
 use Spatie\BackupServer\Tasks\Backup\Events\BackupFailedEvent;
+use Spatie\BackupServer\Tests\TestCase;
 
 beforeEach(function () {
     $this->backup = Backup::factory()->create();

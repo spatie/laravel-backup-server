@@ -1,12 +1,14 @@
 <?php
 
-uses(\Spatie\BackupServer\Tests\TestCase::class);
+uses(TestCase::class);
 
 use Spatie\BackupServer\Enums\BackupStatus;
 use Spatie\BackupServer\Models\Backup;
 use Spatie\BackupServer\Tasks\Monitor\HealthChecks\Source\MaximumStorageInMB;
+use Spatie\BackupServer\Tests\Feature\Tasks\Monitor\Concerns\HealthCheckAssertions;
+use Spatie\BackupServer\Tests\TestCase;
 
-uses(\Spatie\BackupServer\Tests\Feature\Tasks\Monitor\Concerns\HealthCheckAssertions::class);
+uses(HealthCheckAssertions::class);
 
 it('will fail when it is higher then the given number of megabytes', function () {
     $maximumSizeInMB = 1;

@@ -1,9 +1,10 @@
 <?php
 
-uses(\Spatie\BackupServer\Tests\TestCase::class);
+uses(TestCase::class);
 use Spatie\BackupServer\Exceptions\InvalidCommandInput;
 use Spatie\BackupServer\Models\Backup;
 use Spatie\BackupServer\Tests\Database\Factories\SourceFactory;
+use Spatie\BackupServer\Tests\TestCase;
 
 it('lists sources', function () {
     $this->artisan('backup-server:list')->assertExitCode(0);
