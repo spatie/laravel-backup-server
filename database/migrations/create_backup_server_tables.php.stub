@@ -38,6 +38,7 @@ class CreateBackupServerTables extends Migration
             $table->boolean('healthy')->default(false);
 
             $table->string('name');
+            $table->string('directory_name')->nullable()->unique();
             $table->string('host');
             $table->string('ssh_user');
             $table->integer('ssh_port')->default(22);

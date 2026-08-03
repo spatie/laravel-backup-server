@@ -20,6 +20,10 @@ On the destination disk a directory will be created with this format:
 
 `/<source-id>/<backup-<date-in-YmdHis-format>`
 
+If the source has a [`directory_name`](/docs/laravel-backup-server/v1/taking-backups/creating-a-source#content-naming-the-backup-directory), that is used instead of the source's id.
+
+`/<source-directory-name>/<backup-<date-in-YmdHis-format>`
+
 If that directory could not be created - you know the drill by now - the backup process will stop.
 
 ## 4. Perform pre-backup commands
