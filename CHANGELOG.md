@@ -2,6 +2,23 @@
 
 All notable changes to `laravel-backup-server` will be documented in this file
 
+## 4.3.0 - 2026-08-07
+
+### What's Changed
+
+* Bump @babel/core from 7.8.3 to 7.29.7 by @dependabot[bot] in https://github.com/spatie/laravel-backup-server/pull/118
+* Bump js-yaml from 3.14.2 to 3.15.0 by @dependabot[bot] in https://github.com/spatie/laravel-backup-server/pull/121
+* Bump ws from 6.2.3 to 6.2.4 by @dependabot[bot] in https://github.com/spatie/laravel-backup-server/pull/122
+* Bump websocket-driver from 0.7.3 to 0.7.5 by @dependabot[bot] in https://github.com/spatie/laravel-backup-server/pull/123
+* Bump brace-expansion from 1.1.11 to 1.1.16 by @dependabot[bot] in https://github.com/spatie/laravel-backup-server/pull/124
+* Allow naming a source's backup directory by @aerni in https://github.com/spatie/laravel-backup-server/pull/125
+
+### New Contributors
+
+* @aerni made their first contribution in https://github.com/spatie/laravel-backup-server/pull/125
+
+**Full Changelog**: https://github.com/spatie/laravel-backup-server/compare/4.2.1...4.3.0
+
 ## 4.2.1 - 2026-05-11
 
 ### What's Changed
