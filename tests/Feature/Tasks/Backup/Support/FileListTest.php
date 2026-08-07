@@ -1,8 +1,9 @@
 <?php
 
-uses(\Spatie\BackupServer\Tests\TestCase::class);
+uses(TestCase::class);
 use Spatie\BackupServer\Tasks\Backup\Support\FileList\FileListEntry;
 use Spatie\BackupServer\Tests\Factories\BackupFactory;
+use Spatie\BackupServer\Tests\TestCase;
 use Symfony\Component\Finder\Exception\DirectoryNotFoundException;
 
 beforeEach(function () {

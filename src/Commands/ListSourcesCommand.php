@@ -44,7 +44,7 @@ class ListSourcesCommand extends Command
         $headers = array_values($this->headers);
 
         $columnStyles = collect($headers)
-            ->map(function (string $header): \Spatie\BackupServer\Support\AlignRightTableStyle|\Spatie\BackupServer\Support\AlignCenterTableStyle|null {
+            ->map(function (string $header): AlignRightTableStyle|AlignCenterTableStyle|null {
                 if (in_array($header, ['Id', 'Youngest Backup Size', '# of Backups', 'Total Backup Size', 'Used storage'])) {
                     return new AlignRightTableStyle;
                 }

@@ -3,6 +3,8 @@
 namespace Spatie\BackupServer\Tasks\Monitor;
 
 use Illuminate\Database\Eloquent\Model;
+use Spatie\BackupServer\Models\Destination;
+use Spatie\BackupServer\Models\Source;
 use Spatie\BackupServer\Tasks\Monitor\HealthChecks\HealthCheck;
 
 class HealthCheckCollection
@@ -10,7 +12,7 @@ class HealthCheckCollection
     private ?array $healthCheckResults = null;
 
     /**
-     * @param  \Spatie\BackupServer\Models\Source|\Spatie\BackupServer\Models\Destination  $model
+     * @param  Source|Destination  $model
      */
     public function __construct(private array $healthCheckClassNames, private Model $model)
     {
@@ -45,7 +47,7 @@ class HealthCheckCollection
         }
 
         $healthChecks = collect($this->healthCheckClassNames)
-            ->map(function ($arguments, string $healthCheckClassName): \Spatie\BackupServer\Tasks\Monitor\HealthChecks\HealthCheck {
+            ->map(function ($arguments, string $healthCheckClassName): HealthCheck {
                 if (is_numeric($healthCheckClassName)) {
                     $healthCheckClassName = $arguments;
                     $arguments = [];
@@ -60,7 +62,7 @@ class HealthCheckCollection
         /** @var HealthCheck $healthCheck */
         foreach ($healthChecks as $healthCheck) {
             if ($runRemainingChecks) {
-                /** @var \Spatie\BackupServer\Tasks\Monitor\HealthCheckResult $healthCheckResult */
+                /** @var HealthCheckResult $healthCheckResult */
                 $healthCheckResult = $healthCheck->getResult($this->model);
 
                 $healthCheckResults[] = $healthCheckResult;

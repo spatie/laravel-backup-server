@@ -1,10 +1,11 @@
 <?php
 
-uses(\Spatie\BackupServer\Tests\TestCase::class);
+uses(TestCase::class);
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Spatie\BackupServer\Models\Source;
 use Spatie\BackupServer\Tasks\Summary\Actions\CreateServerSummaryAction;
+use Spatie\BackupServer\Tests\TestCase;
 use Spatie\Docker\DockerContainer;
 
 beforeEach(function () {

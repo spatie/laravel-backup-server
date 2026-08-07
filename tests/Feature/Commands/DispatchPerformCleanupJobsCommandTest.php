@@ -1,6 +1,6 @@
 <?php
 
-uses(\Spatie\BackupServer\Tests\TestCase::class);
+uses(TestCase::class);
 
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
@@ -11,6 +11,7 @@ use Spatie\BackupServer\Models\Backup;
 use Spatie\BackupServer\Models\Destination;
 use Spatie\BackupServer\Models\Source;
 use Spatie\BackupServer\Tests\Factories\BackupFactory;
+use Spatie\BackupServer\Tests\TestCase;
 use Spatie\TestTime\TestTime;
 
 beforeEach(function () {
@@ -114,7 +115,7 @@ it('will clean up failed backup that are older than a day', function () {
 });
 
 it('will delete all backups until the total size is under the limit', function () {
-    /** @var \Spatie\BackupServer\Models\Source $source */
+    /** @var Source $source */
     $source = Source::factory()->create([
         'delete_oldest_backups_when_using_more_megabytes_than' => 5,
     ]);
@@ -132,7 +133,7 @@ it('will delete all backups until the total size is under the limit', function (
 });
 
 it('the delete oldest backups when using more megabytes than field is lower that the backup size it will not delete the youngest backup', function () {
-    /** @var \Spatie\BackupServer\Models\Source $source */
+    /** @var Source $source */
     $source = Source::factory()->create([
         'delete_oldest_backups_when_using_more_megabytes_than' => 1,
     ]);

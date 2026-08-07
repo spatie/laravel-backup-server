@@ -1,12 +1,13 @@
 <?php
 
-uses(\Spatie\BackupServer\Tests\TestCase::class);
+uses(TestCase::class);
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Support\Facades\Storage;
 use Spatie\BackupServer\Enums\BackupStatus;
 use Spatie\BackupServer\Models\Backup;
 use Spatie\BackupServer\Tasks\Cleanup\Jobs\DeleteBackupJob;
 use Spatie\BackupServer\Tests\Factories\BackupFactory;
+use Spatie\BackupServer\Tests\TestCase;
 use Spatie\TestTime\TestTime;
 
 beforeEach(function () {
@@ -32,7 +33,7 @@ it('has a method to determine if the backup directory exists', function () {
 it('will fill the completed at field when marking a backup as completed', function () {
     TestTime::freeze();
 
-    /** @var \Spatie\BackupServer\Models\Backup $backup */
+    /** @var Backup $backup */
     $backup = Backup::factory()->create();
 
     $backup->markAsCompleted();

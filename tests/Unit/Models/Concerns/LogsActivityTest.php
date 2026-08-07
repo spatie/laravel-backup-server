@@ -1,11 +1,12 @@
 <?php
 
-uses(\Spatie\BackupServer\Tests\TestCase::class);
+uses(TestCase::class);
 use Spatie\BackupServer\Models\Backup;
 use Spatie\BackupServer\Models\Destination;
 use Spatie\BackupServer\Models\Source;
 use Spatie\BackupServer\Support\Helpers\Enums\LogLevel;
 use Spatie\BackupServer\Support\Helpers\Enums\Task;
+use Spatie\BackupServer\Tests\TestCase;
 
 test('a source can log activity', function () {
     $source = Source::factory()->create();

@@ -1,11 +1,12 @@
 <?php
 
-uses(\Spatie\BackupServer\Tests\TestCase::class);
+uses(TestCase::class);
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Notification;
 use Spatie\BackupServer\Notifications\Notifiable;
 use Spatie\BackupServer\Notifications\Notifications\ServerSummaryNotification;
 use Spatie\BackupServer\Tasks\Summary\Jobs\SendServerSummaryNotificationJob;
+use Spatie\BackupServer\Tests\TestCase;
 
 beforeEach(function () {
     Carbon::setTestNow();

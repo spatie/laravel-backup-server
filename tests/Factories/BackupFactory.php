@@ -3,6 +3,7 @@
 namespace Spatie\BackupServer\Tests\Factories;
 
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 use Spatie\BackupServer\Enums\BackupStatus;
 use Spatie\BackupServer\Models\Backup;
 use Spatie\BackupServer\Models\Destination;
@@ -65,7 +66,7 @@ class BackupFactory
         $this->makeSureBackupDirectoryExists();
 
         $files = collect(File::allFiles($directory))
-            ->mapWithKeys(fn (SplFileInfo $file) => [$file->getPathname() => \Illuminate\Support\Str::after($file->getPathname(), 'stubs/serverContent/')])
+            ->mapWithKeys(fn (SplFileInfo $file) => [$file->getPathname() => Str::after($file->getPathname(), 'stubs/serverContent/')])
             ->toArray();
 
         $this->filesWithRelativeDestinations = $files;
@@ -87,7 +88,7 @@ class BackupFactory
             $attributes['status'] = $this->status;
         }
 
-        /** @var \Spatie\BackupServer\Models\Backup $backup */
+        /** @var Backup $backup */
         $backup = Backup::factory()->create($attributes);
 
         if ($this->createBackupDirectory) {

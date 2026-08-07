@@ -1,7 +1,8 @@
 <?php
 
-uses(\Spatie\BackupServer\Tests\TestCase::class);
+uses(TestCase::class);
 use Spatie\BackupServer\Support\Helpers\Format;
+use Spatie\BackupServer\Tests\TestCase;
 use Spatie\TestTime\TestTime;
 
 it('can format a number as a human readable filesize', function () {

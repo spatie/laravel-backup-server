@@ -24,7 +24,7 @@ class RunBackup implements BackupTask
                 $backup->handleProgress($type, $progress);
             });
 
-        /** @var \Spatie\BackupServer\Models\Backup $previousCompletedBackup */
+        /** @var Backup $previousCompletedBackup */
         if ($previousCompletedBackup = $backup->source->backups()->completed()->latest()->first()) {
             $pendingBackup->incrementalFrom($previousCompletedBackup->destinationLocation()->getFullPath());
         }
