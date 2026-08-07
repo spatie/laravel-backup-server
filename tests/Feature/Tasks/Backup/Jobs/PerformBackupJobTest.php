@@ -41,6 +41,16 @@ it('can perform a backup', function () {
     expect($this->source->backups()->first()->has('src/exclude.txt'))->toBeFalse();
 });
 
+it('will use the directory name of the source when it is set', function () {
+    $this->container->addFiles(__DIR__.'/stubs/serverContent/testServer', '/src');
+
+    $this->source->update(['directory_name' => 'acme-production']);
+
+    $this->artisan('backup-server:dispatch-backups')->assertExitCode(0);
+
+    expect($this->source->backups()->first()->path)->toStartWith('acme-production/');
+});
+
 it('can perform a pre backup command', function () {
     $this->container->addFiles(__DIR__.'/stubs/serverContent/testServer', '/src');
 
