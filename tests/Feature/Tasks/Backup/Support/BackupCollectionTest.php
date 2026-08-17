@@ -3,6 +3,7 @@
 uses(TestCase::class);
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use Spatie\BackupServer\Models\Backup;
 use Spatie\BackupServer\Models\Destination;
 use Spatie\BackupServer\Tasks\Backup\Support\BackupCollection;
 use Spatie\BackupServer\Tests\Factories\BackupFactory;
@@ -42,4 +43,12 @@ it('will only recalculate the size of a backups with a path in a backup collecti
     $backups->recalculateRealSizeInKb();
 
     expect($this->backup1->refresh()->real_size_in_kb)->toBe(1234);
+});
+
+it('returns the oldest backup regardless of collection order', function () {
+    $older = Backup::factory()->create(['created_at' => now()->subDay()]);
+    $newer = Backup::factory()->create(['created_at' => now()]);
+
+    expect((new BackupCollection([$newer, $older]))->oldest()->is($older))->toBeTrue()
+        ->and((new BackupCollection([$older, $newer]))->oldest()->is($older))->toBeTrue();
 });
