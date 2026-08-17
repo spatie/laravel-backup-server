@@ -1,8 +1,9 @@
 <?php
 
-uses(TestCase::class);
 use Spatie\BackupServer\Tasks\Backup\Support\Rsync\RsyncProgressOutput;
 use Spatie\BackupServer\Tests\TestCase;
+
+uses(TestCase::class);
 
 it('can return the transfer speed', function () {
     $output = '     9,846,214  77%   11.96MB/s    0:00:00 (xfr#1317, ir-chk=1014/2680)';

@@ -1,12 +1,13 @@
 <?php
 
-uses(TestCase::class);
 use Illuminate\Support\Facades\Notification;
 use Spatie\BackupServer\Models\Backup;
 use Spatie\BackupServer\Notifications\Notifiable;
 use Spatie\BackupServer\Notifications\Notifications\BackupCompletedNotification;
 use Spatie\BackupServer\Tasks\Backup\Events\BackupCompletedEvent;
 use Spatie\BackupServer\Tests\TestCase;
+
+uses(TestCase::class);
 
 beforeEach(function () {
     Notification::fake();

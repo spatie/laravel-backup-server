@@ -1,7 +1,5 @@
 <?php
 
-uses(TestCase::class);
-
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Notification;
@@ -13,6 +11,8 @@ use Spatie\BackupServer\Models\Source;
 use Spatie\BackupServer\Tests\Factories\BackupFactory;
 use Spatie\BackupServer\Tests\TestCase;
 use Spatie\TestTime\TestTime;
+
+uses(TestCase::class);
 
 beforeEach(function () {
     // Storage::fake('backups');

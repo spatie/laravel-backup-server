@@ -1,11 +1,12 @@
 <?php
 
-uses(TestCase::class);
 use Illuminate\Support\Facades\Notification;
 use Spatie\BackupServer\Models\Destination;
 use Spatie\BackupServer\Notifications\Notifications\HealthyDestinationFoundNotification;
 use Spatie\BackupServer\Tasks\Monitor\Events\HealthyDestinationFoundEvent;
 use Spatie\BackupServer\Tests\TestCase;
+
+uses(TestCase::class);
 
 beforeEach(function () {
     $this->destination = Destination::factory()->create();

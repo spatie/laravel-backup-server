@@ -1,11 +1,12 @@
 <?php
 
-uses(TestCase::class);
 use Illuminate\Support\Facades\Notification;
 use Spatie\BackupServer\Models\Source;
 use Spatie\BackupServer\Notifications\Notifications\CleanupForSourceFailedNotification;
 use Spatie\BackupServer\Tasks\Cleanup\Events\CleanupForSourceFailedEvent;
 use Spatie\BackupServer\Tests\TestCase;
+
+uses(TestCase::class);
 
 beforeEach(function () {
     $this->source = Source::factory()->create();

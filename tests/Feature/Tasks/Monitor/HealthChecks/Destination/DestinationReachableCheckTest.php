@@ -1,11 +1,11 @@
 <?php
 
-uses(TestCase::class);
 use Spatie\BackupServer\Models\Destination;
 use Spatie\BackupServer\Tasks\Monitor\HealthChecks\Destination\DestinationReachable;
 use Spatie\BackupServer\Tests\Feature\Tasks\Monitor\Concerns\HealthCheckAssertions;
 use Spatie\BackupServer\Tests\TestCase;
 
+uses(TestCase::class);
 uses(HealthCheckAssertions::class);
 
 it('will pass when the destination is reachable', function () {

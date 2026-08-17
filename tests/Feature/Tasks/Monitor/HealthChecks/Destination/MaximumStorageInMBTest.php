@@ -1,13 +1,12 @@
 <?php
 
-uses(TestCase::class);
-
 use Spatie\BackupServer\Enums\BackupStatus;
 use Spatie\BackupServer\Models\Backup;
 use Spatie\BackupServer\Tasks\Monitor\HealthChecks\Destination\MaximumStorageInMB;
 use Spatie\BackupServer\Tests\Feature\Tasks\Monitor\Concerns\HealthCheckAssertions;
 use Spatie\BackupServer\Tests\TestCase;
 
+uses(TestCase::class);
 uses(HealthCheckAssertions::class);
 
 it('can check if the storage exceeds the maximum storage', function () {

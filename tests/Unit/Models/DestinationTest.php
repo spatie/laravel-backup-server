@@ -1,10 +1,11 @@
 <?php
 
-uses(TestCase::class);
 use Illuminate\Support\Facades\Queue;
 use Spatie\BackupServer\Models\Destination;
 use Spatie\BackupServer\Tasks\Cleanup\Jobs\DeleteDestinationJob;
 use Spatie\BackupServer\Tests\TestCase;
+
+uses(TestCase::class);
 
 beforeEach(function () {
     $this->destination = Destination::factory()->create();

@@ -1,6 +1,5 @@
 <?php
 
-uses(TestCase::class);
 use Spatie\BackupServer\Models\Source;
 use Spatie\BackupServer\Tasks\Monitor\HealthChecks\Source\MaximumAgeInDays;
 use Spatie\BackupServer\Tests\Factories\BackupFactory;
@@ -8,6 +7,7 @@ use Spatie\BackupServer\Tests\Feature\Tasks\Monitor\Concerns\HealthCheckAssertio
 use Spatie\BackupServer\Tests\TestCase;
 use Spatie\TestTime\TestTime;
 
+uses(TestCase::class);
 uses(HealthCheckAssertions::class);
 
 beforeEach(function () {

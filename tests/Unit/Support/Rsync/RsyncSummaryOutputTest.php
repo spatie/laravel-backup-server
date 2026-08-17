@@ -1,8 +1,9 @@
 <?php
 
-uses(TestCase::class);
 use Spatie\BackupServer\Tasks\Backup\Support\Rsync\RsyncSummaryOutput;
 use Spatie\BackupServer\Tests\TestCase;
+
+uses(TestCase::class);
 
 beforeEach(function () {
     $summary = file_get_contents(__DIR__.'/stubs/rsyncSummary.txt');

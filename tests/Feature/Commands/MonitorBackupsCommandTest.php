@@ -1,13 +1,13 @@
 <?php
 
-uses(TestCase::class);
-
 use Illuminate\Support\Facades\Notification;
 use Spatie\BackupServer\Models\Destination;
 use Spatie\BackupServer\Models\Source;
 use Spatie\BackupServer\Notifications\Notifications\UnhealthyDestinationFoundNotification;
 use Spatie\BackupServer\Notifications\Notifications\UnhealthySourceFoundNotification;
 use Spatie\BackupServer\Tests\TestCase;
+
+uses(TestCase::class);
 
 beforeEach(function () {
     Notification::fake();

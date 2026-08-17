@@ -1,6 +1,5 @@
 <?php
 
-uses(TestCase::class);
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Support\Facades\Storage;
 use Spatie\BackupServer\Enums\BackupStatus;
@@ -9,6 +8,8 @@ use Spatie\BackupServer\Tasks\Cleanup\Jobs\DeleteBackupJob;
 use Spatie\BackupServer\Tests\Factories\BackupFactory;
 use Spatie\BackupServer\Tests\TestCase;
 use Spatie\TestTime\TestTime;
+
+uses(TestCase::class);
 
 beforeEach(function () {
     Storage::fake();

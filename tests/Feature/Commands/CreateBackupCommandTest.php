@@ -1,8 +1,9 @@
 <?php
 
-uses(TestCase::class);
 use Spatie\BackupServer\Models\Source;
 use Spatie\BackupServer\Tests\TestCase;
+
+uses(TestCase::class);
 
 it('can immediately perform a backup', function () {
     $source = Source::factory()->create();

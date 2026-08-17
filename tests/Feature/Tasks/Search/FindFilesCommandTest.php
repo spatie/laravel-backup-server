@@ -1,9 +1,10 @@
 <?php
 
-uses(TestCase::class);
 use Illuminate\Support\Facades\File;
 use Spatie\BackupServer\Models\Backup;
 use Spatie\BackupServer\Tests\TestCase;
+
+uses(TestCase::class);
 
 beforeEach(function () {
     $this->backup = Backup::factory()->create();

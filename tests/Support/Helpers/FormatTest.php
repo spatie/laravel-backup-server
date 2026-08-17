@@ -1,9 +1,10 @@
 <?php
 
-uses(TestCase::class);
 use Spatie\BackupServer\Support\Helpers\Format;
 use Spatie\BackupServer\Tests\TestCase;
 use Spatie\TestTime\TestTime;
+
+uses(TestCase::class);
 
 it('can format a number as a human readable filesize', function () {
     expect(Format::KbToHumanReadableSize(10))->toEqual('10 KB');

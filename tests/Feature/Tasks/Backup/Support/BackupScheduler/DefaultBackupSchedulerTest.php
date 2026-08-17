@@ -1,10 +1,11 @@
 <?php
 
-uses(TestCase::class);
 use Illuminate\Support\Carbon;
 use Spatie\BackupServer\Models\Source;
 use Spatie\BackupServer\Tasks\Backup\Support\BackupScheduler\BackupScheduler;
 use Spatie\BackupServer\Tests\TestCase;
+
+uses(TestCase::class);
 
 it('runs a backup if the cron expression is due', function () {
     Carbon::setTestNow(now()->setTime(2, 0));
