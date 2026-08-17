@@ -2,6 +2,15 @@
 
 All notable changes to `laravel-backup-server` will be documented in this file
 
+## 4.3.1 - 2026-08-17
+
+### What's Changed
+
+* Bump js-yaml from 3.15.0 to 3.15.1 by @dependabot[bot] in https://github.com/spatie/laravel-backup-server/pull/126
+* Fix `oldest()` deleting recent backups instead of old ones by @aerni in https://github.com/spatie/laravel-backup-server/pull/127
+
+**Full Changelog**: https://github.com/spatie/laravel-backup-server/compare/4.3.0...4.3.1
+
 ## 4.3.0 - 2026-08-07
 
 ### What's Changed
