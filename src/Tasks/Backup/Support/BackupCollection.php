@@ -30,7 +30,10 @@ class BackupCollection extends Collection
 
     public function oldest(): ?Backup
     {
-        return $this->reverse()->last();
+        return $this->sortBy([
+            ['created_at', 'asc'],
+            ['id', 'asc'],
+        ])->first();
     }
 
     public function recalculateRealSizeInKb(): self
