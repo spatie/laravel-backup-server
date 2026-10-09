@@ -36,7 +36,7 @@ class ListSourcesCommand extends Command
 
         $this->guardAgainstInvalidOptionValues($sortBy);
 
-        $rows = Source::all()
+        $rows = config('backup-server.backup_source_model')::all()
             ->map(fn (Source $source) => $this->convertToRow($source))
             ->sortBy($sortBy, SORT_REGULAR, $this->option('desc'))
             ->map(fn (Collection $data) => $this->makeRowReadable($data));

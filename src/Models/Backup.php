@@ -77,17 +77,17 @@ class Backup extends Model
 
     public function source(): BelongsTo
     {
-        return $this->belongsTo(Source::class);
+        return $this->belongsTo(config('backup-server.backup_source_model'));
     }
 
     public function destination(): BelongsTo
     {
-        return $this->belongsTo(Destination::class);
+        return $this->belongsTo(config('backup-server.backup_destination_model'));
     }
 
     public function logItems(): HasMany
     {
-        return $this->hasMany(BackupLogItem::class);
+        return $this->hasMany(config('backup-server.backup_log_item_model'), 'backup_id');
     }
 
     public function sourceLocation(): SourceLocation

@@ -1,6 +1,10 @@
 <?php
 
 use Carbon\CarbonInterval;
+use Spatie\BackupServer\Models\Backup;
+use Spatie\BackupServer\Models\BackupLogItem;
+use Spatie\BackupServer\Models\Destination;
+use Spatie\BackupServer\Models\Source;
 use Spatie\BackupServer\Notifications\Notifiable;
 use Spatie\BackupServer\Notifications\Notifications\BackupCompletedNotification;
 use Spatie\BackupServer\Notifications\Notifications\BackupFailedNotification;
@@ -156,6 +160,23 @@ return [
             'delete_oldest_backups_when_using_more_megabytes_than' => 5000,
         ],
     ],
+
+    /*
+     * The fully qualified class name of the backup model
+     */
+    'backup_model' => Backup::class,
+    /*
+     * The fully qualified class name of the backup log item model
+     */
+    'backup_log_item_model' => BackupLogItem::class,
+    /*
+     * The fully qualified class name of the destination model
+     */
+    'backup_destination_model' => Destination::class,
+    /*
+     * The fully qualified class name of the source model
+     */
+    'backup_source_model' => Source::class,
 
     /*
      * Here you can specify on which connection the backup server jobs will be dispatched.

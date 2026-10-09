@@ -6,6 +6,7 @@ use Exception;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Spatie\BackupServer\Enums\DestinationStatus;
@@ -45,6 +46,16 @@ class Destination extends Model
     public function getDeletionJobClassName(): string
     {
         return DeleteDestinationJob::class;
+    }
+
+    public function backups(): HasMany
+    {
+        return $this->hasMany(config('backup-server.backup_model'), 'destination_id')->orderByDesc('created_at');
+    }
+
+    public function logItems(): HasMany
+    {
+        return $this->hasMany(config('backup-server.backup_log_item_model'), 'destination_id');
     }
 
     public function disk(): Filesystem
