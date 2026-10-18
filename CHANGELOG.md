@@ -2,6 +2,19 @@
 
 All notable changes to `laravel-backup-server` will be documented in this file
 
+## 4.3.2 - 2026-10-15
+
+### Fixed
+
+* Add missing casts to the Destination model, fixing `willBeDeleted()` returning false after a destination is reloaded from the database. Closes #132 via #136.
+* Cast destination retention and health settings to integers.
+
+**Compatibility note:** `$destination->status` now returns a `DestinationStatus` enum instead of a string, consistent with the Source and Backup models. Use enum comparisons or `->value` where needed.
+
+This release also includes the previously merged browserslist, js-yaml, compression, and proxy-addr dependency updates.
+
+**Full Changelog**: https://github.com/spatie/laravel-backup-server/compare/4.3.1...4.3.2
+
 ## 4.3.1 - 2026-08-17
 
 ### What's Changed

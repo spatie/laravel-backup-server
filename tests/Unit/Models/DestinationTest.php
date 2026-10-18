@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Queue;
+use Spatie\BackupServer\Enums\DestinationStatus;
 use Spatie\BackupServer\Models\Destination;
 use Spatie\BackupServer\Tasks\Cleanup\Jobs\DeleteDestinationJob;
 use Spatie\BackupServer\Tests\TestCase;
@@ -44,4 +45,17 @@ test('an async delete of a destination will get queued', function () {
 
     expect(Destination::get())->toHaveCount(1);
     Queue::assertPushed(DeleteDestinationJob::class);
+});
+
+it('knows a destination will be deleted after reloading it from the database', function () {
+    Queue::fake();
+
+    expect($this->destination->fresh()->willBeDeleted())->toBeFalse();
+
+    $this->destination->asyncDelete();
+
+    $destination = $this->destination->fresh();
+
+    expect($destination->status)->toBe(DestinationStatus::Deleting);
+    expect($destination->willBeDeleted())->toBeTrue();
 });
