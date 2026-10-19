@@ -11,11 +11,29 @@ on:
       - 'phpunit.xml.dist'
       - 'composer.json'
       - 'composer.lock'
+      - 'package.json'
+      - 'yarn.lock'
 
 permissions:
   contents: read
 
 jobs:
+  javascript-dependencies:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: yarn
+
+      - name: Validate lockfile and dependency integrity
+        run: yarn install --frozen-lockfile --ignore-scripts
+
   test:
     runs-on: ubuntu-latest
     timeout-minutes: 10
