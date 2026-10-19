@@ -18,13 +18,13 @@ class DispatchPerformCleanupJobsCommand extends Command
     {
         $this->info('Dispatching cleanup jobs...');
 
-        Source::each(function (Source $source) {
+        config('backup-server.backup_source_model')::each(function (Source $source) {
             $this->comment("Dispatching cleanup job for source `{$source->name}` (id: {$source->id})...");
 
             dispatch(new PerformCleanupSourceJob($source));
         });
 
-        Destination::each(function (Destination $destination) {
+        config('backup-server.backup_destination_model')::each(function (Destination $destination) {
             $this->comment("Dispatching cleanup job for destination `{$destination->name}` (id: {$destination->id})...");
 
             dispatch(new PerformCleanupDestinationJob($destination));

@@ -31,7 +31,7 @@ class CreateBackupAction
 
     public function execute(Source $source): Backup
     {
-        $backup = Backup::create([
+        $backup = config('backup-server.backup_model')::create([
             'status' => BackupStatus::Pending,
             'source_id' => $source->id,
             'destination_id' => $source->destination->id,

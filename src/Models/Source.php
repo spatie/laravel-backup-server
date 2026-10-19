@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\BackupServer\Enums\SourceStatus;
 use Spatie\BackupServer\Models\Concerns\HasAsyncDelete;
 use Spatie\BackupServer\Models\Concerns\HasBackupRelation;
@@ -65,9 +66,19 @@ class Source extends Model
         return DeleteSourceJob::class;
     }
 
+    public function backups(): HasMany
+    {
+        return $this->hasMany(config('backup-server.backup_model'), 'source_id')->orderByDesc('created_at');
+    }
+
+    public function logItems(): HasMany
+    {
+        return $this->hasMany(config('backup-server.backup_log_item_model'), 'source_id');
+    }
+
     public function destination(): BelongsTo
     {
-        return $this->belongsTo(Destination::class);
+        return $this->belongsTo(config('backup-server.backup_destination_model'));
     }
 
     public function scopeNamed(Builder $builder, string $name): void

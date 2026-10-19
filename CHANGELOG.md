@@ -2,6 +2,58 @@
 
 All notable changes to `laravel-backup-server` will be documented in this file
 
+## 4.4.0 - 2026-10-19
+
+### Custom models
+
+You can now extend and configure the Backup, BackupLogItem, Destination, and Source models. Package queries, relationships, backup creation, console logging, and asynchronous deletion honor the configured subclasses.
+
+Thanks to @fabio-ivona for implementing this feature in #131.
+
+### Validation and maintenance
+
+- Added six regression cases covering custom model relationships, foreign keys, global scopes, logging, and deletion, plus configuration documentation.
+- Updated development tooling to Pest 5.3.3, its type-coverage plugin 5.0.3, and Pint 1.32.1.
+- CI verifies PHP 8.5 / Laravel 13 with lowest-compatible and latest stable dependencies, alongside JavaScript dependency integrity.
+- Fixed a disk-size test fixture so it reliably allocates additional storage.
+
+This release requires PHP 8.5 and Laravel 13. Older Laravel support was dropped to align with current testing dependencies.
+
+**Full changelog:** https://github.com/spatie/laravel-backup-server/compare/4.3.3...4.4.0
+
+## 4.3.3 - 2026-10-19
+
+### Fixed
+
+- Update the development dependency brace-expansion from 1.1.16 to 1.1.21, incorporating additional denial-of-service protections (#135).
+- Avoid Docker container-name reuse races in the backup and summary integration tests (#137).
+- Skip Dependabot auto-merge when the repository has auto-merge disabled.
+
+### Tooling and requirements
+
+- Upgrade to Pest 5.3, its type-coverage plugin 5, and PHPUnit 13 configuration.
+- Test PHP 8.5 and Laravel 13 against both lowest and stable dependencies; add pull-request coverage and frozen Yarn lockfile integrity validation.
+- Laravel 13 is now required. Laravel 12 support was dropped because its Testbench requires Symfony Process 7, conflicting with Pest 5.3. PHP 8.5 remains the minimum requirement. The documented requirements have been aligned.
+
+Validation: both dependency matrices passed 92 tests and 1,183 assertions, with four pre-existing skips; Yarn dependency validation and PHP styling also passed on the merged commit.
+
+This release does not resolve the separate legacy Laravel Mix / webpack-dev-server security-update conflict.
+
+**Full Changelog**: https://github.com/spatie/laravel-backup-server/compare/4.3.2...4.3.3
+
+## 4.3.2 - 2026-10-15
+
+### Fixed
+
+* Add missing casts to the Destination model, fixing `willBeDeleted()` returning false after a destination is reloaded from the database. Closes #132 via #136.
+* Cast destination retention and health settings to integers.
+
+**Compatibility note:** `$destination->status` now returns a `DestinationStatus` enum instead of a string, consistent with the Source and Backup models. Use enum comparisons or `->value` where needed.
+
+This release also includes the previously merged browserslist, js-yaml, compression, and proxy-addr dependency updates.
+
+**Full Changelog**: https://github.com/spatie/laravel-backup-server/compare/4.3.1...4.3.2
+
 ## 4.3.1 - 2026-08-17
 
 ### What's Changed

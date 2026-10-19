@@ -27,7 +27,7 @@ class ListDestinationsCommand extends Command
             'Inode Usage',
         ];
 
-        $rows = Destination::get()
+        $rows = config('backup-server.backup_destination_model')::get()
             ->map(fn (Destination $destination) => $this->convertToRow($destination));
 
         $columnStyles = collect($headers)

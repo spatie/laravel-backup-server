@@ -21,11 +21,11 @@ class BackupLogItem extends Model
 
     public function source(): BelongsTo
     {
-        return $this->belongsTo(Source::class);
+        return $this->belongsTo(config('backup-server.backup_source_model'));
     }
 
     public function backup(): BelongsTo
     {
-        return $this->belongsTo(Backup::class);
+        return $this->belongsTo(config('backup-server.backup_model'));
     }
 }

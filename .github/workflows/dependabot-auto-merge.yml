@@ -12,8 +12,20 @@ jobs:
     if: ${{ github.event.pull_request.user.login == 'dependabot[bot]' && github.repository == 'spatie/laravel-backup-server' }}
     steps:
 
+      - name: Check repository auto-merge setting
+        id: auto-merge
+        run: |
+          enabled=$(gh api "repos/$GITHUB_REPOSITORY" --jq '.allow_auto_merge')
+          echo "enabled=$enabled" >> "$GITHUB_OUTPUT"
+          if [ "$enabled" != "true" ]; then
+            echo "Auto-merge is disabled for this repository; leaving the PR for manual review."
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Dependabot metadata
         id: metadata
+        if: steps.auto-merge.outputs.enabled == 'true'
         uses: dependabot/fetch-metadata@v3.1.0
         with:
           github-token: "${{ secrets.GITHUB_TOKEN }}"

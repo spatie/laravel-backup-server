@@ -6,6 +6,7 @@ use Exception;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Spatie\BackupServer\Enums\DestinationStatus;
@@ -30,6 +31,20 @@ class Destination extends Model
 
     public $guarded = [];
 
+    protected $casts = [
+        'status' => DestinationStatus::class,
+        'keep_all_backups_for_days' => 'int',
+        'keep_daily_backups_for_days' => 'int',
+        'keep_weekly_backups_for_weeks' => 'int',
+        'keep_monthly_backups_for_months' => 'int',
+        'keep_yearly_backups_for_years' => 'int',
+        'delete_oldest_backups_when_using_more_megabytes_than' => 'int',
+        'healthy_maximum_backup_age_in_days_per_source' => 'int',
+        'healthy_maximum_storage_in_mb_per_source' => 'int',
+        'healthy_maximum_storage_in_mb' => 'int',
+        'healthy_maximum_inode_usage_percentage' => 'int',
+    ];
+
     public static function booted(): void
     {
         static::creating(function (Destination $source) {
@@ -45,6 +60,16 @@ class Destination extends Model
     public function getDeletionJobClassName(): string
     {
         return DeleteDestinationJob::class;
+    }
+
+    public function backups(): HasMany
+    {
+        return $this->hasMany(config('backup-server.backup_model'), 'destination_id')->orderByDesc('created_at');
+    }
+
+    public function logItems(): HasMany
+    {
+        return $this->hasMany(config('backup-server.backup_log_item_model'), 'destination_id');
     }
 
     public function disk(): Filesystem

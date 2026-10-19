@@ -7,7 +7,6 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Spatie\BackupServer\Models\Backup;
-use Spatie\BackupServer\Models\Source;
 use Spatie\BackupServer\Tasks\Search\ContentSearchResult;
 
 class FindContentCommand extends Command
@@ -24,7 +23,7 @@ class FindContentCommand extends Command
 
         $searchFor = $this->argument('searchFor');
 
-        if (! $source = Source::named($this->argument('sourceName'))->first()) {
+        if (! $source = config('backup-server.backup_source_model')::named($this->argument('sourceName'))->first()) {
             $this->error("Did not find a source named {$sourceName}");
 
             return -1;

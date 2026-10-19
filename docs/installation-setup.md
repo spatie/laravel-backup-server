@@ -196,3 +196,31 @@ In the Horizon config you can add extra configuration for backup server.
 ## Setting up block storage
 
 Backup Server can copy the contents of several servers onto block storage. Make sure that the system where you run Backup Server on has plenty of block storage available.
+
+## Using custom models
+
+You can extend the package's `Backup`, `BackupLogItem`, `Destination`, and `Source` models to add relationships, scopes, or other behavior. Each custom model must extend its corresponding model in `Spatie\BackupServer\Models` so it remains compatible with the package's jobs and actions.
+
+For example:
+
+```php
+namespace App\Models;
+
+use Spatie\BackupServer\Models\Source as BaseSource;
+
+class Source extends BaseSource
+{
+    // Add your relationships or other behavior here.
+}
+```
+
+Register the models you want to replace in `config/backup-server.php`. Models you do not replace continue to use the package defaults.
+
+```php
+'backup_model' => App\Models\Backup::class,
+'backup_log_item_model' => App\Models\BackupLogItem::class,
+'backup_destination_model' => App\Models\Destination::class,
+'backup_source_model' => App\Models\Source::class,
+```
+
+The custom models inherit the package's table names and use the existing `source_id`, `destination_id`, and `backup_id` foreign keys. No migration is needed when extending the models without changing their tables or columns. If you override a model's `booted` method, call `parent::booted()` to preserve the package's model events.

@@ -30,7 +30,7 @@ class MonitorBackupsCommand extends Command
 
     protected function checkSourcesHealth(): self
     {
-        [$healthySources, $unhealthySources] = collect(Source::all())
+        [$healthySources, $unhealthySources] = collect(config('backup-server.backup_source_model')::all())
             ->partition(function (Source $source): bool {
                 return $source->isHealthy();
             });
@@ -62,7 +62,7 @@ class MonitorBackupsCommand extends Command
 
     protected function checkDestinationsHealth(): self
     {
-        [$healthyDestinations, $unHealthyDestinations] = collect(Destination::all())
+        [$healthyDestinations, $unHealthyDestinations] = collect(config('backup-server.backup_destination_model')::all())
             ->partition(function (Destination $destination): bool {
                 return $destination->isHealthy();
             });

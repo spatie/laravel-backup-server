@@ -19,7 +19,7 @@ class DispatchPerformBackupJobsCommand extends Command
 
         $backupScheduler = app(BackupScheduler::class);
 
-        Source::cursor()
+        config('backup-server.backup_source_model')::cursor()
             ->filter(fn (Source $source) => $backupScheduler->shouldBackupNow($source))
             ->each(function (Source $source) {
                 $this->comment("Dispatching backup job for source `{$source->name}` (id: {$source->id})");

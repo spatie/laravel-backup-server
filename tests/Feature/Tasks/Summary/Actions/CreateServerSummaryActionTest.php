@@ -17,7 +17,6 @@ beforeEach(function () {
     Storage::fake('backups');
 
     $container = DockerContainer::create('spatie/laravel-backup-server-tests')
-        ->name('laravel-backup-server-tests')
         ->mapPort(4848, 22)
         ->stopOnDestruct()
         ->start()
