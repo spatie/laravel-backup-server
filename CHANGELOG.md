@@ -2,6 +2,20 @@
 
 All notable changes to `laravel-backup-server` will be documented in this file
 
+## 4.4.1 - 2026-10-19
+
+### Maintenance
+
+- Upgrade the development dependency Symfony VarDumper from ^7.2 to ^8.1 (#128).
+- Retain Pest ^5.3.3 and its type-coverage plugin ^5.0.3, with PHP ^8.5, Laravel ^13.0, and Testbench ^11.1 as the supported baseline. Older unsupported versions remain excluded.
+- No runtime feature or public API changes. This is a maintenance release; support drops are treated as non-breaking under the approved release policy.
+
+### Validation
+
+Both lowest-compatible and stable dependency matrices passed 98 tests and 1,213 assertions, with four existing skips. The matrices exercised Symfony VarDumper 8.1.0 and 8.1.9 with Pest 5.3.3. PHP styling, JavaScript dependency integrity, and post-merge CI passed.
+
+**Full changelog:** https://github.com/spatie/laravel-backup-server/compare/4.4.0...4.4.1
+
 ## 4.4.0 - 2026-10-19
 
 ### Custom models
