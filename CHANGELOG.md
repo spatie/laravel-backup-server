@@ -2,6 +2,25 @@
 
 All notable changes to `laravel-backup-server` will be documented in this file
 
+## 4.4.0 - 2026-10-19
+
+### Custom models
+
+You can now extend and configure the Backup, BackupLogItem, Destination, and Source models. Package queries, relationships, backup creation, console logging, and asynchronous deletion honor the configured subclasses.
+
+Thanks to @fabio-ivona for implementing this feature in #131.
+
+### Validation and maintenance
+
+- Added six regression cases covering custom model relationships, foreign keys, global scopes, logging, and deletion, plus configuration documentation.
+- Updated development tooling to Pest 5.3.3, its type-coverage plugin 5.0.3, and Pint 1.32.1.
+- CI verifies PHP 8.5 / Laravel 13 with lowest-compatible and latest stable dependencies, alongside JavaScript dependency integrity.
+- Fixed a disk-size test fixture so it reliably allocates additional storage.
+
+This release requires PHP 8.5 and Laravel 13. Older Laravel support was dropped to align with current testing dependencies.
+
+**Full changelog:** https://github.com/spatie/laravel-backup-server/compare/4.3.3...4.4.0
+
 ## 4.3.3 - 2026-10-19
 
 ### Fixed
