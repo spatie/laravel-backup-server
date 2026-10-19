@@ -2,6 +2,26 @@
 
 All notable changes to `laravel-backup-server` will be documented in this file
 
+## 4.3.3 - 2026-10-19
+
+### Fixed
+
+- Update the development dependency brace-expansion from 1.1.16 to 1.1.21, incorporating additional denial-of-service protections (#135).
+- Avoid Docker container-name reuse races in the backup and summary integration tests (#137).
+- Skip Dependabot auto-merge when the repository has auto-merge disabled.
+
+### Tooling and requirements
+
+- Upgrade to Pest 5.3, its type-coverage plugin 5, and PHPUnit 13 configuration.
+- Test PHP 8.5 and Laravel 13 against both lowest and stable dependencies; add pull-request coverage and frozen Yarn lockfile integrity validation.
+- Laravel 13 is now required. Laravel 12 support was dropped because its Testbench requires Symfony Process 7, conflicting with Pest 5.3. PHP 8.5 remains the minimum requirement. The documented requirements have been aligned.
+
+Validation: both dependency matrices passed 92 tests and 1,183 assertions, with four pre-existing skips; Yarn dependency validation and PHP styling also passed on the merged commit.
+
+This release does not resolve the separate legacy Laravel Mix / webpack-dev-server security-update conflict.
+
+**Full Changelog**: https://github.com/spatie/laravel-backup-server/compare/4.3.2...4.3.3
+
 ## 4.3.2 - 2026-10-15
 
 ### Fixed
