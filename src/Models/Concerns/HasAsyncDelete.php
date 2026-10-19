@@ -29,10 +29,10 @@ trait HasAsyncDelete
 
     protected function status(): DestinationStatus|BackupStatus|SourceStatus
     {
-        return match (static::class) {
-            Source::class => SourceStatus::Deleting,
-            Destination::class => DestinationStatus::Deleting,
-            Backup::class => BackupStatus::Deleting,
+        return match (true) {
+            $this instanceof Source => SourceStatus::Deleting,
+            $this instanceof Destination => DestinationStatus::Deleting,
+            $this instanceof Backup => BackupStatus::Deleting,
             default => throw new \InvalidArgumentException(
                 'Unknown class type for deletion status: '.static::class
             ),

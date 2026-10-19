@@ -3,6 +3,8 @@ name: run-tests
 on:
   pull_request:
   push:
+    branches:
+      - main
     paths:
       - '**.php'
       - '.github/workflows/run-tests.yml'
@@ -34,11 +36,11 @@ jobs:
 
   test:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 10
     strategy:
       fail-fast: false
       matrix:
-        php: [8.5]
+        php: ['8.5']
         laravel: ['13.*']
         stability: [prefer-lowest, prefer-stable]
         include:
@@ -49,18 +51,16 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v7
 
-      - name: Install sed
-        run: sudo apt-get install sed
+      - name: Install rsync
+        run: sudo apt-get update && sudo apt-get install -y rsync
 
-      - name: Set permissions for keys
+      - name: Configure SSH for test containers
         run: |
-          chmod 700 tests/docker/keys/laravel_backup_server_id_rsa
-          chmod 700 tests/docker/keys/laravel_backup_server_id_rsa.pub
-
-      - name: Patch SSH Daemon
-        run: sudo sed -ri 's/^#?   StrictHostKeyChecking ask/StrictHostKeyChecking no/g' /etc/ssh/ssh_config
+          chmod 600 tests/docker/keys/laravel_backup_server_id_rsa
+          mkdir -p ~/.ssh
+          printf 'Host 0.0.0.0\n  StrictHostKeyChecking no\n  UserKnownHostsFile /dev/null\n' >> ~/.ssh/config
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2

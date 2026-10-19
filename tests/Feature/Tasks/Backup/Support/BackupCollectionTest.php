@@ -30,11 +30,11 @@ it('can recalculate the size of a backup in a backup collection', function () {
     $backups = new BackupCollection([$this->backup1, $this->backup2]);
     $originalSize = $backups->recalculateRealSizeInKb()->pluck('real_size_in_kb')->sum();
 
-    File::put($this->backup1->destinationLocation()->getFullPath().'/test.txt', 'some data');
+    File::put($this->backup1->destinationLocation()->getFullPath().'/test.txt', str_repeat('a', 8192));
 
     $newSize = $backups->recalculateRealSizeInKb()->pluck('real_size_in_kb')->sum();
 
-    $this->assertNotEquals($originalSize, $newSize);
+    expect($newSize)->toBeGreaterThan($originalSize);
 });
 
 it('will only recalculate the size of a backups with a path in a backup collection', function () {
